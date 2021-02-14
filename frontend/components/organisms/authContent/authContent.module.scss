@@ -1,0 +1,28 @@
+.card {
+  width: 402px;
+  height: 82.6vh;
+  padding-top: 4.6vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  
+  h4 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #EBEBF5;
+  }
+  
+  h6 {
+    color: #86869C;
+    font-size: 1.8rem;
+    font-weight: 500;
+    padding: 1.8rem 0 7.9rem 0;
+  }
+  
+  p {
+    color: #86869C;
+    font-weight: 500;
+    font-size: 1.3rem;
+  }
+}

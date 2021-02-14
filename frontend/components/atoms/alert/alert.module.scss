@@ -1,0 +1,18 @@
+.wrapper {
+  position: absolute;
+  left: 22px;
+  bottom: 23px;
+  background: #48466b;
+  border-left: 3px solid #9199ff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  p {
+    color: #EBEBF5;
+    font-size: 1.38rem;
+    font-weight: 600;
+  }
+}

@@ -25,6 +25,14 @@ body {
 
 input, textarea {
   font-family: 'Montserrat', sans-serif;
+  border: none;
+  outline: none;
+}
+
+button {
+  outline: none;
+  cursor: pointer;
+  border: none;
 }
 
 *::selection {
