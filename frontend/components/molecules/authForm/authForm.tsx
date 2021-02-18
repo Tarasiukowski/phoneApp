@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../atoms/input/input';
 import { Button } from '../../atoms/button/button';
+import Loader from '../loader/loader';
 import { login as authLogin } from '../../../reducers/userReducer';
 import { propsAuthForm, formData } from '../../../interfaces';
 import styles from './authForm.module.scss';
@@ -52,7 +53,7 @@ const AuthForm = ({ login, setErrorMessage }: propsAuthForm) => {
 
   if (redirect) {
     router.push('/onboarding/number');
-    return <h2>redirect</h2>;
+    return <Loader />;
   } else {
     return (
       <>
