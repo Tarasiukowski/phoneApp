@@ -8,12 +8,19 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.5.0",
+    "@types/react-redux": "^7.1.16",
     "@types/styled-components": "^5.1.7",
+    "axios": "^0.21.1",
     "babel-plugin-inline-react-svg": "^1.1.2",
+    "cookies": "^0.8.0",
     "next": "latest",
     "node-sass": "^5.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-google-login": "^5.2.2",
+    "react-hook-form": "^6.15.1",
+    "react-redux": "^7.2.2",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {

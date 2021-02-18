@@ -1,22 +1,43 @@
-type login = Boolean
+import { Dispatch, SetStateAction } from 'react';
 
-export type typeButton = {
-  disabled?: Boolean
-  transparent?: Boolean
-}
+export type propsAuthPage = {
+  user: User;
+};
 
-export type typeAuthContent = {
-  login?: login
-}
+export type propsAuthContent = {
+  login?: login;
+};
 
-export type typeToggleAuth = {
-  login?: Boolean
-}
+export type propsAuthForm = {
+  login?: Boolean;
+  setErrorMessage: Dispatch<SetStateAction<string | null>>;
+};
 
-export type typeAuthForm = {
-  login?: Boolean
-}
+export type propsButton = {
+  disabled?: Boolean;
+  transparent?: Boolean;
+};
 
-export type typeButtonGoogle = {
-  login?: Boolean
-}
+export type propsToggleAuth = {
+  login?: Boolean;
+};
+
+export type propsButtonGoogle = {
+  login?: Boolean;
+  onClick: (res: any) => void;
+};
+
+export type propsAlert = {
+  errorMessage: String;
+  close: () => void;
+};
+
+export type formData = {
+  email: String;
+};
+
+export type User = {
+  email: String;
+};
+
+type login = Boolean;

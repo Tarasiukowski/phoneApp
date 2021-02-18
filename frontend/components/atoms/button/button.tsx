@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import { typeButton } from '../../../interfaces';
+import { propsButton } from '../../../interfaces';
 
-export const Button = styled.button<typeButton>`
+export const Button = styled.button<propsButton>`
   width: 315px;
   color: white;
   background: #6333ff;

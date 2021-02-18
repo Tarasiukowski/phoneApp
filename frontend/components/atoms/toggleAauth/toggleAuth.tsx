@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { typeToggleAuth } from "../../../interfaces"
+import { propsToggleAuth } from "../../../interfaces"
 import styles from './ToggleAuth.module.scss'
 
-const ToggleAuth = ({ login }: typeToggleAuth) => (
+const ToggleAuth = ({ login }: propsToggleAuth) => (
   <div className={styles.wrapper}>
     <p>
       {login ? "Need an account?" : "Already have an account?"}

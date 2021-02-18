@@ -1,10 +1,11 @@
 import { Button } from '../button/button'
+import { propsAlert } from '../../../interfaces'
 import styles from './alert.module.scss'
 
-const Alert = () => (
+const Alert = ({ errorMessage, close }: propsAlert) => (
   <div className={styles.wrapper}>
-    <p>some alert</p>
-    <Button transparent>Close</Button>
+    <p>{errorMessage}</p>
+    <Button onClick={close} transparent>Close</Button>
   </div>
 )
 

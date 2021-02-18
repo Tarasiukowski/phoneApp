@@ -1,30 +1,70 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
 import { Input } from '../../atoms/input/input';
 import { Button } from '../../atoms/button/button';
-// import Alert from '../../atoms/alert/alert';
-import { typeAuthForm } from '../../../interfaces';
-import { handleOnChange } from '../../../utils';
+import { login as authLogin } from '../../../reducers/userReducer';
+import { propsAuthForm, formData } from '../../../interfaces';
 import styles from './authForm.module.scss';
 
-const AuthForm = ({ login }: typeAuthForm) => {
-  const [emailValue, setEmailValue] = useState<string>('');
+const AuthForm = ({ login, setErrorMessage }: propsAuthForm) => {
+  const [disabled, setDisabled] = useState<boolean>(true);
+  const [redirect, setRedirect] = useState<boolean>(false);
 
-  return (
-    <>
-      <form className={styles.form}>
-        <Input
-            value={emailValue}
-            onChange={(e) => handleOnChange(e, setEmailValue)}
-            type="email"
-            placeholder="Enter your email"
-        />
-        <Button type="submit" disabled={emailValue?.length < 1}>
+  const { register, handleSubmit, watch } = useForm();
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    setDisabled(!watch('email') ? true : false);
+  }, [watch('email')]);
+
+  const submit = async (data: formData) => {
+    const { email } = data;
+
+    setDisabled(true);
+
+    const {
+      data: { errorMsg, user },
+    } = await axios.post(
+      `http://localhost:7000/auth/${login ? 'login' : 'singup'}`,
+      {
+        email,
+      },
+      { withCredentials: true },
+    );
+
+    if (errorMsg) {
+      setErrorMessage(errorMsg);
+      setDisabled(false);
+      return;
+    }
+
+    setErrorMessage(null);
+    setDisabled(false);
+
+    setRedirect(true);
+
+    dispatch(authLogin(user));
+  };
+
+  if (redirect) {
+    router.push('/onboarding/number');
+    return <h2>redirect</h2>;
+  } else {
+    return (
+      <>
+        <form onSubmit={handleSubmit(submit)} className={styles.form}>
+          <Input name="email" placeholder="Enter your email" autoComplete="off" ref={register()} />
+          <Button type="submit" disabled={disabled}>
             Continue
-        </Button>
-      </form>
-      {/* <Alert /> */}
-    </>
-  );
+          </Button>
+        </form>
+      </>
+    );
+  }
 };
 
 export default AuthForm;
