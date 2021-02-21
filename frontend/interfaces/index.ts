@@ -16,7 +16,22 @@ export type propsAuthForm = {
 export type propsButton = {
   disabled?: Boolean;
   transparent?: Boolean;
+  absolute?: absolute;
+  width?: string;
+  margin?: string
 };
+
+export type propsSelectNumberButton = {
+  onClick: () => void
+}
+
+export type propsSelectNumberList = {
+  setOpenList: Dispatch<SetStateAction<boolean>>
+}
+
+export type propsSelectNumberItem = {
+  number: string
+}
 
 export type propsToggleAuth = {
   login?: Boolean;
@@ -41,3 +56,10 @@ export type User = {
 };
 
 type login = Boolean;
+
+type absolute = {
+  top?: string;
+  bottom?: string;
+  left?:  string;
+  right?: string;
+};
