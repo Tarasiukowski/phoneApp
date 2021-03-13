@@ -4,6 +4,10 @@ export type propsAuthPage = {
   user: User;
 };
 
+export type propsOnboardingNumberPage = {
+  user: User
+}
+
 export type propsAuthContent = {
   login?: login;
 };
@@ -23,6 +27,7 @@ export type propsButton = {
 
 export type propsSelectNumberButton = {
   onClick: () => void
+  number: string | null
 }
 
 export type propsSelectNumberList = {
@@ -31,6 +36,12 @@ export type propsSelectNumberList = {
 
 export type propsSelectNumberItem = {
   number: string
+  onClick: (e: any) => void
+}
+
+export type propsSelectNumberInput = {
+  value: string | undefined
+  onChange: (e: any) => void
 }
 
 export type propsToggleAuth = {

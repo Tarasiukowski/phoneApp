@@ -4,7 +4,7 @@ import AuthTemplate from '../templates/authTemplate/authTemplate';
 import AuthContent from '../components/organisms/authContent/authContent';
 import { login } from '../reducers/userReducer';
 import { loginByToken } from '../utils/loginByToken';
-import { propsAuthPage } from '../interfaces/index'
+import { propsAuthPage } from '../interfaces/index';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const user = await loginByToken(req, res);
