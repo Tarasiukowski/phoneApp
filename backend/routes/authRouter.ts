@@ -6,4 +6,4 @@ export const authRouter = Router();
 authRouter 
   .post('/verify', authController.verify)
   .post('/login', authController.login)
-  .post('/singup', authController.singUp);
+  .post('/singup', authController.singUp)

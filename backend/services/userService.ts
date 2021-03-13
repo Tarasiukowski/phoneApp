@@ -42,6 +42,12 @@ class UserService {
     res.send({ errorMsg: 'user with such email does not exist' });
   }
 
+  static update(data: any, res: Response){
+    UserModel.update(data)
+
+    res.send({ msg: "updated" })
+  }
+
   async singup(res: Response) {
     const { email } = this;
 
