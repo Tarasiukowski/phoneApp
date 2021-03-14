@@ -107,7 +107,11 @@ const List = ({ setOpenList }: propsSelectNumberList) => {
 
   return (
     <div onClick={closeList} className={styles.wrapper} ref={refWrapper}>
-      <div className={styles.content}>
+      <div
+        className={`${styles.content} ${
+          activeList === 'All' ? styles.all : styles.recommended
+        }`}
+      >
         <div className={styles.tab} ref={refTab}>
           <button
             onClick={setOverlap}
