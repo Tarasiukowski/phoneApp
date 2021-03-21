@@ -46,9 +46,9 @@ const AuthForm = ({ login, setErrorMessage }: propsAuthForm) => {
     setErrorMessage(null);
     setDisabled(false);
 
-    setRedirect(true);
-
     dispatch(authLogin(user));
+
+    setRedirect(true);
   };
 
   if (redirect) {

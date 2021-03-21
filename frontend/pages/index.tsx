@@ -1,3 +1,5 @@
-const HomePage = () => <h2>Home Page</h2>
+import Loader from '../components/molecules/loader/loader';
 
-export default HomePage
+const HomePage = () => <Loader />;
+
+export default HomePage;
