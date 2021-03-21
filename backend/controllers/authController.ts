@@ -3,7 +3,7 @@ import UserService from '../services/userService';
 import { verifyEmail } from '../utils';
 
 class AuthController {
-  verify(req: Request, res: Response) {
+  byToken(req: Request, res: Response) {
     const { token } = req.body;
 
     UserService.verify(token, res);

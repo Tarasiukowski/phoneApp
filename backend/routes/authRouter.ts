@@ -4,6 +4,6 @@ import { authController } from '../controllers/authController';
 export const authRouter = Router();
 
 authRouter 
-  .post('/verify', authController.verify)
+  .post('/byToken', authController.byToken)
   .post('/login', authController.login)
   .post('/singup', authController.singUp)

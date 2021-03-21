@@ -6,7 +6,6 @@ import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { connectDB } from './utils/connectDB';
 import { withRouter } from './routes';
-import { generateNumberContaining } from './utils/numbers/generateNumberContaining';
 
 export const app = express();
 

@@ -1,14 +1,25 @@
-import type { AppProps } from 'next/app'
-import { Provider } from 'react-redux'
-import store from '../store/index'
-import '../style/globalStyle.scss'
+import type { AppProps, AppContext } from 'next/app';
+import { Provider } from 'react-redux';
+import store from '../store/index';
+import AppTemplate from '../templates/appTemplate/appTemplate';
+import { loginByToken } from '../utils/loginByToken';
+import { User } from '../interfaces';
+import '../style/globalStyle.scss';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, user }: AppProps & { user: User }) {
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
+      <AppTemplate user={user}>
+        <Component {...pageProps} />
+      </AppTemplate>
     </Provider>
-  )
+  );
 }
 
-export default MyApp
+MyApp.getInitialProps = async ({ ctx: { req } }: AppContext) => {
+  const user = await loginByToken(req);
+
+  return { user };
+};
+
+export default MyApp;
