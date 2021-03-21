@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../reducers/userReducer';
 import { User } from '../../interfaces';
@@ -11,7 +11,11 @@ interface props {
 const AppTemplate = ({ children, user }: props) => {
   const dispatch = useDispatch();
 
-  dispatch(login(user));
+  useEffect(() => {
+    if (user) {
+      dispatch(login(user));
+    }
+  });
 
   return <>{children}</>;
 };
