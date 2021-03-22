@@ -4,7 +4,7 @@ import { verifyEmail } from '../utils';
 
 class AuthController {
   byToken(req: Request, res: Response) {
-    const { token } = req.body;
+    const token = req.cookies["SESSID"]
 
     UserService.verify(token, res);
   }

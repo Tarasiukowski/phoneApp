@@ -10,13 +10,19 @@ class UserService {
   }
 
   static async verify(token: string, res: Response) {
-    const { id } = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
+    if (token) {
+      const { id } = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 
-    const user = await UserModel.find('_id', id);
+      const user = await UserModel.find('_id', id);
 
-    const formatUser = UserModel.format(user);
+      const formatUser = UserModel.format(user);
 
-    res.send({ user: formatUser });
+      console.log(formatUser)
+      res.send({ user: formatUser });
+      return;
+    }
+
+    res.send({ user: null });
   }
 
   async login(res: Response) {
@@ -42,10 +48,10 @@ class UserService {
     res.send({ errorMsg: 'user with such email does not exist' });
   }
 
-  static update(data: any, res: Response){
-    UserModel.update(data)
+  static update(data: any, res: Response) {
+    UserModel.update(data);
 
-    res.send({ msg: "updated" })
+    res.send({ msg: 'updated' });
   }
 
   async singup(res: Response) {

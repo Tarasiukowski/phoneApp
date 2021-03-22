@@ -1,21 +1,23 @@
-import { ReactNode, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { login } from '../../reducers/userReducer';
-import { User } from '../../interfaces';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, selectUser } from '../../reducers/userReducer';
 
-interface props {
-  children: ReactNode;
-  user: User;
-}
-
-const AppTemplate = ({ children, user }: props) => {
+const AppTemplate: React.FC = ({ children }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const selectedUser = useSelector(selectUser);
 
   useEffect(() => {
-    if (user) {
-      dispatch(login(user));
-    }
-  });
+    axios
+      .post('http://localhost:7000/auth/byToken', {}, { withCredentials: true })
+      .then(({ data: { user } }) => {
+        if (selectedUser !== user) {
+          dispatch(login(user));
+        }
+      });
+  }, [router.asPath]);
 
   return <>{children}</>;
 };

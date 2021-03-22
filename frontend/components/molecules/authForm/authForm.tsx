@@ -27,6 +27,8 @@ const AuthForm = ({ login, setErrorMessage }: propsAuthForm) => {
 
     setDisabled(true);
 
+    dispatch(authLogin('loading'));
+
     const {
       data: { errorMsg, user },
     } = await axios.post(
@@ -40,19 +42,21 @@ const AuthForm = ({ login, setErrorMessage }: propsAuthForm) => {
     if (errorMsg) {
       setErrorMessage(errorMsg);
       setDisabled(false);
+
+      dispatch(authLogin(null));
       return;
     }
 
     setErrorMessage(null);
     setDisabled(false);
+    setRedirect(true);
 
     dispatch(authLogin(user));
 
-    setRedirect(true);
+    router.push('/onboarding/number');
   };
 
   if (redirect) {
-    router.push('/onboarding/number');
     return <Loader />;
   } else {
     return (

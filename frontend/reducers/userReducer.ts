@@ -3,9 +3,9 @@ import { User } from '../interfaces'
 
 const userSlice = createSlice({
   name: "user",
-  initialState: null as User | null,
+  initialState: null as User | null | "loading",
   reducers: {
-    login(state, { payload }: PayloadAction<User>){
+    login(state, { payload }: PayloadAction<User | null | "loading">){
       return state = payload
     }
   }
