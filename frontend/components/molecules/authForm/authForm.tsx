@@ -35,6 +35,7 @@ const AuthForm = ({ login, setErrorMessage }: propsAuthForm) => {
       `http://localhost:7000/auth/${login ? 'login' : 'singup'}`,
       {
         email,
+        by: 'Google',
       },
       { withCredentials: true },
     );
@@ -53,7 +54,7 @@ const AuthForm = ({ login, setErrorMessage }: propsAuthForm) => {
 
     dispatch(authLogin(user));
 
-    router.push('/onboarding/number');
+    router.push('/onboarding/code');
   };
 
   if (redirect) {

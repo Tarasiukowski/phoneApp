@@ -1,25 +1,60 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 import ButtonGoogle from '../../atoms/buttonGoogle/buttonGoogle';
 import AuthForm from '../../molecules/authForm/authForm';
 import ToggleAuth from '../../atoms/toggleAauth/toggleAuth';
 import Alert from '../../atoms/alert/alert';
 import styles from './authContent.module.scss';
 import GoogleLogin from 'react-google-login';
-import { responseGoogle } from '../../../utils/responseGoogle';
+import { login as loginAuth } from '../../../reducers/userReducer';
 import { propsAuthContent } from '../../../interfaces';
-
+import Loader from '../../molecules/loader/loader';
 
 const AuthContent = ({ login }: propsAuthContent) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [redirect, setRedirect] = useState<boolean>(false);
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
-  const googleLogin = responseGoogle(setErrorMessage, dispatch, login);
+  const googleLogin = async (res: any) => {
+    const {
+      profileObj: { email },
+    } = res;
+
+    const {
+      data: { user, errorMsg },
+    } = await axios.post(
+      `http://localhost:7000/auth/${login ? 'login' : 'singup'}`,
+      {
+        email,
+      },
+      { withCredentials: true },
+    );
+
+    if (errorMsg) {
+      setErrorMessage(errorMsg);
+      return;
+    } else {
+      setErrorMessage(null);
+    }
+
+    setRedirect(true);
+
+    dispatch(loginAuth(user));
+  };
 
   const closeAlert = () => {
     setErrorMessage(null);
   };
+
+  if (redirect) {
+    router.push('/onboarding/number');
+
+    return <Loader />;
+  }
 
   return (
     <div className={styles.card}>
