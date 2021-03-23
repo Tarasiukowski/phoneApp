@@ -17,7 +17,6 @@ class UserService {
 
       const formatUser = UserModel.format(user);
 
-      console.log(formatUser)
       res.send({ user: formatUser });
       return;
     }

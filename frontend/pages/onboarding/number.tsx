@@ -4,9 +4,9 @@ import IsLoggedTemplate from '../../templates/isLoggedTemplate/isLoggedTemplate'
 
 const OnboardingNumberPage = () => (
   <IsLoggedTemplate allow="logged" redirectTo="/singup">
-      <OnboardingTemplate>
-    <OnboardingNumberContent />
-  </OnboardingTemplate>
+    <OnboardingTemplate>
+      <OnboardingNumberContent />
+    </OnboardingTemplate>
   </IsLoggedTemplate>
 );
 
