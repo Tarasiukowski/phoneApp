@@ -28,12 +28,12 @@ const IsLoggedTemplate = ({ children, redirectTo, allow }: props) => {
       .then(({ data: { user } }) => {
         dispatch(login(user));
 
-        const isLogged = user ? true : false
+        const isLogged = user ? true : false;
 
-        if(settings[allow] === isLogged){
-          setLoading(false)
+        if (settings[allow] === isLogged) {
+          setLoading(false);
         } else {
-          router.push(redirectTo)
+          router.push(redirectTo);
         }
       });
   });

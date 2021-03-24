@@ -6,16 +6,16 @@ export const allNumbers = async (lastNumber?: string, counter?: number): Promise
   const numbers: string[] = [];
   let number = lastNumber ? unformat(lastNumber) : '0000000';
   let parseNumber = parseInt(number) + 1;
-  let numberOfRepetitions = parseNumber + (counter ? counter : 20)
+  let numberOfRepetitions = parseNumber + (counter ? counter : 20);
 
-  for (let i = parseNumber ; i <= numberOfRepetitions; i++) {
+  for (let i = parseNumber; i <= numberOfRepetitions; i++) {
     const formattedNumber = formatNumber(number);
     const user = await User.find('number', formattedNumber);
 
     if (!user) {
       numbers.push(formattedNumber);
     } else {
-      numberOfRepetitions++
+      numberOfRepetitions++;
     }
 
     number = number.slice(0, number.length - i.toString().length) + `${i}`;

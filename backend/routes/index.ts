@@ -5,6 +5,6 @@ import { userRouter } from './userRouter';
 
 export const withRouter = (app: Application) => {
   app.use('/auth', authRouter);
-  app.use('/user', userRouter)
-  app.use('/generate', generateRouter)
+  app.use('/user', userRouter);
+  app.use('/generate', generateRouter);
 };

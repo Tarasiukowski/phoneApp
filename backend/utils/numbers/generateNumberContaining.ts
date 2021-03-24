@@ -12,10 +12,10 @@ export const generateNumberContaining = (filter: string, startNumber?: string): 
       return [formatNumber(filter)];
     } else {
       let lengthAddNumber = containNumber.toString().length;
-      let lengthParseNumber = parseNumber.toString().length
+      let lengthParseNumber = parseNumber.toString().length;
 
       if (startNumber) {
-        number = number.slice(0, number.length - lengthParseNumber) + `${parseNumber}` 
+        number = number.slice(0, number.length - lengthParseNumber) + `${parseNumber}`;
 
         parseNumber += lengthContainNumber > 1 ? Math.pow(10, lengthContainNumber) : 10;
 

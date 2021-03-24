@@ -6,8 +6,8 @@ import RedirectTemplate from '../../../templates/redirectTemplate/redirectTempla
 import Alert from '../../atoms/alert/alert';
 import { Button } from '../../atoms/button/button';
 import { Input } from '../../atoms/input/input';
+import { Error } from '../../../interfaces';
 import styles from './onboardingAccountContent.module.scss';
-import { Error } from '../../../interfaces'
 
 const OnboardingAccountContent = () => {
   const [valueFirstName, setValueFirstName] = useState<string>('');
@@ -43,7 +43,7 @@ const OnboardingAccountContent = () => {
 
       setRedirect(true);
     } catch (e) {
-        setError({ msg: "'Can not set firstname and lastname'", id: Math.random() });
+      setError({ msg: "'Can not set firstname and lastname'", id: Math.random() });
     }
 
     setDisabledByRequest(false);

@@ -1,8 +1,6 @@
-import { Router } from 'express'
-import { userController } from '../controllers/userController'
+import { Router } from 'express';
+import { userController } from '../controllers/userController';
 
-export const userRouter = Router()
+export const userRouter = Router();
 
-userRouter
-  .post('/update', userController.update)
-  .post('/verifyByCode', userController.verify)
+userRouter.post('/update', userController.update).post('/verifyByCode', userController.verify);

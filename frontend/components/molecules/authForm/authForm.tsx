@@ -4,10 +4,10 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../atoms/input/input';
 import { Button } from '../../atoms/button/button';
+import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
 import { login as authLogin } from '../../../reducers/userReducer';
 import { propsAuthForm, formData } from '../../../interfaces';
 import styles from './authForm.module.scss';
-import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
 
 const AuthForm = ({ login, setError }: propsAuthForm) => {
   const [disabled, setDisabled] = useState<boolean>(true);

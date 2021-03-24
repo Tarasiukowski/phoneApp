@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import SelectNumberButton from '../../../atoms/selectNumber/button/button';
 import SelectNumberList from '../../../atoms/selectNumber/list/list';
-import { selectUser } from '../../../../reducers/userReducer';
 import { Button } from '../../../atoms/button/button';
+import { selectUser } from '../../../../reducers/userReducer';
 import styles from './number.module.scss';
 
 const OnboardingNumberContent = () => {

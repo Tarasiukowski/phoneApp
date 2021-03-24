@@ -9,7 +9,7 @@ class UserController {
   }
 
   verify(req: Request, res: Response) {
-    const { email, code } = req.body
+    const { email, code } = req.body;
 
     UserService.verifyByCode(email, code, res);
   }

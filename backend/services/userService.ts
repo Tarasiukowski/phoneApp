@@ -33,12 +33,12 @@ class UserService {
   }
 
   static async verifyByCode(email: string, code: string, res: Response) {
-    const findUser: any = await UserModel.find("email", email)
+    const findUser: any = await UserModel.find('email', email);
 
-    if(findUser.code === code){
-      res.send({ valid: true })
+    if (findUser.code === code) {
+      res.send({ valid: true });
     } else {
-      res.send({ valid: false, errorMsg: "Wrong verification code." })
+      res.send({ valid: false, errorMsg: 'Wrong verification code.' });
     }
   }
 

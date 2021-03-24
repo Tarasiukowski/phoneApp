@@ -1,14 +1,14 @@
 .wrapper {
   margin-top: 50px;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(0, 0, 0, 0.20);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   width: 100%;
   padding: 0 1rem 0 3.5rem;
   height: 72px;
   display: flex;
   align-items: center;
-  color: #EBEBF5;
+  color: #ebebf5;
   cursor: pointer;
   position: relative;
 
@@ -18,7 +18,7 @@
   }
 
   svg {
-    fill: #6333FF;
+    fill: #6333ff;
     position: absolute;
     right: 27px;
     width: 25px;

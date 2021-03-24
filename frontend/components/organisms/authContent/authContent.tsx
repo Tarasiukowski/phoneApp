@@ -1,16 +1,15 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import GoogleLogin from 'react-google-login';
 import ButtonGoogle from '../../atoms/buttonGoogle/buttonGoogle';
 import AuthForm from '../../molecules/authForm/authForm';
 import ToggleAuth from '../../atoms/toggleAauth/toggleAuth';
 import Alert from '../../atoms/alert/alert';
-import styles from './authContent.module.scss';
-import GoogleLogin from 'react-google-login';
 import { login as loginAuth } from '../../../reducers/userReducer';
-import { propsAuthContent } from '../../../interfaces';
 import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
-import { Error } from '../../../interfaces';
+import { Error, propsAuthContent } from '../../../interfaces';
+import styles from './authContent.module.scss';
 
 const AuthContent = ({ login }: propsAuthContent) => {
   const [error, setError] = useState<Error | null>(null);

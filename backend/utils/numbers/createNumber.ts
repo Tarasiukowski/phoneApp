@@ -1,4 +1,4 @@
-import User from '../../models/user/userModel'
+import User from '../../models/user/userModel';
 
 export const createNumber = async (): Promise<string> => {
   const number = () => {
@@ -17,12 +17,12 @@ export const createNumber = async (): Promise<string> => {
     return number;
   };
 
-  const num = number()
+  const num = number();
 
-  const user = await User.find("number", num)
+  const user = await User.find('number', num);
 
-  if(user){
-    number()
+  if (user) {
+    number();
   }
 
   return num;

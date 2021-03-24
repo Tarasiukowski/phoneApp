@@ -6,5 +6,5 @@ export const userSchema = new Schema({
   code: String,
   onboarding: Boolean,
   firstName: String,
-  lastName: String
+  lastName: String,
 });

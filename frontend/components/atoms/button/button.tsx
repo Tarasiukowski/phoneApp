@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { propsButton } from '../../../interfaces';
 
 export const Button = styled.button<propsButton>`
-  width: ${({ width }) => width ? width : "315px"};
+  width: ${({ width }) => (width ? width : '315px')};
   color: white;
   background: #6333ff;
   padding: 9px 16px;
@@ -11,28 +11,32 @@ export const Button = styled.button<propsButton>`
   font-size: 1.5rem;
   transition: background 0.3s ease 0ms;
   border-radius: 4px;
-  margin: ${({ margin }) => margin ? margin : null};
+  margin: ${({ margin }) => (margin ? margin : null)};
 
-  ${({ absolute }) => absolute && css`
-    position: absolute;
-    top: ${absolute.top};
-    bottom: ${absolute.bottom};
-    right: ${absolute.right};
-    left: ${absolute.left};
-  `}
+  ${({ absolute }) =>
+    absolute &&
+    css`
+      position: absolute;
+      top: ${absolute.top};
+      bottom: ${absolute.bottom};
+      right: ${absolute.right};
+      left: ${absolute.left};
+    `}
 
-  ${({ transparent }) => transparent && css`
-    width: auto;
-    height: auto;
-    padding: 8px 12px;
-    font-size: 1.3rem;
-    margin-left: 37px;
-    background: transparent;
+  ${({ transparent }) =>
+    transparent &&
+    css`
+      width: auto;
+      height: auto;
+      padding: 8px 12px;
+      font-size: 1.3rem;
+      margin-left: 37px;
+      background: transparent;
 
-    :hover {
-      background: rgba(235, 235, 245, 0.08);
-    }
-  `}
+      :hover {
+        background: rgba(235, 235, 245, 0.08);
+      }
+    `}
 
   ${({ disabled, transparent }) =>
     disabled
@@ -41,7 +45,8 @@ export const Button = styled.button<propsButton>`
           background: rgba(255, 255, 255, 0.12);
           cursor: default;
         `
-      : !transparent && css`
+      : !transparent &&
+        css`
           :hover {
             background: rgb(69, 35, 178);
           }

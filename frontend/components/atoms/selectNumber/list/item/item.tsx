@@ -1,6 +1,6 @@
-import styles from './item.module.scss'
 import Circle from '../../../../../public/svgs/circle.svg'
 import { propsSelectNumberItem } from '../../../../../interfaces'
+import styles from './item.module.scss'
 
 const Item = ({ number, onClick }: propsSelectNumberItem) => (
   <div onClick={onClick} className={styles.wrapper}>

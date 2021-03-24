@@ -19,7 +19,7 @@ class GenerateController {
         filter,
         lastNumber ? unformat(lastNumber) : undefined,
       );
-      
+
       res.send({ numbers: containNumbers, lastNumber });
 
       return;

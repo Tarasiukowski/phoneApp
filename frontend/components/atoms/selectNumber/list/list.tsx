@@ -1,11 +1,11 @@
 import { useRef, MouseEvent, useState, useEffect } from 'react';
 import gsap from 'gsap';
+import axios from 'axios';
 import Input from './input/input';
+import NumbersList from './numbersList/numbersList';
 import { fetchAllNumbers, fetchRecommendedNumbers } from '../../../../utils/fetchNumbers';
 import { propsSelectNumberList } from '../../../../interfaces';
 import styles from './list.module.scss';
-import axios from 'axios';
-import NumbersList from './numbersList/numbersList';
 
 const List = ({ setOpenList, setNumber }: propsSelectNumberList) => {
   const [activeList, setActiveList] = useState<string | null>('Recommended');
@@ -108,9 +108,7 @@ const List = ({ setOpenList, setNumber }: propsSelectNumberList) => {
   return (
     <div onClick={closeList} className={styles.wrapper} ref={refWrapper}>
       <div
-        className={`${styles.content} ${
-          activeList === 'All' ? styles.all : styles.recommended
-        }`}
+        className={`${styles.content} ${activeList === 'All' ? styles.all : styles.recommended}`}
       >
         <div className={styles.tab} ref={refTab}>
           <button
