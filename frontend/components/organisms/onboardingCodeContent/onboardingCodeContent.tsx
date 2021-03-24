@@ -25,6 +25,7 @@ const OnboardingCodeContent = () => {
   };
 
   const verifyByCode = async () => {
+
     const { data } = await axios.post('http://localhost:7000/user/verifyByCode', {
       email: user.email,
       code: valueInput,
