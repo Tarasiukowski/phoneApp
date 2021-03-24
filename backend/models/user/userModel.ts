@@ -1,15 +1,23 @@
-import { model } from 'mongoose';
-import { createNumber } from '../../utils/numbers/createNumber'
+import { Document, model } from 'mongoose';
+import { generateCode } from '../../utils/generateCode';
+import { createNumber } from '../../utils/numbers/createNumber';
+import { sendMail } from '../../utils/sendMail';
 import { userSchema } from './userSchema';
 
 export const userModel = model('user', userSchema);
 
 class User {
-  email: String;
-  number: String;
+  email: string;
+  number: string;
+  code: string;
+  by: 'Google' | undefined;
 
-  constructor(email: String) {
+  constructor(email: string, by: any) {
     this.email = email;
+    this.by = by;
+    if (by !== 'Google') {
+      this.code = generateCode();
+    }
   }
 
   static format(user) {
@@ -17,16 +25,16 @@ class User {
 
     return {
       email,
-      number
+      number,
     };
   }
 
-  static async update(data){
-    const { email } = data
+  static async update(data) {
+    const { email } = data;
 
-    delete data.email
-      
-    await userModel.updateOne({ email }, { $set: { ...data } } )
+    delete data.email;
+
+    await userModel.updateOne({ email }, { $set: { ...data } });
   }
 
   static async find(key: string, value: string) {
@@ -35,9 +43,14 @@ class User {
     return user;
   }
 
-
   async save() {
-    this.number = await createNumber()
+    this.number = await createNumber();
+
+    if (this.by !== 'Google') {
+      sendMail(this.email, this.code);
+    }
+
+    delete this.by;
 
     const user = new userModel(this).save();
 

@@ -2,5 +2,6 @@ import { Schema } from 'mongoose';
 
 export const userSchema = new Schema({
   email: String,
-  number: String
+  number: String,
+  code: String
 });

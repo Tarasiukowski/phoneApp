@@ -5,3 +5,4 @@ export const userRouter = Router()
 
 userRouter
   .post('/update', userController.update)
+  .post('/verifyByCode', userController.verify)

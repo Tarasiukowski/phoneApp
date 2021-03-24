@@ -10,19 +10,19 @@ class AuthController {
   }
 
   async login(req: Request, res: Response) {
-    const { email } = req.body;
+    const { email, by } = req.body;
 
     const { verify, errorMsg } = verifyEmail(email);
 
-    verify ? await new UserService(email).login(res) : res.send({ errorMsg });
+    verify ? await new UserService(email, by).login(res) : res.send({ errorMsg });
   }
 
   async singUp(req: Request, res: Response) {
-    const { email } = req.body;
+    const { email, by } = req.body;
 
     const { verify, errorMsg } = verifyEmail(email);
 
-    verify ? await new UserService(email).singup(res) : res.send({ errorMsg });
+    verify ? await new UserService(email, by).singup(res) : res.send({ errorMsg });
   }
 }
 

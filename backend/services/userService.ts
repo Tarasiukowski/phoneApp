@@ -4,9 +4,17 @@ import UserModel from '../models/user/userModel';
 
 class UserService {
   email: string;
+  by: 'Google' | undefined;
 
-  constructor(email: string) {
+  constructor(email: string, by: 'Google' | undefined) {
     this.email = email;
+    this.by = by;
+  }
+
+  static update(data: any, res: Response) {
+    UserModel.update(data);
+
+    res.send({ msg: 'updated' });
   }
 
   static async verify(token: string, res: Response) {
@@ -22,6 +30,16 @@ class UserService {
     }
 
     res.send({ user: null });
+  }
+
+  static async verifyByCode(email: string, code: string, res: Response) {
+    const findUser: any = await UserModel.find("email", email)
+
+    if(findUser.code === code){
+      res.send({ valid: true })
+    } else {
+      res.send({ valid: false, errorMsg: "Wrong verification code." })
+    }
   }
 
   async login(res: Response) {
@@ -47,12 +65,6 @@ class UserService {
     res.send({ errorMsg: 'user with such email does not exist' });
   }
 
-  static update(data: any, res: Response) {
-    UserModel.update(data);
-
-    res.send({ msg: 'updated' });
-  }
-
   async singup(res: Response) {
     const { email } = this;
 
@@ -62,7 +74,7 @@ class UserService {
       return res.send({ errorMsg: 'user with that email address exists' });
     }
 
-    const user = await new UserModel(email).save();
+    const user = await new UserModel(email, this.email).save();
 
     const { _id } = user;
 
