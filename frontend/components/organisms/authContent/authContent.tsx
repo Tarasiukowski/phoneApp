@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import ButtonGoogle from '../../atoms/buttonGoogle/buttonGoogle';
 import AuthForm from '../../molecules/authForm/authForm';
@@ -10,14 +9,13 @@ import styles from './authContent.module.scss';
 import GoogleLogin from 'react-google-login';
 import { login as loginAuth } from '../../../reducers/userReducer';
 import { propsAuthContent } from '../../../interfaces';
-import Loader from '../../molecules/loader/loader';
+import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
 
 const AuthContent = ({ login }: propsAuthContent) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [redirect, setRedirect] = useState<boolean>(false);
 
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const googleLogin = async (res: any) => {
     const {
@@ -50,26 +48,22 @@ const AuthContent = ({ login }: propsAuthContent) => {
     setErrorMessage(null);
   };
 
-  if (redirect) {
-    router.push('/onboarding/number');
-
-    return <Loader />;
-  }
-
   return (
-    <div className={styles.card}>
-      <h4>{login ? 'Log into OpenPhone' : 'Sign up on OpenPhone'}</h4>
-      <h6>Use one of the methods below to continue</h6>
-      <GoogleLogin
-        clientId={`${process.env.NEXT_PUBLIC_CLIENT_ID}`}
-        onSuccess={googleLogin}
-        render={({ onClick }) => <ButtonGoogle onClick={onClick} login={login} />}
-      />
-      <p>Or continue with email</p>
-      <AuthForm login={login} setErrorMessage={setErrorMessage} />
-      <ToggleAuth login={login} />
-      {errorMessage && <Alert close={closeAlert} errorMessage={errorMessage} />}
-    </div>
+    <RedirectTemplate isRedirect={redirect} redirectTo="/onboarding/number">
+      <div className={styles.card}>
+        <h4>{login ? 'Log into OpenPhone' : 'Sign up on OpenPhone'}</h4>
+        <h6>Use one of the methods below to continue</h6>
+        <GoogleLogin
+          clientId={`${process.env.NEXT_PUBLIC_CLIENT_ID}`}
+          onSuccess={googleLogin}
+          render={({ onClick }) => <ButtonGoogle onClick={onClick} login={login} />}
+        />
+        <p>Or continue with email</p>
+        <AuthForm login={login} setErrorMessage={setErrorMessage} />
+        <ToggleAuth login={login} />
+        {errorMessage && <Alert close={closeAlert} errorMessage={errorMessage} />}
+      </div>
+    </RedirectTemplate>
   );
 };
 

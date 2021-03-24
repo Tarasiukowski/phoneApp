@@ -7,7 +7,7 @@ import styles from './list.module.scss';
 import axios from 'axios';
 import NumbersList from './numbersList/numbersList';
 
-const List = ({ setOpenList }: propsSelectNumberList) => {
+const List = ({ setOpenList, setNumber }: propsSelectNumberList) => {
   const [activeList, setActiveList] = useState<string | null>('Recommended');
   const [valueDigits, setValueDigits] = useState<string | undefined>('');
   const [recommendedNumbers, setRecommendedNumbers] = useState<string[]>([]);
@@ -128,9 +128,9 @@ const List = ({ setOpenList }: propsSelectNumberList) => {
         {activeList === 'All' && <Input value={valueDigits} onChange={handleValueDigits} />}
         <div className={styles.listItems} ref={refListItems}>
           {activeList === 'Recommended' ? (
-            <NumbersList numbers={recommendedNumbers} />
+            <NumbersList numbers={recommendedNumbers} setNumber={setNumber} />
           ) : (
-            <NumbersList numbers={allNumbers} />
+            <NumbersList numbers={allNumbers} setNumber={setNumber} />
           )}
         </div>
       </div>

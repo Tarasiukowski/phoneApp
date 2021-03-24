@@ -31,7 +31,8 @@ export type propsSelectNumberButton = {
 }
 
 export type propsSelectNumberList = {
-  setOpenList: Dispatch<SetStateAction<boolean>>
+  setOpenList: Dispatch<SetStateAction<boolean>>,
+  setNumber: Dispatch<SetStateAction<string | null>>
 }
 
 export type propsSelectNumberItem = {

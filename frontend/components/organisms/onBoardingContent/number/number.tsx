@@ -28,7 +28,7 @@ const OnboardingNumberContent = () => {
       <Button disabled={!number} margin="32px 0 0 0" width="100%">
         Continue
       </Button>
-      {openList && <SelectNumberList setOpenList={setOpenList} />}
+      {openList && <SelectNumberList setNumber={setNumber} setOpenList={setOpenList} />}
     </div>
   );
 };

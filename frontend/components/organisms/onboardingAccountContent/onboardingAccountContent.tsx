@@ -2,10 +2,10 @@ import axios from 'axios';
 import { ChangeEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../reducers/userReducer';
+import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
 import Alert from '../../atoms/alert/alert';
 import { Button } from '../../atoms/button/button';
 import { Input } from '../../atoms/input/input';
-import Loader from '../../molecules/loader/loader';
 import styles from './onboardingAccountContent.module.scss';
 
 const OnboardingAccountContent = () => {
@@ -52,12 +52,8 @@ const OnboardingAccountContent = () => {
     setErrorMessage(null);
   };
 
-  if (redirect) {
-    return <Loader />;
-  }
-
   return (
-    <>
+    <RedirectTemplate isRedirect={redirect} redirectTo="/">
       <div className={styles.template}>
         <h2>A little about you</h2>
         <p>This is your OpenPhone profile</p>
@@ -83,7 +79,7 @@ const OnboardingAccountContent = () => {
         </Button>
       </div>
       {errorMessage && <Alert close={closeAlert} errorMessage={errorMessage} />}
-    </>
+    </RedirectTemplate>
   );
 };
 

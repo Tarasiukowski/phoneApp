@@ -1,22 +1,14 @@
+import { Dispatch, SetStateAction } from 'react';
 import Item from '../item/item';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../../../../reducers/userReducer';
-import axios from 'axios';
 
 interface props {
   numbers: string[];
+  setNumber: Dispatch<SetStateAction<string | null>>;
 }
 
-const NumbersList = ({ numbers }: props) => {
-  const user = useSelector(selectUser);
-
-  const selectNumber = (e: MouseEvent) => {
-    const target = e.target as HTMLDivElement;
-
-    axios.post('http://localhost:7000/user/update', {
-      email: user.email,
-      number: target.lastChild?.textContent,
-    });
+const NumbersList = ({ numbers, setNumber }: props) => {
+  const selectNumber = (number: string) => {
+    setNumber(number);
   };
 
   return (
@@ -24,7 +16,7 @@ const NumbersList = ({ numbers }: props) => {
       {numbers.length ? (
         <>
           {numbers.map((number) => (
-            <Item onClick={selectNumber} key={number} number={number} />
+            <Item onClick={() => selectNumber(number)} key={number} number={number} />
           ))}
         </>
       ) : null}
