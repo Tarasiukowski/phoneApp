@@ -9,7 +9,7 @@ import { propsAuthForm, formData } from '../../../interfaces';
 import styles from './authForm.module.scss';
 import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
 
-const AuthForm = ({ login, setErrorMessage }: propsAuthForm) => {
+const AuthForm = ({ login, setError }: propsAuthForm) => {
   const [disabled, setDisabled] = useState<boolean>(true);
   const [redirect, setRedirect] = useState<boolean>(false);
 
@@ -39,14 +39,14 @@ const AuthForm = ({ login, setErrorMessage }: propsAuthForm) => {
     );
 
     if (errorMsg) {
-      setErrorMessage(errorMsg);
+      setError({ msg: errorMsg, id: Math.random() });
       setDisabled(false);
 
       dispatch(authLogin(null));
       return;
     }
 
-    setErrorMessage(null);
+    setError(null);
     setDisabled(false);
     setRedirect(true);
 

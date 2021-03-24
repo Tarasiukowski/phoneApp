@@ -10,9 +10,10 @@ import GoogleLogin from 'react-google-login';
 import { login as loginAuth } from '../../../reducers/userReducer';
 import { propsAuthContent } from '../../../interfaces';
 import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
+import { Error } from '../../../interfaces';
 
 const AuthContent = ({ login }: propsAuthContent) => {
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [redirect, setRedirect] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -33,19 +34,15 @@ const AuthContent = ({ login }: propsAuthContent) => {
     );
 
     if (errorMsg) {
-      setErrorMessage(errorMsg);
+      setError({ msg: errorMsg, id: Math.random() });
       return;
     } else {
-      setErrorMessage(null);
+      setError(null);
     }
 
     setRedirect(true);
 
     dispatch(loginAuth(user));
-  };
-
-  const closeAlert = () => {
-    setErrorMessage(null);
   };
 
   return (
@@ -59,9 +56,9 @@ const AuthContent = ({ login }: propsAuthContent) => {
           render={({ onClick }) => <ButtonGoogle onClick={onClick} login={login} />}
         />
         <p>Or continue with email</p>
-        <AuthForm login={login} setErrorMessage={setErrorMessage} />
+        <AuthForm login={login} setError={setError} />
         <ToggleAuth login={login} />
-        {errorMessage && <Alert close={closeAlert} errorMessage={errorMessage} />}
+        <Alert errorMsg={error ? error.msg : null} />
       </div>
     </RedirectTemplate>
   );

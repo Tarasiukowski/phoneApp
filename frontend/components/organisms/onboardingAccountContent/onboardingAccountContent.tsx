@@ -7,12 +7,13 @@ import Alert from '../../atoms/alert/alert';
 import { Button } from '../../atoms/button/button';
 import { Input } from '../../atoms/input/input';
 import styles from './onboardingAccountContent.module.scss';
+import { Error } from '../../../interfaces'
 
 const OnboardingAccountContent = () => {
   const [valueFirstName, setValueFirstName] = useState<string>('');
   const [valueLastName, setValueLastName] = useState<string>('');
   const [disabledByRequest, setDisabledByRequest] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [redirect, setRedirect] = useState<boolean>(false);
 
   const user = useSelector(selectUser);
@@ -42,14 +43,10 @@ const OnboardingAccountContent = () => {
 
       setRedirect(true);
     } catch (e) {
-      setErrorMessage('Can not set ');
+        setError({ msg: "'Can not set firstname and lastname'", id: Math.random() });
     }
 
     setDisabledByRequest(false);
-  };
-
-  const closeAlert = () => {
-    setErrorMessage(null);
   };
 
   return (
@@ -78,7 +75,7 @@ const OnboardingAccountContent = () => {
           Continue
         </Button>
       </div>
-      {errorMessage && <Alert close={closeAlert} errorMessage={errorMessage} />}
+      <Alert errorMsg={error ? error.msg : null} />
     </RedirectTemplate>
   );
 };

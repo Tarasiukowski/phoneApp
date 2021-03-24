@@ -7,10 +7,11 @@ import Alert from '../../atoms/alert/alert';
 import { Button } from '../../atoms/button/button';
 import { Input } from '../../atoms/input/input';
 import styles from './onboardingCodeContent.module.scss';
+import { Error } from '../../../interfaces';
 
 const OnboardingCodeContent = () => {
   const [valueInput, setValueInput] = useState<string>('');
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [redirect, setRedirect] = useState<boolean>(false);
 
   const user = useSelector(selectUser);
@@ -30,9 +31,10 @@ const OnboardingCodeContent = () => {
 
     if (data.valid) {
       setRedirect(true);
-      setErrorMsg(null);
+      setError(null);
     } else {
-      setErrorMsg(data.errorMsg);
+      console.log(data);
+      setError({ msg: data.errorMsg, id: Math.random() });
     }
   };
 
@@ -46,7 +48,7 @@ const OnboardingCodeContent = () => {
           Continue
         </Button>
       </div>
-      {errorMsg && <Alert errorMessage={errorMsg} close={() => setErrorMsg(null)} />}
+      <Alert errorMsg={error ? error.msg : null} />
     </RedirectTemplate>
   );
 };

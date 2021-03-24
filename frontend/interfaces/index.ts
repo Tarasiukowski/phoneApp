@@ -5,8 +5,8 @@ export type propsAuthPage = {
 };
 
 export type propsOnboardingNumberPage = {
-  user: User
-}
+  user: User;
+};
 
 export type propsAuthContent = {
   login?: login;
@@ -14,7 +14,7 @@ export type propsAuthContent = {
 
 export type propsAuthForm = {
   login?: Boolean;
-  setErrorMessage: Dispatch<SetStateAction<string | null>>;
+  setError: Dispatch<SetStateAction<Error | null>>;
 };
 
 export type propsButton = {
@@ -22,28 +22,28 @@ export type propsButton = {
   transparent?: Boolean;
   absolute?: absolute;
   width?: string;
-  margin?: string
+  margin?: string;
 };
 
 export type propsSelectNumberButton = {
-  onClick: () => void
-  number: string | null
-}
+  onClick: () => void;
+  number: string | null;
+};
 
 export type propsSelectNumberList = {
-  setOpenList: Dispatch<SetStateAction<boolean>>,
-  setNumber: Dispatch<SetStateAction<string | null>>
-}
+  setOpenList: Dispatch<SetStateAction<boolean>>;
+  setNumber: Dispatch<SetStateAction<string | null>>;
+};
 
 export type propsSelectNumberItem = {
-  number: string
-  onClick: (e: any) => void
-}
+  number: string;
+  onClick: (e: any) => void;
+};
 
 export type propsSelectNumberInput = {
-  value: string | undefined
-  onChange: (e: any) => void
-}
+  value: string | undefined;
+  onChange: (e: any) => void;
+};
 
 export type propsToggleAuth = {
   login?: Boolean;
@@ -55,8 +55,7 @@ export type propsButtonGoogle = {
 };
 
 export type propsAlert = {
-  errorMessage: String;
-  close: () => void;
+  errorMsg: string | null;
 };
 
 export type formData = {
@@ -72,6 +71,11 @@ type login = Boolean;
 type absolute = {
   top?: string;
   bottom?: string;
-  left?:  string;
+  left?: string;
   right?: string;
+};
+
+export type Error = {
+  msg: string;
+  id: number;
 };
