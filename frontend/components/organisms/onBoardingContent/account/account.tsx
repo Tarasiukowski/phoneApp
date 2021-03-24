@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { ChangeEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../../../reducers/userReducer';
-import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
-import Alert from '../../atoms/alert/alert';
-import { Button } from '../../atoms/button/button';
-import { Input } from '../../atoms/input/input';
-import { Error } from '../../../interfaces';
-import styles from './onboardingAccountContent.module.scss';
+import { selectUser } from '../../../../reducers/userReducer';
+import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
+import Alert from '../../../atoms/alert/alert';
+import { Button } from '../../../atoms/button/button';
+import { Input } from '../../../atoms/input/input';
+import { Error } from '../../../../interfaces';
+import styles from './account.module.scss';
 
 const OnboardingAccountContent = () => {
   const [valueFirstName, setValueFirstName] = useState<string>('');

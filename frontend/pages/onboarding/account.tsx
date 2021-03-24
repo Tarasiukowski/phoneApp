@@ -1,4 +1,4 @@
-import OnboardingAccountContent from '../../components/organisms/onboardingAccountContent/onboardingAccountContent';
+import OnboardingAccountContent from '../../components/organisms/onBoardingContent/account/account';
 import IsLoggedTemplate from '../../templates/isLoggedTemplate/isLoggedTemplate';
 import OnboardingTemplate from '../../templates/onboardingTemplate/onboardingTemplate';
 
