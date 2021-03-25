@@ -24,6 +24,14 @@ class AuthController {
 
     verify ? await new UserService(email, by).singup(res) : res.send({ errorMsg });
   }
+
+  logout(_: Request, res: Response) {
+    try {
+      res.clearCookie('SESSID').send({ error: false });
+    } catch {
+      res.send({ error: true, msg: 'Can not logout.' });
+    }
+  }
 }
 
 export const authController = new AuthController();
