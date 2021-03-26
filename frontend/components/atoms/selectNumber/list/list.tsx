@@ -126,9 +126,13 @@ const List = ({ setOpenList, setNumber }: propsSelectNumberList) => {
         {activeList === 'All' && <Input value={valueDigits} onChange={handleValueDigits} />}
         <div className={styles.listItems} ref={refListItems}>
           {activeList === 'Recommended' ? (
-            <NumbersList numbers={recommendedNumbers} setNumber={setNumber} />
+            <NumbersList
+              numbers={recommendedNumbers}
+              setNumber={setNumber}
+              setOpenList={setOpenList}
+            />
           ) : (
-            <NumbersList numbers={allNumbers} setNumber={setNumber} />
+            <NumbersList numbers={allNumbers} setNumber={setNumber} setOpenList={setOpenList} />
           )}
         </div>
       </div>

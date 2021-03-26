@@ -14,7 +14,7 @@ const OnboardingNumberContent = () => {
 
   useEffect(() => {
     setNumber(user ? user.number : null);
-  });
+  }, []);
 
   const toggleOpenList = () => {
     setOpenList(!openList);
