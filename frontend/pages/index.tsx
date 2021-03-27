@@ -1,5 +1,5 @@
-import Loader from '../components/molecules/loader/loader';
+import HomeContent from '../components/organisms/onBoardingContent/home/homeContent';
 
-const HomePage = () => <Loader />;
+const HomePage = () => <HomeContent />;
 
 export default HomePage;

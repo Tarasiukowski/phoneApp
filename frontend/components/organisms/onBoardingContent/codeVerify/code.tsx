@@ -33,7 +33,6 @@ const OnboardingCodeContent = () => {
       setRedirect(true);
       setError(null);
     } else {
-      console.log(data);
       setError({ msg: data.errorMsg, id: Math.random() });
     }
   };
