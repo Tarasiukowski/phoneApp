@@ -1,0 +1,33 @@
+.template {
+  padding: 25px 0 0 20px;
+
+  ul {
+    list-style: none;
+
+    li {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-top: 10px;
+    }
+  }
+}
+
+.key {
+  color: #86869c;
+  display: flex;
+  align-items: center;
+  width: 25%;
+
+  p {
+    font-weight: 500;
+    margin-left: 10px;
+  }
+}
+
+.value {
+  p {
+    color: white;
+    font-size: 16px;
+  }
+}
