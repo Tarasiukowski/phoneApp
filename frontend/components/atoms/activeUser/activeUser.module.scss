@@ -1,0 +1,12 @@
+.template {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 15px;
+
+  p {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: white;
+  }
+}

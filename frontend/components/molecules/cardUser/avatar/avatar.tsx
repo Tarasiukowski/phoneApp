@@ -1,12 +1,11 @@
 import { BiMessageDetail } from 'react-icons/bi';
 import { HiOutlineDotsVertical } from "react-icons/hi";
+import ImageUser from '../../../atoms/imageUser/imageUser';
 import styles from './avatar.module.scss';
 
 const Avatar = () => (
   <div className={styles.template}>
-    <div className={styles.image}>
-      <p>MT</p>
-    </div>
+    <ImageUser />
     <h3>Michał Tarasiuk</h3>
     <div className={styles.options}>
       <div className={styles.option}>
