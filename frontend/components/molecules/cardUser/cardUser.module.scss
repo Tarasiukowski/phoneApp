@@ -6,5 +6,10 @@
   right: 0;
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 25% 75%;
+  grid-template-rows: 25% 12%;
+
+  div:nth-child(3){
+    display: flex;
+    justify-content: center;
+  }
 }
