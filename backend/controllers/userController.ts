@@ -10,14 +10,17 @@ class UserController {
     res.send(data);
   }
 
-  verify(req: Request, res: Response) {
+  async verify(req: Request, res: Response) {
     const { email, code } = req.body;
 
-    console.log(email, code);
+    const { valid, errorMsg } = await UserService.verifyByCode(email, code);
 
-    const data = UserService.verifyByCode(email, code);
+    if (!valid) {
+      res.send({ errorMsg, valid });
+      return;
+    }
 
-    res.send(data);
+    res.send({ valid });
   }
 }
 
