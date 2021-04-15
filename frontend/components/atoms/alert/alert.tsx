@@ -19,7 +19,7 @@ const Alert = ({ errorMsg }: propsAlert) => {
       {errorMsg && isOpen ? (
         <div className={styles.wrapper}>
           <p>{errorMsg}</p>
-          <Button onClick={close} transparent>
+          <Button onClick={close} transparent alert>
             Close
           </Button>
         </div>

@@ -4,7 +4,7 @@ import { propsButton } from '../../../interfaces';
 export const Button = styled.button<propsButton>`
   width: ${({ width }) => (width ? width : '315px')};
   color: white;
-  background: #6333ff;
+  background: rgb(112, 70, 227);
   padding: 9px 16px;
   font-size: 0.865rem;
   font-weight: 600;
@@ -38,17 +38,21 @@ export const Button = styled.button<propsButton>`
       }
     `}
 
-  ${({ disabled, transparent }) =>
-    disabled
-      ? css`
-          color: rgba(255, 255, 255, 0.3);
-          background: rgba(255, 255, 255, 0.12);
-          cursor: default;
-        `
-      : !transparent &&
-        css`
-          :hover {
-            background: rgb(69, 35, 178);
-          }
-        `}
+      ${({ disabled }) =>
+    disabled &&
+    css`
+      color: rgba(255, 255, 255, 0.3);
+      background: rgb(36, 36, 51);
+      cursor: default;
+    `}
+
+    ${({ alert }) =>
+    alert &&
+    css`
+      color: #e85c5c;
+
+      :hover {
+        background: rgba(232, 92, 92, 0.1);
+      }
+    `}
 `;

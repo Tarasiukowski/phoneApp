@@ -23,6 +23,7 @@ export type propsButton = {
   absolute?: absolute;
   width?: string;
   margin?: string;
+  alert?: boolean;
 };
 
 export type propsSelectNumberButton = {

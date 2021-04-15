@@ -2,8 +2,8 @@
   position: absolute;
   left: 22px;
   bottom: 23px;
-  background: #48466b;
-  border-left: 3px solid #9199ff;
+  background: rgb(42, 42, 59);
+  border-left: 3px solid rgb(245, 108, 78);
   padding: 6px 10px;
   border-radius: 4px;
   display: flex;
@@ -11,7 +11,7 @@
   align-items: center;
 
   p {
-    color: #ebebf5 !important;
+    color: rgb(245, 108, 78) !important;
     font-size: 1.38rem !important;
     font-weight: 600 !important;
   }

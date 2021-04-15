@@ -40,6 +40,7 @@ const OnboardingCodeContent = () => {
   return (
     <RedirectTemplate isRedirect={redirect} redirectTo="/onboarding/number">
       <div className={styles.template}>
+        <img src="/pngs/verifyMail.png" width="200px" alt="verify mail" />
         <h2>Check your email</h2>
         <p>We just sent you a 6-digit code to {user.email}. Enter the code below to continue</p>
         <Input value={valueInput} onChange={handleOnChange} placeholder="6-digit code" />
