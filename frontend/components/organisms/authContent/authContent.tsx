@@ -28,6 +28,7 @@ const AuthContent = ({ login }: propsAuthContent) => {
       `http://localhost:7000/auth/${login ? 'login' : 'singup'}`,
       {
         email,
+        by: "Google"
       },
       { withCredentials: true },
     );

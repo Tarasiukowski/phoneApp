@@ -15,7 +15,7 @@ class UserService {
   static update(data: any, res: Response) {
     UserModel.update(data);
 
-    res.send({ msg: 'updated' });
+    return { updated: true };
   }
 
   static async verify(token: string) {
@@ -70,6 +70,12 @@ class UserService {
 
   async singup() {
     const { email } = this;
+
+    const { verify, errorMsg } = verifyEmail(email);
+
+    if (!verify) {
+      return { errorMsg };
+    }
 
     const findUser = await UserModel.find('email', email);
 

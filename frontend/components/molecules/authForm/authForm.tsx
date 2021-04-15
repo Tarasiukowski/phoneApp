@@ -33,7 +33,6 @@ const AuthForm = ({ login, setError }: propsAuthForm) => {
       `http://localhost:7000/auth/${login ? 'login' : 'singup'}`,
       {
         email,
-        by: 'Google',
       },
       { withCredentials: true },
     );
