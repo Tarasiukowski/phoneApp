@@ -1,28 +1,41 @@
 import { Request, Response } from 'express';
 import UserService from '../services/userService';
-import { verifyEmail } from '../utils';
 
 class AuthController {
-  byToken(req: Request, res: Response) {
+  async byToken(req: Request, res: Response) {
     const token = req.cookies['SESSID'];
 
-    UserService.verify(token, res);
+    const data = await UserService.verify(token);
+
+    res.send(data);
   }
 
   async login(req: Request, res: Response) {
     const { email, by } = req.body;
 
-    const { verify, errorMsg } = verifyEmail(email);
+    const { errorMsg, user, token } = await new UserService(email, by).login();
 
-    verify ? await new UserService(email, by).login(res) : res.send({ errorMsg });
+    if (errorMsg) {
+      res.send({ errorMsg });
+      return;
+    }
+
+    res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
+    res.send({ user });
   }
 
   async singUp(req: Request, res: Response) {
     const { email, by } = req.body;
 
-    const { verify, errorMsg } = verifyEmail(email);
+    const { errorMsg, user, token } = await new UserService(email, by).singup();
 
-    verify ? await new UserService(email, by).singup(res) : res.send({ errorMsg });
+    if (errorMsg) {
+      res.send({ errorMsg });
+      return;
+    }
+
+    res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
+    res.send({ user });
   }
 
   logout(_: Request, res: Response) {

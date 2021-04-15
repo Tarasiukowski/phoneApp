@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import UserModel from '../models/user/userModel';
+import { verifyEmail } from '../utils';
 
 class UserService {
   email: string;
@@ -17,7 +18,7 @@ class UserService {
     res.send({ msg: 'updated' });
   }
 
-  static async verify(token: string, res: Response) {
+  static async verify(token: string) {
     if (token) {
       const { id } = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 
@@ -25,11 +26,10 @@ class UserService {
 
       const formatUser = UserModel.format(user);
 
-      res.send({ user: formatUser });
-      return;
+      return { user: formatUser };
     }
 
-    res.send({ user: null });
+    return { user: null };
   }
 
   static async verifyByCode(email: string, code: string, res: Response) {
@@ -42,8 +42,14 @@ class UserService {
     }
   }
 
-  async login(res: Response) {
+  async login() {
     const { email } = this;
+
+    const { verify, errorMsg } = verifyEmail(email);
+
+    if (!verify) {
+      return { errorMsg };
+    }
 
     const user = await UserModel.find('email', email);
 
@@ -56,22 +62,19 @@ class UserService {
 
       const formatUser = UserModel.format(user);
 
-      res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
-      res.send({ user: formatUser });
-
-      return;
+      return { user: formatUser, token };
     }
 
-    res.send({ errorMsg: 'user with such email does not exist' });
+    return { errorMsg: 'user with such email does not exist' };
   }
 
-  async singup(res: Response) {
+  async singup() {
     const { email } = this;
 
     const findUser = await UserModel.find('email', email);
 
     if (findUser) {
-      return res.send({ errorMsg: 'user with that email address exists' });
+      return { errorMsg: 'user with that email address exists' };
     }
 
     const user = await new UserModel(email, this.email).save();
@@ -84,8 +87,7 @@ class UserService {
 
     const fromatUser = UserModel.format(user);
 
-    res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
-    res.send({ user: fromatUser });
+    return { user: fromatUser, token };
   }
 }
 
