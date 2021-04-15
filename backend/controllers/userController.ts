@@ -5,13 +5,19 @@ class UserController {
   update(req: Request, res: Response) {
     const body = req.body;
 
-    UserService.update(body, res);
+    const data = UserService.update(body);
+
+    res.send(data);
   }
 
   verify(req: Request, res: Response) {
     const { email, code } = req.body;
 
-    UserService.verifyByCode(email, code, res);
+    console.log(email, code);
+
+    const data = UserService.verifyByCode(email, code);
+
+    res.send(data);
   }
 }
 

@@ -12,7 +12,7 @@ class UserService {
     this.by = by;
   }
 
-  static update(data: any, res: Response) {
+  static update(data: any) {
     UserModel.update(data);
 
     return { updated: true };
@@ -32,13 +32,13 @@ class UserService {
     return { user: null };
   }
 
-  static async verifyByCode(email: string, code: string, res: Response) {
+  static async verifyByCode(email: string, code: string) {
     const findUser: any = await UserModel.find('email', email);
 
     if (findUser.code === code) {
-      res.send({ valid: true });
+      return { valid: true };
     } else {
-      res.send({ valid: false, errorMsg: 'Wrong verification code.' });
+      return { valid: false, errorMsg: 'Wrong verification code.' };
     }
   }
 
