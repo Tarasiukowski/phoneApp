@@ -25,7 +25,7 @@ const OnboardingTemplate: React.FC = ({ children }) => {
   return (
     <div className={styles.wrapper}>
       <Logo className={styles.logo} />
-      <Button onClick={logout} absolute={{ right: '25px', top: '15px' }} transparent>
+      <Button onClick={logout} absolute={{ right: '25px', top: '25px' }} transparent>
         Sign out
       </Button>
       {children}
