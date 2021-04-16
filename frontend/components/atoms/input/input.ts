@@ -11,4 +11,10 @@ export const Input = styled.input`
   font-weight: 500;
   font-size: 1.8rem;
   margin-bottom: 15px;
+  transition: 240ms ease 0ms;
+
+  :focus {
+    border-color: rgb(112,70,227);
+    box-shadow: rgb(155 112 255 / 18%) 0px 0px 0px 3px;
+  }
 `;
