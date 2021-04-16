@@ -6,6 +6,7 @@ import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTem
 import Alert from '../../../atoms/alert/alert';
 import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
+import { updateUser } from '../../../../utils/updateUser';
 import { Error } from '../../../../interfaces';
 import styles from './account.module.scss';
 
@@ -31,17 +32,20 @@ const OnboardingAccountContent = () => {
     }
   };
 
-  const updateUser = () => {
+  const next = () => {
     setDisabledByRequest(true);
 
     try {
-      axios.post('http://localhost:7000/user/update', {
-        email: user.email,
-        firstName: valueFirstName,
-        lastName: valueLastName,
-      });
-
-      setRedirect(true);
+      axios
+        .post('http://localhost:7000/user/update', {
+          email: user.email,
+          firstName: valueFirstName,
+          lastName: valueLastName,
+        })
+        .then(() => {
+          updateUser([{ email: user.email, redirectTo: '/' }]);
+          setRedirect(true);
+        });
     } catch (e) {
       setError({ msg: "'Can not set firstname and lastname'", id: Math.random() });
     }
@@ -51,7 +55,7 @@ const OnboardingAccountContent = () => {
 
   return (
     <RedirectTemplate isRedirect={redirect} redirectTo="/">
-      <form onSubmit={updateUser} className={styles.template}>
+      <form onSubmit={next} className={styles.template}>
         <h2>A little about you</h2>
         <p>This is your OpenPhone profile</p>
         <div className={styles.templateInputs}>

@@ -25,6 +25,7 @@ const OnboardingNumberContent = () => {
 
   const next = () => {
     updateUser([{ email: user.email, number }]);
+    updateUser([{ email: user.email, redirectTo: "/onboarding/account" }])
 
     setRedirect(true);
   };
