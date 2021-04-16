@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
 import Alert from '../../../atoms/alert/alert';
 import { Button } from '../../../atoms/button/button';
@@ -23,7 +23,9 @@ const OnboardingCodeContent = () => {
     setValueInput(value);
   };
 
-  const verifyByCode = async () => {
+  const verifyByCode = async (e: FormEvent) => {
+    e.preventDefault();
+
     const { data } = await axios.post('http://localhost:7000/user/verifyByCode', {
       email: user.email,
       code: valueInput,
@@ -39,15 +41,15 @@ const OnboardingCodeContent = () => {
 
   return (
     <RedirectTemplate isRedirect={redirect} redirectTo="/onboarding/number">
-      <div className={styles.template}>
+      <form onSubmit={verifyByCode} className={styles.template}>
         <img src="/pngs/verifyMail.png" width="200px" alt="verify mail" />
         <h2>Check your email</h2>
         <p>We just sent you a 6-digit code to {user.email}. Enter the code below to continue</p>
         <Input value={valueInput} onChange={handleOnChange} placeholder="6-digit code" />
-        <Button onClick={verifyByCode} disabled={valueInput.length < 1 ? true : false}>
+        <Button disabled={valueInput.length < 1 ? true : false} type="submit">
           Continue
         </Button>
-      </div>
+      </form>
       <Alert errorMsg={error ? error.msg : null} />
     </RedirectTemplate>
   );

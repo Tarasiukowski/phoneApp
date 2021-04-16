@@ -51,7 +51,7 @@ const OnboardingAccountContent = () => {
 
   return (
     <RedirectTemplate isRedirect={redirect} redirectTo="/">
-      <div className={styles.template}>
+      <form onSubmit={updateUser} className={styles.template}>
         <h2>A little about you</h2>
         <p>This is your OpenPhone profile</p>
         <div className={styles.templateInputs}>
@@ -68,13 +68,10 @@ const OnboardingAccountContent = () => {
             placeholder="Last name"
           />
         </div>
-        <Button
-          onClick={updateUser}
-          disabled={disabledByRequest ? disabledByRequest : disabledByValue}
-        >
+        <Button type="submit" disabled={disabledByRequest ? disabledByRequest : disabledByValue}>
           Continue
         </Button>
-      </div>
+      </form>
       <Alert errorMsg={error ? error.msg : null} />
     </RedirectTemplate>
   );
