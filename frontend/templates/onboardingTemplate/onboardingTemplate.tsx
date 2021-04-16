@@ -29,7 +29,7 @@ const OnboardingTemplate: React.FC = ({ children }) => {
         Sign out
       </Button>
       {children}
-      <Alert errorMsg={error ? error.msg : null} />
+      <Alert error={error ? error: null} />
     </div>
   );
 };

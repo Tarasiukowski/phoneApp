@@ -56,7 +56,7 @@ export type propsButtonGoogle = {
 };
 
 export type propsAlert = {
-  errorMsg: string | null;
+  error: Error | null;
 };
 
 export type formData = {

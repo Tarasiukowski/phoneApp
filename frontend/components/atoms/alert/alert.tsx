@@ -3,22 +3,24 @@ import { Button } from '../button/button';
 import { propsAlert } from '../../../interfaces';
 import styles from './alert.module.scss';
 
-const Alert = ({ errorMsg }: propsAlert) => {
+const Alert = ({ error }: propsAlert) => {
   const [isOpen, setIsOpen] = useState<boolean>(Boolean);
   const [msg, setMsg] = useState<string | null>(null);
 
   useEffect(() => {
-    if (errorMsg) {
-      if (errorMsg.length - 49 > 20) {
-        const sliceMsg = errorMsg.substring(0, 67) + '...';
+    if (error) {
+      const { msg } = error;
+
+      if (msg.length - 49 > 20) {
+        const sliceMsg = msg.substring(0, 67) + '...';
 
         setMsg(sliceMsg);
       } else {
-        setMsg(errorMsg);
+        setMsg(msg);
       }
     }
     setIsOpen(true);
-  }, [errorMsg]);
+  }, [error]);
 
   const close = () => {
     setIsOpen(false);
@@ -26,7 +28,7 @@ const Alert = ({ errorMsg }: propsAlert) => {
 
   return (
     <>
-      {errorMsg && isOpen ? (
+      {error && isOpen ? (
         <div className={styles.wrapper}>
           <p>{msg}</p>
           <Button onClick={close} transparent alert>

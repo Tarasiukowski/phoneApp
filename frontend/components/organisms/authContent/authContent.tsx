@@ -28,7 +28,7 @@ const AuthContent = ({ login }: propsAuthContent) => {
       `http://localhost:7000/auth/${login ? 'login' : 'singup'}`,
       {
         email,
-        by: "Google"
+        by: 'Google',
       },
       { withCredentials: true },
     );
@@ -58,7 +58,7 @@ const AuthContent = ({ login }: propsAuthContent) => {
         <p>Or continue with email</p>
         <AuthForm login={login} setError={setError} />
         <ToggleAuth login={login} />
-        <Alert errorMsg={error ? error.msg : null} />
+        <Alert error={error ? error : null} />
       </div>
     </RedirectTemplate>
   );

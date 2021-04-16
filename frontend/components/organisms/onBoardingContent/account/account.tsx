@@ -72,7 +72,7 @@ const OnboardingAccountContent = () => {
           Continue
         </Button>
       </form>
-      <Alert errorMsg={error ? error.msg : null} />
+      <Alert error={error ? error : null} />
     </RedirectTemplate>
   );
 };
