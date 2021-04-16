@@ -5,8 +5,8 @@ import SelectNumberList from '../../../atoms/selectNumber/list/list';
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
 import { Button } from '../../../atoms/button/button';
 import { selectUser } from '../../../../reducers/userReducer';
+import { updateUser } from '../../../../utils/updateUser';
 import styles from './number.module.scss';
-import axios from 'axios';
 
 const OnboardingNumberContent = () => {
   const [openList, setOpenList] = useState<boolean>(false);
@@ -24,10 +24,7 @@ const OnboardingNumberContent = () => {
   };
 
   const next = () => {
-    axios.post('http://localhost:7000/user/update', {
-      email: user.email,
-      number,
-    });
+    updateUser([{ email: user.email, number }]);
 
     setRedirect(true);
   };
