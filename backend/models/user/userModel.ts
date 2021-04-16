@@ -10,11 +10,15 @@ class User {
   email: string;
   number: string;
   code: string;
+  redirectTo: string;
   by: 'Google' | undefined;
+  onBoarding: boolean;
 
-  constructor(email: string, by: any) {
+  constructor(email: string, by: 'Google' | undefined) {
     this.email = email;
     this.by = by;
+    this.onBoarding = true;
+    this.redirectTo = this.by === 'Google' ? '/onboarding/number' : '/onboarding/code';
     if (by !== 'Google') {
       this.code = generateCode();
     }
