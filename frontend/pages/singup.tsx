@@ -3,7 +3,7 @@ import AuthContent from '../components/organisms/authContent/authContent';
 import IsLoggedTemplate from '../templates/isLoggedTemplate/isLoggedTemplate';
 
 const SingUpPage = () => (
-  <IsLoggedTemplate allow="notLogged" redirectTo="/onboarding/number">
+  <IsLoggedTemplate allow="notLogged">
     <AuthTemplate>
       <AuthContent />
     </AuthTemplate>

@@ -22,11 +22,14 @@ class UserService {
     if (token) {
       const { id } = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 
-      const user = await UserModel.find('_id', id);
+      const user: any = await UserModel.find('_id', id);
 
       const formatUser = UserModel.format(user);
 
-      return { user: formatUser };
+      return {
+        user: formatUser,
+        status: { onBoarding: user.onBoarding, redirectTo: user.redirectTo },
+      };
     }
 
     return { user: null };
@@ -83,7 +86,7 @@ class UserService {
       return { errorMsg: 'user with that email address exists' };
     }
 
-    const user = await new UserModel(email, this.email).save();
+    const user = await new UserModel(email, this.by).save();
 
     const { _id } = user;
 

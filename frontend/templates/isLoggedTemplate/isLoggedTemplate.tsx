@@ -7,11 +7,10 @@ import { login } from '../../reducers/userReducer';
 
 interface props {
   children: ReactNode;
-  redirectTo: string;
   allow: 'logged' | 'notLogged';
 }
 
-const IsLoggedTemplate = ({ children, redirectTo, allow }: props) => {
+const IsLoggedTemplate = ({ children, allow }: props) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const dispatch = useDispatch();
@@ -25,15 +24,22 @@ const IsLoggedTemplate = ({ children, redirectTo, allow }: props) => {
   useEffect(() => {
     axios
       .post('http://localhost:7000/auth/byToken', {}, { withCredentials: true })
-      .then(({ data: { user } }) => {
+      .then(({ data: { user, status } }) => {
         dispatch(login(user));
 
         const isLogged = user ? true : false;
 
-        if (settings[allow] === isLogged) {
+        if (
+          settings[allow] === isLogged &&
+          (status ? status?.redirectTo === router.pathname : true)
+        ) {
           setLoading(false);
         } else {
-          router.push(redirectTo);
+          if (isLogged) {
+            router.push(status?.redirectTo);
+          } else {
+            router.push("/singup")
+          }
         }
       });
   });

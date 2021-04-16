@@ -3,7 +3,7 @@ import OnboardingNumberContent from '../../components/organisms/onBoardingConten
 import IsLoggedTemplate from '../../templates/isLoggedTemplate/isLoggedTemplate';
 
 const OnboardingNumberPage = () => (
-  <IsLoggedTemplate allow="logged" redirectTo="/singup">
+  <IsLoggedTemplate allow="logged">
     <OnboardingTemplate>
       <OnboardingNumberContent />
     </OnboardingTemplate>

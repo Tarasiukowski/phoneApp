@@ -7,4 +7,6 @@ export const userSchema = new Schema({
   onboarding: Boolean,
   firstName: String,
   lastName: String,
+  onBoarding: Boolean,
+  redirectTo: String,
 });
