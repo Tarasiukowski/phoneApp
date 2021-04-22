@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../interfaces';
+import { RootState } from '../store';
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: null as User | null | 'loading',
+  initialState: {} as User,
   reducers: {
-    login(state, { payload }: PayloadAction<User | null | 'loading'>) {
+    login(state, { payload }: PayloadAction<User>) {
       return (state = payload);
     },
   },
@@ -13,6 +14,6 @@ const userSlice = createSlice({
 
 export const { login } = userSlice.actions;
 
-export const selectUser = (state: any) => state.user;
+export const selectUser = (state: RootState) => state.user;
 
 export const userReducer = userSlice.reducer;

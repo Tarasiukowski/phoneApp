@@ -65,6 +65,7 @@ export type formData = {
 
 export type User = {
   email: String;
+  number: string;
 };
 
 type login = Boolean;
