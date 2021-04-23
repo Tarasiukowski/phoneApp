@@ -1,16 +1,12 @@
-import { useState, useEffect, ReactNode } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Loader from '../../components/molecules/loader/loader';
 import { login } from '../../reducers/userReducer';
+import { propsIsLoggedTemplate } from '../../interfaces';
 
-interface props {
-  children: ReactNode;
-  allow: 'logged' | 'notLogged';
-}
-
-const IsLoggedTemplate = ({ children, allow }: props) => {
+const IsLoggedTemplate = ({ children, allow }: propsIsLoggedTemplate) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const dispatch = useDispatch();
@@ -38,7 +34,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
           if (isLogged) {
             router.push(status?.redirectTo);
           } else {
-            router.push("/singup")
+            router.push('/singup');
           }
         }
       });

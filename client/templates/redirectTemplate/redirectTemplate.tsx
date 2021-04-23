@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import Loader from '../../components/molecules/loader/loader';
+import { propsRedirectTemplate } from '../../interfaces';
 
-interface props {
-  isRedirect: boolean;
-  redirectTo: string;
-}
-
-const RedirectTemplate: React.FC<props> = ({ children, isRedirect, redirectTo }) => {
+const RedirectTemplate: React.FC<propsRedirectTemplate> = ({
+  children,
+  isRedirect,
+  redirectTo,
+}) => {
   const router = useRouter();
 
   if (isRedirect) {

@@ -1,4 +1,6 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, ReactNode } from 'react';
+
+// Pages
 
 export type propsAuthPage = {
   user: User;
@@ -7,6 +9,8 @@ export type propsAuthPage = {
 export type propsOnboardingNumberPage = {
   user: User;
 };
+
+// Components
 
 export type propsAuthContent = {
   login?: login;
@@ -24,6 +28,10 @@ export type propsButton = {
   width?: string;
   margin?: string;
   alert?: boolean;
+};
+
+export type propsImageUser = {
+  mini?: Boolean;
 };
 
 export type propsSelectNumberButton = {
@@ -62,6 +70,20 @@ export type propsAlert = {
 export type formData = {
   email: String;
 };
+
+// Templates
+
+export type propsIsLoggedTemplate = {
+  children: ReactNode;
+  allow: 'logged' | 'notLogged';
+};
+
+export type propsRedirectTemplate = {
+  isRedirect: boolean;
+  redirectTo: string;
+};
+
+// Others
 
 export type User = {
   email: String;

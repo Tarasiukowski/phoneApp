@@ -1,10 +1,7 @@
 import styled from 'styled-components';
+import { propsImageUser } from '../../../interfaces';
 
-interface props {
-  mini?: Boolean;
-}
-
-const Image = styled.div<props>`
+const Image = styled.div<propsImageUser>`
   width: ${({ mini }) => (mini ? '35px' : '70px')};
   height: ${({ mini }) => (mini ? '35px' : '70px')};
   background-color: #21d19f;
@@ -12,7 +9,7 @@ const Image = styled.div<props>`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: ${({ mini }) => mini ? "9px" : null};
+  margin-right: ${({ mini }) => (mini ? '9px' : null)};
 
   p {
     font-size: ${({ mini }) => (mini ? '1.2rem' : ' 2.4rem')};
@@ -20,7 +17,7 @@ const Image = styled.div<props>`
   }
 `;
 
-const ImageUser = ({ mini }: props) => (
+const ImageUser = ({ mini }: propsImageUser) => (
   <Image mini={mini}>
     <p>MT</p>
   </Image>
