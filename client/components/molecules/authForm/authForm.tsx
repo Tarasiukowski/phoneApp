@@ -25,8 +25,6 @@ const AuthForm = ({ login, setError }: propsAuthForm) => {
 
     setDisabled(true);
 
-    dispatch(authLogin('loading'));
-
     const {
       data: { errorMsg, user },
     } = await axios.post(
@@ -40,8 +38,6 @@ const AuthForm = ({ login, setError }: propsAuthForm) => {
     if (errorMsg) {
       setError({ msg: errorMsg, id: Math.random() });
       setDisabled(false);
-
-      dispatch(authLogin(null));
       return;
     }
 
