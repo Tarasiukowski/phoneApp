@@ -49,7 +49,10 @@ const AuthForm = ({ login, setError }: propsAuthForm) => {
   };
 
   return (
-    <RedirectTemplate isRedirect={redirect} redirectTo="/onboarding/code">
+    <RedirectTemplate
+      isRedirect={redirect}
+      redirectTo={login ? '/onboarding/code' : '/onboarding/number'}
+    >
       <form onSubmit={handleSubmit(submit)} className={styles.form}>
         <Input name="email" placeholder="Enter your email" autoComplete="off" ref={register()} />
         <Button type="submit" disabled={disabled}>
