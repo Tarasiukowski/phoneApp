@@ -1,0 +1,22 @@
+.box {
+  width: 90%;
+  height: 38px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: none !important;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start !important;
+  align-items: center;
+
+  &:hover {
+    background-color: #4b4b663b;
+  }
+}
+
+.name {
+  color: rgb(238, 238, 240);
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 9px;
+}

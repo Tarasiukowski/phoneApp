@@ -1,0 +1,15 @@
+.box {
+  width: 13vw;
+  height: 100vh;
+  background-color: rgb(29, 29, 41);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 21% 79%;
+
+  div:first-child {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    justify-content: center;
+  }
+}

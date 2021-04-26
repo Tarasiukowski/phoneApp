@@ -1,5 +1,12 @@
-import Loader from '../components/molecules/loader/loader';
+// import IsLoggedTemplate from '../templates/isLoggedTemplate/isLoggedTemplate';
+import MainTemplate from '../templates/mainTemplate/mainTemplate';
 
-const HomePage = () => <Loader />
+const HomePage = () => (
+//   <IsLoggedTemplate allow="logged">
+    <MainTemplate>
+      
+    </MainTemplate>
+//   </IsLoggedTemplate>
+)
 
 export default HomePage;
