@@ -30,6 +30,11 @@ export type propsButton = {
   alert?: boolean;
 };
 
+export type ButtonNavigation = {
+  icon: any;
+  content: string;
+};
+
 export type propsImageUser = {
   mini?: Boolean;
 };
