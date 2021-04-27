@@ -8,7 +8,7 @@ const Image = styled.div`
   align-items: center;
   width: 25px;
   height: 25px;
-  margin-left: 10px;
+  margin-left: 9px;
 
   p {
     font-size: 0.8rem;
