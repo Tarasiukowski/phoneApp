@@ -23,6 +23,7 @@ const Button = styled.button`
 
   svg {
     margin-left: 2px;
+    fill: rgb(151, 151, 176);
   }
 
   :hover {

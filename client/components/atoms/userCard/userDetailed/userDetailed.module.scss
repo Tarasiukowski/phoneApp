@@ -1,0 +1,20 @@
+.box {
+  background-color: rgb(33, 33, 46);
+  width: 250px;
+  position: absolute;
+  top: 0;
+  z-index: 99999;
+  border-radius: 5px;
+  border: 1px solid rgba(80, 80, 97, 0.498);
+
+  div:first-child {
+    border-bottom: 1px solid rgba(80, 80, 97, 0.498);
+  }
+}
+
+.template {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 6px 0 6px 0;
+}

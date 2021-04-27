@@ -10,12 +10,24 @@ const Image = styled.div<propsImageUser>`
   width: 25px;
   height: 25px;
   margin-left: 9px;
+  pointer-events: none;
 
   p {
     font-size: 0.8rem;
     font-weight: 600;
     color: white;
   }
+
+  ${({ big }) => big && css`
+    width: 40px;
+    height: 40px;
+    margin-left: 12px;
+    cursor: default;
+
+    p {
+      font-size: 1.4rem;
+    }
+  `}
 
   ${({ mini }) => mini && css`
     width: 20px;
@@ -28,8 +40,8 @@ const Image = styled.div<propsImageUser>`
   `}
 `;
 
-const ImageUser = ({ mini }: propsImageUser) => (
-  <Image mini={mini}>
+const ImageUser = ({ mini, big }: propsImageUser) => (
+  <Image mini={mini} big={big}>
     <p>MT</p>
   </Image>
 );

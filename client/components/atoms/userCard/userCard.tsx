@@ -1,12 +1,32 @@
+import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import ImageUser from '../imageUser/imageUser';
+import UserDetailed from './userDetailed/userDetailed';
 import { propsUserCard } from '../../../interfaces';
 
-const UserCard = ({ friend }: propsUserCard) => {
+const UserCard = ({ friend, big }: propsUserCard) => {
+  const [openDetailed, setOpenDetailed] = useState<boolean>(false);
+
+  const templateRef = useRef<HTMLDivElement>(null);
+  const userDetailedRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    window.addEventListener('click', (e: Event) => {
+      const target = e.target;
+
+      if (templateRef.current === target) {
+        setOpenDetailed(true);
+      } else {
+        setOpenDetailed(false);
+      }
+    });
+  });
+
   return (
-    <Template friend={friend}>
-      <ImageUser mini={friend} />
+    <Template friend={friend} big={big} ref={templateRef}>
+      <ImageUser mini={friend} big={big} />
       <p className="name">Michał Tarasiuk</p>
+      {!friend && openDetailed && <UserDetailed ref={userDetailedRef} />}
     </Template>
   );
 };
@@ -21,17 +41,35 @@ export const Template = styled.div<propsUserCard>`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
 
   .name {
     color: rgb(238, 238, 240);
     font-size: 14px;
     font-weight: 600;
     margin-left: 9px;
+    pointer-events: none;
   }
-
   :hover {
     background-color: #4b4b663b;
   }
+
+  ${({ big }) =>
+    big &&
+    css`
+      margin: 0;
+      width: 100%;
+      height: 70px;
+      cursor: default;
+
+      .name {
+        margin-left: 13px;
+      }
+
+      :hover {
+        background-color: transparent;
+      }
+    `}
 
   ${({ friend }) =>
     friend &&

@@ -18,6 +18,7 @@ export type propsAuthContent = {
 
 export type propsUserCard = {
   friend?: boolean;
+  big?: boolean;
 };
 
 export type propsAuthForm = {
@@ -40,7 +41,8 @@ export type ButtonNavigation = {
 };
 
 export type propsImageUser = {
-  mini?: Boolean;
+  mini?: boolean;
+  big?: boolean;
 };
 
 export type propsSelectNumberButton = {
