@@ -4,7 +4,7 @@ import styles from './friendsList.module.scss';
 
 const FriendsList = () => (
   <div>
-    <h2 className={styles.heading}>FriensdList</h2>
+    <h2 className={styles.heading}>Friensd List</h2>
     <div className={styles.template}>
       <FriendsListElement friend />
       <AddButton />

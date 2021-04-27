@@ -3,7 +3,7 @@ import styles from "./groupsList.module.scss"
 
 const GroupsList = () => (
   <div>
-    <p className={styles.heading}>GroupsList</p>
+    <p className={styles.heading}>Groups List</p>
     <div className={styles.template}>
       <GroupElementList />
     </div>
