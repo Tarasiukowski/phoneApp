@@ -16,6 +16,10 @@ export type propsAuthContent = {
   login?: login;
 };
 
+export type propsUserCard = {
+  friend?: boolean;
+};
+
 export type propsAuthForm = {
   login?: Boolean;
   setError: Dispatch<SetStateAction<Error | null>>;

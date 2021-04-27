@@ -1,7 +1,8 @@
 import ButtonNavigation from '../../atoms/buttonNavigation/buttonNavigation';
 import UserCard from '../../atoms/userCard/userCard';
 import GroupsList from '../groupsList/groupsList';
-import { SearchSvg, ContactsSvg, SettingsSvg } from "../../../public/svgs"
+import FriendsList from '../friendsList/friendsList';
+import { SearchSvg, ContactsSvg, SettingsSvg } from '../../../public/svgs';
 // import ContactsSvg from "../../../public/svgs/contacts.svg"
 // import SearchSvg from "../../../public/svgs/search.svg"
 // import Settings from "../../../public/svgs/settings.svg"
@@ -11,21 +12,13 @@ const Navigation = () => (
   <div className={styles.box}>
     <div className={styles.header}>
       <UserCard />
-      <ButtonNavigation
-        icon={<SearchSvg />}
-        content="Search"
-      />
-      <ButtonNavigation
-        icon={<ContactsSvg />}
-        content="Contacts"
-      />
-      <ButtonNavigation
-        icon={<SettingsSvg />}
-        content="Settings"
-      />
+      <ButtonNavigation icon={<SearchSvg />} content="Search" />
+      <ButtonNavigation icon={<ContactsSvg />} content="Contacts" />
+      <ButtonNavigation icon={<SettingsSvg />} content="Settings" />
     </div>
     <div>
       <GroupsList />
+      <FriendsList />
     </div>
   </div>
 );

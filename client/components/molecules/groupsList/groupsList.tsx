@@ -6,7 +6,6 @@ const GroupsList = () => (
     <p className={styles.heading}>GroupsList</p>
     <div className={styles.template}>
       <GroupElementList />
-      <GroupElementList />
     </div>
   </div>
 )
