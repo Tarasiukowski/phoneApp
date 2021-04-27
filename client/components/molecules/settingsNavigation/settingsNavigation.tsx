@@ -13,11 +13,11 @@ const SettingsNavigation = () => {
   const buttonNavigationSettings = {
     size: {
       width: '86%',
-      height: '35px',
+      height: '33px',
     },
     iconSettings: {
-      marginLeft: "20px"
-    }
+      marginLeft: '20px',
+    },
   };
 
   return (

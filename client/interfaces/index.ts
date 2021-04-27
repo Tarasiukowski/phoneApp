@@ -50,6 +50,7 @@ export type ButtonNavigation = {
 export type propsImageUser = {
   mini?: boolean;
   big?: boolean;
+  customized?: boolean
 };
 
 export type propsSelectNumberButton = {

@@ -18,30 +18,46 @@ const Image = styled.div<propsImageUser>`
     color: white;
   }
 
-  ${({ big }) => big && css`
-    width: 40px;
-    height: 40px;
-    margin-left: 12px;
-    cursor: default;
+  ${({ big }) =>
+    big &&
+    css`
+      width: 40px;
+      height: 40px;
+      margin-left: 12px;
+      cursor: default;
 
-    p {
-      font-size: 1.4rem;
-    }
-  `}
+      p {
+        font-size: 1.4rem;
+      }
+    `}
 
-  ${({ mini }) => mini && css`
-    width: 20px;
-    height: 20px;
-    margin-left: 13px;
+  ${({ mini }) =>
+    mini &&
+    css`
+      width: 20px;
+      height: 20px;
+      margin-left: 13px;
 
-    p {
-      font-size: .7rem;
-    }
-  `}
+      p {
+        font-size: 0.7rem;
+      }
+    `}
+
+  ${({ customized }) =>
+    customized &&
+    css`
+      width: 90%;
+      height: 90%;
+      margin: 0;
+
+      p {
+        font-size: 3rem;
+      }
+    `}
 `;
 
-const ImageUser = ({ mini, big }: propsImageUser) => (
-  <Image mini={mini} big={big}>
+const ImageUser = ({ ...props }: propsImageUser) => (
+  <Image {...props}>
     <p>MT</p>
   </Image>
 );

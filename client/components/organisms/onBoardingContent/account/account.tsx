@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../../reducers/userReducer';
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
@@ -32,7 +32,9 @@ const OnboardingAccountContent = () => {
     }
   };
 
-  const next = () => {
+  const next = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
     setDisabledByRequest(true);
 
     try {
