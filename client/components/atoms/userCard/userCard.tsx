@@ -8,7 +8,7 @@ const UserCard = ({ friend, big }: propsUserCard) => {
   const [openDetailed, setOpenDetailed] = useState<boolean>(false);
 
   const templateRef = useRef<HTMLDivElement>(null);
-  const userDetailedRef = useRef<HTMLDivElement>(null)
+  const userDetailedRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     window.addEventListener('click', (e: Event) => {

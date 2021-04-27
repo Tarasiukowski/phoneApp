@@ -38,6 +38,13 @@ export type propsButton = {
 export type ButtonNavigation = {
   icon: any;
   content: string;
+  size?: {
+    width?: string,
+    height?: string
+  },
+  iconSettings?: {
+    marginLeft: string
+  }
 };
 
 export type propsImageUser = {

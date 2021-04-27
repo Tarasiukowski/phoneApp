@@ -1,7 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ButtonNavigation as propsButtonNavigation } from '../../../interfaces';
 
-const Button = styled.button`
+const Button = styled.button<{
+  size?: { width?: string; height?: string };
+  iconSettings?: { marginLeft: string };
+}>`
   color: #eeeef0;
   cursor: pointer;
   height: 30px;
@@ -29,10 +32,25 @@ const Button = styled.button`
   :hover {
     background-color: #4b4b663b;
   }
+ 
+  ${({ size }) =>
+    size &&
+    css`
+      width: ${size.width};
+      height: ${size.height};
+    `}
+
+  ${({ iconSettings }) =>
+    iconSettings &&
+    css`
+      svg {
+        margin-left: ${iconSettings.marginLeft};
+      }
+    `}
 `;
 
-const ButtonNavigation = ({ icon, content }: propsButtonNavigation) => (
-  <Button>
+const ButtonNavigation = ({ icon, content, ...settings }: propsButtonNavigation) => (
+  <Button {...settings}>
     {icon} <span>{content}</span>
   </Button>
 );
