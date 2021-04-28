@@ -13,6 +13,16 @@ export const Button = styled.button<propsButton>`
   border-radius: 4px;
   margin: ${({ margin }) => (margin ? margin : null)};
 
+  ${({ waring }) => waring && css`
+    background-color: transparent;
+    color: #e85c5c;
+    transition: 0s;
+
+    :hover {
+      background-color: rgba(232, 92, 92, 0.1);
+    }
+  `}
+
   ${({ absolute }) =>
     absolute &&
     css`

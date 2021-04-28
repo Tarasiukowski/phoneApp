@@ -33,24 +33,25 @@ export type propsButton = {
   width?: string;
   margin?: string;
   alert?: boolean;
+  waring?: boolean;
 };
 
 export type ButtonNavigation = {
   icon: any;
   content: string;
   size?: {
-    width?: string,
-    height?: string
-  },
+    width?: string;
+    height?: string;
+  };
   iconSettings?: {
-    marginLeft: string
-  }
+    marginLeft: string;
+  };
 };
 
 export type propsImageUser = {
   mini?: boolean;
   big?: boolean;
-  customized?: boolean
+  customized?: boolean;
 };
 
 export type propsSelectNumberButton = {
