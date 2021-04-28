@@ -52,6 +52,8 @@ export type propsImageUser = {
   mini?: boolean;
   big?: boolean;
   customized?: boolean;
+  size?: string
+  fontSize?: string
 };
 
 export type propsSelectNumberButton = {

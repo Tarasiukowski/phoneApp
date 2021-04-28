@@ -1,0 +1,56 @@
+.box {
+  height: 100vh;
+  width: 22.5vw;
+  background-color: #1a1925;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 33px 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.name {
+  color: white;
+  font-size: 2.3rem;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  button:first-child {
+    margin-right: 10px;
+  }
+
+  button:nth-child(2) {
+    margin-left: 10px;
+  }
+
+  button {
+    padding: 0;
+    background-color: #4B4B663B;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+
+    svg {
+      fill: rgb(151, 151, 176);
+    }
+
+    &:hover {
+      background-color: #2f3043;
+
+      svg {
+        fill: #9b70ff;
+      }
+    }
+  }
+}

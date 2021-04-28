@@ -18,6 +18,18 @@ const Image = styled.div<propsImageUser>`
     color: white;
   }
 
+  ${({ size }) => size && css`
+    width: ${size};
+    height: ${size};
+  `}
+
+
+  ${({ fontSize }) => fontSize && css`
+    p {
+      font-size: ${fontSize};
+    }
+  `}
+
   ${({ big }) =>
     big &&
     css`
