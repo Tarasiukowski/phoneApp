@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import UserService from '../services/userService';
 
 class AuthController {
-  async byToken(req: Request, res: Response) {
+  async index(req: Request, res: Response) {
     const token = req.cookies['SESSID'];
 
-    const data = await UserService.verify(token);
+    const data = await UserService.loginByToken(token);
 
     res.send(data);
   }

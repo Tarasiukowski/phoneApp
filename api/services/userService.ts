@@ -18,7 +18,7 @@ class UserService {
     return { updated: true };
   }
 
-  static async verify(token: string) {
+  static async loginByToken(token: string) {
     if (token) {
       const { id } = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 

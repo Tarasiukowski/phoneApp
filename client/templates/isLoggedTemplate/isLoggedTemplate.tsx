@@ -19,7 +19,7 @@ const IsLoggedTemplate = ({ children, allow }: propsIsLoggedTemplate) => {
 
   useEffect(() => {
     axios
-      .post('http://localhost:7000/auth/byToken', {}, { withCredentials: true })
+      .post('http://localhost:7000/auth', {}, { withCredentials: true })
       .then(({ data: { user, status } }) => {
         dispatch(login(user));
 
