@@ -1,0 +1,31 @@
+.box {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  right: 0;
+  display: flex;
+  width: auto;
+  height: auto;
+
+  button:first-child {
+    margin-right: 10px;
+  }
+
+  button {
+    padding: 0;
+    background-color: transparent;
+    padding: 4px;
+
+    svg {
+      fill: rgb(151, 151, 176);
+    }
+
+    &:hover {
+      background-color: #2f3043;
+    
+      svg {
+        fill: #9B70FF;
+      }
+    }
+  }
+}
