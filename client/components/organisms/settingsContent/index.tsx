@@ -1,17 +1,15 @@
+import SettingsTemplate from '../../../templates/settingsTemplate/settingsTemplate';
 import SettingsNavigation from '../../molecules/settingsNavigation/settingsNavigation';
-import SettingsGeneralContent from './general/general';
+import SettingsProfileContent from './profile/profile';
+// import SettingsGeneralContent from './general/general';
 // import SettingsBlocklistContent from './blocklist/blocklist';
 // import SettingsContactContent from './contacts/contacts';
-// import SettingsProfileContent from './profile/profile';
 
 const SettingsContent = () => (
-  <>
+  <div>
     <SettingsNavigation />
-    <SettingsGeneralContent />
-    {/* <SettingsProfileContent /> */}
-    {/* <SettingsContactContent /> */}
-    {/* <SettingsBlocklistContent /> */}
-  </>
+    <SettingsProfileContent />
+  </div>
 );
 
 export default SettingsContent;

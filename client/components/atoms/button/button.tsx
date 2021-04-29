@@ -12,6 +12,7 @@ export const Button = styled.button<propsButton>`
   transition: background 0.3s ease 0ms;
   border-radius: 4px;
   margin: ${({ margin }) => (margin ? margin : null)};
+  cursor: pointer;
 
   ${({ waring }) => waring && css`
     background-color: transparent;
@@ -51,9 +52,9 @@ export const Button = styled.button<propsButton>`
       ${({ disabled }) =>
     disabled &&
     css`
-      color: rgba(255, 255, 255, 0.3);
-      background: rgb(36, 36, 51);
-      cursor: default;
+      color: rgba(255, 255, 255, 0.3) !important;
+      background: rgb(36, 36, 51) !important;
+      cursor: default !important;
     `}
 
     ${({ alert }) =>

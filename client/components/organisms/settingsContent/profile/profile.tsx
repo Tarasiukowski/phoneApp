@@ -20,7 +20,7 @@ const SettingsProfileContent = () => (
       <p>michal.tarasiuk03@gmail.com</p>
       <Button width="auto" transparent>Change</Button>
     </div>
-    <Button disabled={true} width="auto">save</Button>
+    <Button disabled={false} width="auto">save</Button>
   </div>
 );
 
