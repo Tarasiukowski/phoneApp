@@ -1,0 +1,37 @@
+.list {
+  width: 100%;
+  padding: 20px 14px 0;
+}
+
+.listElement {
+  width: 100%;
+  height: 30px;
+  display: grid;
+  grid-template-columns: 33% 67%;
+  grid-template-rows: 100%; 
+  
+  div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  div:first-child {
+    color: rgb(151, 151, 176);
+    fill: rgb(151, 151, 176);
+    padding-left: 10px;
+    color: rgb(151, 151, 176);
+    font-size: 14px;
+    font-weight: 600;
+
+    p {
+      margin-left: 7px;
+    }
+  }
+
+  div:nth-child(2){
+    color: rgb(238, 238, 240);
+    font-weight: 600;
+  }
+}
