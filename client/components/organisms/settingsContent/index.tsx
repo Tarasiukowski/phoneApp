@@ -1,4 +1,3 @@
-import SettingsTemplate from '../../../templates/settingsTemplate/settingsTemplate';
 import SettingsNavigation from '../../molecules/settingsNavigation/settingsNavigation';
 import SettingsProfileContent from './profile/profile';
 // import SettingsGeneralContent from './general/general';
