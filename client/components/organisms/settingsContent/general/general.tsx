@@ -1,13 +1,13 @@
-// import ImageUser from '../../../atoms/imageUser/imageUser';
-import { Button } from '../../../atoms/button/button';
+import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTemplate';
 import ImageUser from '../../../atoms/imageUser/imageUser';
 import { Input } from '../../../atoms/input/input';
+import { Button } from '../../../atoms/button/button';
 import styles from './general.module.scss';
 
 const SettingsGeneralContent = () => (
-  <div className={styles.template}>
-    <h2 className={styles.title}>Workspace</h2>
-    <p className={styles.description}>General information about your workspace.</p>
+  <SettingsTemplate>
+    <h2 className="title">Workspace</h2>
+    <p className="description">General information about your workspace.</p>
     <div className={styles.templateImage}>
       <ImageUser customized />
     </div>
@@ -18,7 +18,7 @@ const SettingsGeneralContent = () => (
     <Button disabled={true} width="auto">
       save
     </Button>
-  </div>
+  </SettingsTemplate>
 );
 
 export default SettingsGeneralContent;

@@ -1,15 +1,12 @@
-// import SettingsContent from '../components/organisms/settingsContent';
+import SettingsContent from '../components/organisms/settingsContent';
 // import ChatContent from '../components/organisms/chatContent/chatContent';
-// import MainTemplate from '../templates/mainTemplate/mainTemplate';
-
-import InviteFriend from '../components/molecules/inviteFriend/inviteFriend';
+import MainTemplate from '../templates/mainTemplate/mainTemplate';
 
 const MainPage = () => (
-  <>
-    {/* <SettingsContent /> */}
+  <MainTemplate>
+    <SettingsContent />
     {/* <ChatContent /> */}
-    <InviteFriend />
-  </>
+  </MainTemplate>
 );
 
 export default MainPage;

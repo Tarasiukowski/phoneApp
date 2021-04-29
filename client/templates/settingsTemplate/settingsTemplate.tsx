@@ -9,12 +9,12 @@ const Template = styled.div`
   border-left: 1px solid rgba(255, 255, 255, 0.06);
   padding: 2.5rem 0 1.5rem 3.1rem;
 
-  h2 {
+  .title {
     color: white;
     font-size: 3.2rem;
   }
 
-  p {
+  .description {
     color: rgb(151, 151, 176);
     font-size: 13px;
     font-weight: 600;

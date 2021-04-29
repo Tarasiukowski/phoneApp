@@ -1,13 +1,13 @@
-// import ImageUser from '../../../atoms/imageUser/imageUser';
-import { Button } from '../../../atoms/button/button';
+import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTemplate';
 import ImageUser from '../../../atoms/imageUser/imageUser';
 import { Input } from '../../../atoms/input/input';
+import { Button } from '../../../atoms/button/button';
 import styles from './profile.module.scss';
 
 const SettingsProfileContent = () => (
-  <div className={styles.template}>
-    <h2 className={styles.title}>Account</h2>
-    <p className={styles.description}>Manage your OpenPhone profile.</p>
+  <SettingsTemplate>
+    <h2 className="title">Account</h2>
+    <p className="description">Manage your OpenPhone profile.</p>
     <div className={styles.templateImage}>
       <ImageUser customized />
     </div>
@@ -18,10 +18,14 @@ const SettingsProfileContent = () => (
     <p className={styles.label}>Email</p>
     <div className={styles.emailSet}>
       <p>michal.tarasiuk03@gmail.com</p>
-      <Button width="auto" transparent>Change</Button>
+      <Button width="auto" transparent>
+        Change
+      </Button>
     </div>
-    <Button disabled={false} width="auto">save</Button>
-  </div>
+    <Button disabled={false} width="auto">
+      save
+    </Button>
+  </SettingsTemplate>
 );
 
 export default SettingsProfileContent;

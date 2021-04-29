@@ -1,14 +1,14 @@
 import SettingsNavigation from '../../molecules/settingsNavigation/settingsNavigation';
-import SettingsProfileContent from './profile/profile';
+// import SettingsProfileContent from './profile/profile';
 // import SettingsGeneralContent from './general/general';
 // import SettingsBlocklistContent from './blocklist/blocklist';
-// import SettingsContactContent from './contacts/contacts';
+import SettingsContactContent from './contacts/contacts';
 
 const SettingsContent = () => (
-  <div>
+  <>
     <SettingsNavigation />
-    <SettingsProfileContent />
-  </div>
+    <SettingsContactContent />
+  </>
 );
 
 export default SettingsContent;
