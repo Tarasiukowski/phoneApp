@@ -19,6 +19,7 @@ export type propsAuthContent = {
 export type propsUserCard = {
   friend?: boolean;
   big?: boolean;
+  withDetailed?: boolean
 };
 
 export type propsAuthForm = {

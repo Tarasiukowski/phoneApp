@@ -11,7 +11,7 @@ import styles from './navigation.module.scss';
 const Navigation = () => (
   <div className={styles.box}>
     <div className={styles.header}>
-      <UserCard />
+      <UserCard withDetailed />
       <ButtonNavigation icon={<SearchSvg />} content="Search" />
       <ButtonNavigation icon={<ContactsSvg />} content="Contacts" />
       <ButtonNavigation icon={<SettingsSvg />} content="Settings" />

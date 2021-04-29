@@ -4,7 +4,7 @@ import ImageUser from '../imageUser/imageUser';
 import UserDetailed from './userDetailed/userDetailed';
 import { propsUserCard } from '../../../interfaces';
 
-const UserCard = ({ friend, big }: propsUserCard) => {
+const UserCard = ({ friend, big, withDetailed }: propsUserCard) => {
   const [openDetailed, setOpenDetailed] = useState<boolean>(false);
 
   const templateRef = useRef<HTMLDivElement>(null);
@@ -26,7 +26,7 @@ const UserCard = ({ friend, big }: propsUserCard) => {
     <Template friend={friend} big={big} ref={templateRef}>
       <ImageUser mini={friend} big={big} />
       <p className="name">Michał Tarasiuk</p>
-      {!friend && openDetailed && <UserDetailed ref={userDetailedRef} />}
+      {withDetailed && openDetailed && <UserDetailed ref={userDetailedRef} />}
     </Template>
   );
 };
