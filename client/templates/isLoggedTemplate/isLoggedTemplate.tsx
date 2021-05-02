@@ -6,16 +6,16 @@ import Loader from '../../components/molecules/loader/loader';
 import { login } from '../../reducers/userReducer';
 import { propsIsLoggedTemplate } from '../../interfaces';
 
+const settings = {
+  logged: true,
+  notLogged: false,
+};
+
 const IsLoggedTemplate = ({ children, allow }: propsIsLoggedTemplate) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const settings = {
-    logged: true,
-    notLogged: false,
-  };
 
   useEffect(() => {
     axios

@@ -32,7 +32,7 @@ const Button = styled.button<{
   :hover {
     background-color: #4b4b663b;
   }
- 
+
   ${({ size }) =>
     size &&
     css`

@@ -1,4 +1,3 @@
-import { Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import UserModel from '../models/user/userModel';
 import { verifyEmail } from '../utils';

@@ -4,38 +4,36 @@ import UserCard from '../userCard';
 import styles from './UserDetailed.module.scss';
 import { SingOutSvg, SettingsSvg, PlusSvg } from '../../../../public/svgs';
 
-const UserDetailed = ({ ref }: { ref: RefObject<HTMLDivElement> }) => {
-  const buttonNavigationSettings = {
-    size: {
-      width: '93%',
-    },
-  };
-
-  return (
-    <div className={styles.box} ref={ref}>
-      <div>
-        <UserCard big />
-      </div>
-      <div className={styles.template}>
-        <ButtonNavigation
-          icon={<SettingsSvg />}
-          content="Edit account"
-          {...buttonNavigationSettings}
-        />
-        <ButtonNavigation
-          icon={<SettingsSvg />}
-          content="Workspace settings"
-          {...buttonNavigationSettings}
-        />
-        <ButtonNavigation
-          icon={<PlusSvg />}
-          content="Invite your friends"
-          {...buttonNavigationSettings}
-        />
-        <ButtonNavigation icon={<SingOutSvg />} content="Sing out" {...buttonNavigationSettings} />
-      </div>
-    </div>
-  );
+const buttonNavigationSettings = {
+  size: {
+    width: '93%',
+  },
 };
+
+const UserDetailed = ({ ref }: { ref: RefObject<HTMLDivElement> }) => (
+  <div className={styles.box} ref={ref}>
+    <div>
+      <UserCard big />
+    </div>
+    <div className={styles.template}>
+      <ButtonNavigation
+        icon={<SettingsSvg />}
+        content="Edit account"
+        {...buttonNavigationSettings}
+      />
+      <ButtonNavigation
+        icon={<SettingsSvg />}
+        content="Workspace settings"
+        {...buttonNavigationSettings}
+      />
+      <ButtonNavigation
+        icon={<PlusSvg />}
+        content="Invite your friends"
+        {...buttonNavigationSettings}
+      />
+      <ButtonNavigation icon={<SingOutSvg />} content="Sing out" {...buttonNavigationSettings} />
+    </div>
+  </div>
+);
 
 export default UserDetailed;
