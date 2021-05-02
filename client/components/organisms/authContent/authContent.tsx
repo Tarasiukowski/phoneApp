@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import ButtonGoogle from '../../atoms/buttonGoogle/buttonGoogle';
 import AuthForm from '../../molecules/authForm/authForm';
 import ToggleAuth from '../../atoms/toggleAauth/toggleAuth';
 import Alert from '../../atoms/alert/alert';
 import { login as loginAuth } from '../../../reducers/userReducer';
+import { fetcher } from '../../../utils/fetcher';
 import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
 import { Error, propsAuthContent } from '../../../interfaces';
 import styles from './authContent.module.scss';
@@ -22,16 +22,10 @@ const AuthContent = ({ login }: propsAuthContent) => {
       profileObj: { email },
     } = res;
 
-    const {
-      data: { user, errorMsg },
-    } = await axios.post(
-      `http://localhost:7000/auth/${login ? 'login' : 'singup'}`,
-      {
-        email,
-        by: 'Google',
-      },
-      { withCredentials: true },
-    );
+    const { user, errorMsg } = await fetcher('post', `auth/${login ? 'login' : 'singup'}`, {
+      email,
+      by: 'Google',
+    });
 
     if (errorMsg) {
       setError({ msg: errorMsg, id: Math.random() });

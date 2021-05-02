@@ -1,11 +1,11 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
 import Alert from '../../../atoms/alert/alert';
 import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
 import { selectUser } from '../../../../reducers/userReducer';
+import { fetcher } from '../../../../utils/fetcher';
 import { updateUser } from '../../../../utils/updateUser';
 import { Error } from '../../../../interfaces';
 import styles from './code.module.scss';
@@ -27,17 +27,17 @@ const OnboardingCodeContent = () => {
   const verifyByCode = async (e: FormEvent) => {
     e.preventDefault();
 
-    const { data } = await axios.post('http://localhost:7000/user/verifyByCode', {
+    const { valid, errorMsg } = await fetcher('post', 'user/verifyByCode', {
       email: user.email,
       code: valueInput,
     });
 
-    if (data.valid) {
-      updateUser([{ email: user.email, redirectTo: "/onboarding/number" }])
+    if (valid) {
+      updateUser([{ email: user.email, redirectTo: '/onboarding/number' }]);
       setRedirect(true);
       setError(null);
     } else {
-      setError({ msg: data.errorMsg, id: Math.random() });
+      setError({ msg: errorMsg, id: Math.random() });
     }
   };
 

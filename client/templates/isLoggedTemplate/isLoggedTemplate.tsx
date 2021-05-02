@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import Loader from '../../components/molecules/loader/loader';
 import { login } from '../../reducers/userReducer';
+import { fetcher } from '../../utils/fetcher';
 import { propsIsLoggedTemplate } from '../../interfaces';
 
 const settings = {
@@ -18,26 +18,24 @@ const IsLoggedTemplate = ({ children, allow }: propsIsLoggedTemplate) => {
   const router = useRouter();
 
   useEffect(() => {
-    axios
-      .post('http://localhost:7000/auth', {}, { withCredentials: true })
-      .then(({ data: { user, status } }) => {
-        dispatch(login(user));
+    fetcher('post', 'auth').then(({ user, status }) => {
+      dispatch(login(user));
 
-        const isLogged = user ? true : false;
+      const isLogged = user ? true : false;
 
-        if (
-          settings[allow] === isLogged &&
-          (status ? status?.redirectTo === router.pathname : true)
-        ) {
-          setLoading(false);
+      if (
+        settings[allow] === isLogged &&
+        (status ? status?.redirectTo === router.pathname : true)
+      ) {
+        setLoading(false);
+      } else {
+        if (isLogged) {
+          router.push(status?.redirectTo);
         } else {
-          if (isLogged) {
-            router.push(status?.redirectTo);
-          } else {
-            router.push('/singup');
-          }
+          router.push('/singup');
         }
-      });
+      }
+    });
   });
 
   return <>{loading ? <Loader /> : children}</>;

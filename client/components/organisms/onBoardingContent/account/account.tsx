@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../../reducers/userReducer';
@@ -7,6 +6,7 @@ import Alert from '../../../atoms/alert/alert';
 import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
 import { updateUser } from '../../../../utils/updateUser';
+import { fetcher } from '../../../../utils/fetcher';
 import { Error } from '../../../../interfaces';
 import styles from './account.module.scss';
 
@@ -33,21 +33,19 @@ const OnboardingAccountContent = () => {
   };
 
   const next = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     setDisabledByRequest(true);
 
     try {
-      axios
-        .post('http://localhost:7000/user/update', {
-          email: user.email,
-          firstName: valueFirstName,
-          lastName: valueLastName,
-        })
-        .then(() => {
-          updateUser([{ email: user.email, redirectTo: '/' }]);
-          setRedirect(true);
-        });
+      fetcher('post', 'user/update', {
+        email: user.email,
+        firstName: valueFirstName,
+        lastName: valueLastName,
+      }).then(() => {
+        updateUser([{ email: user.email, redirectTo: '/' }]);
+        setRedirect(true);
+      });
     } catch (e) {
       setError({ msg: "'Can not set firstname and lastname'", id: Math.random() });
     }

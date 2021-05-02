@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
-import axios from 'axios';
 import { login as loginAuth } from '../reducers/userReducer';
+import { fetcher } from './fetcher';
 
 export const responseGoogle = (
   setErrorMessage: Dispatch<SetStateAction<string | null>>,
@@ -12,15 +12,9 @@ export const responseGoogle = (
       profileObj: { email },
     } = res;
 
-    const {
-      data: { user, errorMsg },
-    } = await axios.post(
-      `http://localhost:7000/auth/${login ? 'login' : 'singup'}`,
-      {
-        email,
-      },
-      { withCredentials: true },
-    );
+    const { user, errorMsg } = await fetcher('post', login ? 'login' : 'singup', {
+      email,
+    });
 
     if (errorMsg) {
       setErrorMessage(errorMsg);

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { fetcher } from './fetcher';
 
 export const updateUser = (...args: any[]) => {
   let passData = {};
@@ -7,7 +7,5 @@ export const updateUser = (...args: any[]) => {
     passData = { ...passData, ...arg };
   });
 
-  console.log(passData)
-
-  axios.post('http://localhost:7000/user/update', passData);
+  fetcher('post', 'user/update', passData);
 };

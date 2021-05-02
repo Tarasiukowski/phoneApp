@@ -1,21 +1,19 @@
 import { useState } from 'react';
-import axios from 'axios';
 import Alert from '../../components/atoms/alert/alert';
 import { Button } from '../../components/atoms/button/button';
 import Logo from '../../public/svgs/logo.svg';
 import { Error } from '../../interfaces';
 import styles from './onboardingTemplate.module.scss';
+import { fetcher } from '../../utils/fetcher';
 
 const OnboardingTemplate: React.FC = ({ children }) => {
   const [error, setError] = useState<Error | null>();
 
   const logout = async () => {
-    const { data } = await axios.get('http://localhost:7000/auth/logout', {
-      withCredentials: true,
-    });
+    const { error, msg } = await fetcher('get', 'auth/logout');
 
-    if (data.error) {
-      setError({ msg: data.msg, id: Math.random() });
+    if (error) {
+      setError({ msg: msg, id: Math.random() });
       return;
     }
 
@@ -29,7 +27,7 @@ const OnboardingTemplate: React.FC = ({ children }) => {
         Sign out
       </Button>
       {children}
-      <Alert error={error ? error: null} />
+      <Alert error={error ? error : null} />
     </div>
   );
 };
