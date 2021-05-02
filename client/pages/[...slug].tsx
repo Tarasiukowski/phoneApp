@@ -5,14 +5,14 @@ import MainTemplate from '../templates/mainTemplate/mainTemplate';
 
 const routes = [
   {
-    slug: "settings",
-    component: SettingsContent
+    slug: 'settings',
+    component: <SettingsContent />,
   },
   {
-    slug: "chat",
-    component: ChatContent
-  }
-]
+    slug: 'chat',
+    component: <ChatContent />,
+  },
+];
 
 const MainPage = () => (
   <MainTemplate>

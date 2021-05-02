@@ -9,23 +9,23 @@ import SettingsContactContent from './contacts/contacts';
 const routes = [
   {
     slug: 'friends',
-    component: SettingsFriendsContent,
+    component: <SettingsFriendsContent />,
   },
   {
     slug: 'profile',
-    component: SettingsProfileContent,
+    component: <SettingsProfileContent />,
   },
   {
     slug: 'general',
-    component: SettingsGeneralContent,
+    component: <SettingsGeneralContent />,
   },
   {
     slug: 'blocklist',
-    component: SettingsBlocklistContent,
+    component: <SettingsBlocklistContent />,
   },
   {
     slug: 'contacts',
-    component: SettingsContactContent,
+    component: <SettingsContactContent />,
   },
 ];
 
