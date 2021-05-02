@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState, useReducer } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../../reducers/userReducer';
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
@@ -11,25 +11,27 @@ import { Error } from '../../../../interfaces';
 import styles from './account.module.scss';
 
 const OnboardingAccountContent = () => {
-  const [valueFirstName, setValueFirstName] = useState<string>('');
-  const [valueLastName, setValueLastName] = useState<string>('');
+  const [formValues, setFormValues] = useReducer(
+    (prevState: any, state: any) => ({ ...prevState, ...state }),
+    { firstname: '', lastname: '' },
+  );
   const [disabledByRequest, setDisabledByRequest] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
   const [redirect, setRedirect] = useState<boolean>(false);
 
   const user = useSelector(selectUser);
 
-  const disabledByValue = !valueFirstName.length || !valueLastName.length;
+  const { firstname, lastname } = formValues;
+
+  const disabledByValue = !firstname.length || !lastname.length;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
     const value = target.value;
 
-    if (target.name === 'firstname') {
-      setValueFirstName(value);
-    } else if (target.name === 'lastname') {
-      setValueLastName(value);
-    }
+    setFormValues({
+      [target.name]: value,
+    });
   };
 
   const next = (e: FormEvent<HTMLFormElement>) => {
@@ -40,8 +42,7 @@ const OnboardingAccountContent = () => {
     try {
       fetcher('post', 'user/update', {
         email: user.email,
-        firstName: valueFirstName,
-        lastName: valueLastName,
+        ...formValues,
       }).then(() => {
         updateUser([{ email: user.email, redirectTo: '/' }]);
         setRedirect(true);
@@ -59,18 +60,8 @@ const OnboardingAccountContent = () => {
         <h2>A little about you</h2>
         <p>This is your OpenPhone profile</p>
         <div className={styles.templateInputs}>
-          <Input
-            name="firstname"
-            value={valueFirstName}
-            onChange={onChange}
-            placeholder="First name"
-          />
-          <Input
-            name="lastname"
-            value={valueLastName}
-            onChange={onChange}
-            placeholder="Last name"
-          />
+          <Input name="firstname" value={firstname} onChange={onChange} placeholder="First name" />
+          <Input name="lastname" value={lastname} onChange={onChange} placeholder="Last name" />
         </div>
         <Button type="submit" disabled={disabledByRequest ? disabledByRequest : disabledByValue}>
           Continue
