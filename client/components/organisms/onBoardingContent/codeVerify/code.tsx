@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
 import Alert from '../../../atoms/alert/alert';
@@ -9,6 +9,7 @@ import { fetcher } from '../../../../utils/fetcher';
 import { updateUser } from '../../../../utils/updateUser';
 import { Error } from '../../../../interfaces';
 import styles from './code.module.scss';
+import { handleOnChange } from '../../../../utils/handleOnInputChange';
 
 const OnboardingCodeContent = () => {
   const [valueInput, setValueInput] = useState<string>('');
@@ -16,13 +17,6 @@ const OnboardingCodeContent = () => {
   const [redirect, setRedirect] = useState<boolean>(false);
 
   const user = useSelector(selectUser);
-
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLInputElement;
-    const value = target.value;
-
-    setValueInput(value);
-  };
 
   const verifyByCode = async (e: FormEvent) => {
     e.preventDefault();
@@ -47,7 +41,13 @@ const OnboardingCodeContent = () => {
         <img src="/pngs/verifyMail.png" width="200px" alt="verify mail" />
         <h2>Check your email</h2>
         <p>We just sent you a 6-digit code to {user.email}. Enter the code below to continue</p>
-        <Input value={valueInput} onChange={handleOnChange} placeholder="6-digit code" />
+        <Input
+          value={valueInput}
+          onChange={(e) => {
+            handleOnChange(e, setValueInput);
+          }}
+          placeholder="6-digit code"
+        />
         <Button disabled={valueInput.length < 1 ? true : false} type="submit">
           Continue
         </Button>
