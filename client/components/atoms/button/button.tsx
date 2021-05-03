@@ -49,7 +49,7 @@ export const Button = styled.button<props>`
       }
     `}
 
-      ${({ disabled }) =>
+    ${({ disabled }) =>
     disabled &&
     css`
       color: rgba(255, 255, 255, 0.3) !important;
