@@ -39,12 +39,7 @@ const List = ({ setOpenList, setNumber }: propsSelectNumberList) => {
       left: `${leftTarget - leftTab}px`,
     });
 
-    if (activeList === 'Recommended') {
-      setActiveList(target.textContent);
-    } else if (activeList === 'All') {
-      setActiveList(target.textContent);
-      return;
-    }
+    setActiveList(activeList === 'All' ? 'Recommended' : 'All');
   };
 
   const handleValueDigits = async (e: MouseEvent) => {
