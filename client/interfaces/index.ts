@@ -19,7 +19,7 @@ export type propsAuthContent = {
 export type propsUserCard = {
   friend?: boolean;
   big?: boolean;
-  withDetailed?: boolean
+  withDetailed?: boolean;
 };
 
 export type propsAuthForm = {
@@ -47,14 +47,17 @@ export type ButtonNavigation = {
   iconSettings?: {
     marginLeft: string;
   };
+  href?: string;
+  button?: boolean;
+  active?: boolean;
 };
 
 export type propsImageUser = {
   mini?: boolean;
   big?: boolean;
   customized?: boolean;
-  size?: string
-  fontSize?: string
+  size?: string;
+  fontSize?: string;
 };
 
 export type propsSelectNumberButton = {

@@ -13,8 +13,8 @@ const Navigation = () => (
     <div className={styles.header}>
       <UserCard withDetailed />
       <ButtonNavigation icon={<SearchSvg />} content="Search" />
-      <ButtonNavigation icon={<ContactsSvg />} content="Contacts" />
-      <ButtonNavigation icon={<SettingsSvg />} content="Settings" />
+      <ButtonNavigation href="/contacts" icon={<ContactsSvg />} content="Contacts" />
+      <ButtonNavigation href="/settings/profile" icon={<SettingsSvg />} content="Settings" />
     </div>
     <div>
       <GroupsList />

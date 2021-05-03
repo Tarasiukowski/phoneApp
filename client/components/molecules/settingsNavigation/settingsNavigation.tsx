@@ -24,22 +24,40 @@ const SettingsNavigation = () => (
     <p className={styles.heading}>Account</p>
     <div className={styles.template}>
       <ButtonNavigation
+        href="/settings/profile"
         icon={<AccountProfileSvg />}
         content="Account & Profile"
         {...buttonNavigationSettings}
       />
       <ButtonNavigation
+        href="/settings/contacts"
         icon={<ContactSettingsSvg />}
         content="Contacts"
         {...buttonNavigationSettings}
       />
-      <ButtonNavigation icon={<BlockListSvg />} content="Blocklist" {...buttonNavigationSettings} />
+      <ButtonNavigation
+        href="/settings/blocklist"
+        icon={<BlockListSvg />}
+        content="Blocklist"
+        {...buttonNavigationSettings}
+      />
     </div>
     <p className={styles.heading}>Workspace</p>
     <div className={styles.template}>
-      <ButtonNavigation icon={<GeneralSvg />} content="General" {...buttonNavigationSettings} />
-      <ButtonNavigation icon={<MembersSvg />} content="Members" {...buttonNavigationSettings} />
       <ButtonNavigation
+        href="/settings/general"
+        icon={<GeneralSvg />}
+        content="General"
+        {...buttonNavigationSettings}
+      />
+      <ButtonNavigation
+        href="/settings/members"
+        icon={<MembersSvg />}
+        content="Members"
+        {...buttonNavigationSettings}
+      />
+      <ButtonNavigation
+        href="/settings/numbers"
         icon={<PhoneNumberSvg />}
         content="Phone Numbers"
         {...buttonNavigationSettings}

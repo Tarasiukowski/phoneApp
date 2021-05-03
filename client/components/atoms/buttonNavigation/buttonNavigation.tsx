@@ -1,9 +1,50 @@
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 import { ButtonNavigation as propsButtonNavigation } from '../../../interfaces';
+
+const LinkTemplate: React.FC<{ href: string }> = ({ children, href }) => (
+  <Link href={href}>{children}</Link>
+);
+
+const ButtonNavigation = ({
+  icon,
+  active,
+  button,
+  href,
+  content,
+  ...settings
+}: propsButtonNavigation) => {
+  if (button) {
+    const { asPath } = useRouter();
+
+    return (
+      <Button
+        active={asPath === href || asPath.startsWith(`/${content.toLocaleLowerCase()}`)}
+        {...settings}
+      >
+        {icon} <span>{content}</span>
+      </Button>
+    );
+  }
+
+  return (
+    <>
+      {href ? (
+        <LinkTemplate href={href}>
+          <ButtonNavigation button icon={icon} href={href} content={content} {...settings} />
+        </LinkTemplate>
+      ) : (
+        <ButtonNavigation button icon={icon} content={content} {...settings} />
+      )}
+    </>
+  );
+};
 
 const Button = styled.button<{
   size?: { width?: string; height?: string };
   iconSettings?: { marginLeft: string };
+  active?: boolean;
 }>`
   color: #eeeef0;
   cursor: pointer;
@@ -33,6 +74,12 @@ const Button = styled.button<{
     background-color: #4b4b663b;
   }
 
+  ${({ active }) =>
+    active &&
+    css`
+      background-color: #4b4b663b;
+    `}
+
   ${({ size }) =>
     size &&
     css`
@@ -48,11 +95,5 @@ const Button = styled.button<{
       }
     `}
 `;
-
-const ButtonNavigation = ({ icon, content, ...settings }: propsButtonNavigation) => (
-  <Button {...settings}>
-    {icon} <span>{content}</span>
-  </Button>
-);
 
 export default ButtonNavigation;

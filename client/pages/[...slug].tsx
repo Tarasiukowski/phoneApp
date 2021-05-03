@@ -1,4 +1,5 @@
 import ChatContent from '../components/organisms/chatContent/chatContent';
+import ContactsContent from '../components/organisms/contactsContent/contactsContent';
 import SettingsContent from '../components/organisms/settingsContent';
 import Subpage from '../components/organisms/subpage/subpage';
 import MainTemplate from '../templates/mainTemplate/mainTemplate';
@@ -11,6 +12,10 @@ const routes = [
   {
     slug: 'chat',
     component: <ChatContent />,
+  },
+  {
+    slug: "contacts",
+    component: <ContactsContent />
   },
 ];
 

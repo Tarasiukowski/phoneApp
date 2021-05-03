@@ -17,11 +17,13 @@ const UserDetailed = ({ ref }: { ref: RefObject<HTMLDivElement> }) => (
     </div>
     <div className={styles.template}>
       <ButtonNavigation
+        href="/settings/profile"
         icon={<SettingsSvg />}
         content="Edit account"
         {...buttonNavigationSettings}
       />
       <ButtonNavigation
+        href="/settings/general"
         icon={<SettingsSvg />}
         content="Workspace settings"
         {...buttonNavigationSettings}

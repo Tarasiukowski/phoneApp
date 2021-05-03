@@ -27,6 +27,10 @@ const routes = [
     slug: 'contacts',
     component: <SettingsContactContent />,
   },
+  {
+    slug: "members",
+    component: <SettingsFriendsContent />
+  }
 ];
 
 const SettingsContent = () => (
