@@ -2,7 +2,7 @@ import { useRef, MouseEvent, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import Input from './input/input';
 import NumbersList from './numbersList/numbersList';
-import { fetcher } from '../../../../utils/fetcher';
+import { fetcher } from '../../../../utils';
 import { propsSelectNumberList } from '../../../../interfaces';
 import styles from './list.module.scss';
 

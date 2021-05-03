@@ -9,7 +9,7 @@ import { fetcher } from '../../../../utils/fetcher';
 import { updateUser } from '../../../../utils/updateUser';
 import { Error } from '../../../../interfaces';
 import styles from './code.module.scss';
-import { handleOnChange } from '../../../../utils/handleOnInputChange';
+import { handleOnChange } from '../../../../utils';
 
 const OnboardingCodeContent = () => {
   const [valueInput, setValueInput] = useState<string>('');

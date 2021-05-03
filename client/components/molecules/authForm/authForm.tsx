@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Input } from '../../atoms/input/input';
 import { Button } from '../../atoms/button/button';
 import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
-import { fetcher } from '../../../utils/fetcher';
+import { fetcher } from '../../../utils';
 import { login as authLogin } from '../../../reducers/userReducer';
 import { propsAuthForm, formData } from '../../../interfaces';
 import styles from './authForm.module.scss';

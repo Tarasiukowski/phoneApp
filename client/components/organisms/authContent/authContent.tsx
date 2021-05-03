@@ -6,7 +6,7 @@ import AuthForm from '../../molecules/authForm/authForm';
 import ToggleAuth from '../../atoms/toggleAauth/toggleAuth';
 import Alert from '../../atoms/alert/alert';
 import { login as loginAuth } from '../../../reducers/userReducer';
-import { fetcher } from '../../../utils/fetcher';
+import { fetcher } from '../../../utils';
 import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
 import { Error, propsAuthContent } from '../../../interfaces';
 import styles from './authContent.module.scss';

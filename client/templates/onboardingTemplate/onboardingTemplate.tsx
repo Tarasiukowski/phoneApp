@@ -4,7 +4,7 @@ import { Button } from '../../components/atoms/button/button';
 import Logo from '../../public/svgs/logo.svg';
 import { Error } from '../../interfaces';
 import styles from './onboardingTemplate.module.scss';
-import { fetcher } from '../../utils/fetcher';
+import { fetcher } from '../../utils';
 
 const OnboardingTemplate: React.FC = ({ children }) => {
   const [error, setError] = useState<Error | null>();

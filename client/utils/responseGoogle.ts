@@ -19,9 +19,8 @@ export const responseGoogle = (
     if (errorMsg) {
       setErrorMessage(errorMsg);
       return;
-    } else {
-      setErrorMessage(null);
     }
+    setErrorMessage(null);
 
     dispatch(loginAuth(user));
   };

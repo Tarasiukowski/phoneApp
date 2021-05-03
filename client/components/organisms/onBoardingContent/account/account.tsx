@@ -6,7 +6,7 @@ import Alert from '../../../atoms/alert/alert';
 import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
 import { updateUser } from '../../../../utils/updateUser';
-import { fetcher } from '../../../../utils/fetcher';
+import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
 import styles from './account.module.scss';
 
