@@ -9,8 +9,9 @@ const Image = styled.div<props>`
   align-items: center;
   width: 25px;
   height: 25px;
-  margin-left: 9px;
   pointer-events: none;
+  cursor: default;
+  margin: ${({ margin }) => margin};
 
   p {
     font-size: 0.8rem;
@@ -38,8 +39,6 @@ const Image = styled.div<props>`
     css`
       width: 40px;
       height: 40px;
-      margin-left: 12px;
-      cursor: default;
 
       p {
         font-size: 1.4rem;
@@ -51,22 +50,9 @@ const Image = styled.div<props>`
     css`
       width: 20px;
       height: 20px;
-      margin-left: 13px;
 
       p {
         font-size: 0.7rem;
-      }
-    `}
-
-  ${({ customized }) =>
-    customized &&
-    css`
-      width: 90%;
-      height: 90%;
-      margin: 0;
-
-      p {
-        font-size: 3rem;
       }
     `}
 `;

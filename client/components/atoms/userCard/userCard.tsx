@@ -24,7 +24,7 @@ const UserCard = ({ friend, big, withDetailed }: props) => {
 
   return (
     <Template friend={friend} big={big} ref={templateRef}>
-      <ImageUser mini={friend} big={big} />
+      <ImageUser margin={friend ? '0 0 0 13px' : '0 0 0 9px'} mini={friend} big={big} />
       <p className="name">Michał Tarasiuk</p>
       {withDetailed && openDetailed && <UserDetailed ref={userDetailedRef} />}
     </Template>
