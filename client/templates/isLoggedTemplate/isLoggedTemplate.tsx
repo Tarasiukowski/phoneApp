@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import Loader from '../../components/molecules/loader/loader';
 
 import { login } from '../../reducers/userReducer';
-import { fetcher } from '../../utils';
+import { checkOnboardingStage, fetcher } from '../../utils';
 import { props } from './types';
 
 const settings = {
@@ -25,15 +25,19 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
 
       const isLogged = user ? true : false;
 
-      if (settings[allow] === isLogged && (status ? status?.redirectTo === router.asPath : true)) {
-        setLoading(false);
-      } else if (isLogged && (router.asPath === '/singup' || router.asPath === '/login')) {
-        router.push(status?.redirectTo);
+      if (settings[allow] === isLogged) {
+        if (status) {
+          const { loading, redirectTo } = checkOnboardingStage(status, router.asPath);
+
+          !loading ? setLoading(false) : router.push(redirectTo);
+        } else {
+          setLoading(false);
+        }
       } else {
         if (isLogged) {
-          if (status.onBoarding) {
-            router.push(status?.redirectTo);
-          }
+          const { loading, redirectTo } = checkOnboardingStage(status, router.asPath);
+
+          !loading ? setLoading(false) : router.push(redirectTo);
         } else {
           router.push('/singup');
         }

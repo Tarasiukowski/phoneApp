@@ -5,8 +5,7 @@ import { selectUser } from '../../../../reducers/userReducer';
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
 import Alert from '../../../atoms/alert/alert';
 import { Button } from '../../../atoms/button/button';
-import { Input } from '../../../atoms/input/input'
-;
+import { Input } from '../../../atoms/input/input';
 import { updateUser } from '../../../../utils';
 import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
@@ -46,7 +45,7 @@ const OnboardingAccountContent = () => {
         email: user.email,
         ...formValues,
       }).then(() => {
-        updateUser([{ email: user.email, redirectTo: '/contacts' }]);
+        updateUser([{ email: user.email, redirectTo: '/contacts', onBoarding: true }]);
         setRedirect(true);
       });
     } catch (e) {
