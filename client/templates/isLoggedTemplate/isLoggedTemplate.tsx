@@ -23,14 +23,15 @@ const IsLoggedTemplate = ({ children, allow }: propsIsLoggedTemplate) => {
 
       const isLogged = user ? true : false;
 
-      if (
-        settings[allow] === isLogged &&
-        (status ? status?.redirectTo === router.asPath : false)
-      ) {
-        setLoading(false)
+      if (settings[allow] === isLogged && (status ? status?.redirectTo === router.asPath : true)) {
+        setLoading(false);
+      } else if (isLogged && (router.asPath === '/singup' || router.asPath === '/login')) {
+        router.push(status?.redirectTo);
       } else {
         if (isLogged) {
-          router.push(status?.redirectTo);
+          if (status.onBoarding) {
+            router.push(status?.redirectTo);
+          }
         } else {
           router.push('/singup');
         }
