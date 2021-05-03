@@ -1,5 +1,5 @@
 import Digits from '../../../../../public/svgs/digits.svg';
-import { propsSelectNumberInput } from '../../../../../interfaces';
+import { propsSelectNumberInput } from '../../types';
 import styles from './input.module.scss';
 
 const Input = ({ value, onChange }: propsSelectNumberInput) => (

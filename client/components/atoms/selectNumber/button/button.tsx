@@ -1,6 +1,6 @@
 import styles from './button.module.scss';
 import PenSvg from '../../../../public/svgs/pen.svg';
-import { propsSelectNumberButton } from '../../../../interfaces';
+import { propsSelectNumberButton } from '../types';
 
 const SelectNumberButton = ({ onClick, number }: propsSelectNumberButton) => {
   return (

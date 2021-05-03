@@ -1,5 +1,5 @@
 import Circle from '../../../../../public/svgs/circle.svg'
-import { propsSelectNumberItem } from '../../../../../interfaces'
+import { propsSelectNumberItem } from '../../types'
 import styles from './item.module.scss'
 
 const Item = ({ number, onClick }: propsSelectNumberItem) => (

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Button } from '../button/button';
-import { propsAlert } from '../../../interfaces';
+import { props } from './types';
 import styles from './alert.module.scss';
 
-const Alert = ({ error }: propsAlert) => {
+const Alert = ({ error }: props) => {
   const [isOpen, setIsOpen] = useState<boolean>(Boolean);
   const [msg, setMsg] = useState<string | null>(null);
 

@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import Loader from '../../components/molecules/loader/loader';
-import { propsRedirectTemplate } from '../../interfaces';
+import { props } from './types';
 
-const RedirectTemplate: React.FC<propsRedirectTemplate> = ({
+const RedirectTemplate: React.FC<props> = ({
   children,
   isRedirect,
   redirectTo,

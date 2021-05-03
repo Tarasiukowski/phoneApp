@@ -1,13 +1,7 @@
-import { Dispatch, SetStateAction } from 'react';
 import Item from '../item/item';
+import { propsSelectNumbersList } from '../../types';
 
-interface props {
-  numbers: string[];
-  setNumber: Dispatch<SetStateAction<string | null>>;
-  setOpenList: Dispatch<SetStateAction<boolean>>;
-}
-
-const NumbersList = ({ numbers, setNumber, setOpenList }: props) => {
+const NumbersList = ({ numbers, setNumber, setOpenList }: propsSelectNumbersList) => {
   const selectNumber = (number: string) => {
     setNumber(number);
     setOpenList(false);

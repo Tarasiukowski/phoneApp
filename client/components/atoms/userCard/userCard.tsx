@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import ImageUser from '../imageUser/imageUser';
 import UserDetailed from './userDetailed/userDetailed';
-import { propsUserCard } from '../../../interfaces';
+import { props } from './types';
 
-const UserCard = ({ friend, big, withDetailed }: propsUserCard) => {
+const UserCard = ({ friend, big, withDetailed }: props) => {
   const [openDetailed, setOpenDetailed] = useState<boolean>(false);
 
   const templateRef = useRef<HTMLDivElement>(null);
@@ -31,7 +31,7 @@ const UserCard = ({ friend, big, withDetailed }: propsUserCard) => {
   );
 };
 
-export const Template = styled.div<propsUserCard>`
+export const Template = styled.div<props>`
   width: 90%;
   height: 38px;
   margin: 10px 0 12px 0;

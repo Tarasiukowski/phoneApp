@@ -3,10 +3,10 @@ import gsap from 'gsap';
 import Input from './input/input';
 import NumbersList from './numbersList/numbersList';
 import { fetcher } from '../../../../utils';
-import { propsSelectNumberList } from '../../../../interfaces';
+import { propsSelectList } from '../types';
 import styles from './list.module.scss';
 
-const List = ({ setOpenList, setNumber }: propsSelectNumberList) => {
+const List = ({ setOpenList, setNumber }: propsSelectList) => {
   const [activeList, setActiveList] = useState<string | null>('Recommended');
   const [valueDigits, setValueDigits] = useState<string | undefined>('');
   const [recommendedNumbers, setRecommendedNumbers] = useState<string[]>([]);

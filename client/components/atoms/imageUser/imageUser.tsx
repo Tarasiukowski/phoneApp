@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import { propsImageUser } from '../../../interfaces';
+import { props } from './types';
 
-const Image = styled.div<propsImageUser>`
+const Image = styled.div<props>`
   background-color: #9c5ab6;
   border-radius: 50%;
   display: flex;
@@ -18,17 +18,20 @@ const Image = styled.div<propsImageUser>`
     color: white;
   }
 
-  ${({ size }) => size && css`
-    width: ${size};
-    height: ${size};
-  `}
+  ${({ size }) =>
+    size &&
+    css`
+      width: ${size};
+      height: ${size};
+    `}
 
-
-  ${({ fontSize }) => fontSize && css`
-    p {
-      font-size: ${fontSize};
-    }
-  `}
+  ${({ fontSize }) =>
+    fontSize &&
+    css`
+      p {
+        font-size: ${fontSize};
+      }
+    `}
 
   ${({ big }) =>
     big &&
@@ -68,7 +71,7 @@ const Image = styled.div<propsImageUser>`
     `}
 `;
 
-const ImageUser = ({ ...props }: propsImageUser) => (
+const ImageUser = ({ ...props }: props) => (
   <Image {...props}>
     <p>MT</p>
   </Image>

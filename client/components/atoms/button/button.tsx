@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import { propsButton } from '../../../interfaces';
+import { props } from './types';
 
-export const Button = styled.button<propsButton>`
+export const Button = styled.button<props>`
   width: ${({ width }) => (width ? width : '315px')};
   color: white;
   background: rgb(112, 70, 227);

@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
-import { ButtonNavigation as propsButtonNavigation } from '../../../interfaces';
+import { props, propsLinkTemplate, propsButton } from "./types"
 
-const LinkTemplate: React.FC<{ href: string }> = ({ children, href }) => (
+const LinkTemplate: React.FC<propsLinkTemplate> = ({ children, href }) => (
   <Link href={href}>{children}</Link>
 );
 
@@ -14,7 +14,7 @@ const ButtonNavigation = ({
   href,
   content,
   ...settings
-}: propsButtonNavigation) => {
+}: props) => {
   if (button) {
     const { asPath } = useRouter();
 
@@ -41,11 +41,7 @@ const ButtonNavigation = ({
   );
 };
 
-const Button = styled.button<{
-  size?: { width?: string; height?: string };
-  iconSettings?: { marginLeft: string };
-  active?: boolean;
-}>`
+const Button = styled.button<propsButton>`
   color: #eeeef0;
   cursor: pointer;
   height: 30px;

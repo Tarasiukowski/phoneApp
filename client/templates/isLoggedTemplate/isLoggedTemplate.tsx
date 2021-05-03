@@ -4,14 +4,14 @@ import { useDispatch } from 'react-redux';
 import Loader from '../../components/molecules/loader/loader';
 import { login } from '../../reducers/userReducer';
 import { fetcher } from '../../utils';
-import { propsIsLoggedTemplate } from '../../interfaces';
+import { props } from './types';
 
 const settings = {
   logged: true,
   notLogged: false,
 };
 
-const IsLoggedTemplate = ({ children, allow }: propsIsLoggedTemplate) => {
+const IsLoggedTemplate = ({ children, allow }: props) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const dispatch = useDispatch();

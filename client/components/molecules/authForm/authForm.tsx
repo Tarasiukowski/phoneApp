@@ -6,10 +6,11 @@ import { Button } from '../../atoms/button/button';
 import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
 import { fetcher } from '../../../utils';
 import { login as authLogin } from '../../../reducers/userReducer';
-import { propsAuthForm, formData } from '../../../interfaces';
+import { formData } from '../../../interfaces';
+import { props } from "./types"
 import styles from './authForm.module.scss';
 
-const AuthForm = ({ login, setError }: propsAuthForm) => {
+const AuthForm = ({ login, setError }: props) => {
   const [disabled, setDisabled] = useState<boolean>(true);
   const [redirect, setRedirect] = useState<boolean>(false);
 

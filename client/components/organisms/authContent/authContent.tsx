@@ -8,10 +8,11 @@ import Alert from '../../atoms/alert/alert';
 import { login as loginAuth } from '../../../reducers/userReducer';
 import { fetcher } from '../../../utils';
 import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
-import { Error, propsAuthContent } from '../../../interfaces';
+import { Error } from '../../../interfaces';
+import { props } from './types';
 import styles from './authContent.module.scss';
 
-const AuthContent = ({ login }: propsAuthContent) => {
+const AuthContent = ({ login }: props) => {
   const [error, setError] = useState<Error | null>(null);
   const [redirect, setRedirect] = useState<boolean>(false);
 
