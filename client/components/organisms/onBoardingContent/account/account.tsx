@@ -44,7 +44,7 @@ const OnboardingAccountContent = () => {
         email: user.email,
         ...formValues,
       }).then(() => {
-        updateUser([{ email: user.email, redirectTo: '/' }]);
+        updateUser([{ email: user.email, redirectTo: '/contacts' }]);
         setRedirect(true);
       });
     } catch (e) {
@@ -55,7 +55,7 @@ const OnboardingAccountContent = () => {
   };
 
   return (
-    <RedirectTemplate isRedirect={redirect} redirectTo="/">
+    <RedirectTemplate isRedirect={redirect} redirectTo="/contacts">
       <form onSubmit={next} className={styles.template}>
         <h2>A little about you</h2>
         <p>This is your OpenPhone profile</p>

@@ -25,9 +25,9 @@ const IsLoggedTemplate = ({ children, allow }: propsIsLoggedTemplate) => {
 
       if (
         settings[allow] === isLogged &&
-        (status ? status?.redirectTo === router.pathname : true)
+        (status ? status?.redirectTo === router.asPath : false)
       ) {
-        setLoading(false);
+        setLoading(false)
       } else {
         if (isLogged) {
           router.push(status?.redirectTo);
@@ -36,7 +36,7 @@ const IsLoggedTemplate = ({ children, allow }: propsIsLoggedTemplate) => {
         }
       }
     });
-  });
+  }, [router.asPath]);
 
   return <>{loading ? <Loader /> : children}</>;
 };
