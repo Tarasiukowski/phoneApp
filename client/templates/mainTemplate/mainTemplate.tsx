@@ -1,4 +1,5 @@
 import styled from "styled-components"
+
 import Navigation from "../../components/molecules/navigation/navigation";
 
 const MainTemplate: React.FC = ({ children }) => (

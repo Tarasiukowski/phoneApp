@@ -1,5 +1,6 @@
 import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTemplate';
 import { Button } from '../../../atoms/button/button';
+
 import styles from './contacts.module.scss';
 
 const SettingsContactContent = () => (

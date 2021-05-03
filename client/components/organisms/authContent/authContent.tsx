@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import GoogleLogin from 'react-google-login';
+
 import ButtonGoogle from '../../atoms/buttonGoogle/buttonGoogle';
 import AuthForm from '../../molecules/authForm/authForm';
 import ToggleAuth from '../../atoms/toggleAauth/toggleAuth';
 import Alert from '../../atoms/alert/alert';
+import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
+
 import { login as loginAuth } from '../../../reducers/userReducer';
 import { fetcher } from '../../../utils';
-import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
 import { Error } from '../../../interfaces';
 import { props } from './types';
 import styles from './authContent.module.scss';

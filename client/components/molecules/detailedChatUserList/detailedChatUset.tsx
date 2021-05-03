@@ -1,4 +1,5 @@
 import styles from "./detailedChatUser.module.scss"
+
 import { EmailSvg } from "../../../public/svgs"
 
 const DetailedChatUserList = () => (

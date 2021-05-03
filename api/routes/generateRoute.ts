@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import { generateController } from '../controllers/generateController';
 
 export const generateRouter = Router();

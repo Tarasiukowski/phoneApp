@@ -2,6 +2,7 @@ import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTem
 import { Button } from '../../../atoms/button/button';
 import UserCard from '../../../atoms/userCard/userCard';
 import ElementFinder from '../../../molecules/elementFinder/elementFinder';
+
 import styles from './friends.module.scss';
 
 const SettingsFriendsContent = () => (

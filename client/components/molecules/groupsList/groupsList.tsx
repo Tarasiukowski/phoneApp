@@ -1,4 +1,5 @@
 import GroupElementList from "../../atoms/groupElementList/groupElementList"
+
 import styles from "./groupsList.module.scss"
 
 const GroupsList = () => (

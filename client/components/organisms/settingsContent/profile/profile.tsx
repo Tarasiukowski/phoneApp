@@ -2,6 +2,7 @@ import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTem
 import ImageUser from '../../../atoms/imageUser/imageUser';
 import { Input } from '../../../atoms/input/input';
 import { Button } from '../../../atoms/button/button';
+
 import styles from './profile.module.scss';
 
 const SettingsProfileContent = () => (

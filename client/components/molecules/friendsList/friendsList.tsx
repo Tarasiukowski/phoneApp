@@ -1,5 +1,6 @@
 import FriendsListElement from "../../atoms/userCard/userCard"
 import AddButton from "./addButton/addButton";
+
 import styles from './friendsList.module.scss';
 
 const FriendsList = () => (

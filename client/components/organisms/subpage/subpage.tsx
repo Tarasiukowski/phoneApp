@@ -1,7 +1,9 @@
 import { ReactNode } from 'react';
 import { useRouter } from 'next/router';
-import { route } from './types';
+
 import Loader from '../../molecules/loader/loader';
+
+import { route } from './types';
 
 const Component = ({ component }: { component: ReactNode }) => <>{component}</>;
 

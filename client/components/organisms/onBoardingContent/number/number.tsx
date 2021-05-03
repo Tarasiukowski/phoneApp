@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import SelectNumberButton from '../../../atoms/selectNumber/button/button';
 import SelectNumberList from '../../../atoms/selectNumber/list/list';
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
 import { Button } from '../../../atoms/button/button';
+
 import { selectUser } from '../../../../reducers/userReducer';
 import { updateUser } from '../../../../utils';
 import styles from './number.module.scss';

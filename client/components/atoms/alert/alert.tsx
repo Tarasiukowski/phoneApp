@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+
 import { Button } from '../button/button';
+
 import { props } from './types';
 import styles from './alert.module.scss';
 

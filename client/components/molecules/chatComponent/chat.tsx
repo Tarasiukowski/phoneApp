@@ -1,5 +1,6 @@
 import ImageUser from '../../atoms/imageUser/imageUser';
 import ChatOptions from './chatOptions/chatOptions';
+
 import styles from './chat.module.scss';
 
 const Chat = () => (

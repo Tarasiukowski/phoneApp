@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+
 import Loader from '../../components/molecules/loader/loader';
+
 import { login } from '../../reducers/userReducer';
 import { fetcher } from '../../utils';
 import { props } from './types';

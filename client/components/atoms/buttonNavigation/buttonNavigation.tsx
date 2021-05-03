@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
+
 import { props, propsLinkTemplate, propsButton } from "./types"
 
 const LinkTemplate: React.FC<propsLinkTemplate> = ({ children, href }) => (

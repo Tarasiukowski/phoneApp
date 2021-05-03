@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import { props } from './types';
 import styles from './ToggleAuth.module.scss';
 

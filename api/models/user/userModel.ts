@@ -1,4 +1,5 @@
-import { Document, model } from 'mongoose';
+import { model } from 'mongoose';
+
 import { generateCode } from '../../utils/generateCode';
 import { createNumber } from '../../utils/numbers/createNumber';
 import { sendMail } from '../../utils/sendMail';

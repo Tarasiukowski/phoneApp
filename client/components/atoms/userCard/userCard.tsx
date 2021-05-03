@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
+
 import ImageUser from '../imageUser/imageUser';
 import UserDetailed from './userDetailed/userDetailed';
+
 import { props } from './types';
 
 const UserCard = ({ friend, big, withDetailed }: props) => {

@@ -1,6 +1,8 @@
 import { useState } from 'react';
+
 import Alert from '../../components/atoms/alert/alert';
 import { Button } from '../../components/atoms/button/button';
+
 import Logo from '../../public/svgs/logo.svg';
 import { Error } from '../../interfaces';
 import styles from './onboardingTemplate.module.scss';

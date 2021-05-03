@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
+
 import Loader from '../../components/molecules/loader/loader';
+
 import { props } from './types';
 
 const RedirectTemplate: React.FC<props> = ({

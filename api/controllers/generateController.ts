@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
-import { allNumbers } from '../utils/numbers/allNumbers';
-import { generateNumberContaining } from '../utils/numbers/generateNumberContaining';
-import { randomNumbers } from '../utils/numbers/randomNumbers';
-import { unformat } from '../utils/numbers/unformat';
+
+import { allNumbers, generateNumberContaining, unformat, randomNumbers } from '../utils';
 
 class GenerateController {
   async randomNumbers(_: Request, res: Response) {

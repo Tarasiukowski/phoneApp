@@ -1,6 +1,7 @@
 import UserDetailed from '../chatContent/userDetailed/userDetailed';
-import styles from './contactsContent.module.scss';
 import UserCard from '../../atoms/userCard/userCard';
+
+import styles from './contactsContent.module.scss';
 import { SearchSvg } from "../../../public/svgs"
 
 const ContactsContent = () => (

@@ -4,7 +4,8 @@ import * as express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
-import { connectDB } from './utils/connectDB';
+
+import { connectDB } from './utils';
 import { withRouter } from './routes';
 
 export const app = express();

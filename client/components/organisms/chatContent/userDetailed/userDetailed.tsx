@@ -1,6 +1,7 @@
 import { Button } from '../../../atoms/button/button';
 import ImageUser from '../../../atoms/imageUser/imageUser';
 import DetailedChatUserList from '../../../molecules/detailedChatUserList/detailedChatUset';
+
 import styles from './userDetailed.module.scss';
 import { MailSvg, MoreSvg } from '../../../../public/svgs';
 

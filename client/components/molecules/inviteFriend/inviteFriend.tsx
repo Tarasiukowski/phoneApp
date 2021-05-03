@@ -1,4 +1,5 @@
 import { Button } from '../../atoms/button/button';
+
 import styles from './InviteFriend.module.scss';
 
 const InviteFriend = () => (

@@ -1,6 +1,8 @@
 import { RefObject } from 'react';
+
 import ButtonNavigation from '../../buttonNavigation/buttonNavigation';
 import UserCard from '../userCard';
+
 import styles from './UserDetailed.module.scss';
 import { SingOutSvg, SettingsSvg, PlusSvg } from '../../../../public/svgs';
 

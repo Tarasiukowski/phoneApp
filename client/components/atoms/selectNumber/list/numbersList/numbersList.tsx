@@ -1,4 +1,5 @@
 import Item from '../item/item';
+
 import { propsSelectNumbersList } from '../../types';
 
 const NumbersList = ({ numbers, setNumber, setOpenList }: propsSelectNumbersList) => {

@@ -2,6 +2,7 @@ import ButtonNavigation from '../../atoms/buttonNavigation/buttonNavigation';
 import UserCard from '../../atoms/userCard/userCard';
 import GroupsList from '../groupsList/groupsList';
 import FriendsList from '../friendsList/friendsList';
+
 import { SearchSvg, ContactsSvg, SettingsSvg } from '../../../public/svgs';
 // import ContactsSvg from "../../../public/svgs/contacts.svg"
 // import SearchSvg from "../../../public/svgs/search.svg"

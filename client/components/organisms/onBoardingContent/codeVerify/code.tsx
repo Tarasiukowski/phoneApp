@@ -1,12 +1,13 @@
 import { useState, FormEvent } from 'react';
 import { useSelector } from 'react-redux';
+
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
 import Alert from '../../../atoms/alert/alert';
 import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
+
 import { selectUser } from '../../../../reducers/userReducer';
-import { fetcher } from '../../../../utils/fetcher';
-import { updateUser } from '../../../../utils/updateUser';
+import { updateUser, fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
 import styles from './code.module.scss';
 import { handleOnChange } from '../../../../utils';

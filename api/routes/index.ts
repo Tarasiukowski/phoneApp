@@ -1,4 +1,5 @@
 import { Application } from 'express';
+
 import { authRouter } from './authRouter';
 import { generateRouter } from './generateRoute';
 import { userRouter } from './userRouter';
