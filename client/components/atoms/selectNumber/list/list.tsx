@@ -2,7 +2,6 @@ import { useRef, MouseEvent, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import Input from './input/input';
 import NumbersList from './numbersList/numbersList';
-import { fetchAllNumbers, fetchRecommendedNumbers } from '../../../../utils/fetchNumbers';
 import { fetcher } from '../../../../utils/fetcher';
 import { propsSelectNumberList } from '../../../../interfaces';
 import styles from './list.module.scss';
@@ -19,23 +18,15 @@ const List = ({ setOpenList, setNumber }: propsSelectNumberList) => {
   const refListItems = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetchRecommendedNumbers().then((numbers) => {
+    fetcher('get', 'generate/randomNumbers').then((numbers) => {
       setRecommendedNumbers(numbers);
     });
   }, []);
 
   useEffect(() => {
-    if (valueDigits?.length !== 0) {
-      fetcher('post', 'generate/allNumbers', {
-        filter: valueDigits,
-      }).then(({ numbers }) => {
-        setAllNumbers(numbers);
-      });
-    } else {
-      fetchAllNumbers().then((data) => {
-        setAllNumbers(data);
-      });
-    }
+    fetcher('post', 'generate/allNumbers', { filter: valueDigits }).then(({ numbers }) => {
+      setAllNumbers(numbers);
+    });
   }, [valueDigits]);
 
   const setOverlap = (e: MouseEvent) => {
