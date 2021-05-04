@@ -2,20 +2,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 
-import { props, propsLinkTemplate, propsButton } from "./types"
+import { props, propsLinkTemplate, propsButton } from './types';
 
 const LinkTemplate: React.FC<propsLinkTemplate> = ({ children, href }) => (
   <Link href={href}>{children}</Link>
 );
 
-const ButtonNavigation = ({
-  icon,
-  active,
-  button,
-  href,
-  content,
-  ...settings
-}: props) => {
+const ButtonNavigation = ({ icon, active, button, href, content, ...settings }: props) => {
   if (button) {
     const { asPath } = useRouter();
 

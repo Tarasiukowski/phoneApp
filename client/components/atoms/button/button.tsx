@@ -15,15 +15,17 @@ export const Button = styled.button<props>`
   margin: ${({ margin }) => (margin ? margin : null)};
   cursor: pointer;
 
-  ${({ waring }) => waring && css`
-    background-color: transparent;
-    color: #e85c5c;
-    transition: 0s;
+  ${({ waring }) =>
+    waring &&
+    css`
+      background-color: transparent;
+      color: #e85c5c;
+      transition: 0s;
 
-    :hover {
-      background-color: rgba(232, 92, 92, 0.1);
-    }
-  `}
+      :hover {
+        background-color: rgba(232, 92, 92, 0.1);
+      }
+    `}
 
   ${({ absolute }) =>
     absolute &&
@@ -50,7 +52,7 @@ export const Button = styled.button<props>`
       }
     `}
 
-    ${({ disabled }) =>
+  ${({ disabled }) =>
     disabled &&
     css`
       color: rgba(255, 255, 255, 0.3) !important;
@@ -58,7 +60,7 @@ export const Button = styled.button<props>`
       cursor: default !important;
     `}
 
-    ${({ alert }) =>
+  ${({ alert }) =>
     alert &&
     css`
       color: #e85c5c;

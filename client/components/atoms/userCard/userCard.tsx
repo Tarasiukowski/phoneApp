@@ -10,25 +10,26 @@ const UserCard = ({ friend, big, withDetailed }: props) => {
   const [openDetailed, setOpenDetailed] = useState<boolean>(false);
 
   const templateRef = useRef<HTMLDivElement>(null);
-  const userDetailedRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    window.addEventListener('click', (e: Event) => {
-      const target = e.target;
+  if (withDetailed) {
+    useEffect(() => {
+      window.addEventListener('click', (e: Event) => {
+        const target = e.target;
 
-      if (templateRef.current === target) {
-        setOpenDetailed(true);
-      } else {
-        setOpenDetailed(false);
-      }
+        if (templateRef.current === target) {
+          setOpenDetailed(true);
+        } else {
+          setOpenDetailed(false)
+        }
+      });
     });
-  });
+  }
 
   return (
     <Template friend={friend} big={big} ref={templateRef}>
       <ImageUser margin={friend ? '0 0 0 13px' : '0 0 0 9px'} mini={friend} big={big} />
       <p className="name">Michał Tarasiuk</p>
-      {withDetailed && openDetailed && <UserDetailed ref={userDetailedRef} />}
+      {withDetailed && openDetailed && <UserDetailed />}
     </Template>
   );
 };

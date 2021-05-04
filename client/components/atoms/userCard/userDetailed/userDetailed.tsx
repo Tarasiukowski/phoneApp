@@ -1,5 +1,3 @@
-import { RefObject } from 'react';
-
 import ButtonNavigation from '../../buttonNavigation/buttonNavigation';
 import UserCard from '../userCard';
 
@@ -12,8 +10,8 @@ const buttonNavigationSettings = {
   },
 };
 
-const UserDetailed = ({ ref }: { ref: RefObject<HTMLDivElement> }) => (
-  <div className={styles.box} ref={ref}>
+const UserDetailed = () => (
+  <div className={styles.box}>
     <div>
       <UserCard big />
     </div>
