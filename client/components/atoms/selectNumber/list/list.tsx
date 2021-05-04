@@ -26,7 +26,7 @@ const List = ({ setOpenList, setNumber }: propsSelectList) => {
   }, []);
 
   useEffect(() => {
-    fetcher('post', 'generate/allNumbers', { filter: valueDigits }).then(({ numbers }) => {
+    fetcher('post', 'generate/allNumbers', { filter: valueDigits }).then((numbers) => {
       setAllNumbers(numbers);
     });
   }, [valueDigits]);

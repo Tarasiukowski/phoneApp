@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
-import { allNumbers, generateNumberContaining, unformat, randomNumbers } from '../utils';
+import { randomNumbers } from '../utils';
+import { allNumbers } from '../utils/numbers';
 
 class GenerateController {
   async randomNumbers(_: Request, res: Response) {
@@ -10,22 +11,11 @@ class GenerateController {
   }
 
   async allNumbers(req: Request, res: Response) {
-    const { lastNumber, filter } = req.body;
+    const { filter } = req.body;
 
-    if (filter) {
-      const containNumbers = generateNumberContaining(
-        filter,
-        lastNumber ? unformat(lastNumber) : undefined,
-      );
+    const numbers = allNumbers(filter);
 
-      res.send({ numbers: containNumbers, lastNumber });
-
-      return;
-    }
-
-    const numbers = await allNumbers(lastNumber, 20);
-
-    res.send({ numbers, lastNumber });
+    res.send(numbers);
   }
 }
 
