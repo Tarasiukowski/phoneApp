@@ -1,4 +1,4 @@
-import User from '../../models/user/userModel';
+import { availabilityNumber } from './availabilityNumber';
 
 export const createNumber = async (): Promise<string> => {
   const number = () => {
@@ -19,9 +19,9 @@ export const createNumber = async (): Promise<string> => {
 
   const num = number();
 
-  const user = await User.find('number', num);
+  const availability = availabilityNumber(num);
 
-  if (user) {
+  if (!availability) {
     number();
   }
 
