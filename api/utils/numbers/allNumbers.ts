@@ -17,7 +17,9 @@ export const allNumbers = (filter?: string, lastNumber?: string): string[] => {
       if (i == 0) {
         const formatedNumber = formatNumber(number);
 
-        numbers.push(formatedNumber);
+        if (!lastNumber) {
+          numbers.push(formatedNumber);
+        }
 
         parseNumber = parseInt(number) + increaseNumber;
       } else {
@@ -45,7 +47,9 @@ export const allNumbers = (filter?: string, lastNumber?: string): string[] => {
 
     const formatedNumber = formatNumber(number);
 
-    numbers.push(formatedNumber);
+    if (!(i === 0 && lastNumber)) {
+      numbers.push(formatedNumber);
+    }
 
     parseNumber = parseInt(number) + 1;
   }
