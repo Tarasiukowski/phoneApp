@@ -11,9 +11,9 @@ class GenerateController {
   }
 
   async allNumbers(req: Request, res: Response) {
-    const { filter } = req.body;
+    const { filter, lastNumber } = req.body;
 
-    const numbers = allNumbers(filter);
+    const numbers = allNumbers(filter, lastNumber);
 
     res.send(numbers);
   }

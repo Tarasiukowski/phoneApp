@@ -1,8 +1,9 @@
 import { formatNumber } from './formatNumber';
+import { unformat } from './unformat';
 
-export const allNumbers = (filter?: string): string[] => {
+export const allNumbers = (filter?: string, lastNumber?: string): string[] => {
   const numbers: string[] = [];
-  let number = '0000000';
+  let number = lastNumber ? unformat(lastNumber) : '0000000';
   let parseNumber = parseInt(number);
 
   if (filter) {
