@@ -14,15 +14,16 @@ const Subpage = ({ routes, slugNumber }: { routes: route[]; slugNumber: number }
 
   return (
     <>
-      {routes.map((route) => (
-        <>
-          {slug === undefined ? (
-            <Loader />
-          ) : (
-            route.slug === slug[slugNumber] && <Component component={route.component} />
-          )}
-        </>
-      ))}
+      {slug === undefined ? (
+        <Loader />
+      ) : (
+        routes.map(
+          (route) =>
+            route.slug === slug[slugNumber] && (
+              <Component key={route.slug} component={route.component} />
+            ),
+        )
+      )}
     </>
   );
 };
