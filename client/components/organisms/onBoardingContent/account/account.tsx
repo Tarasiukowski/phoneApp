@@ -41,7 +41,7 @@ const OnboardingAccountContent = () => {
     setDisabledByRequest(true);
 
     try {
-      fetcher('post', 'user/update', {
+      fetcher('put', 'user/update', {
         email: user.email,
         ...formValues,
       }).then(() => {
