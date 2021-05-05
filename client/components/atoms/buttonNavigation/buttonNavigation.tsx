@@ -1,41 +1,39 @@
+import { forwardRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 
-import { props, propsLinkTemplate, propsButton } from './types';
+import { props, propsButton } from './types';
 
-const LinkTemplate: React.FC<propsLinkTemplate> = ({ children, href }) => (
-  <Link href={href}>{children}</Link>
-);
-
-const ButtonNavigation = ({ icon, active, button, href, content, ...settings }: props) => {
-  if (button) {
+const Button = forwardRef<HTMLButtonElement, props>(
+  ({ icon, active, button, href, content, ...settings }, ref) => {
     const { asPath } = useRouter();
 
     return (
-      <Button
+      <StyledButton
+        ref={ref}
         active={asPath === href || asPath.startsWith(`/${content.toLocaleLowerCase()}`)}
         {...settings}
       >
         {icon} <span>{content}</span>
-      </Button>
+      </StyledButton>
     );
-  }
+  },
+);
 
+const ButtonNavigation = ({ href, ...restProps }: props) => {
   return (
     <>
       {href ? (
-        <LinkTemplate href={href}>
-          <ButtonNavigation button icon={icon} href={href} content={content} {...settings} />
-        </LinkTemplate>
+        <Link href={href} children={<Button {...restProps} />} />
       ) : (
-        <ButtonNavigation button icon={icon} content={content} {...settings} />
+        <Button href={href} {...restProps} />
       )}
     </>
   );
 };
 
-const Button = styled.button<propsButton>`
+const StyledButton = styled.button<propsButton>`
   color: #eeeef0;
   cursor: pointer;
   height: 30px;
