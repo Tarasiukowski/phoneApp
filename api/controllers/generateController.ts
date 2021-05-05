@@ -13,7 +13,7 @@ class GenerateController {
   async allNumbers(req: Request, res: Response) {
     const { filter, lastNumber } = req.body;
 
-    const numbers = allNumbers(filter, lastNumber);
+    const numbers = await allNumbers(filter, lastNumber);
 
     res.send(numbers);
   }

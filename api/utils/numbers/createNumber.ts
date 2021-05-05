@@ -22,7 +22,8 @@ export const createNumber = async (): Promise<string> => {
   const availability = availabilityNumber(num);
 
   if (!availability) {
-    number();
+    createNumber();
+    return
   }
 
   return num;
