@@ -22,17 +22,24 @@ const OnboardingCodeContent = () => {
   const verifyByCode = async (e: FormEvent) => {
     e.preventDefault();
 
-    const { valid, errorMsg } = await fetcher('post', 'user/verifyByCode', {
+    const { valid, errorMsg, error } = await fetcher('post', 'user/verifyByCode', {
       email: user.email,
       code: valueInput,
     });
+
+    if (error) {
+      setError({ msg: errorMsg, id: Math.random() });
+
+      if (errorMsg === 'error - functionality not allowed') {
+        window.location.reload();
+      }
+      return;
+    }
 
     if (valid) {
       updateUser([{ email: user.email, redirectTo: '/onboarding/number' }]);
       setRedirect(true);
       setError(null);
-    } else {
-      setError({ msg: errorMsg, id: Math.random() });
     }
   };
 

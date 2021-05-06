@@ -13,7 +13,7 @@ class userMiddleware {
       return;
     }
 
-    res.send({ error: true, msg: 'error - functionality not allowed' });
+    res.send({ error: true, errorMsg: 'error - functionality not allowed' });
   }
 }
 

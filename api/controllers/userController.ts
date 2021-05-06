@@ -17,7 +17,7 @@ class UserController {
     const { valid, errorMsg } = await UserService.verifyByCode(email, code);
 
     if (!valid) {
-      res.send({ errorMsg, valid });
+      res.send({ errorMsg, error: true });
       return;
     }
 
