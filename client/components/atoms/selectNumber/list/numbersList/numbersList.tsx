@@ -1,4 +1,5 @@
 import Item from '../item/item';
+import Spinner from '../../../spinner/spinner';
 
 import { propsSelectNumbersList } from '../../types';
 
@@ -16,7 +17,9 @@ const NumbersList = ({ numbers, setNumber, setOpenList }: propsSelectNumbersList
             <Item onClick={() => selectNumber(number)} key={number} number={number} />
           ))}
         </>
-      ) : null}
+      ) : (
+        <Spinner />
+      )}
     </>
   );
 };
