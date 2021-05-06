@@ -4,7 +4,7 @@ import styles from "./ElementFinder.module.scss"
 
 const ElementFinder: React.FC = ({ children }) => (
   <div className={styles.list}>
-    <Input placeholder="Select for a number" />
+    <Input placeholder="Select for a number" autoComplete="off" />
     {children}
   </div>
 );

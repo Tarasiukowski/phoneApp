@@ -48,6 +48,7 @@ const OnboardingCodeContent = () => {
             handleOnChange(e, setValueInput);
           }}
           placeholder="6-digit code"
+          autoComplete="off"
         />
         <Button disabled={valueInput.length < 1 ? true : false} type="submit">
           Continue

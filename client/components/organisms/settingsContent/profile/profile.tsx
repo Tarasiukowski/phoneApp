@@ -13,8 +13,8 @@ const SettingsProfileContent = () => (
       <ImageUser size="90%" fontSize="3rem" />
     </div>
     <div className={styles.templateInputs}>
-      <Input name="firstname" value="Michał" placeholder="First name" />
-      <Input name="lastname" value="Tarasiuk" placeholder="Last name" />
+      <Input name="firstname" value="Michał" placeholder="First name" autoComplete="off" />
+      <Input name="lastname" value="Tarasiuk" placeholder="Last name" autoComplete="off" />
     </div>
     <p className={styles.label}>Email</p>
     <div className={styles.emailSet}>

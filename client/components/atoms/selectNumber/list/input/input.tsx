@@ -5,7 +5,13 @@ import styles from './input.module.scss';
 const Input = ({ value, onChange }: propsSelectNumberInput) => (
   <div className={styles.wrapper}>
     <Digits />
-    <input value={value} onChange={onChange} type="number" placeholder="Filter by digits" />
+    <input
+      value={value}
+      onChange={onChange}
+      type="number"
+      placeholder="Filter by digits"
+      autoComplete="off"
+    />
   </div>
 );
 

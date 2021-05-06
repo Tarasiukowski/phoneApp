@@ -17,7 +17,7 @@ const ContactsContent = () => (
             <SearchSvg />
           </div>
           <div>
-            <input placeholder="Search" />
+            <input placeholder="Search" autoComplete="off" />
           </div>
         </div>
         <div className={styles.listElement}>

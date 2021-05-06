@@ -61,8 +61,20 @@ const OnboardingAccountContent = () => {
         <h2>A little about you</h2>
         <p>This is your OpenPhone profile</p>
         <div className={styles.templateInputs}>
-          <Input name="firstname" value={firstname} onChange={onChange} placeholder="First name" />
-          <Input name="lastname" value={lastname} onChange={onChange} placeholder="Last name" />
+          <Input
+            name="firstname"
+            value={firstname}
+            onChange={onChange}
+            placeholder="First name"
+            autoComplete="off"
+          />
+          <Input
+            name="lastname"
+            value={lastname}
+            onChange={onChange}
+            placeholder="Last name"
+            autoComplete="off"
+          />
         </div>
         <Button type="submit" disabled={disabledByRequest ? disabledByRequest : disabledByValue}>
           Continue

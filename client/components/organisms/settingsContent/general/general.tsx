@@ -14,7 +14,7 @@ const SettingsGeneralContent = () => (
     </div>
     <div className={styles.templateInput}>
       <p className={styles.label}>Company name</p>
-      <Input />
+      <Input autoComplete="off" />
     </div>
     <Button disabled={true} width="auto">
       save

@@ -10,7 +10,7 @@ const InviteFriend = () => (
         <p>Add your friend to friend list.</p>
       </div>
       <div className={styles.inputTemplate}>
-        <input placeholder="Enter an email adress" />
+        <input placeholder="Enter an email adress" autoComplete="off" />
       </div>
       <div className={styles.footer}>
         <Button disabled={true} width="auto">
