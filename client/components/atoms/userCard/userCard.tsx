@@ -16,10 +16,10 @@ const UserCard = ({ friend, big, withDetailed }: props) => {
   if (withDetailed) {
     useEffect(() => {
       window.addEventListener('click', (e: Event) => {
-        const target = e.target;
+        const target = e.target as HTMLElement;
         const userDetailedRefCurrent = userDetailedRef.current;
 
-        const allowElements: any[] = userDetailedRefCurrent
+        const allowElements: HTMLElement[] = userDetailedRefCurrent
           ? getAllChildreenOfElement(userDetailedRefCurrent)
           : [];
 

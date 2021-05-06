@@ -19,7 +19,7 @@ const getChildren = (elem: HTMLElement | ChildNode, arr: any[]): boolean => {
 };
 
 export const getAllChildreenOfElement = (mainElement: HTMLElement): HTMLElement[] => {
-  const elements: any[] = [];
+  const elements: HTMLElement [] = [];
 
   getChildren(mainElement, elements);
 
