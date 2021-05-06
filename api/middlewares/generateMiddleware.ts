@@ -1,0 +1,21 @@
+import { Request, Response, NextFunction } from 'express';
+import userService from '../services/userService';
+
+class generateMiddleware {
+  async index(req: Request, res: Response, next: NextFunction) {
+    const token = req.cookies.SESSID;
+
+    const { user } = await userService.loginByToken(token);
+
+    if (user) {
+      next();
+      return;
+    }
+
+    res.send({ error: true, msg: 'function not allowed' });
+  }
+}
+
+const GenerateMiddleware = new generateMiddleware();
+
+export default GenerateMiddleware;

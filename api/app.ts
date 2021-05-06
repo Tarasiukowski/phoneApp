@@ -7,6 +7,7 @@ import * as cookieParser from 'cookie-parser';
 
 import { connectDB } from './utils';
 import { withRouter } from './routes';
+import { useMiddlewares } from './middlewares';
 
 export const app = express();
 
@@ -16,4 +17,5 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 connectDB();
 
+useMiddlewares(app);
 withRouter(app);
