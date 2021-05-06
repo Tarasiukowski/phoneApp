@@ -1,13 +1,14 @@
 import * as jwt from 'jsonwebtoken';
 
-import UserModel from '../models/user/userModel';
-import { verifyEmail } from '../utils';
+import UserModel from '../../models/user/userModel';
+import { verifyEmail } from '../../utils';
+import { By } from "./types"
 
 class UserService {
   email: string;
-  by: 'Google' | undefined;
+  by: By;
 
-  constructor(email: string, by: 'Google' | undefined) {
+  constructor(email: string, by: By) {
     this.email = email;
     this.by = by;
   }
@@ -22,7 +23,7 @@ class UserService {
     if (token) {
       const { id } = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 
-      const user: any = await UserModel.find('_id', id);
+      const user = await UserModel.find('_id', id);
 
       const formatUser = UserModel.format(user);
 
@@ -36,7 +37,7 @@ class UserService {
   }
 
   static async verifyByCode(email: string, code: string) {
-    const findUser: any = await UserModel.find('email', email);
+    const findUser = await UserModel.find('email', email);
 
     if (findUser.code === code) {
       return { valid: true };

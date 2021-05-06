@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import userService from '../services/userService';
+import userService from '../services/userService/userService';
 
 class generateMiddleware {
   async index(req: Request, res: Response, next: NextFunction) {

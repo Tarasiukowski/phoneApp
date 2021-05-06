@@ -4,18 +4,19 @@ import { generateCode } from '../../utils/generateCode';
 import { createNumber } from '../../utils/numbers/createNumber';
 import { sendMail } from '../../utils/sendMail';
 import { userSchema } from './userSchema';
+import { By, UserDocument } from './types';
 
-export const userModel = model('user', userSchema);
+export const userModel = model<UserDocument>('user', userSchema);
 
 class User {
   email: string;
   number: string;
   code: string;
   redirectTo: string;
-  by: 'Google' | undefined;
+  by: By;
   onBoarding: boolean;
 
-  constructor(email: string, by: 'Google' | undefined) {
+  constructor(email: string, by: By) {
     this.email = email;
     this.by = by;
     this.onBoarding = false;
