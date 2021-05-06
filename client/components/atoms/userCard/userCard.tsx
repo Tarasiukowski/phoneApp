@@ -5,21 +5,28 @@ import ImageUser from '../imageUser/imageUser';
 import UserDetailed from './userDetailed/userDetailed';
 
 import { props } from './types';
+import { getAllChildreenOfElement } from '../../../utils';
 
 const UserCard = ({ friend, big, withDetailed }: props) => {
   const [openDetailed, setOpenDetailed] = useState<boolean>(false);
 
   const templateRef = useRef<HTMLDivElement>(null);
+  const userDetailedRef = useRef<HTMLDivElement>(null);
 
   if (withDetailed) {
     useEffect(() => {
       window.addEventListener('click', (e: Event) => {
         const target = e.target;
+        const userDetailedRefCurrent = userDetailedRef.current;
+
+        const allowElements: any[] = userDetailedRefCurrent
+          ? getAllChildreenOfElement(userDetailedRefCurrent)
+          : [];
 
         if (templateRef.current === target) {
           setOpenDetailed(true);
-        } else {
-          setOpenDetailed(false)
+        } else if (!allowElements.includes(target)) {
+          setOpenDetailed(false);
         }
       });
     });
@@ -29,7 +36,7 @@ const UserCard = ({ friend, big, withDetailed }: props) => {
     <Template friend={friend} big={big} ref={templateRef}>
       <ImageUser margin={friend ? '0 0 0 13px' : '0 0 0 9px'} mini={friend} big={big} />
       <p className="name">Michał Tarasiuk</p>
-      {withDetailed && openDetailed && <UserDetailed />}
+      {withDetailed && openDetailed && <UserDetailed userDetailedRef={userDetailedRef} />}
     </Template>
   );
 };
