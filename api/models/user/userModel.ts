@@ -40,7 +40,13 @@ class User {
 
     delete data.email;
 
-    await userModel.updateOne({ email }, { $set: { ...data } });
+    try {
+      await userModel.updateOne({ email }, { $set: { ...data } });
+    } catch {
+      return { error: true, errorMsg: "error - cant't update user" };
+    }
+
+    return { updated: true };
   }
 
   static async find(key: string, value: string) {

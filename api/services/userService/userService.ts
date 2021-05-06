@@ -13,11 +13,10 @@ class UserService {
     this.by = by;
   }
 
-  // FIX ME
-  static update(data: any) {
-    UserModel.update(data);
+  static async update(data: any) {
+    const returnData = await UserModel.update(data);
 
-    return { updated: true };
+    return returnData;
   }
 
   static async loginByToken(token: string) {

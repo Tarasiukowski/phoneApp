@@ -7,5 +7,7 @@ export const updateUser = (...args: any[]) => {
     passData = { ...passData, ...arg };
   });
 
-  fetcher('put', 'user/update', passData);
+  const data = fetcher('put', 'user/update', passData);
+
+  return data;
 };

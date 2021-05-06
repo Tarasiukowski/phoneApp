@@ -3,10 +3,10 @@ import { Response, Request } from 'express';
 import UserService from '../services/userService/userService';
 
 class UserController {
-  update(req: Request, res: Response) {
+  async update(req: Request, res: Response) {
     const body = req.body;
 
-    const data = UserService.update(body);
+    const data = await UserService.update(body);
 
     res.send(data);
   }
