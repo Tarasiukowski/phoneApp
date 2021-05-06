@@ -4,9 +4,11 @@ import { useScroll } from 'react-use';
 
 import Input from './input/input';
 import NumbersList from './numbersList/numbersList';
+import Alert from '../../alert/alert';
 
 import { fetcher } from '../../../../utils';
 import { propsSelectList } from '../types';
+import { Error } from '../../../../interfaces';
 import styles from './list.module.scss';
 
 const List = ({ setOpenList, setNumber }: propsSelectList) => {
@@ -14,6 +16,7 @@ const List = ({ setOpenList, setNumber }: propsSelectList) => {
   const [valueDigits, setValueDigits] = useState<string | undefined>('');
   const [recommendedNumbers, setRecommendedNumbers] = useState<string[]>([]);
   const [allNumbers, setAllNumbers] = useState<string[]>([]);
+  const [error, setError] = useState<Error | null>(null);
 
   const refIndicator = useRef<HTMLSpanElement>(null);
   const refTab = useRef<HTMLDivElement>(null);
@@ -31,21 +34,38 @@ const List = ({ setOpenList, setNumber }: propsSelectList) => {
       fetcher('post', 'generate/allNumbers', {
         filter: valueDigits,
         lastNumber: allNumbers[allNumbers.length - 1],
-      }).then((numbers) => {
-        setAllNumbers([...allNumbers, ...numbers]);
+      }).then((data) => {
+        if (data.error) {
+          setError({ msg: data.msg, id: Math.random() });
+          window.location.reload();
+          return;
+        }
+
+        setAllNumbers([...allNumbers, ...data.numbers]);
       });
     }
   }, [y]);
 
   useEffect(() => {
-    fetcher('get', 'generate/randomNumbers').then((numbers) => {
-      setRecommendedNumbers(numbers);
+    fetcher('get', 'generate/randomNumbers').then((data) => {
+      if (data.error) {
+        setError({ msg: data.msg, id: Math.random() });
+        window.location.reload();
+        return;
+      }
+
+      setRecommendedNumbers(data.numbers);
     });
   }, []);
 
   useEffect(() => {
-    fetcher('post', 'generate/allNumbers', { filter: valueDigits }).then((numbers) => {
-      setAllNumbers(numbers);
+    fetcher('post', 'generate/allNumbers', { filter: valueDigits }).then((data) => {
+      if (data.error) {
+        window.location.reload();
+        return;
+      }
+
+      setAllNumbers(data.numbers);
     });
   }, [valueDigits]);
 
@@ -80,37 +100,40 @@ const List = ({ setOpenList, setNumber }: propsSelectList) => {
   };
 
   return (
-    <div onClick={closeList} className={styles.wrapper} ref={refWrapper}>
-      <div
-        className={`${styles.content} ${activeList === 'All' ? styles.all : styles.recommended}`}
-      >
-        <div className={styles.tab} ref={refTab}>
-          <button
-            onClick={setOverlap}
-            disabled={activeList === 'Recommended'}
-            className={styles.button}
-          >
-            Recommended
-          </button>
-          <button onClick={setOverlap} disabled={activeList === 'All'} className={styles.button}>
-            All
-          </button>
-          <span className={styles.indicator} ref={refIndicator} />
-        </div>
-        {activeList === 'All' && <Input value={valueDigits} onChange={handleValueDigits} />}
-        <div className={styles.listItems} ref={refListItems}>
-          {activeList === 'Recommended' ? (
-            <NumbersList
-              numbers={recommendedNumbers}
-              setNumber={setNumber}
-              setOpenList={setOpenList}
-            />
-          ) : (
-            <NumbersList numbers={allNumbers} setNumber={setNumber} setOpenList={setOpenList} />
-          )}
+    <>
+      <div onClick={closeList} className={styles.wrapper} ref={refWrapper}>
+        <div
+          className={`${styles.content} ${activeList === 'All' ? styles.all : styles.recommended}`}
+        >
+          <div className={styles.tab} ref={refTab}>
+            <button
+              onClick={setOverlap}
+              disabled={activeList === 'Recommended'}
+              className={styles.button}
+            >
+              Recommended
+            </button>
+            <button onClick={setOverlap} disabled={activeList === 'All'} className={styles.button}>
+              All
+            </button>
+            <span className={styles.indicator} ref={refIndicator} />
+          </div>
+          {activeList === 'All' && <Input value={valueDigits} onChange={handleValueDigits} />}
+          <div className={styles.listItems} ref={refListItems}>
+            {activeList === 'Recommended' ? (
+              <NumbersList
+                numbers={recommendedNumbers}
+                setNumber={setNumber}
+                setOpenList={setOpenList}
+              />
+            ) : (
+              <NumbersList numbers={allNumbers} setNumber={setNumber} setOpenList={setOpenList} />
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      <Alert error={error ? error : null} />
+    </>
   );
 };
 

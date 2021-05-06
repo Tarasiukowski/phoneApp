@@ -40,17 +40,19 @@ const OnboardingAccountContent = () => {
 
     setDisabledByRequest(true);
 
-    try {
-      fetcher('put', 'user/update', {
-        email: user.email,
-        ...formValues,
-      }).then(() => {
-        updateUser([{ email: user.email, redirectTo: '/contacts', onBoarding: true }]);
-        setRedirect(true);
-      });
-    } catch (e) {
-      setError({ msg: "'Can not set firstname and lastname'", id: Math.random() });
-    }
+    fetcher('put', 'user/update', {
+      email: user.email,
+      ...formValues,
+    }).then((data) => {
+      if (data.error) {
+        window.location.reload();
+        setError({ msg: data.msg, id: Math.random() });
+        return;
+      }
+
+      updateUser([{ email: user.email, redirectTo: '/contacts', onBoarding: true }]);
+      setRedirect(true);
+    });
 
     setDisabledByRequest(false);
   };

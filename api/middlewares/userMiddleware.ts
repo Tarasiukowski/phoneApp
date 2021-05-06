@@ -3,17 +3,17 @@ import userService from '../services/userService/userService';
 
 class userMiddleware {
   async index(req: Request, res: Response, next: NextFunction) {
-    const { email } = req.body
+    const { email } = req.body;
     const token = req.cookies.SESSID;
 
     const { user } = await userService.loginByToken(token);
 
-    if (user.email === email) {
+    if (user?.email === email) {
       next();
       return;
     }
 
-    res.send({ error: true, msg: 'function not allowed' });
+    res.send({ error: true, msg: 'error - functionality not allowed' });
   }
 }
 

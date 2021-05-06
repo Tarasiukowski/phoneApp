@@ -12,7 +12,7 @@ class generateMiddleware {
       return;
     }
 
-    res.send({ error: true, msg: 'function not allowed' });
+    res.send({ error: true, msg: 'error - functionality not allowed' });
   }
 }
 
