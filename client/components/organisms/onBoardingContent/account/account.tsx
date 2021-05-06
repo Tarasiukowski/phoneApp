@@ -45,8 +45,8 @@ const OnboardingAccountContent = () => {
       ...formValues,
     }).then((data) => {
       if (data.error) {
+        setError({ msg: data.errorMsg, id: Math.random() });
         window.location.reload();
-        setError({ msg: data.msg, id: Math.random() });
         return;
       }
 

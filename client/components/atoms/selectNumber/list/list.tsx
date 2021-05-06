@@ -36,7 +36,7 @@ const List = ({ setOpenList, setNumber }: propsSelectList) => {
         lastNumber: allNumbers[allNumbers.length - 1],
       }).then((data) => {
         if (data.error) {
-          setError({ msg: data.msg, id: Math.random() });
+          setError({ msg: data.errorMsg, id: Math.random() });
           window.location.reload();
           return;
         }
@@ -49,7 +49,7 @@ const List = ({ setOpenList, setNumber }: propsSelectList) => {
   useEffect(() => {
     fetcher('get', 'generate/randomNumbers').then((data) => {
       if (data.error) {
-        setError({ msg: data.msg, id: Math.random() });
+        setError({ msg: data.errorMsg, id: Math.random() });
         window.location.reload();
         return;
       }
@@ -61,6 +61,7 @@ const List = ({ setOpenList, setNumber }: propsSelectList) => {
   useEffect(() => {
     fetcher('post', 'generate/allNumbers', { filter: valueDigits }).then((data) => {
       if (data.error) {
+        setError({ msg: data.errorMsg, id: Math.random() });
         window.location.reload();
         return;
       }

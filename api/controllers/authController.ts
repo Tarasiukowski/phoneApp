@@ -14,10 +14,10 @@ class AuthController {
   async login(req: Request, res: Response) {
     const { email, by } = req.body;
 
-    const { errorMsg, user, token } = await new UserService(email, by).login();
+    const { error, errorMsg, user, token } = await new UserService(email, by).login();
 
-    if (errorMsg) {
-      res.send({ errorMsg });
+    if (error) {
+      res.send({ error, errorMsg });
       return;
     }
 
@@ -28,10 +28,10 @@ class AuthController {
   async singUp(req: Request, res: Response) {
     const { email, by } = req.body;
 
-    const { errorMsg, user, token } = await new UserService(email, by).singup();
+    const { error, errorMsg, user, token } = await new UserService(email, by).singup();
 
-    if (errorMsg) {
-      res.send({ errorMsg });
+    if (error) {
+      res.send({ error, errorMsg });
       return;
     }
 

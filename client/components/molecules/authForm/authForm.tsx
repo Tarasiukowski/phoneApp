@@ -28,11 +28,11 @@ const AuthForm = ({ login, setError }: props) => {
 
     setDisabled(true);
 
-    const { errorMsg, user } = await fetcher('post', `auth/${login ? 'login' : 'singup'}`, {
+    const { error, errorMsg, user } = await fetcher('post', `auth/${login ? 'login' : 'singup'}`, {
       email,
     });
 
-    if (errorMsg) {
+    if (error) {
       setError({ msg: errorMsg, id: Math.random() });
       setDisabled(false);
       return;

@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 
 import UserModel from '../../models/user/userModel';
 import { verifyEmail } from '../../utils';
-import { By } from "./types"
+import { By } from './types';
 
 class UserService {
   email: string;
@@ -13,6 +13,7 @@ class UserService {
     this.by = by;
   }
 
+  // FIX ME
   static update(data: any) {
     UserModel.update(data);
 
@@ -42,7 +43,7 @@ class UserService {
     if (findUser.code === code) {
       return { valid: true };
     } else {
-      return { valid: false, errorMsg: 'Wrong verification code.' };
+      return { valid: false, error: true, errorMsg: 'Wrong verification code.' };
     }
   }
 
@@ -69,7 +70,7 @@ class UserService {
       return { user: formatUser, token };
     }
 
-    return { errorMsg: 'user with such email does not exist' };
+    return { error: true, errorMsg: 'user with such email does not exist' };
   }
 
   async singup() {
@@ -78,13 +79,13 @@ class UserService {
     const { verify, errorMsg } = verifyEmail(email);
 
     if (!verify) {
-      return { errorMsg };
+      return { error: true, errorMsg };
     }
 
     const findUser = await UserModel.find('email', email);
 
     if (findUser) {
-      return { errorMsg: 'user with that email address exists' };
+      return { error: true, errorMsg: 'user with that email address exists' };
     }
 
     const user = await new UserModel(email, this.by).save();
