@@ -1,10 +1,12 @@
-const getChildren = (elem: HTMLElement | ChildNode, arr: any[]): boolean => {
+const getChildren = (elem: HTMLElement | ChildNode, arr: HTMLElement[]): boolean => {
   let end = false;
 
   if (elem.hasChildNodes()) {
     Array.from(elem.childNodes).map((elem) => {
       if (!(elem.nodeName === 'BUTTON')) {
-        arr.push(elem);
+        const element = elem as HTMLElement;
+
+        arr.push(element);
       }
 
       if (elem.hasChildNodes() && !(elem.nodeName === 'BUTTON')) {
@@ -19,7 +21,7 @@ const getChildren = (elem: HTMLElement | ChildNode, arr: any[]): boolean => {
 };
 
 export const getAllChildreenOfElement = (mainElement: HTMLElement): HTMLElement[] => {
-  const elements: HTMLElement [] = [];
+  const elements: HTMLElement[] = [];
 
   getChildren(mainElement, elements);
 
