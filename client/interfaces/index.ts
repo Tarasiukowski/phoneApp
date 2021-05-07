@@ -9,6 +9,9 @@ export type propsOnboardingNumberPage = {
 export type User = {
   email: string;
   number: string;
+  firstname: string;
+  lastname: string;
+  color: string
 };
 
 export type absolute = {

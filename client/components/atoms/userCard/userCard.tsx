@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 
 import ImageUser from '../imageUser/imageUser';
@@ -6,12 +7,15 @@ import UserDetailed from './userDetailed/userDetailed';
 
 import { props } from './types';
 import { getAllChildreenOfElement } from '../../../utils';
+import { selectUser } from '../../../reducers/userReducer';
 
 const UserCard = ({ friend, big, withDetailed }: props) => {
   const [openDetailed, setOpenDetailed] = useState<boolean>(false);
 
   const templateRef = useRef<HTMLDivElement>(null);
   const userDetailedRef = useRef<HTMLDivElement>(null);
+
+  const { firstname, lastname } = useSelector(selectUser);
 
   if (withDetailed) {
     useEffect(() => {
@@ -34,8 +38,14 @@ const UserCard = ({ friend, big, withDetailed }: props) => {
 
   return (
     <Template friend={friend} big={big} ref={templateRef}>
-      <ImageUser margin={friend ? '0 0 0 13px' : '0 0 0 9px'} mini={friend} big={big} />
-      <p className="name">Michał Tarasiuk</p>
+      <ImageUser
+        margin={friend ? '0 0 0 13px' : '0 0 0 9px'}
+        mini={friend}
+        big={big}
+      />
+      <p className="name">
+        {firstname} {lastname}
+      </p>
       {withDetailed && openDetailed && <UserDetailed userDetailedRef={userDetailedRef} />}
     </Template>
   );

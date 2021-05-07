@@ -5,12 +5,12 @@ import { createNumber } from '../../utils/numbers/createNumber';
 import { sendMail } from '../../utils/sendMail';
 import { userSchema } from './userSchema';
 import { By, UserDocument } from './types';
+import { randomColor } from '../../utils';
 
 export const userModel = model<UserDocument>('user', userSchema);
 
 class User {
   email: string;
-  number: string;
   code: string;
   redirectTo: string;
   by: By;
@@ -26,14 +26,15 @@ class User {
     }
   }
 
-  static format(user) {
-    const { email, number, firstname, lastname } = user;
+  static format(user: UserDocument) {
+    const { email, number, firstname, lastname, color } = user;
 
     return {
       email,
       number,
       firstname,
-      lastname
+      lastname,
+      color,
     };
   }
 
@@ -58,7 +59,8 @@ class User {
   }
 
   async save() {
-    this.number = await createNumber();
+    const number = await createNumber();
+    const color = randomColor();
 
     if (this.by !== 'Google') {
       sendMail(this.email, this.code);
@@ -66,7 +68,7 @@ class User {
 
     delete this.by;
 
-    const user = new userModel(this).save();
+    const user = new userModel({ ...this, color, number }).save();
 
     return user;
   }

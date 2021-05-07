@@ -1,8 +1,42 @@
 import styled, { css } from 'styled-components';
+import { useSelector } from 'react-redux';
+
 import { props } from './types';
+import { selectUser } from '../../../reducers/userReducer';
+
+const ImageUser = ({ fullname, color, ...props }: props) => {
+  const user = useSelector(selectUser);
+
+  if (!color && user) {
+    const { color: colorImage } = user;
+
+    color = colorImage;
+  }
+
+  if (!fullname && user) {
+    const { firstname, lastname } = user;
+
+    fullname = { firstname, lastname };
+  } else {
+    fullname = {
+      firstname: null,
+      lastname: null,
+    };
+  }
+
+  const { firstname, lastname } = fullname;
+
+  const initials = firstname && lastname ? `${firstname[0]}${lastname[0]}` : null;
+
+  return (
+    <Image color={color} {...props}>
+      <p>{initials}</p>
+    </Image>
+  );
+};
 
 const Image = styled.div<props>`
-  background-color: #9c5ab6;
+  background-color: ${({ color }) => color};
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -56,11 +90,5 @@ const Image = styled.div<props>`
       }
     `}
 `;
-
-const ImageUser = ({ ...props }: props) => (
-  <Image {...props}>
-    <p>MT</p>
-  </Image>
-);
 
 export default ImageUser;
