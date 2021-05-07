@@ -3,6 +3,7 @@ import UserCard from '../userCard';
 
 import styles from './UserDetailed.module.scss';
 import { props } from './types';
+import { logout } from '../../../../utils'
 import { SingOutSvg, SettingsSvg, PlusSvg } from '../../../../public/svgs';
 
 const UserDetailed = ({ userDetailedRef }: props) => (
@@ -42,6 +43,7 @@ const buttonsData = [
   {
     icon: <SingOutSvg />,
     content: 'Sing out',
+    onClick: logout,
   },
 ];
 

@@ -11,6 +11,7 @@ export type props = {
   href?: string;
   button?: boolean;
   active?: boolean;
+  onClick?: (...args: any) => any
 };
 
 export type propsButton = {

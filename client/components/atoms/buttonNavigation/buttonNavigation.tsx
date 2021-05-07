@@ -6,11 +6,12 @@ import styled, { css } from 'styled-components';
 import { props, propsButton } from './types';
 
 const Button = forwardRef<HTMLButtonElement, props>(
-  ({ icon, active, button, href, content, ...settings }, ref) => {
+  ({ icon, active, button, href, content, onClick, ...settings }, ref) => {
     const { asPath } = useRouter();
 
     return (
       <StyledButton
+        onClick={onClick}
         ref={ref}
         active={asPath === href || asPath.startsWith(`/${content.toLocaleLowerCase()}`)}
         {...settings}
