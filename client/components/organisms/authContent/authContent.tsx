@@ -55,7 +55,7 @@ const AuthContent = ({ login }: props) => {
         <p>Or continue with email</p>
         <AuthForm login={login} setError={setError} />
         <ToggleAuth login={login} />
-        <Alert error={error ? error : null} />
+        <Alert error={error} />
       </div>
     </RedirectTemplate>
   );

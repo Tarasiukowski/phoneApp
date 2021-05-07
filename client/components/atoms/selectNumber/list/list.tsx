@@ -133,7 +133,7 @@ const List = ({ setOpenList, setNumber }: propsSelectList) => {
           </div>
         </div>
       </div>
-      <Alert error={error ? error : null} />
+      <Alert error={error} />
     </>
   );
 };

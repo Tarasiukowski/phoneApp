@@ -9,7 +9,7 @@ import styles from './onboardingTemplate.module.scss';
 import { logout } from '../../utils';
 
 const OnboardingTemplate: React.FC = ({ children }) => {
-  const [error, setError] = useState<Error | null>();
+  const [error, setError] = useState<Error | null>(null);
 
   const hanldeLogoutError = (msg: string) => {
     setError({ msg, id: Math.random() });
@@ -26,7 +26,7 @@ const OnboardingTemplate: React.FC = ({ children }) => {
         Sign out
       </Button>
       {children}
-      <Alert error={error ? error : null} />
+      <Alert error={error} />
     </div>
   );
 };
