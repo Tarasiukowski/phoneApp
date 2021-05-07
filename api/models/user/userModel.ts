@@ -27,11 +27,13 @@ class User {
   }
 
   static format(user) {
-    const { email, number } = user;
+    const { email, number, firstname, lastname } = user;
 
     return {
       email,
       number,
+      firstname,
+      lastname
     };
   }
 
