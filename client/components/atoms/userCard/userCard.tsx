@@ -15,7 +15,15 @@ const UserCard = ({ friend, big, withDetailed }: props) => {
   const templateRef = useRef<HTMLDivElement>(null);
   const userDetailedRef = useRef<HTMLDivElement>(null);
 
-  const { firstname, lastname } = useSelector(selectUser);
+  let fullname = '';
+
+  const user = useSelector(selectUser);
+
+  if (user) {
+    const { firstname, lastname } = user;
+
+    fullname = `${firstname} ${lastname}`;
+  }
 
   if (withDetailed) {
     useEffect(() => {
@@ -38,14 +46,8 @@ const UserCard = ({ friend, big, withDetailed }: props) => {
 
   return (
     <Template friend={friend} big={big} ref={templateRef}>
-      <ImageUser
-        margin={friend ? '0 0 0 13px' : '0 0 0 9px'}
-        mini={friend}
-        big={big}
-      />
-      <p className="name">
-        {firstname} {lastname}
-      </p>
+      <ImageUser margin={friend ? '0 0 0 13px' : '0 0 0 9px'} mini={friend} big={big} />
+      <p className="name">{fullname}</p>
       {withDetailed && openDetailed && <UserDetailed userDetailedRef={userDetailedRef} />}
     </Template>
   );
