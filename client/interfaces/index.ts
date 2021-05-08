@@ -11,7 +11,8 @@ export type User = {
   number: string;
   firstname: string;
   lastname: string;
-  color: string
+  color: string;
+  fullname: string
 };
 
 export type absolute = {

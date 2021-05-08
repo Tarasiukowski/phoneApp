@@ -8,7 +8,9 @@ const userSlice = createSlice({
   initialState: {} as User,
   reducers: {
     login(state, { payload }: PayloadAction<User>) {
-      return (state = payload);
+      const { firstname, lastname } = payload;
+
+      return (state = { ...payload, fullname: `${firstname} ${lastname}` });
     },
   },
 });

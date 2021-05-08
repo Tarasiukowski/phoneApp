@@ -4,32 +4,25 @@ import { useSelector } from 'react-redux';
 import { props } from './types';
 import { selectUser } from '../../../reducers/userReducer';
 
-const ImageUser = ({ fullname, color, ...props }: props) => {
-  const user = useSelector(selectUser);
+const ImageUser = ({ friend, colorImage, ...props }: props) => {
+  let splitedFullname;
 
-  if (!color && user) {
-    const { color: colorImage } = user;
+  if (!friend) {
+    const { fullname, color } = useSelector(selectUser);
 
-    color = colorImage;
-  }
+    colorImage = color;
 
-  if (!fullname && user) {
-    const { firstname, lastname } = user;
-
-    fullname = { firstname, lastname };
+    splitedFullname = fullname.split(' ');
   } else {
-    fullname = {
-      firstname: null,
-      lastname: null,
-    };
+    splitedFullname = Object.values(friend);
+
+    console.log(splitedFullname)
   }
 
-  const { firstname, lastname } = fullname;
-
-  const initials = firstname && lastname ? `${firstname[0]}${lastname[0]}` : null;
+  const initials = `${splitedFullname[0][0]}${splitedFullname[1][0]}`.toUpperCase();
 
   return (
-    <Image color={color} {...props}>
+    <Image color={colorImage} {...props}>
       <p>{initials}</p>
     </Image>
   );

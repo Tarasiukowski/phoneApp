@@ -4,9 +4,9 @@ export type props = {
   size?: string;
   fontSize?: string;
   margin?: string;
-  fullname?: {
-    firstname: string | null;
-    lastname: string | null;
+  friend?: {
+    firstname: string;
+    lastname: string;
   };
-  color?: string
+  colorImage?: string
 };
