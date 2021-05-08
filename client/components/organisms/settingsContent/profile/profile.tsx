@@ -6,6 +6,7 @@ import ImageUser from '../../../atoms/imageUser/imageUser';
 import { Input } from '../../../atoms/input/input';
 import { Button } from '../../../atoms/button/button';
 import Alert from '../../../atoms/alert/alert';
+import Multitask from '../../../molecules/multitask/multitask';
 
 import styles from './profile.module.scss';
 import { InputsValues } from './types';
@@ -86,6 +87,14 @@ const SettingsProfileContent = () => {
         save
       </Button>
       <Alert error={error} />
+      {false && (
+        <Multitask
+          name="ChangeEmail"
+          onEnd={() => {
+            alert('end');
+          }}
+        />
+      )}
     </SettingsTemplate>
   );
 };

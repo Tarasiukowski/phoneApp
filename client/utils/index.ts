@@ -5,3 +5,4 @@ export { updateUser } from './updateUser';
 export { logout } from './logout';
 export { checkOnboardingStage } from './checkOnboardingStage';
 export { getAllChildreenOfElement } from './getAllChildreenOfElement';
+export { checkInputValue } from './checkInputValue'
