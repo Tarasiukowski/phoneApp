@@ -1,8 +1,8 @@
 import { Button } from '../../atoms/button/button';
 
-import styles from './InviteFriend.module.scss';
+import styles from './multitask.module.scss';
 
-const InviteFriend = () => (
+const Multitask = () => (
   <div className={styles.template}>
     <div className={styles.box}>
       <div className={styles.header}>
@@ -21,4 +21,4 @@ const InviteFriend = () => (
   </div>
 );
 
-export default InviteFriend;
+export default Multitask;
