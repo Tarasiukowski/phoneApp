@@ -6,20 +6,25 @@ import { selectUser } from '../../../reducers/userReducer';
 
 const ImageUser = ({ friend, colorImage, ...props }: props) => {
   let splitedFullname;
+  let initials = '';
 
   if (!friend) {
-    const { fullname, color } = useSelector(selectUser);
+    const user = useSelector(selectUser);
 
-    colorImage = color;
+    if (user) {
+      const { fullname, color } = user;
 
-    splitedFullname = fullname.split(' ');
+      colorImage = color;
+
+      splitedFullname = fullname.split(' ');
+
+      initials = `${splitedFullname[0][0]}${splitedFullname[1][0]}`.toUpperCase();
+    }
   } else {
     splitedFullname = Object.values(friend);
 
-    console.log(splitedFullname)
+    initials = `${splitedFullname[0][0]}${splitedFullname[1][0]}`.toUpperCase();
   }
-
-  const initials = `${splitedFullname[0][0]}${splitedFullname[1][0]}`.toUpperCase();
 
   return (
     <Image color={colorImage} {...props}>
