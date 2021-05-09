@@ -6,14 +6,16 @@ import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTem
 import Alert from '../../../atoms/alert/alert';
 import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
+
 import { updateUser } from '../../../../utils';
 import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
+import { FormValues } from './types';
 import styles from './account.module.scss';
 
 const OnboardingAccountContent = () => {
   const [formValues, setFormValues] = useReducer(
-    (prevState: any, state: any) => ({ ...prevState, ...state }),
+    (prevState: FormValues, state: FormValues) => ({ ...prevState, ...state }),
     { firstname: '', lastname: '' },
   );
   const [disabledByRequest, setDisabledByRequest] = useState<boolean>(false);
@@ -24,7 +26,7 @@ const OnboardingAccountContent = () => {
 
   const { firstname, lastname } = formValues;
 
-  const disabledByValue = !firstname.length || !lastname.length;
+  const disabledByValue = firstname && lastname ? !firstname.length || !lastname.length : true;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
