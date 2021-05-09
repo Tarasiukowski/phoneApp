@@ -1,7 +1,7 @@
 import { Application } from 'express';
 
 import { authRouter } from './authRouter';
-import { generateRouter } from './generateRoute';
+import { generateRouter } from './generateRouter';
 import { userRouter } from './userRouter';
 
 export const withRouter = (app: Application) => {

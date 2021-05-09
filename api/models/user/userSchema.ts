@@ -9,5 +9,9 @@ export const userSchema: Schema = new Schema({
   lastname: String,
   onBoarding: Boolean,
   redirectTo: String,
-  color: String
+  color: String,
+  newEmail: {
+    email: String,
+    code: String
+  }
 });
