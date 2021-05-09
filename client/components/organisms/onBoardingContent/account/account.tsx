@@ -43,14 +43,23 @@ const OnboardingAccountContent = () => {
     fetcher('put', 'user/update', {
       email: user.email,
       ...formValues,
-    }).then((data) => {
+    }).then(async (data) => {
       if (data.error) {
         setError({ msg: data.errorMsg, id: Math.random() });
         window.location.reload();
         return;
       }
 
-      updateUser([{ email: user.email, redirectTo: '/contacts', onBoarding: true }]);
+      const returnData = await updateUser([
+        { email: user.email, redirectTo: '/contacts', onBoarding: true },
+      ]);
+
+      if (returnData.error) {
+        setError({ msg: returnData.errorMsg, id: Math.random() });
+        window.location.reload();
+        return;
+      }
+
       setRedirect(true);
     });
 
