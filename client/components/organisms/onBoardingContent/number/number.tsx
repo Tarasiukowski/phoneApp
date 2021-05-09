@@ -5,15 +5,18 @@ import SelectNumberButton from '../../../atoms/selectNumber/button/button';
 import SelectNumberList from '../../../atoms/selectNumber/list/list';
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
 import { Button } from '../../../atoms/button/button';
+import Alert from '../../../atoms/alert/alert';
 
 import { selectUser } from '../../../../reducers/userReducer';
 import { updateUser } from '../../../../utils';
 import styles from './number.module.scss';
+import { Error } from '../../../../interfaces';
 
 const OnboardingNumberContent = () => {
   const [openList, setOpenList] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<boolean>(false);
   const [number, setNumber] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   const user = useSelector(selectUser);
 
@@ -25,9 +28,24 @@ const OnboardingNumberContent = () => {
     setOpenList(!openList);
   };
 
-  const next = () => {
-    updateUser([{ email: user.email, number }]);
-    updateUser([{ email: user.email, redirectTo: "/onboarding/account" }])
+  const next = async () => {
+    let data;
+
+    data = await updateUser([{ email: user.email, number }]);
+
+    if (data.error) {
+      setError({ msg: data.errorMsg, id: Math.random() });
+      window.location.reload();
+      return;
+    }
+
+    data = await updateUser([{ email: user.email, redirectTo: '/onboarding/account' }]);
+
+    if (data.error) {
+      setError({ msg: data.errorMsg, id: Math.random() });
+      window.location.reload();
+      return;
+    }
 
     setRedirect(true);
   };
@@ -43,6 +61,7 @@ const OnboardingNumberContent = () => {
         </Button>
         {openList && <SelectNumberList setNumber={setNumber} setOpenList={setOpenList} />}
       </div>
+      <Alert error={error} />
     </RedirectTemplate>
   );
 };

@@ -37,7 +37,14 @@ const OnboardingCodeContent = () => {
     }
 
     if (valid) {
-      updateUser([{ email: user.email, redirectTo: '/onboarding/number' }]);
+      const data = await updateUser([{ email: user.email, redirectTo: '/onboarding/number' }]);
+
+      if(data.error) {
+        setError({ msg: data.errorMsg, id: Math.random() })
+        window.location.reload()
+        return
+      }
+
       setRedirect(true);
       setError(null);
     }
