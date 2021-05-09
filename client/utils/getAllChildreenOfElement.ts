@@ -1,16 +1,26 @@
-const getChildren = (elem: HTMLElement | ChildNode, arr: HTMLElement[]): boolean => {
+const getChildren = (
+  elem: HTMLElement | ChildNode,
+  arr: HTMLElement[],
+  withButton?: boolean,
+): boolean => {
   let end = false;
 
   if (elem.hasChildNodes()) {
     Array.from(elem.childNodes).map((elem) => {
-      if (!(elem.nodeName === 'BUTTON')) {
-        const element = elem as HTMLElement;
+      const element = elem as HTMLElement;
 
+      if (withButton) {
         arr.push(element);
+      } else {
+        if (!(elem.nodeName === 'BUTTON')) {
+          const element = elem as HTMLElement;
+
+          arr.push(element);
+        }
       }
 
-      if (elem.hasChildNodes() && !(elem.nodeName === 'BUTTON')) {
-        getChildren(elem, arr);
+      if (elem.hasChildNodes() && withButton ? true : !(elem.nodeName === 'BUTTON')) {
+        getChildren(elem, arr, withButton);
       }
     });
   } else {
@@ -20,10 +30,13 @@ const getChildren = (elem: HTMLElement | ChildNode, arr: HTMLElement[]): boolean
   return !end;
 };
 
-export const getAllChildreenOfElement = (mainElement: HTMLElement): HTMLElement[] => {
+export const getAllChildreenOfElement = (
+  mainElement: HTMLElement,
+  withButton?: boolean,
+): HTMLElement[] => {
   const elements: HTMLElement[] = [];
 
-  getChildren(mainElement, elements);
+  getChildren(mainElement, elements, withButton);
 
   return elements;
 };

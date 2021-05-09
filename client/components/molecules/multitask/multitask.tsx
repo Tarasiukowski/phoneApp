@@ -23,9 +23,11 @@ const Multitask = ({ name, open, onEnd, onClose }: props) => {
       window.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         const allowElements = templateRef.current
-          ? getAllChildreenOfElement(templateRef.current)
+          ? getAllChildreenOfElement(templateRef.current, true)
           : [];
 
+        console.log(allowElements.includes(target))
+ 
         if (!allowElements.includes(target) && target.id !== name) {
           setInputValue('');
           onClose();
