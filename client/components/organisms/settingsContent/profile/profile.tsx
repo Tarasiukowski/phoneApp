@@ -16,6 +16,7 @@ import { Error } from '../../../../interfaces';
 
 const SettingsProfileContent = () => {
   const [error, setError] = useState<Error | null>(null);
+  const [openMultiTask, setOpenMultiTask] = useState<boolean>(false);
 
   const { firstname, lastname, email } = useSelector(selectUser);
 
@@ -76,25 +77,35 @@ const SettingsProfileContent = () => {
           autoComplete="off"
         />
       </div>
-      <p className={styles.label}>Email</p>
-      <div className={styles.emailSet}>
-        <p>michal.tarasiuk03@gmail.com</p>
-        <Button width="auto" transparent>
-          Change
-        </Button>
-      </div>
       <Button onClick={save} disabled={false} width="auto">
         save
       </Button>
-      <Alert error={error} />
-      {false && (
-        <Multitask
-          name="ChangeEmail"
-          onEnd={() => {
-            alert('end');
+      <p className={styles.label}>Email</p>
+      <div className={styles.emailSet}>
+        <p>michal.tarasiuk03@gmail.com</p>
+        <Button
+          id="ChangeEmail"
+          onClick={() => {
+            setOpenMultiTask(true);
           }}
-        />
-      )}
+          disabled={openMultiTask}
+          width="auto"
+          transparent
+        >
+          Change
+        </Button>
+      </div>
+      <Alert error={error} />
+      <Multitask
+        name="ChangeEmail"
+        open={openMultiTask}
+        onEnd={() => {
+          alert('end');
+        }}
+        onClose={() => {
+          setOpenMultiTask(false);
+        }}
+      />
     </SettingsTemplate>
   );
 };

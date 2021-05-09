@@ -6,6 +6,7 @@
   z-index: 2;
   display: flex;
   justify-content: center;
+  pointer-events: none;
 }
 
 .box {
@@ -16,6 +17,7 @@
   border-radius: 8px;
   display: flex;
   flex-direction: column;
+  pointer-events: auto;
 }
 
 .header {
