@@ -38,16 +38,19 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
 
     const disabled = !checkInputValue(inputName, inputValue);
 
-    const next = () => {
-      setCounterStage(counterStage + 1);
-      setInputValue('');
-
+    const next = async () => {
       if (end) {
         onEnd(inputValue);
+        setCounterStage(0);
         return;
       }
 
-      onNext(inputValue);
+      const allowNextStage = await onNext(inputValue);
+
+      if (allowNextStage) {
+        setCounterStage(counterStage + 1);
+        setInputValue('');
+      }
     };
 
     if (open) {

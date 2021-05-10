@@ -1,13 +1,12 @@
 import { Response, Request } from 'express';
 
 import UserService from '../services/userService/userService';
-import { generateCode } from '../utils/generateCode';
 
 class UserController {
   async update(req: Request, res: Response) {
     const body = req.body;
 
-    const data = await UserService.update(body);
+    const data = await UserService.update(body, false, body.removeField);
 
     res.send(data);
   }
@@ -27,10 +26,8 @@ class UserController {
 
   async updateEmail(req: Request, res: Response) {
     const { email, newEmail } = req.body;
-    
-    const code = generateCode();
 
-    const data = await UserService.update({ email, newEmail: { email: newEmail, code } });
+    const data = await UserService.updateEmail(email, newEmail);
 
     res.send(data);
   }

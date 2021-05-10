@@ -36,6 +36,11 @@ const SettingsProfileContent = () => {
   };
 
   const hanldeOnNextMultiTask = async (newEmail: string) => {
+    if (newEmail === email) {
+      setError({ msg: 'error - name and surname are the same', id: Math.random() });
+      return false;
+    }
+
     const data = await fetcher('PUT', 'user/update/email', {
       email,
       newEmail,
@@ -43,10 +48,24 @@ const SettingsProfileContent = () => {
 
     if (data.error) {
       setError({ msg: data.errorMsg, id: Math.random() });
-      return;
+
+      if (data.errorMsg === 'error - functionality not allowed') {
+        window.location.reload();
+      }
+      return false;
     }
 
-    window.location.reload();
+    return true;
+  };
+
+  const hanldeOnCloseMultiTask = () => {
+    fetcher('PUT', 'user/update', {
+      removeField: true,
+      email,
+      fieldName: 'newEmail',
+    });
+
+    setOpenMultiTask(false);
   };
 
   const hanldeOnEndMultiTask = async (code: string) => {
@@ -61,6 +80,7 @@ const SettingsProfileContent = () => {
       return;
     }
 
+    setOpenMultiTask(false);
     window.location.reload();
   };
 
@@ -130,9 +150,7 @@ const SettingsProfileContent = () => {
         open={openMultiTask}
         onNext={hanldeOnNextMultiTask}
         onEnd={hanldeOnEndMultiTask}
-        onClose={() => {
-          setOpenMultiTask(false);
-        }}
+        onClose={hanldeOnCloseMultiTask}
       />
     </SettingsTemplate>
   );

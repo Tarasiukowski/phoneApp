@@ -3,5 +3,5 @@ export type props = {
   open: boolean
   onEnd: (inputValue: string) => void;
   onClose: () => void;
-  onNext: (inputValue: string) => void
+  onNext: (inputValue: string) => boolean | Promise<boolean>
 }

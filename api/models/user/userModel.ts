@@ -38,15 +38,17 @@ class User {
     };
   }
 
-  static async update(data, updateEmail?: boolean) {
-    const { email, newEmail } = data;
+  static async update(data, updateEmail?: boolean, removeField?: boolean) {
+    const { email, newEmail, fieldName } = data;
 
     delete data.email;
 
     try {
       await userModel.updateOne(
         { email },
-        { $set: updateEmail ? { email: newEmail } : { ...data } },
+        removeField
+          ? { $unset: { [fieldName]: '' } }
+          : { $set: updateEmail ? { email: newEmail } : { ...data } },
       );
     } catch {
       return { error: true, errorMsg: "error - cant't update user" };

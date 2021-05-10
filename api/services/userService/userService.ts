@@ -2,6 +2,7 @@ import * as jwt from 'jsonwebtoken';
 
 import UserModel from '../../models/user/userModel';
 import { verifyEmail } from '../../utils';
+import { generateCode } from '../../utils/generateCode';
 import { By } from './types';
 
 class UserService {
@@ -13,10 +14,24 @@ class UserService {
     this.by = by;
   }
 
-  static async update(data: any, updateEmail?: boolean) {
-    const returnData = await UserModel.update(data, updateEmail);
+  static async update(data: any, updateEmail?: boolean, removeField?: boolean) {
+    const returnData = await UserModel.update(data, updateEmail, removeField);
 
     return returnData;
+  }
+
+  static async updateEmail(email: string, newEmail: string) {
+    const code = generateCode();
+
+    const findUser = await UserModel.find('email', newEmail);
+
+    if (findUser) {
+      return { error: true, errorMsg: 'error - this email is pinned to another account' };
+    }
+
+    const data = await UserService.update({ email, newEmail: { email: newEmail, code } });
+
+    return data;
   }
 
   static async loginByToken(token: string) {
@@ -41,11 +56,11 @@ class UserService {
 
     if (verifyNewEmail) {
       if (findUser.newEmail.code === code) {
-        const newEmail = findUser.newEmail.email
-        const email = findUser.email
-        
-        this.update({ email, newEmail }, true)
-        
+        const newEmail = findUser.newEmail.email;
+        const email = findUser.email;
+
+        this.update({ email, newEmail }, true);
+
         return { valid: true };
       } else {
         return { valid: false, error: true, errorMsg: 'Wrong verification code.' };
