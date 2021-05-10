@@ -20,19 +20,21 @@ const Multitask = ({ name, open, onEnd, onClose }: props) => {
     const end = counterStage === stages.length - 1 ? true : false;
 
     useEffect(() => {
-      window.addEventListener('click', (e) => {
+      const handleClickEvent = (e: Event) => {
         const target = e.target as HTMLElement;
         const allowElements = templateRef.current
           ? getAllChildreenOfElement(templateRef.current, true)
           : [];
 
-        console.log(allowElements.includes(target))
- 
+        console.log(allowElements.includes(target));
+
         if (!allowElements.includes(target) && target.id !== name) {
           setInputValue('');
           onClose();
         }
-      });
+      };
+
+      window.addEventListener('click', handleClickEvent);
     });
 
     const { title, description, inputPlaceholder, inputName } = activeStage;

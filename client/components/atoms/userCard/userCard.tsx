@@ -27,7 +27,7 @@ const UserCard = ({ friend, big, withDetailed }: props) => {
 
   if (withDetailed) {
     useEffect(() => {
-      window.addEventListener('click', (e: Event) => {
+      const handleClickEvent = (e: Event) => {
         const target = e.target as HTMLElement;
         const userDetailedRefCurrent = userDetailedRef.current;
 
@@ -40,17 +40,15 @@ const UserCard = ({ friend, big, withDetailed }: props) => {
         } else if (!allowElements.includes(target)) {
           setOpenDetailed(false);
         }
-      });
+      };
+
+      window.addEventListener('click', handleClickEvent);
     });
   }
 
   return (
     <Template friend={friend} big={big} ref={templateRef}>
-      <ImageUser
-        margin={friend ? '0 0 0 13px' : '0 0 0 9px'}
-        mini={friend}
-        big={big}
-      />
+      <ImageUser margin={friend ? '0 0 0 13px' : '0 0 0 9px'} mini={friend} big={big} />
       <p className="name">{fullname}</p>
       {withDetailed && openDetailed && <UserDetailed userDetailedRef={userDetailedRef} />}
     </Template>
