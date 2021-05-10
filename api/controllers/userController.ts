@@ -13,9 +13,9 @@ class UserController {
   }
 
   async verify(req: Request, res: Response) {
-    const { email, code } = req.body;
+    const { email, code, verifyNewEmail } = req.body;
 
-    const { valid, errorMsg } = await UserService.verifyByCode(email, code);
+    const { valid, errorMsg } = await UserService.verifyByCode(email, code, verifyNewEmail);
 
     if (!valid) {
       res.send({ errorMsg, error: true });

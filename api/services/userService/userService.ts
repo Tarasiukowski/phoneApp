@@ -13,8 +13,8 @@ class UserService {
     this.by = by;
   }
 
-  static async update(data: any) {
-    const returnData = await UserModel.update(data);
+  static async update(data: any, updateEmail?: boolean) {
+    const returnData = await UserModel.update(data, updateEmail);
 
     return returnData;
   }
@@ -36,8 +36,21 @@ class UserService {
     return { user: null };
   }
 
-  static async verifyByCode(email: string, code: string) {
+  static async verifyByCode(email: string, code: string, verifyNewEmail: boolean) {
     const findUser = await UserModel.find('email', email);
+
+    if (verifyNewEmail) {
+      if (findUser.newEmail.code === code) {
+        const newEmail = findUser.newEmail.email
+        const email = findUser.email
+        
+        this.update({ email, newEmail }, true)
+        
+        return { valid: true };
+      } else {
+        return { valid: false, error: true, errorMsg: 'Wrong verification code.' };
+      }
+    }
 
     if (findUser.code === code) {
       return { valid: true };

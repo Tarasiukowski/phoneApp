@@ -11,5 +11,9 @@ export interface UserDocument extends Document {
   lastname: string;
   onBoarding: boolean;
   redirectTo: string;
-  color: string
+  color: string;
+  newEmail: {
+    email: string;
+    code: string;
+  };
 }
