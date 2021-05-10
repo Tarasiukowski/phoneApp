@@ -1,6 +1,7 @@
 export type props = {
   name: "ChangeEmail";
   open: boolean
-  onEnd: () => void;
-  onClose: () => void
+  onEnd: (inputValue: string) => void;
+  onClose: () => void;
+  onNext: (inputValue: string) => void
 }

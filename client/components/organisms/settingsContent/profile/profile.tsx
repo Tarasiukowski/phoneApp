@@ -35,9 +35,38 @@ const SettingsProfileContent = () => {
     });
   };
 
+  const hanldeOnNextMultiTask = async (newEmail: string) => {
+    const data = await fetcher('PUT', 'user/update/email', {
+      email,
+      newEmail,
+    });
+
+    if (data.error) {
+      setError({ msg: data.errorMsg, id: Math.random() });
+      return;
+    }
+
+    window.location.reload();
+  };
+
+  const hanldeOnEndMultiTask = async (code: string) => {
+    const data = await fetcher('POST', 'user/verifyByCode', {
+      email,
+      code,
+      verifyNewEmail: true,
+    });
+
+    if (data.error) {
+      setError({ msg: data.errorMsg, id: Math.random() });
+      return;
+    }
+
+    window.location.reload();
+  };
+
   const save = async () => {
     if (firstnameValue !== firstname || lastnameValue !== lastname) {
-      const data = await fetcher('PUT', 'user/update', {
+      const data = await fetcher('POST', 'user/verifyByCode', {
         email,
         firstname: firstnameValue,
         lastname: lastnameValue,
@@ -82,7 +111,7 @@ const SettingsProfileContent = () => {
       </Button>
       <p className={styles.label}>Email</p>
       <div className={styles.emailSet}>
-        <p>michal.tarasiuk03@gmail.com</p>
+        <p>{email}</p>
         <Button
           id="ChangeEmail"
           onClick={() => {
@@ -99,9 +128,8 @@ const SettingsProfileContent = () => {
       <Multitask
         name="ChangeEmail"
         open={openMultiTask}
-        onEnd={() => {
-          alert('end');
-        }}
+        onNext={hanldeOnNextMultiTask}
+        onEnd={hanldeOnEndMultiTask}
         onClose={() => {
           setOpenMultiTask(false);
         }}

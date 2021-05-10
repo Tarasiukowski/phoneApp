@@ -6,7 +6,7 @@ import styles from './multitask.module.scss';
 import { checkInputValue, getAllChildreenOfElement } from '../../../utils';
 import { props } from './types';
 
-const Multitask = ({ name, open, onEnd, onClose }: props) => {
+const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
   const option = optionsComponent.find((option) => option.name === name);
 
   if (option) {
@@ -25,9 +25,6 @@ const Multitask = ({ name, open, onEnd, onClose }: props) => {
         const allowElements = templateRef.current
           ? getAllChildreenOfElement(templateRef.current, true)
           : [];
-
-        console.log(allowElements.includes(target));
-
         if (!allowElements.includes(target) && target.id !== name) {
           setInputValue('');
           onClose();
@@ -46,8 +43,11 @@ const Multitask = ({ name, open, onEnd, onClose }: props) => {
       setInputValue('');
 
       if (end) {
-        onEnd();
+        onEnd(inputValue);
+        return;
       }
+
+      onNext(inputValue);
     };
 
     if (open) {
