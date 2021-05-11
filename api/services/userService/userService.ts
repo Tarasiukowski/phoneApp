@@ -14,12 +14,14 @@ class UserService {
     this.by = by;
   }
 
+  // FIX ME
   static async update(data: any, updateEmail?: boolean, removeField?: boolean) {
     const returnData = await UserModel.update(data, updateEmail, removeField);
 
     return returnData;
   }
 
+  // FIX ME
   static async updateEmail(email: string, newEmail: string) {
     const code = generateCode();
 

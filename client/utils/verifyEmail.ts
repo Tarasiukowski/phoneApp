@@ -11,10 +11,10 @@ export const verifyEmail = (email: string): returnValueVerifyEmail => {
       verify: true,
       errorMsg: null,
     };
-  } else {
-    return {
-      verify: false,
-      errorMsg: `error in email - email format validation failed: ${email}`,
-    };
   }
+  
+  return {
+    verify: false,
+    errorMsg: `error in email - email format validation failed: ${email}`,
+  };
 };

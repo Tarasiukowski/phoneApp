@@ -1,5 +1,6 @@
 import { verifyEmail } from './verifyEmail';
 
+// FIX ME
 export const checkInputValue = (type: string, value: string) => {
   switch (type) {
     case 'email':

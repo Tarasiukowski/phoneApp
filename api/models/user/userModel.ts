@@ -38,6 +38,7 @@ class User {
     };
   }
 
+  // FIX ME
   static async update(data, updateEmail?: boolean, removeField?: boolean) {
     const { email, newEmail, fieldName } = data;
 

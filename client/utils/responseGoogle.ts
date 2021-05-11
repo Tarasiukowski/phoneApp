@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { login as loginAuth } from '../reducers/userReducer';
 import { fetcher } from './fetcher';
 
+// FIX ME
 export const responseGoogle = (
   setErrorMessage: Dispatch<SetStateAction<string | null>>,
   dispatch: Dispatch<any>,
