@@ -58,7 +58,7 @@ const SettingsProfileContent = () => {
     return true;
   };
 
-  const hanldeOnCloseMultiTask = () => {
+  const hanldeOnCloseMultiTask = (verify?: boolean) => {
     fetcher('PUT', 'user/update', {
       removeField: true,
       email,
@@ -66,6 +66,7 @@ const SettingsProfileContent = () => {
     });
 
     setOpenMultiTask(false);
+    verify ? window.location.reload() : null;
   };
 
   const hanldeOnEndMultiTask = async (code: string) => {
@@ -77,11 +78,10 @@ const SettingsProfileContent = () => {
 
     if (data.error) {
       setError({ msg: data.errorMsg, id: Math.random() });
-      return;
+      return false;
     }
 
-    setOpenMultiTask(false);
-    window.location.reload();
+    return true;
   };
 
   const save = async () => {
