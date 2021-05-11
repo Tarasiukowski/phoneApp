@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 
-import UserService from '../services/userService/userService';
+import AuthService from '../services/authService';
 
 class AuthController {
   async index(req: Request, res: Response) {
     const token = req.cookies['SESSID'];
 
-    const data = await UserService.loginByToken(token);
+    const data = await AuthService.index(token);
 
     res.send(data);
   }
@@ -14,7 +14,7 @@ class AuthController {
   async login(req: Request, res: Response) {
     const { email, by } = req.body;
 
-    const { error, errorMsg, user, token } = await new UserService(email, by).login();
+    const { error, errorMsg, user, token } = await new AuthService(email, by).login();
 
     if (error) {
       res.send({ error, errorMsg });
@@ -28,7 +28,7 @@ class AuthController {
   async singUp(req: Request, res: Response) {
     const { email, by } = req.body;
 
-    const { error, errorMsg, user, token } = await new UserService(email, by).singup();
+    const { error, errorMsg, user, token } = await new AuthService(email, by).singup();
 
     if (error) {
       res.send({ error, errorMsg });

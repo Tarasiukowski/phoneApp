@@ -1,0 +1,1 @@
+export type By = 'Google' | undefined;

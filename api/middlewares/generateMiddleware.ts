@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
-import userService from '../services/userService/userService';
+
+import AuthService from '../services/authService';
 
 class generateMiddleware {
   async index(req: Request, res: Response, next: NextFunction) {
     const token = req.cookies.SESSID;
 
-    const { user } = await userService.loginByToken(token);
+    const { user } = await AuthService.index(token);
 
     if (user) {
       next();
