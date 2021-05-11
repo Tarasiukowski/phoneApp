@@ -35,55 +35,6 @@ const SettingsProfileContent = () => {
     });
   };
 
-  const hanldeOnNextMultiTask = async (newEmail: string) => {
-    if (newEmail === email) {
-      setError({ msg: 'error - name and surname are the same', id: Math.random() });
-      return false;
-    }
-
-    const data = await fetcher('PUT', 'user/update/email', {
-      email,
-      newEmail,
-    });
-
-    if (data.error) {
-      setError({ msg: data.errorMsg, id: Math.random() });
-
-      if (data.errorMsg === 'error - functionality not allowed') {
-        window.location.reload();
-      }
-      return false;
-    }
-
-    return true;
-  };
-
-  const hanldeOnCloseMultiTask = (verify?: boolean) => {
-    fetcher('PUT', 'user/update', {
-      removeField: true,
-      email,
-      fieldName: 'newEmail',
-    });
-
-    setOpenMultiTask(false);
-    verify ? window.location.reload() : null;
-  };
-
-  const hanldeOnEndMultiTask = async (code: string) => {
-    const data = await fetcher('POST', 'user/verifyByCode', {
-      email,
-      code,
-      verifyNewEmail: true,
-    });
-
-    if (data.error) {
-      setError({ msg: data.errorMsg, id: Math.random() });
-      return false;
-    }
-
-    return true;
-  };
-
   const save = async () => {
     if (firstnameValue !== firstname || lastnameValue !== lastname) {
       const data = await fetcher('POST', 'user/verifyByCode', {
@@ -102,6 +53,57 @@ const SettingsProfileContent = () => {
 
     setError({ msg: 'error - name and surname are the same', id: Math.random() });
   };
+
+  const multiTaskHandle = {
+    onNext: async (newEmail: string) => {
+      if (newEmail === email) {
+        setError({ msg: 'error - name and surname are the same', id: Math.random() });
+        return false;
+      }
+
+      const data = await fetcher('PUT', 'user/update/email', {
+        email,
+        newEmail,
+      });
+
+      if (data.error) {
+        setError({ msg: data.errorMsg, id: Math.random() });
+
+        if (data.errorMsg === 'error - functionality not allowed') {
+          window.location.reload();
+        }
+        return false;
+      }
+
+      return true;
+    },
+    onClose: (verify?: boolean) => {
+      fetcher('PUT', 'user/update', {
+        removeField: true,
+        email,
+        fieldName: 'newEmail',
+      });
+
+      setOpenMultiTask(false);
+      verify ? window.location.reload() : null;
+    },
+    onEnd: async (code: string) => {
+      const data = await fetcher('POST', 'user/verifyByCode', {
+        email,
+        code,
+        verifyNewEmail: true,
+      });
+
+      if (data.error) {
+        setError({ msg: data.errorMsg, id: Math.random() });
+        return false;
+      }
+
+      return true;
+    },
+  };
+
+  const { onNext, onEnd, onClose } = multiTaskHandle;
 
   return (
     <SettingsTemplate>
@@ -148,9 +150,9 @@ const SettingsProfileContent = () => {
       <Multitask
         name="ChangeEmail"
         open={openMultiTask}
-        onNext={hanldeOnNextMultiTask}
-        onEnd={hanldeOnEndMultiTask}
-        onClose={hanldeOnCloseMultiTask}
+        onNext={onNext}
+        onEnd={onEnd}
+        onClose={onClose}
       />
     </SettingsTemplate>
   );
