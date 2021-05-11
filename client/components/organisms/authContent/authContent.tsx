@@ -20,7 +20,7 @@ const AuthContent = ({ login }: props) => {
 
   const dispatch = useDispatch();
 
-  const googleLogin = async (res: any) => {
+  const hanldeGoogleLogin = async (res: any) => {
     const {
       profileObj: { email },
     } = res;
@@ -49,7 +49,7 @@ const AuthContent = ({ login }: props) => {
         <h6>Use one of the methods below to continue</h6>
         <GoogleLogin
           clientId={`${process.env.NEXT_PUBLIC_CLIENT_ID}`}
-          onSuccess={googleLogin}
+          onSuccess={hanldeGoogleLogin}
           render={({ onClick }) => <ButtonGoogle onClick={onClick} login={login} />}
         />
         <p>Or continue with email</p>
