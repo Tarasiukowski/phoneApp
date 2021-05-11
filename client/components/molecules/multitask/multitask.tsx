@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Button } from '../../atoms/button/button';
 
 import styles from './multitask.module.scss';
-import { checkInputValue, getAllChildreenOfElement } from '../../../utils';
+import { isCorrectValue, getAllChildreenOfElement } from '../../../utils';
 import { props } from './types';
 
 const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
@@ -36,7 +36,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
 
     const { title, description, inputPlaceholder, inputName } = activeStage;
 
-    const disabled = !checkInputValue(inputName, inputValue);
+    const disabled = !isCorrectValue(inputName, inputValue);
 
     const next = async () => {
       if (end) {
