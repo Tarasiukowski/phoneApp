@@ -10,7 +10,7 @@ import { selectUser } from '../../../../reducers/userReducer';
 import { updateUser, fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
 import styles from './code.module.scss';
-import { handleOnChange } from '../../../../utils';
+import { handleOnChange } from './utils';
 
 const OnboardingCodeContent = () => {
   const [valueInput, setValueInput] = useState<string>('');
