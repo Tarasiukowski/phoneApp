@@ -6,6 +6,7 @@ import { sendMail } from '../../utils/sendMail';
 import { userSchema } from './userSchema';
 import { By, UserDocument } from './types';
 import { randomColor } from '../../utils';
+import { updateOption } from '../../interface';
 
 export const userModel = model<UserDocument>('user', userSchema);
 
@@ -15,15 +16,18 @@ class User {
   redirectTo: string;
   by: By;
   onBoarding: boolean;
+  number: string;
+  color: string;
+  invites: [];
 
   constructor(email: string, by: By) {
     this.email = email;
     this.by = by;
     this.onBoarding = false;
+    this.color = randomColor();
+    this.invites = [];
     this.redirectTo = this.by === 'Google' ? '/onboarding/number' : '/onboarding/code';
-    if (by !== 'Google') {
-      this.code = generateCode();
-    }
+    by !== 'Google' ? (this.code = generateCode()) : null;
   }
 
   static format(user: UserDocument) {
@@ -38,30 +42,26 @@ class User {
     };
   }
 
-  static async update(data: any, options: any) {
+  static async update(data: any, option: updateOption = 'setField', setEmail?: boolean) {
     const { email, newEmail, fieldName } = data;
-    const { updateEmail, removeField } = options
-      ? options
-      : { updateEmail: false, removeField: false };
 
     delete data.email;
 
-    try {
-      await userModel.updateOne(
-        { email },
-        removeField
-          ? { $unset: { [fieldName]: '' } }
-          : {
-              $set: updateEmail
-                ? { email: newEmail }
-                : newEmail
-                ? { newEmail: { value: newEmail, code: generateCode() } }
-                : { ...data },
-            },
-      );
-    } catch {
-      return { error: true, errorMsg: "error - cant't update user" };
+    if (newEmail) {
+      const findUser = await this.find('email', newEmail);
+
+      if (findUser) {
+        return { error: true, errorMsg: 'error - this email is pinned to another account' };
+      }
     }
+
+    const availableOptions: any = {
+      removeField: { $unset: { [fieldName]: '' } },
+      setField: { $set: setEmail ? { email: newEmail } : { ...data } },
+      newEmail: { $set: { newEmail: { value: newEmail, code: generateCode() } } },
+    };
+
+    await userModel.updateOne({ email }, availableOptions[option]);
 
     return { updated: true };
   }
@@ -73,16 +73,13 @@ class User {
   }
 
   async save() {
-    const number = await createNumber();
-    const color = randomColor();
+    this.number = await createNumber();
 
-    if (this.by !== 'Google') {
-      sendMail(this.email, this.code);
-    }
+    this.by !== 'Google' ? sendMail(this.email, this.code) : null;
 
     delete this.by;
 
-    const user = new userModel({ ...this, color, invites: [], number }).save();
+    const user = new userModel({ ...this }).save();
 
     return user;
   }

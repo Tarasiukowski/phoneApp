@@ -1,0 +1,1 @@
+export type updateOption = 'removeField' | 'setField' | 'newEmail' 

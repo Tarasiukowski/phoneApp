@@ -64,6 +64,7 @@ const SettingsProfileContent = () => {
       const data = await fetcher('PUT', 'user/update', {
         email,
         newEmail,
+        option: "newEmail"
       });
 
       if (data.error) {
@@ -81,9 +82,7 @@ const SettingsProfileContent = () => {
       fetcher('PUT', 'user/update', {
         email,
         fieldName: 'newEmail',
-        options: {
-          removeField: true,
-        },
+        option: "removeField"
       });
 
       setOpenMultiTask(false);
@@ -93,9 +92,7 @@ const SettingsProfileContent = () => {
       const data = await fetcher('POST', 'user/verifyByCode', {
         email,
         code,
-        options: {
-          verifyNewEmail: true,
-        },
+        option: "verifyNewEmail"
       });
 
       if (data.error) {

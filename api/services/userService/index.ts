@@ -1,3 +1,4 @@
+import { updateOption } from '../../interface';
 import UserModel from '../../models/user/userModel';
 import { By } from '../types';
 
@@ -5,8 +6,8 @@ class UserService {
   email: string;
   by: By;
 
-  static async update(data: any, options: any) {
-    const returnData = await UserModel.update(data, options);
+  static async update(data: any, option: updateOption) {
+    const returnData = await UserModel.update(data, option);
 
     return returnData;
   }
@@ -25,18 +26,17 @@ class UserService {
     return { error: false };
   }
 
-  static async verifyByCode(data, options: any) {
+  static async verifyByCode(data, option?: 'verifyNewEmail') {
     const { code, email } = data;
-    const { verifyNewEmail } = options ? options : { verifyNewEmail: false };
+    const isVerifyNewEmail = option === 'verifyNewEmail';
 
     const findUser = await UserModel.find('email', email);
 
-    if (verifyNewEmail ? findUser.newEmail.value : findUser.code === code) {
-      if (verifyNewEmail) {
+    if (isVerifyNewEmail ? findUser.newEmail.value : findUser.code === code) {
+      if (isVerifyNewEmail) {
         const newEmail = findUser.newEmail.value;
-        const email = findUser.email;
 
-        this.update({ email, newEmail }, { updateEmail: true });
+        UserModel.update({ email, newEmail }, null, true);
       }
 
       return { valid: true };

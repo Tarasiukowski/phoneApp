@@ -1,30 +1,20 @@
 import { Response, Request } from 'express';
 
 import UserService from '../services/userService';
-import userModel from '../models/user/userModel';
 
 class UserController {
   async update(req: Request, res: Response) {
-    const { options, ...restBody } = req.body;
-    const { newEmail } = restBody;
+    const { option, ...restBody } = req.body;
 
-    if (newEmail) {
-      const findUser = await userModel.find('email', newEmail);
-
-      if (findUser) {
-        return { error: true, errorMsg: 'error - this email is pinned to another account' };
-      }
-    }
-
-    const data = await UserService.update(restBody, options);
+    const data = await UserService.update(restBody, option);
 
     res.send(data);
   }
 
   async verify(req: Request, res: Response) {
-    const { options, ...restBody } = req.body;
+    const { option, ...restBody } = req.body;
 
-    const { valid, errorMsg } = await UserService.verifyByCode(restBody, options);
+    const { valid, errorMsg } = await UserService.verifyByCode(restBody, option);
 
     if (!valid) {
       res.send({ errorMsg, error: true });
