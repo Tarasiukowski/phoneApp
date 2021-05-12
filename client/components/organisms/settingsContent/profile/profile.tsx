@@ -54,7 +54,7 @@ const SettingsProfileContent = () => {
     setError({ msg: 'error - name and surname are the same', id: Math.random() });
   };
 
-  const multiTaskHandle = {
+  const multitaskHandle = {
     onNext: async (newEmail: string) => {
       if (newEmail === email) {
         setError({ msg: 'error - email is the same', id: Math.random() });
@@ -107,7 +107,7 @@ const SettingsProfileContent = () => {
     },
   };
 
-  const { onNext, onEnd, onClose } = multiTaskHandle;
+  const { onNext, onEnd, onClose } = multitaskHandle;
 
   return (
     <SettingsTemplate>

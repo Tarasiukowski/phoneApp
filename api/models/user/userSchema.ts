@@ -13,5 +13,6 @@ export const userSchema: Schema = new Schema({
   newEmail: {
     value: String,
     code: String
-  }
+  },
+  invites: [String]
 });

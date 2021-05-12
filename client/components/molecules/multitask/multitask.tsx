@@ -49,7 +49,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
         return;
       }
 
-      const allowNextStage = onNext ? await onNext(inputValue) : false;
+      const allowNextStage = onNext ? await onNext(inputValue) : name === "InviteFriend";
 
       if (allowNextStage) {
         setCounterStage(counterStage + 1);

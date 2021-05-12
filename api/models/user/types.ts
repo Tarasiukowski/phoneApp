@@ -2,6 +2,10 @@ import { Document } from 'mongoose';
 
 export type By = 'Google' | undefined;
 
+export type invite = {
+  email: string;
+};
+
 export interface UserDocument extends Document {
   email: string;
   number: string;
@@ -16,4 +20,5 @@ export interface UserDocument extends Document {
     value: string;
     code: string;
   };
+  invites: invite[];
 }

@@ -44,14 +44,6 @@ class User {
       ? options
       : { updateEmail: false, removeField: false };
 
-    if (newEmail) {
-      const findUser = await this.find('email', newEmail);
-
-      if (findUser) {
-        return { error: true, errorMsg: 'error - this email is pinned to another account' };
-      }
-    }
-
     delete data.email;
 
     try {
@@ -90,7 +82,7 @@ class User {
 
     delete this.by;
 
-    const user = new userModel({ ...this, color, number }).save();
+    const user = new userModel({ ...this, color, invites: [], number }).save();
 
     return user;
   }
