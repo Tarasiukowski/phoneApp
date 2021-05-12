@@ -59,7 +59,7 @@ const OnboardingNumberContent = () => {
         <h4>Your phone number</h4>
         <h6>You can add more phone numbers later.</h6>
         <SelectNumberButton onClick={toggleOpenList} number={number} />
-        <Button onClick={next} disabled={!number} margin="32px 0 0 0" width="100%">
+        <Button onClick={next} disabled={!number} style={{ margin: '32px 0 0 0' }} width="100%">
           Continue
         </Button>
         {openList && <SelectNumberList setNumber={setNumber} setOpenList={setOpenList} />}

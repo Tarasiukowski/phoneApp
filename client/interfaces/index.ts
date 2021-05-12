@@ -15,13 +15,6 @@ export type User = {
   fullname: string
 };
 
-export type absolute = {
-  top?: string;
-  bottom?: string;
-  left?: string;
-  right?: string;
-};
-
 export type Error = {
   msg: string;
   id: number;

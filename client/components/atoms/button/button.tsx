@@ -12,7 +12,6 @@ export const Button = styled.button<props>`
   font-size: 1.5rem;
   transition: background 0.3s ease 0ms;
   border-radius: 4px;
-  margin: ${({ margin }) => (margin ? margin : null)};
   cursor: pointer;
 
   ${({ waring }) =>
@@ -25,16 +24,6 @@ export const Button = styled.button<props>`
       :hover {
         background-color: rgba(232, 92, 92, 0.1);
       }
-    `}
-
-  ${({ absolute }) =>
-    absolute &&
-    css`
-      position: absolute;
-      top: ${absolute.top};
-      bottom: ${absolute.bottom};
-      right: ${absolute.right};
-      left: ${absolute.left};
     `}
 
   ${({ transparent }) =>

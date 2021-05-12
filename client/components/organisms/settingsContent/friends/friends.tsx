@@ -55,7 +55,7 @@ const SettingsFriendsContent = () => {
         }}
         disabled={openMultiTask}
         id="InviteFriend"
-        margin="37px 0 17px 0"
+        style={{ margin: '37px 0 17px 0' }}
         width="auto"
       >
         Invite a member

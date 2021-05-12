@@ -20,7 +20,7 @@ const OnboardingTemplate: React.FC = ({ children }) => {
       <Logo className={styles.logo} />
       <Button
         onClick={() => logout(hanldeLogoutError)}
-        absolute={{ right: '25px', top: '25px' }}
+        style={{ position: 'absolute', right: '25px', top: '25px' }}
         transparent
       >
         Sign out
