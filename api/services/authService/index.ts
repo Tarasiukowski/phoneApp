@@ -2,6 +2,7 @@ import * as jwt from 'jsonwebtoken';
 
 import UserModel from '../../models/user/userModel';
 import { verifyEmail } from '../../utils';
+import { errorsMsgs } from '../../data';
 import { By } from '../types';
 
 class UserService {
@@ -53,7 +54,7 @@ class UserService {
       return { user: formatUser, token };
     }
 
-    return { error: true, errorMsg: 'user with such email does not exist' };
+    return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
   }
 
   async singup() {
@@ -68,7 +69,7 @@ class UserService {
     const findUser = await UserModel.find('email', email);
 
     if (findUser) {
-      return { error: true, errorMsg: 'user with that email address exists' };
+      return { error: true, errorMsg: errorsMsgs.USER_EXIST };
     }
 
     const user = await new UserModel(email, this.by).save();

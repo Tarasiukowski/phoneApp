@@ -1,0 +1,1 @@
+export { errorsMsgs } from './errorsMsgs'

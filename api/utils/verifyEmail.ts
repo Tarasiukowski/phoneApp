@@ -1,3 +1,5 @@
+import { errorsMsgs } from '../data';
+
 type returnValueVerifyEmail = {
   verify: boolean;
   errorMsg: string | null;
@@ -14,7 +16,7 @@ export const verifyEmail = (email: string): returnValueVerifyEmail => {
   } else {
     return {
       verify: false,
-      errorMsg: `error in email - email format validation failed: ${email}`,
+      errorMsg: errorsMsgs.EMAIL_VALIDATION(email),
     };
   }
 };

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 import AuthService from '../services/authService';
+import { errorsMsgs } from '../data';
 
 class generateMiddleware {
   async index(req: Request, res: Response, next: NextFunction) {
@@ -13,7 +14,7 @@ class generateMiddleware {
       return;
     }
 
-    res.send({ error: true, errorMsg: 'error - functionality not allowed' });
+    res.send({ error: true, errorMsg: errorsMsgs.FUNCTIONALITY_NOT_ALLOWED });
   }
 }
 

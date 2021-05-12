@@ -1,3 +1,4 @@
+import { errorsMsgs } from '../../data';
 import { updateOption } from '../../interface';
 import UserModel from '../../models/user/userModel';
 import { By } from '../types';
@@ -14,13 +15,13 @@ class UserService {
 
   static async invite(from: string, to: string) {
     if (from === to) {
-      return { error: true, errorMsg: 'error - you cannot send yourself an invitation' };
+      return { error: true, errorMsg: errorsMsgs.INVITE_TO_YOURSELF };
     }
 
     const findUser = await UserModel.find('email', to);
 
     if (!findUser) {
-      return { error: true, errorMsg: "error - user with this e-mail does't exist" };
+      return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
     }
 
     return { error: false };
@@ -41,7 +42,7 @@ class UserService {
 
       return { valid: true };
     } else {
-      return { valid: false, error: true, errorMsg: 'Wrong verification code.' };
+      return { valid: false, error: true, errorMsg: errorsMsgs.WRONG_VERIFICATION_CODE };
     }
   }
 }

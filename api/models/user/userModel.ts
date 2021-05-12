@@ -7,6 +7,7 @@ import { userSchema } from './userSchema';
 import { By, UserDocument } from './types';
 import { randomColor } from '../../utils';
 import { updateOption } from '../../interface';
+import { errorsMsgs } from '../../data';
 
 export const userModel = model<UserDocument>('user', userSchema);
 
@@ -51,7 +52,7 @@ class User {
       const findUser = await this.find('email', newEmail);
 
       if (findUser) {
-        return { error: true, errorMsg: 'error - this email is pinned to another account' };
+        return { error: true, errorMsg: errorsMsgs.EMAIL_IN_USE };
       }
     }
 
