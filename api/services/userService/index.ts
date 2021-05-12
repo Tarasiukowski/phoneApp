@@ -13,8 +13,9 @@ class UserService {
 
   static async verifyByCode(data, options: any) {
     const { code, email } = data;
-    const findUser = await UserModel.find('email', email);
     const { verifyNewEmail } = options ? options : { verifyNewEmail: false };
+    
+    const findUser = await UserModel.find('email', email);
 
     if (verifyNewEmail ? findUser.newEmail.value : findUser.code === code) {
       if (verifyNewEmail) {

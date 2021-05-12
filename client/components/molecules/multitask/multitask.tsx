@@ -25,6 +25,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
         const allowElements = templateRef.current
           ? getAllChildreenOfElement(templateRef.current, true)
           : [];
+
         if (!allowElements.includes(target) && target.id !== name) {
           setInputValue('');
           onClose();
@@ -48,7 +49,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
         return;
       }
 
-      const allowNextStage = await onNext(inputValue);
+      const allowNextStage = onNext ? await onNext(inputValue) : false;
 
       if (allowNextStage) {
         setCounterStage(counterStage + 1);
@@ -75,7 +76,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
             </div>
             <div className={styles.footer}>
               <Button onClick={next} disabled={disabled} width="auto">
-                {end ? 'Ok' : 'Next'}
+                {end ? (name === 'InviteFriend' ? 'Send' : 'Ok') : 'Next'}
               </Button>
             </div>
           </div>
@@ -104,6 +105,17 @@ const optionsComponent = [
         description: 'to which send to your e-mail',
         inputName: 'code',
         inputPlaceholder: 'Enter an verify code',
+      },
+    ],
+  },
+  {
+    name: 'InviteFriend',
+    stages: [
+      {
+        title: 'Pass friend e-mail',
+        description: 'to send invite',
+        inputName: 'email',
+        inputPlaceholder: 'Enter an email adress',
       },
     ],
   },
