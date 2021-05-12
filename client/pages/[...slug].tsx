@@ -5,6 +5,14 @@ import Subpage from '../components/organisms/subpage/subpage';
 import IsLoggedTemplate from '../templates/isLoggedTemplate/isLoggedTemplate';
 import MainTemplate from '../templates/mainTemplate/mainTemplate';
 
+const MainPage = () => (
+  <IsLoggedTemplate allow="logged">
+    <MainTemplate>
+      <Subpage routes={routes} slugNumber={0} />
+    </MainTemplate>
+  </IsLoggedTemplate>
+);
+
 const routes = [
   {
     slug: 'settings',
@@ -19,13 +27,5 @@ const routes = [
     component: <ContactsContent />,
   },
 ];
-
-const MainPage = () => (
-  <IsLoggedTemplate allow="logged">
-    <MainTemplate>
-      <Subpage routes={routes} slugNumber={0} />
-    </MainTemplate>
-  </IsLoggedTemplate>
-);
 
 export default MainPage;

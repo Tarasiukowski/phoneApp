@@ -1,20 +1,20 @@
 import { Response, Request } from 'express';
 
-import UserService from '../services/userService/userService';
+import UserService from '../services/userService';
 
 class UserController {
   async update(req: Request, res: Response) {
-    const body = req.body;
+    const { options, ...restBody } = req.body;
 
-    const data = await UserService.update(body, false, body.removeField);
+    const data = await UserService.update(restBody, options);
 
     res.send(data);
   }
 
   async verify(req: Request, res: Response) {
-    const { email, code, verifyNewEmail } = req.body;
+    const { options, ...restBody } = req.body;
 
-    const { valid, errorMsg } = await UserService.verifyByCode(email, code, verifyNewEmail);
+    const { valid, errorMsg } = await UserService.verifyByCode(restBody, options);
 
     if (!valid) {
       res.send({ errorMsg, error: true });
@@ -22,14 +22,6 @@ class UserController {
     }
 
     res.send({ valid });
-  }
-
-  async updateEmail(req: Request, res: Response) {
-    const { email, newEmail } = req.body;
-
-    const data = await UserService.updateEmail(email, newEmail);
-
-    res.send(data);
   }
 }
 

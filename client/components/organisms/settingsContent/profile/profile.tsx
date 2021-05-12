@@ -57,11 +57,11 @@ const SettingsProfileContent = () => {
   const multiTaskHandle = {
     onNext: async (newEmail: string) => {
       if (newEmail === email) {
-        setError({ msg: 'error - name and surname are the same', id: Math.random() });
+        setError({ msg: 'error - email is the same', id: Math.random() });
         return false;
       }
 
-      const data = await fetcher('PUT', 'user/update/email', {
+      const data = await fetcher('PUT', 'user/update', {
         email,
         newEmail,
       });
@@ -79,9 +79,11 @@ const SettingsProfileContent = () => {
     },
     onClose: (verify?: boolean) => {
       fetcher('PUT', 'user/update', {
-        removeField: true,
         email,
         fieldName: 'newEmail',
+        options: {
+          removeField: true,
+        },
       });
 
       setOpenMultiTask(false);
@@ -91,7 +93,9 @@ const SettingsProfileContent = () => {
       const data = await fetcher('POST', 'user/verifyByCode', {
         email,
         code,
-        verifyNewEmail: true,
+        options: {
+          verifyNewEmail: true,
+        },
       });
 
       if (data.error) {

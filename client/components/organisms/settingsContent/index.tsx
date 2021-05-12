@@ -6,6 +6,13 @@ import SettingsGeneralContent from './general/general';
 import SettingsBlocklistContent from './blocklist/blocklist';
 import SettingsContactContent from './contacts/contacts';
 
+const SettingsContent = () => (
+  <>
+    <SettingsNavigation />
+    <Subpage routes={routes} slugNumber={1} />
+  </>
+);
+
 const routes = [
   {
     slug: 'friends',
@@ -28,16 +35,9 @@ const routes = [
     component: <SettingsContactContent />,
   },
   {
-    slug: "members",
-    component: <SettingsFriendsContent />
-  }
+    slug: 'members',
+    component: <SettingsFriendsContent />,
+  },
 ];
-
-const SettingsContent = () => (
-  <>
-    <SettingsNavigation />
-    <Subpage routes={routes} slugNumber={1} />
-  </>
-);
 
 export default SettingsContent;

@@ -38,9 +38,19 @@ class User {
     };
   }
 
-  // FIX ME
-  static async update(data, updateEmail?: boolean, removeField?: boolean) {
+  static async update(data: any, options: any) {
     const { email, newEmail, fieldName } = data;
+    const { updateEmail, removeField } = options
+      ? options
+      : { updateEmail: false, removeField: false };
+
+    if (newEmail) {
+      const findUser = await this.find('email', newEmail);
+
+      if (findUser) {
+        return { error: true, errorMsg: 'error - this email is pinned to another account' };
+      }
+    }
 
     delete data.email;
 
@@ -49,7 +59,13 @@ class User {
         { email },
         removeField
           ? { $unset: { [fieldName]: '' } }
-          : { $set: updateEmail ? { email: newEmail } : { ...data } },
+          : {
+              $set: updateEmail
+                ? { email: newEmail }
+                : newEmail
+                ? { newEmail: { email: newEmail, code: generateCode() } }
+                : { ...data },
+            },
       );
     } catch {
       return { error: true, errorMsg: "error - cant't update user" };
