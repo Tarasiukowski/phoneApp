@@ -7,7 +7,7 @@ import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
 
 import { selectUser } from '../../../../reducers/userReducer';
-import { updateUser, fetcher } from '../../../../utils';
+import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
 import styles from './code.module.scss';
 import { handleOnChange } from './utils';
@@ -37,12 +37,15 @@ const OnboardingCodeContent = () => {
     }
 
     if (valid) {
-      const data = await updateUser([{ email: user.email, redirectTo: '/onboarding/number' }]);
+      const { error, errorMsg } = await fetcher('PUT', 'user/update', {
+        email: user.email,
+        redirectTo: '/onboarding/number',
+      });
 
-      if(data.error) {
-        setError({ msg: data.errorMsg, id: Math.random() })
-        window.location.reload()
-        return
+      if (error) {
+        setError({ msg: errorMsg, id: Math.random() });
+        window.location.reload();
+        return;
       }
 
       setRedirect(true);

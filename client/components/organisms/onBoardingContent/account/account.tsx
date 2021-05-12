@@ -7,7 +7,6 @@ import Alert from '../../../atoms/alert/alert';
 import { Button } from '../../../atoms/button/button';
 import { Input } from '../../../atoms/input/input';
 
-import { updateUser } from '../../../../utils';
 import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
 import { FormValues } from './types';
@@ -42,7 +41,7 @@ const OnboardingAccountContent = () => {
 
     setDisabledByRequest(true);
 
-    fetcher('put', 'user/update', {
+    fetcher('PUT', 'user/update', {
       email: user.email,
       ...formValues,
     }).then(async (data) => {
@@ -52,12 +51,14 @@ const OnboardingAccountContent = () => {
         return;
       }
 
-      const returnData = await updateUser([
-        { email: user.email, redirectTo: '/contacts', onBoarding: true },
-      ]);
+      const { error, errorMsg } = await fetcher('PUT', 'user/update', {
+        email: user.email,
+        redirectTo: '/contacts',
+        onBoarding: true,
+      });
 
-      if (returnData.error) {
-        setError({ msg: returnData.errorMsg, id: Math.random() });
+      if (error) {
+        setError({ msg: errorMsg, id: Math.random() });
         window.location.reload();
         return;
       }

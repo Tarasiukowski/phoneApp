@@ -8,7 +8,7 @@ import { Button } from '../../../atoms/button/button';
 import Alert from '../../../atoms/alert/alert';
 
 import { selectUser } from '../../../../reducers/userReducer';
-import { updateUser } from '../../../../utils';
+import { fetcher } from '../../../../utils';
 import styles from './number.module.scss';
 import { Error } from '../../../../interfaces';
 
@@ -31,7 +31,7 @@ const OnboardingNumberContent = () => {
   const next = async () => {
     let data;
 
-    data = await updateUser([{ email: user.email, number }]);
+    data = await fetcher('PUT', 'user/update', { email: user.email, number });
 
     if (data.error) {
       setError({ msg: data.errorMsg, id: Math.random() });
@@ -39,7 +39,10 @@ const OnboardingNumberContent = () => {
       return;
     }
 
-    data = await updateUser([{ email: user.email, redirectTo: '/onboarding/account' }]);
+    data = await fetcher('PUT', 'user/update', {
+      email: user.email,
+      redirectTo: '/onboarding/account',
+    });
 
     if (data.error) {
       setError({ msg: data.errorMsg, id: Math.random() });
