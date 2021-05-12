@@ -11,7 +11,7 @@ export const userSchema: Schema = new Schema({
   redirectTo: String,
   color: String,
   newEmail: {
-    email: String,
+    value: String,
     code: String
   }
 });

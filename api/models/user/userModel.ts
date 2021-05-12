@@ -63,7 +63,7 @@ class User {
               $set: updateEmail
                 ? { email: newEmail }
                 : newEmail
-                ? { newEmail: { email: newEmail, code: generateCode() } }
+                ? { newEmail: { value: newEmail, code: generateCode() } }
                 : { ...data },
             },
       );

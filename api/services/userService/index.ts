@@ -18,7 +18,7 @@ class UserService {
 
     if (verifyNewEmail) {
       if (findUser.newEmail.code === code) {
-        const newEmail = findUser.newEmail.email;
+        const newEmail = findUser.newEmail.value;
         const email = findUser.email;
 
         this.update({ email, newEmail }, { updateEmail: true });

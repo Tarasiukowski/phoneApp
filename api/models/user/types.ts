@@ -13,7 +13,7 @@ export interface UserDocument extends Document {
   redirectTo: string;
   color: string;
   newEmail: {
-    email: string;
+    value: string;
     code: string;
   };
 }
