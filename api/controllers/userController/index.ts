@@ -1,8 +1,9 @@
 import { Response, Request } from 'express';
 
-import UserService from '../services/userService';
+import { inviteController } from './inviteController'
+import UserService from '../../services/userService';
 
-class UserController {
+class UserController extends inviteController {
   async update(req: Request, res: Response) {
     const { option, ...restBody } = req.body;
 
@@ -22,14 +23,6 @@ class UserController {
     }
 
     res.send({ valid });
-  }
-
-  async invite(req: Request, res: Response) {
-    const { email, to } = req.body;
-
-    const data = await UserService.invite(email, to);
-
-    res.send(data);
   }
 }
 

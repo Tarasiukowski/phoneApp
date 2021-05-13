@@ -1,10 +1,11 @@
 import { Router } from 'express';
 
-import { userController } from '../controllers/userController';
+import { userController } from '../../controllers/userController';
+import { inviteRouter } from './inviteRouter';
 
 export const userRouter = Router();
 
 userRouter
   .post('/verifyByCode', userController.verify)
-  .post('/invite', userController.invite)
+  .use('/invite', inviteRouter)
   .put('/update', userController.update);
