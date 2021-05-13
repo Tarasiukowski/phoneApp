@@ -13,6 +13,7 @@ import { InputsValues } from './types';
 import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
+import { ERROR_NOT_ALLOWED, WITHOUT_CHANGE } from '../../../../common/errors';
 
 const SettingsProfileContent = () => {
   const [error, setError] = useState<Error | null>(null);
@@ -51,26 +52,26 @@ const SettingsProfileContent = () => {
       return;
     }
 
-    setError({ msg: 'error - name and surname are the same', id: Math.random() });
+    setError({ msg: WITHOUT_CHANGE('name and surname', 'plural'), id: Math.random() });
   };
 
   const multitaskHandle = {
     onNext: async (newEmail: string) => {
       if (newEmail === email) {
-        setError({ msg: 'error - email is the same', id: Math.random() });
+        setError({ msg: WITHOUT_CHANGE('email', 'singular'), id: Math.random() });
         return false;
       }
 
       const data = await fetcher('PUT', 'user/update', {
         email,
         newEmail,
-        option: "newEmail"
+        option: 'newEmail',
       });
 
       if (data.error) {
         setError({ msg: data.errorMsg, id: Math.random() });
 
-        if (data.errorMsg === 'error - functionality not allowed') {
+        if (data.errorMsg === ERROR_NOT_ALLOWED) {
           window.location.reload();
         }
         return false;
@@ -82,7 +83,7 @@ const SettingsProfileContent = () => {
       fetcher('PUT', 'user/update', {
         email,
         fieldName: 'newEmail',
-        option: "removeField"
+        option: 'removeField',
       });
 
       setOpenMultiTask(false);
@@ -92,7 +93,7 @@ const SettingsProfileContent = () => {
       const data = await fetcher('POST', 'user/verifyByCode', {
         email,
         code,
-        option: "verifyNewEmail"
+        option: 'verifyNewEmail',
       });
 
       if (data.error) {

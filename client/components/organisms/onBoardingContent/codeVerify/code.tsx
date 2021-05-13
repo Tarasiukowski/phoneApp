@@ -11,6 +11,7 @@ import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
 import styles from './code.module.scss';
 import { handleOnChange } from './utils';
+import { ERROR_NOT_ALLOWED } from '../../../../common/errors';
 
 const OnboardingCodeContent = () => {
   const [valueInput, setValueInput] = useState<string>('');
@@ -30,7 +31,7 @@ const OnboardingCodeContent = () => {
     if (error) {
       setError({ msg: errorMsg, id: Math.random() });
 
-      if (errorMsg === 'error - functionality not allowed') {
+      if (errorMsg === ERROR_NOT_ALLOWED) {
         window.location.reload();
       }
       return;

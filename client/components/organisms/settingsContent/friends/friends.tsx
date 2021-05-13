@@ -12,6 +12,7 @@ import styles from './friends.module.scss';
 import { fetcher } from '../../../../utils';
 import { selectUser } from '../../../../reducers/userReducer';
 import { Error } from '../../../../interfaces';
+import { ERROR_NOT_ALLOWED } from '../../../../common/errors'
 
 const SettingsFriendsContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState<boolean>(false);
@@ -32,7 +33,7 @@ const SettingsFriendsContent = () => {
       if (error) {
         setError({ msg: errorMsg, id: Math.random() });
 
-        if (errorMsg === 'error - functionality not allowed') {
+        if (errorMsg === ERROR_NOT_ALLOWED) {
           window.location.reload();
         }
 
