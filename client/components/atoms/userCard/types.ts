@@ -1,5 +1,10 @@
 export type props = {
-  friend?: boolean;
+  elemList?: boolean;
   big?: boolean;
   withDetailed?: boolean;
+  fullname?: {
+    firstname: string;
+    lastname: string;
+  };
+  colorImage?: string;
 };

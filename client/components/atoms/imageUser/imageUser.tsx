@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import { props } from './types';
 import { selectUser } from '../../../reducers/userReducer';
 
-const ImageUser = ({ friend, colorImage, ...props }: props) => {
+const ImageUser = ({ fullname, colorImage, ...props }: props) => {
   let splitedFullname;
   let initials = '';
 
-  if (!friend) {
+  if (!fullname) {
     const user = useSelector(selectUser);
 
     if (user) {
@@ -21,7 +21,7 @@ const ImageUser = ({ friend, colorImage, ...props }: props) => {
       initials = `${splitedFullname[0][0]}${splitedFullname[1][0]}`.toUpperCase();
     }
   } else {
-    splitedFullname = Object.values(friend);
+    splitedFullname = Object.values(fullname);
 
     initials = `${splitedFullname[0][0]}${splitedFullname[1][0]}`.toUpperCase();
   }

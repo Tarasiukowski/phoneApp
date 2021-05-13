@@ -15,6 +15,13 @@ export type User = {
   fullname: string
 };
 
+export type Invite = {
+  email: string,
+  color: string,
+  firstname: string,
+  lastname: string
+}
+
 export type Error = {
   msg: string;
   id: number;

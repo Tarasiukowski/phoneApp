@@ -16,6 +16,10 @@
   font-size: 1.3rem;
   font-weight: 600;
 
+  p {
+    text-transform: capitalize;
+  }
+
   span {
     color: rgb(151, 151, 176);
     margin-left: 8px;
@@ -59,6 +63,7 @@
   height: 40px;
   background-color: #4b4b663b;
   padding-left: 15px;
+  margin-top: 3px;
 
   div {
     margin: 0;

@@ -7,7 +7,7 @@ const FriendsList = () => (
   <div>
     <h2 className={styles.heading}>Friensd List</h2>
     <div className={styles.template}>
-      <FriendsListElement friend />
+      <FriendsListElement elemList />
       <AddButton />
     </div>
   </div>

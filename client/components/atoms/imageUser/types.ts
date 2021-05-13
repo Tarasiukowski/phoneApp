@@ -4,7 +4,7 @@ export type props = {
   size?: string;
   fontSize?: string;
   margin?: string;
-  friend?: {
+  fullname?: {
     firstname: string;
     lastname: string;
   };

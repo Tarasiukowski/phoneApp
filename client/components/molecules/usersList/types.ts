@@ -1,3 +1,3 @@
 export type props = {
-  headerTitle: string
-}
+  name: 'contacts' | 'invites';
+};
