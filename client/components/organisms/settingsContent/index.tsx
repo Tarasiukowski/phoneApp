@@ -31,7 +31,7 @@ const routes = [
     component: <SettingsBlocklistContent />,
   },
   {
-    slug: 'contacts',
+    slug: 'manageLists',
     component: <SettingsContactContent />,
   },
   {

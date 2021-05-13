@@ -31,9 +31,15 @@ const SettingsNavigation = () => (
         {...buttonNavigationSettings}
       />
       <ButtonNavigation
-        href="/settings/contacts"
+        href="/settings/members"
+        icon={<MembersSvg />}
+        content="Friends List"
+        {...buttonNavigationSettings}
+      />
+      <ButtonNavigation
+        href="/settings/manageLists"
         icon={<ContactSettingsSvg />}
-        content="Contacts"
+        content="Manage Lists"
         {...buttonNavigationSettings}
       />
       <ButtonNavigation
@@ -49,12 +55,6 @@ const SettingsNavigation = () => (
         href="/settings/general"
         icon={<GeneralSvg />}
         content="General"
-        {...buttonNavigationSettings}
-      />
-      <ButtonNavigation
-        href="/settings/members"
-        icon={<MembersSvg />}
-        content="Members"
         {...buttonNavigationSettings}
       />
       <ButtonNavigation
