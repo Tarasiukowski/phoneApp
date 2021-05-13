@@ -44,7 +44,7 @@ class User {
   }
 
   static async update(data: any, option: updateOption = 'setField', setEmail?: boolean) {
-    const { email, newEmail, fieldName } = data;
+    const { email, newEmail, fieldName, pushValue } = data;
 
     delete data.email;
 
@@ -60,6 +60,7 @@ class User {
       removeField: { $unset: { [fieldName]: '' } },
       setField: { $set: setEmail ? { email: newEmail } : { ...data } },
       newEmail: { $set: { newEmail: { value: newEmail, code: generateCode() } } },
+      pushToField: { $push: { [fieldName]: pushValue } },
     };
 
     await userModel.updateOne({ email }, availableOptions[option]);

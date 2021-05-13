@@ -24,6 +24,8 @@ class UserService {
       return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
     }
 
+    UserModel.update({ email: to, fieldName: "invites", pushValue: from }, "pushToField")
+
     return { error: false };
   }
 
