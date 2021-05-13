@@ -1,4 +1,4 @@
-const alllowRoutes = ['/settings', '/chat', '/contacts'];
+const alllowRoutes = ['/settings', '/chat', '/contacts', "/invites"];
 
 export const checkOnboardingStage = (
   status: { onBoarding: boolean; redirectTo: string },

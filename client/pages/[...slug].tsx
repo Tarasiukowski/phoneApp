@@ -1,5 +1,6 @@
 import ChatContent from '../components/organisms/chatContent/chatContent';
 import ContactsContent from '../components/organisms/contactsContent/contactsContent';
+import InvitesContent from '../components/organisms/invitesContent/invitesContent';
 import SettingsContent from '../components/organisms/settingsContent';
 import Subpage from '../components/organisms/subpage/subpage';
 import IsLoggedTemplate from '../templates/isLoggedTemplate/isLoggedTemplate';
@@ -26,6 +27,10 @@ const routes = [
     slug: 'contacts',
     component: <ContactsContent />,
   },
+  {
+    slug: 'invites',
+    component: <InvitesContent />
+  }
 ];
 
 export default MainPage;
