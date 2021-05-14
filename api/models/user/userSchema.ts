@@ -15,5 +15,6 @@ export const userSchema: Schema = new Schema({
     code: String
   },
   invites: [String],
+  friends: [String],
   image: String
 });

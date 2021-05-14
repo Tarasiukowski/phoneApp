@@ -5,7 +5,7 @@ import styles from './detailedChatUser.module.scss';
 import { EmailSvg, PhoneNumberSvg } from '../../../public/svgs';
 
 type ListElem = {
-  email?: ReactNode;
+  email: ReactNode;
   number: ReactNode;
 };
 

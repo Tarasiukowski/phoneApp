@@ -1,11 +1,13 @@
 import { Router } from 'express';
 
 import { userController } from '../../controllers/userController';
+import { friendsRouter } from './friendsRouter';
 import { inviteRouter } from './inviteRouter';
 
 export const userRouter = Router();
 
 userRouter
   .post('/verifyByCode', userController.verify)
+  .put('/update', userController.update)
   .use('/invite', inviteRouter)
-  .put('/update', userController.update);
+  .use('/friends', friendsRouter);

@@ -20,7 +20,8 @@ class User {
   number: string;
   color: string;
   image: string;
-  invites: [];
+  invites: string[];
+  friends: string[];
 
   constructor(email: string, by: By) {
     this.email = email;
@@ -28,6 +29,7 @@ class User {
     this.onBoarding = false;
     this.color = randomColor();
     this.invites = [];
+    this.friends = [];
     this.redirectTo = this.by === 'Google' ? '/onboarding/number' : '/onboarding/code';
     by !== 'Google' ? (this.code = generateCode()) : null;
   }
@@ -77,7 +79,7 @@ class User {
   }
 
   async save(data) {
-    const { image } = data
+    const { image } = data;
 
     this.number = await createNumber();
 
