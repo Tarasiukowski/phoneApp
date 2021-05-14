@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import UserDetailed from '../../organisms/chatContent/userDetailed/userDetailed';
@@ -10,8 +10,11 @@ import { props } from './types';
 import { selectUser } from '../../../reducers/userReducer';
 import { fetcher } from '../../../utils';
 import { selectInvites, update } from '../../../reducers/invitesReducer';
+import { Invite } from '../../../interfaces';
 
 const UsersList = ({ name }: props) => {
+  const [userDetailed, setUserDetailed] = useState<Invite | null>(null);
+
   const { email } = useSelector(selectUser);
   const invites = useSelector(selectInvites);
 
@@ -22,17 +25,23 @@ const UsersList = ({ name }: props) => {
       fetcher('POST', 'user/invite/get', {
         email,
       }).then((invites) => {
+        invites.length ? setUserDetailed(invites[0]) : null;
+
         dispatch(update(invites));
       });
     }
   }, []);
+
+  const updateUserDetailed = (userData: Invite) => {
+    setUserDetailed(userData);
+  };
 
   return (
     <>
       <div className={styles.template}>
         <div className={styles.header}>
           <p>{name}</p>
-          <span>{name === "invites" ? invites.length : 0}</span>
+          <span>{name === 'invites' ? invites.length : 0}</span>
         </div>
         <div className={styles.content}>
           <div className={styles.inputTemplate}>
@@ -44,27 +53,32 @@ const UsersList = ({ name }: props) => {
             </div>
           </div>
           <div>
-            {name === "invites" && invites.map((invite) => {
-              const { color, firstname, lastname, email } = invite;
+            {name === 'invites' &&
+              invites.map((invite) => {
+                const { color, firstname, lastname, email } = invite;
 
-              const propsUserCard = {
-                fullname: {
-                  firstname,
-                  lastname,
-                },
-                colorImage: color,
-              };
+                const propsUserCard = {
+                  fullname: {
+                    firstname,
+                    lastname,
+                  },
+                  colorImage: color,
+                };
 
-              return (
-                <div className={styles.listElement}>
-                  <UserCard key={email} {...propsUserCard} />
-                </div>
-              );
-            })}
+                return (
+                  <div
+                    onClick={() => updateUserDetailed(invite)}
+                    key={email}
+                    className={styles.listElement}
+                  >
+                    <UserCard {...propsUserCard} />
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>
-      <UserDetailed />
+      <UserDetailed {...userDetailed} />
     </>
   );
 };

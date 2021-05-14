@@ -27,14 +27,14 @@ const ImageUser = ({ fullname, colorImage, ...props }: props) => {
   }
 
   return (
-    <Image color={colorImage} {...props}>
+    <Image colorImage={colorImage} {...props}>
       <p>{initials}</p>
     </Image>
   );
 };
 
 const Image = styled.div<props>`
-  background-color: ${({ color }) => color};
+  background-color: ${({ colorImage }) => colorImage};
   border-radius: 50%;
   display: flex;
   justify-content: center;

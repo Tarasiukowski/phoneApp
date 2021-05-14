@@ -2,7 +2,7 @@ import styles from "./detailedChatUser.module.scss"
 
 import { EmailSvg } from "../../../public/svgs"
 
-const DetailedChatUserList = () => (
+const DetailedChatUserList = ({ email }: { email?: string }) => (
   <div className={styles.list}>
     <div className={styles.listElement}>
       <div>
@@ -10,7 +10,7 @@ const DetailedChatUserList = () => (
         <p>Email</p>
       </div>
       <div>
-        <p>michal.tarasiuk03@gmail.com</p>
+        <p>{email}</p>
       </div>
     </div>
   </div>
