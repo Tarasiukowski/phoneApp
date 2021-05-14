@@ -14,6 +14,7 @@ import { Invite } from '../../../interfaces';
 
 const UsersList = ({ name }: props) => {
   const [userDetailed, setUserDetailed] = useState<Invite | null>(null);
+  const [inputValue, setInputValue] = useState<string>('');
 
   const { email } = useSelector(selectUser);
   const invites = useSelector(selectInvites);
@@ -49,12 +50,29 @@ const UsersList = ({ name }: props) => {
               <SearchSvg />
             </div>
             <div>
-              <input placeholder="Search" autoComplete="off" />
+              <input
+                value={inputValue}
+                onChange={(e) => {
+                  setInputValue(e.target.value);
+                }}
+                placeholder="Search"
+                autoComplete="off"
+              />
             </div>
           </div>
           <div>
             {name === 'invites' &&
-              invites.map((invite) => {
+              invites
+              .filter((invite) => {
+                const { firstname, lastname } = invite
+
+                const fullnane = `${firstname} ${lastname}`
+
+                if(fullnane.startsWith(inputValue)) {
+                  return invites
+                }
+              })
+              .map((invite) => {
                 const { color, firstname, lastname, email, image } = invite;
 
                 const propsUserCard = {

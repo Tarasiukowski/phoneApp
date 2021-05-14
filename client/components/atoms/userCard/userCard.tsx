@@ -17,12 +17,18 @@ const UserCard = ({ elemList, image, fullname, colorImage, big, withDetailed }: 
 
   let name = '';
 
-  const user = useSelector(selectUser);
-
-  if (user) {
-    const { firstname, lastname } = user;
+  if (fullname) {
+    const { firstname, lastname } = fullname;
 
     name = `${firstname} ${lastname}`;
+  } else {
+    const user = useSelector(selectUser);
+
+    if (user) {
+      const { firstname, lastname } = user;
+
+      name = `${firstname} ${lastname}`;
+    }
   }
 
   if (withDetailed) {
