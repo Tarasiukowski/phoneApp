@@ -21,7 +21,8 @@ export type Invite = {
   color: string,
   firstname: string,
   lastname: string,
-  image?: string
+  image?: string;
+  number: string
 }
 
 export type Error = {

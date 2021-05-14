@@ -5,9 +5,9 @@ import DetailedChatUserList from '../../../molecules/detailedChatUserList/detail
 import styles from './userDetailed.module.scss';
 import { MailSvg, MoreSvg } from '../../../../public/svgs';
 import { props } from './types';
+import { keysToArray } from '../../../../utils/keysToArray';
 
 const UserDetailed = ({ firstname, lastname, color, image, ...restProps }: props) => {
-
   return (
     <div className={styles.box}>
       <div className={styles.header}>
@@ -30,7 +30,7 @@ const UserDetailed = ({ firstname, lastname, color, image, ...restProps }: props
           </Button>
         </div>
       </div>
-      <DetailedChatUserList {...restProps} />
+      <DetailedChatUserList list={keysToArray(restProps)} />
     </div>
   );
 };

@@ -4,4 +4,5 @@ export type props = {
   firstname?: string;
   lastname?: string;
   image?: string;
+  number?: string
 };
