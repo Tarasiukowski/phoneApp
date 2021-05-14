@@ -6,7 +6,7 @@ class InviteService {
   email: string;
   by: By;
 
-  static async invite(from: string, to: string) {
+  static async invite(from: any, to: string) {
     if (from === to) {
       return { error: true, errorMsg: errorsMsgs.INVITE_TO_YOURSELF };
     }
@@ -15,6 +15,12 @@ class InviteService {
 
     if (!findUser) {
       return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
+    }
+
+    const invites = findUser.invites
+
+    if(invites.includes(from)) {
+      return { error: true, errorMsg: errorsMsgs.DUPLICATE_INVITATION }
     }
 
     UserModel.update({ email: to, fieldName: 'invites', pushValue: from }, 'pushToField');

@@ -5,5 +5,6 @@ export const errorsMsgs = {
   WRONG_VERIFICATION_CODE: 'error - wrong verification code',
   INVITE_TO_YOURSELF: 'error - you cannot send yourself an invitation',
   FUNCTIONALITY_NOT_ALLOWED: 'error - functionality not allowed',
+  DUPLICATE_INVITATION: 'error - invitation has already been sent',
   EMAIL_VALIDATION: (email) => `error in email - email format validation failed: ${email}`,
 };
