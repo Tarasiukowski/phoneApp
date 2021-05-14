@@ -6,12 +6,13 @@ import styles from './userDetailed.module.scss';
 import { MailSvg, MoreSvg } from '../../../../public/svgs';
 import { props } from './types';
 
-const UserDetailed = ({ firstname, lastname, color, ...restProps }: props) => {
+const UserDetailed = ({ firstname, lastname, color, image, ...restProps }: props) => {
 
   return (
     <div className={styles.box}>
       <div className={styles.header}>
         <ImageUser
+          image={image}
           fullname={firstname && lastname ? { firstname, lastname } : undefined}
           colorImage={color}
           size="80px"

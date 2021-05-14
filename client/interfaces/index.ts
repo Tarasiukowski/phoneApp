@@ -13,13 +13,15 @@ export type User = {
   lastname: string;
   color: string;
   fullname: string
+  image: string
 };
 
 export type Invite = {
   email: string,
   color: string,
   firstname: string,
-  lastname: string
+  lastname: string,
+  image?: string
 }
 
 export type Error = {

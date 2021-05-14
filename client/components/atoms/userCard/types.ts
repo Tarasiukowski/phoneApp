@@ -7,4 +7,5 @@ export type props = {
     lastname: string;
   };
   colorImage?: string;
+  image?: string
 };

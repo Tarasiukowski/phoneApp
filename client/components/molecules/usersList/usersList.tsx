@@ -55,7 +55,7 @@ const UsersList = ({ name }: props) => {
           <div>
             {name === 'invites' &&
               invites.map((invite) => {
-                const { color, firstname, lastname, email } = invite;
+                const { color, firstname, lastname, email, image } = invite;
 
                 const propsUserCard = {
                   fullname: {
@@ -63,6 +63,7 @@ const UsersList = ({ name }: props) => {
                     lastname,
                   },
                   colorImage: color,
+                  image: image ? image : undefined,
                 };
 
                 return (

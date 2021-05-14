@@ -8,5 +8,6 @@ export type props = {
     firstname: string;
     lastname: string;
   };
-  colorImage?: string
+  colorImage?: string;
+  image?: string
 };

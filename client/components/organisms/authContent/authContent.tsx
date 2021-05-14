@@ -22,11 +22,12 @@ const AuthContent = ({ login }: props) => {
 
   const hanldeGoogleLogin = async (res: any) => {
     const {
-      profileObj: { email },
+      profileObj: { email, imageUrl },
     } = res;
 
     const { user, errorMsg } = await fetcher('post', `auth/${login ? 'login' : 'singup'}`, {
       email,
+      image: imageUrl,
       by: 'Google',
     });
 

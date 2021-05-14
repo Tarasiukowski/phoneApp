@@ -14,5 +14,6 @@ export const userSchema: Schema = new Schema({
     value: String,
     code: String
   },
-  invites: [String]
+  invites: [String],
+  image: String
 });

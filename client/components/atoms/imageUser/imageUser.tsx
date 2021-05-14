@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { props } from './types';
 import { selectUser } from '../../../reducers/userReducer';
 
-const ImageUser = ({ fullname, colorImage, ...props }: props) => {
+const ImageUser = ({ fullname, image, colorImage, ...props }: props) => {
   let splitedFullname;
   let initials = '';
 
@@ -12,9 +12,11 @@ const ImageUser = ({ fullname, colorImage, ...props }: props) => {
     const user = useSelector(selectUser);
 
     if (user) {
-      const { fullname, color } = user;
+      const { fullname, color, image: imageProfile } = user;
 
       colorImage = color;
+
+      imageProfile ? (image = imageProfile) : null;
 
       splitedFullname = fullname.split(' ');
 
@@ -27,14 +29,14 @@ const ImageUser = ({ fullname, colorImage, ...props }: props) => {
   }
 
   return (
-    <Image colorImage={colorImage} {...props}>
-      <p>{initials}</p>
+    <Image image={image} colorImage={colorImage} {...props}>
+      {!image && <p>{initials}</p>}
     </Image>
   );
 };
 
 const Image = styled.div<props>`
-  background-color: ${({ colorImage }) => colorImage};
+  background-color: ${({ colorImage, image }) => (!image ? colorImage : null)};
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -50,6 +52,14 @@ const Image = styled.div<props>`
     font-weight: 600;
     color: white;
   }
+
+  ${({ image }) =>
+    image &&
+    css`
+    background-image: url(${image});
+    background-size cover;
+    background-position: center;
+  `}
 
   ${({ size }) =>
     size &&

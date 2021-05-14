@@ -26,9 +26,9 @@ class AuthController {
   }
 
   async singUp(req: Request, res: Response) {
-    const { email, by } = req.body;
+    const { email, by, image } = req.body;
 
-    const { error, errorMsg, user, token } = await new AuthService(email, by).singup();
+    const { error, errorMsg, user, token } = await new AuthService(email, by).singup({ image });
 
     if (error) {
       res.send({ error, errorMsg });

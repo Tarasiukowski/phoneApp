@@ -57,7 +57,7 @@ class UserService {
     return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
   }
 
-  async singup() {
+  async singup(data) {
     const { email } = this;
 
     const { verify, errorMsg } = verifyEmail(email);
@@ -72,7 +72,7 @@ class UserService {
       return { error: true, errorMsg: errorsMsgs.USER_EXIST };
     }
 
-    const user = await new UserModel(email, this.by).save();
+    const user = await new UserModel(email, this.by).save(data);
 
     const { _id } = user;
 

@@ -9,7 +9,7 @@ import { props } from './types';
 import { getAllChildreenOfElement } from '../../../utils';
 import { selectUser } from '../../../reducers/userReducer';
 
-const UserCard = ({ elemList, fullname, colorImage, big, withDetailed }: props) => {
+const UserCard = ({ elemList, image, fullname, colorImage, big, withDetailed }: props) => {
   const [openDetailed, setOpenDetailed] = useState<boolean>(false);
 
   const templateRef = useRef<HTMLDivElement>(null);
@@ -49,6 +49,7 @@ const UserCard = ({ elemList, fullname, colorImage, big, withDetailed }: props) 
   return (
     <Template elemList={elemList} big={big} ref={templateRef}>
       <ImageUser
+        image={image}
         fullname={fullname}
         colorImage={colorImage}
         margin={elemList ? '0 0 0 13px' : '0 0 0 9px'}

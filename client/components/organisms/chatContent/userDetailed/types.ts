@@ -3,4 +3,5 @@ export type props = {
   color?: string;
   firstname?: string;
   lastname?: string;
+  image?: string;
 };

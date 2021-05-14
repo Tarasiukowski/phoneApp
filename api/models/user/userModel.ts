@@ -19,6 +19,7 @@ class User {
   onBoarding: boolean;
   number: string;
   color: string;
+  image: string;
   invites: [];
 
   constructor(email: string, by: By) {
@@ -32,9 +33,10 @@ class User {
   }
 
   static format(user: UserDocument) {
-    const { email, number, firstname, lastname, color } = user;
+    const { email, number, firstname, lastname, color, image } = user;
 
     return {
+      image,
       email,
       number,
       firstname,
@@ -74,14 +76,18 @@ class User {
     return user;
   }
 
-  async save() {
+  async save(data) {
+    const { image } = data
+
     this.number = await createNumber();
 
-    this.by !== 'Google' ? sendMail(this.email, this.code) : null;
+    if (this.by !== 'Google') {
+      sendMail(this.email, this.code);
+    }
 
     delete this.by;
 
-    const user = new userModel({ ...this }).save();
+    const user = new userModel({ ...this, image }).save();
 
     return user;
   }

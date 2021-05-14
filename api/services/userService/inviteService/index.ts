@@ -29,9 +29,9 @@ class InviteService {
       const user = await UserModel.find('email', email);
 
       if (user) {
-        const { email, firstname, lastname, color } = user;
+        const { email, firstname, lastname, color, image } = user;
 
-        return { email, firstname, lastname, color };
+        return { email, firstname, lastname, color, image };
       }
     });
 
