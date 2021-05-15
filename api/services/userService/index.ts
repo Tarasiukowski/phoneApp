@@ -32,6 +32,20 @@ class UserService extends InviteService {
       return { valid: false, error: true, errorMsg: errorsMsgs.WRONG_VERIFICATION_CODE };
     }
   }
+
+  static async get(data: any[], key: string) {
+    const formatData = data.map(async (elem: any) => {
+      const user = await UserModel.findOne(key, elem);
+
+      if (user) {
+        const { email, firstname, lastname, color, image, number } = user;
+
+        return { email, firstname, lastname, color, image, number };
+      }
+    });
+
+    return Promise.all(formatData);
+  }
 }
 
 export default UserService;

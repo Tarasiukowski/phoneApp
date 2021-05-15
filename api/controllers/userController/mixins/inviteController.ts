@@ -21,8 +21,6 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
 
       const data = await UserService.get(invites, 'email');
 
-      console.log(data)
-
       res.send(data);
     }
   };

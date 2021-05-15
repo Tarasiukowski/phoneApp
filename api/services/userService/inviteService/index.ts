@@ -27,20 +27,6 @@ class InviteService {
 
     return { error: false };
   }
-
-  static async get(data: any[], key: string) {
-    const formatData = data.map(async (elem: any) => {
-      const user = await UserModel.findOne(key, elem);
-      
-      if (user) {
-        const { email, firstname, lastname, color, image, number } = user;
-
-        return { email, firstname, lastname, color, image, number };
-      }
-    });
-
-    return Promise.all(formatData);
-  }
 }
 
 export default InviteService;
