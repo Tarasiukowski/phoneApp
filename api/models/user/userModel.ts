@@ -48,7 +48,7 @@ class User {
   }
 
   static async update(data: any, option: updateOption = 'setField', setEmail?: boolean) {
-    const { email, newEmail, fieldName, pushValue } = data;
+    const { email, newEmail, fieldName, pushValue, removeValue } = data;
 
     delete data.email;
 
@@ -65,15 +65,12 @@ class User {
       setField: { $set: setEmail ? { email: newEmail } : { ...data } },
       newEmail: { $set: { newEmail: { value: newEmail, code: generateCode() } } },
       pushToField: { $push: { [fieldName]: pushValue } },
+      pull: { $pull: { invites: removeValue } }
     };
 
     await userModel.updateOne({ email }, availableOptions[option]);
 
     return { updated: true };
-  }
-
-  static async find() {
-    
   }
 
   static async findOne(key: string, value: string) {

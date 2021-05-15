@@ -23,5 +23,13 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
 
       res.send(data);
     }
+
+    async acceptInvite(req: Request, res: Response) {
+      const { email, from } = req.body
+
+      const data = await UserService.acceptInvite(email, from)
+
+      res.send(data);
+    }
   };
 }
