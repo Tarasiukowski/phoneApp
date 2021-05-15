@@ -1,14 +1,13 @@
-.list {
+.template {
   border: 1px solid rgba(238, 238, 240, 0.09);
   max-width: 630px;
   background: #1d1d29;
   border-radius: 5px;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
   flex-direction: column;
   margin-top: 3.4vh;
-  padding: 2.9rem 2.9rem 1.7rem 2.9rem;
+  padding: 0 2.9rem 1.7rem 2.9rem;
+  height: 47vh;
 
   input {
     height: 35px;
@@ -17,4 +16,13 @@
     width: 100%;
     margin-bottom: 25px;
   }
+}
+
+.inputTemplate {
+  padding-top: 2.9rem;
+}
+
+.list {
+  overflow: scroll;
+  height: 100%;
 }

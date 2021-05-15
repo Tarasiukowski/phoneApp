@@ -12,13 +12,15 @@ import styles from './friends.module.scss';
 import { fetcher } from '../../../../utils';
 import { selectUser } from '../../../../reducers/userReducer';
 import { Error } from '../../../../interfaces';
-import { ERROR_NOT_ALLOWED } from '../../../../common/errors'
+import { ERROR_NOT_ALLOWED } from '../../../../common/errors';
+import { selectFriends } from '../../../../reducers/friendsReducer';
 
 const SettingsFriendsContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
   const { email } = useSelector(selectUser);
+  const friends = useSelector(selectFriends);
 
   const multitaskHandle = {
     close: () => {
@@ -62,10 +64,25 @@ const SettingsFriendsContent = () => {
         Invite a member
       </Button>
       <ElementFinder>
-        <div className={styles.elementList}>
-          <UserCard big />
-          <Button width="auto">Remove</Button>
-        </div>
+        {friends.map((friend) => {
+          const { firstname, lastname, color, image } = friend;
+
+          const passingProps = {
+            fullname: {
+              firstname,
+              lastname,
+            },
+            colorImage: color,
+            image,
+          };
+
+          return (
+            <div className={styles.elementList}>
+              <UserCard {...passingProps} big />
+              <Button width="auto">Remove</Button>
+            </div>
+          );
+        })}
       </ElementFinder>
       <Alert error={error} />
       <Multitask name="InviteFriend" open={openMultiTask} onClose={close} onEnd={end} />
