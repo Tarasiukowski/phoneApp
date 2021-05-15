@@ -50,8 +50,8 @@ const UsersList = ({ name, data, detailedUser }: props) => {
                   return elem;
                 }
               })
-              .map((invite) => {
-                const { color, firstname, lastname, email, image } = invite;
+              .map((elem) => {
+                const { color, firstname, lastname, email, image } = elem;
 
                 const propsUserCard = {
                   fullname: {
@@ -64,7 +64,7 @@ const UsersList = ({ name, data, detailedUser }: props) => {
 
                 return (
                   <div
-                    onClick={() => updateUserDetailed(invite)}
+                    onClick={() => updateUserDetailed(elem)}
                     key={email}
                     className={styles.listElement}
                   >

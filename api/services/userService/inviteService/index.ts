@@ -29,17 +29,17 @@ class InviteService {
   }
 
   static async acceptInvite(email: string, from: string) {
-    const invitingUser = await UserModel.findOne('email', from);
-
-    if (!invitingUser) {
-      return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
-    }
-
     UserModel.update({ email, fieldName: 'invites', removeValue: from }, 'pull');
-    UserModel.update({ email, fieldName: 'friends', pushValue: from }, "pushToField");
-    UserModel.update({ email: from, fieldName: 'friends', pushValue: email }, "pushToField");
+    UserModel.update({ email, fieldName: 'friends', pushValue: from }, 'pushToField');
+    UserModel.update({ email: from, fieldName: 'friends', pushValue: email }, 'pushToField');
 
-    return { error: false }
+    return { error: false };
+  }
+
+  static async rejectInvite(email: string, from: string) {
+    UserModel.update({ email, fieldName: 'invites', removeValue: from }, 'pull');
+
+    return { error: false };
   }
 }
 
