@@ -1,6 +1,7 @@
 import { Response, Request } from 'express';
 
 import UserService from '../../../services/userService';
+import UserModel from '../../../models/user/userModel';
 import { Class } from '../../../interface';
 
 export function InviteControllerMixin<Base extends Class>(base: Base) {
@@ -16,7 +17,11 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
     async getInvites(req: Request, res: Response) {
       const { email } = req.body;
 
-      const data = await UserService.getInvites(email);
+      const invites = await (await UserModel.findOne('email', email)).invites;
+
+      const data = await UserService.get(invites, 'email');
+
+      console.log(data)
 
       res.send(data);
     }

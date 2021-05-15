@@ -18,7 +18,7 @@ class UserService extends InviteService {
     const { code, email } = data;
     const isVerifyNewEmail = option === 'verifyNewEmail';
 
-    const findUser = await UserModel.find('email', email);
+    const findUser = await UserModel.findOne('email', email);
 
     if (isVerifyNewEmail ? findUser.newEmail.value : findUser.code === code) {
       if (isVerifyNewEmail) {

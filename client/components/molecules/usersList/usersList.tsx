@@ -30,6 +30,14 @@ const UsersList = ({ name }: props) => {
 
         dispatch(update(invites));
       });
+    } else if (name === 'contacts') {
+      fetcher('POST', 'user/friends', {
+        email,
+      }).then((friends) => {
+        friends.length ? setUserDetailed(friends[0]) : null;
+
+        console.log(friends)
+      });
     }
   }, []);
 
@@ -63,37 +71,37 @@ const UsersList = ({ name }: props) => {
           <div>
             {name === 'invites' &&
               invites
-              .filter((invite) => {
-                const { firstname, lastname } = invite
+                .filter((invite) => {
+                  const { firstname, lastname } = invite;
 
-                const fullnane = `${firstname} ${lastname}`
+                  const fullnane = `${firstname} ${lastname}`;
 
-                if(fullnane.startsWith(inputValue)) {
-                  return invites
-                }
-              })
-              .map((invite) => {
-                const { color, firstname, lastname, email, image } = invite;
+                  if (fullnane.startsWith(inputValue)) {
+                    return invites;
+                  }
+                })
+                .map((invite) => {
+                  const { color, firstname, lastname, email, image } = invite;
 
-                const propsUserCard = {
-                  fullname: {
-                    firstname,
-                    lastname,
-                  },
-                  colorImage: color,
-                  image: image ? image : undefined,
-                };
+                  const propsUserCard = {
+                    fullname: {
+                      firstname,
+                      lastname,
+                    },
+                    colorImage: color,
+                    image: image ? image : undefined,
+                  };
 
-                return (
-                  <div
-                    onClick={() => updateUserDetailed(invite)}
-                    key={email}
-                    className={styles.listElement}
-                  >
-                    <UserCard {...propsUserCard} />
-                  </div>
-                );
-              })}
+                  return (
+                    <div
+                      onClick={() => updateUserDetailed(invite)}
+                      key={email}
+                      className={styles.listElement}
+                    >
+                      <UserCard {...propsUserCard} />
+                    </div>
+                  );
+                })}
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import User from '../../models/user/userModel';
 
 export const availabilityNumber = async (number: string): Promise<boolean> => {
-  const user = await User.find('number', number);
+  const user = await User.findOne('number', number);
 
   if (user) {
     return false;

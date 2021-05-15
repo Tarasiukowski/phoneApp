@@ -11,16 +11,16 @@ class InviteService {
       return { error: true, errorMsg: errorsMsgs.INVITE_TO_YOURSELF };
     }
 
-    const findUser = await UserModel.find('email', to);
+    const findUser = await UserModel.findOne('email', to);
 
     if (!findUser) {
       return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
     }
 
-    const invites = findUser.invites
+    const invites = findUser.invites;
 
-    if(invites.includes(from)) {
-      return { error: true, errorMsg: errorsMsgs.DUPLICATE_INVITATION }
+    if (invites.includes(from)) {
+      return { error: true, errorMsg: errorsMsgs.DUPLICATE_INVITATION };
     }
 
     UserModel.update({ email: to, fieldName: 'invites', pushValue: from }, 'pushToField');
@@ -28,12 +28,10 @@ class InviteService {
     return { error: false };
   }
 
-  static async getInvites(email: string) {
-    const invites = await (await UserModel.find('email', email)).invites;
-
-    const formatInvites = invites.map(async (email: any) => {
-      const user = await UserModel.find('email', email);
-
+  static async get(data: any[], key: string) {
+    const formatData = data.map(async (elem: any) => {
+      const user = await UserModel.findOne(key, elem);
+      
       if (user) {
         const { email, firstname, lastname, color, image, number } = user;
 
@@ -41,7 +39,7 @@ class InviteService {
       }
     });
 
-    return Promise.all(formatInvites)
+    return Promise.all(formatData);
   }
 }
 

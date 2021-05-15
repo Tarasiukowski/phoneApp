@@ -18,7 +18,7 @@ class UserService {
     if (token) {
       const { id } = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 
-      const user = await UserModel.find('_id', id);
+      const user = await UserModel.findOne('_id', id);
 
       const formatUser = UserModel.format(user);
 
@@ -40,7 +40,7 @@ class UserService {
       return { errorMsg };
     }
 
-    const user = await UserModel.find('email', email);
+    const user = await UserModel.findOne('email', email);
 
     if (user) {
       const { _id } = user;
@@ -66,7 +66,7 @@ class UserService {
       return { error: true, errorMsg };
     }
 
-    const findUser = await UserModel.find('email', email);
+    const findUser = await UserModel.findOne('email', email);
 
     if (findUser) {
       return { error: true, errorMsg: errorsMsgs.USER_EXIST };

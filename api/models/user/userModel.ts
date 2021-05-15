@@ -53,7 +53,7 @@ class User {
     delete data.email;
 
     if (newEmail) {
-      const findUser = await this.find('email', newEmail);
+      const findUser = await this.findOne('email', newEmail);
 
       if (findUser) {
         return { error: true, errorMsg: errorsMsgs.EMAIL_IN_USE };
@@ -72,7 +72,11 @@ class User {
     return { updated: true };
   }
 
-  static async find(key: string, value: string) {
+  static async find() {
+    
+  }
+
+  static async findOne(key: string, value: string) {
     const user = await userModel.findOne({ [key]: value });
 
     return user;
