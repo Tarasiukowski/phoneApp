@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Invite } from '../interfaces';
+import { Member } from '../interfaces';
 import { RootState } from '../store';
 
 const invitesSlice = createSlice({
   name: 'invites',
-  initialState: [] as Invite[],
+  initialState: [] as Member[],
   reducers: {
-    update(state, { payload }: PayloadAction<Invite[]>){
+    update(state, { payload }: PayloadAction<Member[]>){
       return state = payload
     }
   },

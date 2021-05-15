@@ -16,7 +16,7 @@ export type User = {
   image: string
 };
 
-export type Invite = {
+export type Member = {
   email: string,
   color: string,
   firstname: string,
