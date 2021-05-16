@@ -83,6 +83,7 @@ const Image = styled.div<propsImage>`
       width: ${size};
       height: ${size};
     `}
+    
   ${({ fontSize }) =>
     fontSize &&
     css`

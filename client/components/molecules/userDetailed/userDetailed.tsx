@@ -1,24 +1,24 @@
-import { Button } from '../../../atoms/button/button';
-import ImageUser from '../../../atoms/imageUser/imageUser';
-import DetailedChatUserList from '../../../molecules/detailedChatUserList/detailedChatUset';
+import { Button } from '../../atoms/button/button';
+import ImageUser from '../../atoms/imageUser/imageUser';
+import DetailedChatUserList from '../../molecules/detailedChatUserList/detailedChatUset';
 
 import styles from './userDetailed.module.scss';
-import { MailSvg, MoreSvg } from '../../../../public/svgs';
+import { MailSvg, MoreSvg } from '../../../public/svgs';
 import { props } from './types';
-import { keysToArray } from '../../../../utils/keysToArray';
+import { keysToArray } from '../../../utils/keysToArray';
 
 const UserDetailed = ({ email, number, ...restProps }: props) => {
-  const {
-    fullname: { firstname, lastname },
-  } = restProps;
+  //   const {
+  //     fullname: { firstname, lastname },
+  //   } = restProps;
+
+  console.log(restProps);
 
   return (
     <div className={styles.box}>
       <div className={styles.header}>
-        <ImageUser member={restProps} size="80px" fontSize="2.5rem" />
-        <p className={styles.name}>
-          {firstname} {lastname}
-        </p>
+        <ImageUser size="80px" fontSize="2.5rem" />
+        <p className={styles.name}>Michał Tarasiuk</p>
         <div className={styles.options}>
           <Button width="auto">
             <MailSvg />

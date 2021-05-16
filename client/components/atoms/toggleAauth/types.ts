@@ -1,3 +1,3 @@
 export type props = {
-  login?: boolean;
+  auth: "login" | "singup";
 };

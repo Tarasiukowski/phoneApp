@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import UserDetailed from '../../organisms/chatContent/userDetailed/userDetailed';
+import UserDetailed from '../../molecules/userDetailed/userDetailed';
 import UserCard from '../../atoms/userCard/userCard';
 
 import styles from './usersList.module.scss';
@@ -15,8 +15,6 @@ const UsersList = ({ name, data, defaultDetailedUser }: props) => {
   const updateUserDetailed = (userData: User) => {
     setDetailedUser(userData);
   };
-
-  console.log(defaultDetailedUser)
 
   return (
     <>

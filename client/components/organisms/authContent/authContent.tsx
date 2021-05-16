@@ -63,7 +63,7 @@ const AuthContent = () => {
         />
         <p>Or continue with email</p>
         <AuthForm login={isLogin} setError={setError} />
-        <ToggleAuth login={isLogin} />
+        <ToggleAuth auth={activePath} />
         <Alert error={error} />
       </div>
     </RedirectTemplate>

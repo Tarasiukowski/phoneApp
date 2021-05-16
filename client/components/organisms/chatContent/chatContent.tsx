@@ -1,4 +1,4 @@
-import UserDetailed from "./userDetailed/userDetailed";
+// import UserDetailed from "../../molecules/userDetailed";
 import Chat from "../../molecules/chatComponent/chat";
 
 import styles from "./chatContent.module.scss"
@@ -6,7 +6,7 @@ import styles from "./chatContent.module.scss"
 const ChatContent = () => (
   <div className={styles.template}>
     <Chat />
-    <UserDetailed />
+    {/* <UserDetailed /> */}
   </div>
 )
 
