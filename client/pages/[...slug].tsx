@@ -2,7 +2,7 @@ import ChatContent from '../components/organisms/chatContent/chatContent';
 import ContactsContent from '../components/organisms/contactsContent/contactsContent';
 import InvitesContent from '../components/organisms/invitesContent/invitesContent';
 import SettingsContent from '../components/organisms/settingsContent';
-import Subpage from '../components/organisms/subpage/subpage';
+import Subpage from '../components/molecules/subpage/subpage'
 import IsLoggedTemplate from '../templates/isLoggedTemplate/isLoggedTemplate';
 import MainTemplate from '../templates/mainTemplate/mainTemplate';
 

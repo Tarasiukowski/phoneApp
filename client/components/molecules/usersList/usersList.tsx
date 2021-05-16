@@ -6,14 +6,26 @@ import UserCard from '../../atoms/userCard/userCard';
 import styles from './usersList.module.scss';
 import { SearchSvg } from '../../../public/svgs';
 import { props } from './types';
-import { Member } from '../../../interfaces';
 
-const UsersList = ({ name, data, detailedUser }: props) => {
-  const [DetailedUser, setDetailedUser] = useState<Member | null>(null);
+const UsersList = ({ name, data }: props) => {
+  const [DetailedUser, setDetailedUser] = useState<any | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
 
-  const updateUserDetailed = (userData: Member) => {
-    setDetailedUser(userData);
+  const updateUserDetailed = (userData: any) => {
+    const { firstname, lastname, color, image } = userData;
+
+    const data = {
+      member: {
+        fullname: {
+          firstname,
+          lastname,
+        },
+        colorImage: color,
+        image,
+      },
+    };
+
+    setDetailedUser(data);
   };
 
   return (
@@ -54,12 +66,14 @@ const UsersList = ({ name, data, detailedUser }: props) => {
                 const { color, firstname, lastname, email, image } = elem;
 
                 const propsUserCard = {
-                  fullname: {
-                    firstname,
-                    lastname,
+                  member: {
+                    fullname: {
+                      firstname,
+                      lastname,
+                    },
+                    colorImage: color,
+                    image,
                   },
-                  colorImage: color,
-                  image: image ? image : undefined,
                 };
 
                 return (
@@ -75,7 +89,13 @@ const UsersList = ({ name, data, detailedUser }: props) => {
           </div>
         </div>
       </div>
-      {DetailedUser ? <UserDetailed {...DetailedUser} /> : <UserDetailed {...detailedUser} />}
+      {DetailedUser ? (
+        <UserDetailed {...DetailedUser} />
+      ) : (
+        <UserDetailed
+          member={{ fullname: { firstname: 'Michał', lastname: 'Tarasiuk' }, colorImage: 'red' }}
+        />
+      )}
     </>
   );
 };

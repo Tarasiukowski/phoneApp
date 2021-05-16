@@ -7,17 +7,15 @@ import { MailSvg, MoreSvg } from '../../../../public/svgs';
 import { props } from './types';
 import { keysToArray } from '../../../../utils/keysToArray';
 
-const UserDetailed = ({ firstname, lastname, color, image, ...restProps }: props) => {
+const UserDetailed = ({ member, ...restProps }: props) => {
+  const {
+    fullname: { firstname, lastname },
+  } = member;
+
   return (
     <div className={styles.box}>
       <div className={styles.header}>
-        <ImageUser
-          image={image}
-          fullname={firstname && lastname ? { firstname, lastname } : undefined}
-          colorImage={color}
-          size="80px"
-          fontSize="2.5rem"
-        />
+        <ImageUser member={member} size="80px" fontSize="2.5rem" />
         <p className={styles.name}>
           {firstname} {lastname}
         </p>

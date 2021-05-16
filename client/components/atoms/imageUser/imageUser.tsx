@@ -1,32 +1,43 @@
 import styled, { css } from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import { props } from './types';
+import { props, propsImage } from './types';
 import { selectUser } from '../../../reducers/userReducer';
 
-const ImageUser = ({ fullname, image, colorImage, ...props }: props) => {
-  let splitedFullname;
-  let initials = '';
+const ImageUser = ({ member, ...props }: props) => {
+  let defaultMember: any = {
+    colorImage: null,
+    image: null,
+    initials: null,
+  };
 
-  if (!fullname) {
+  if (!member) {
     const user = useSelector(selectUser);
 
     if (user) {
       const { fullname, color, image: imageProfile } = user;
 
-      colorImage = color;
+      const splitedFullname = fullname.split(' ');
 
-      imageProfile ? (image = imageProfile) : null;
-
-      splitedFullname = fullname.split(' ');
-
-      initials = `${splitedFullname[0][0]}${splitedFullname[1][0]}`.toUpperCase();
+      defaultMember = {
+        colorImage: color,
+        image: imageProfile ? imageProfile : null,
+        initials: `${splitedFullname[0][0]}${splitedFullname[1][0]}`.toUpperCase(),
+      };
     }
   } else {
-    splitedFullname = Object.values(fullname);
+    const { fullname, image: profileImage, colorImage } = member;
 
-    initials = `${splitedFullname[0][0]}${splitedFullname[1][0]}`.toUpperCase();
+    const splitedFullname = Object.values(fullname);
+
+    defaultMember = {
+      image: profileImage,
+      initials: `${splitedFullname[0][0]}${splitedFullname[1][0]}`.toUpperCase(),
+      colorImage,
+    };
   }
+
+  const { colorImage, initials, image } = defaultMember;
 
   return (
     <Image image={image} colorImage={colorImage} {...props}>
@@ -35,7 +46,7 @@ const ImageUser = ({ fullname, image, colorImage, ...props }: props) => {
   );
 };
 
-const Image = styled.div<props>`
+const Image = styled.div<propsImage>`
   background-color: ${({ colorImage, image }) => (!image ? colorImage : null)};
   border-radius: 50%;
   display: flex;
@@ -67,7 +78,6 @@ const Image = styled.div<props>`
       width: ${size};
       height: ${size};
     `}
-
   ${({ fontSize }) =>
     fontSize &&
     css`

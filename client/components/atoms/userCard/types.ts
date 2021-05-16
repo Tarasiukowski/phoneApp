@@ -2,10 +2,12 @@ export type props = {
   elemList?: boolean;
   big?: boolean;
   withDetailed?: boolean;
-  fullname?: {
-    firstname: string;
-    lastname: string;
+  member?: {
+    fullname: {
+      firstname: string;
+      lastname: string;
+    };
+    colorImage?: string;
+    image?: string;
   };
-  colorImage?: string;
-  image?: string
 };
