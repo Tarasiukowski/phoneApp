@@ -1,5 +1,5 @@
 import SettingsNavigation from '../../molecules/settingsNavigation/settingsNavigation';
-import Subpage from '../subpage/subpage';
+import Subpage from '../../molecules/subpage/subpage';
 import SettingsFriendsContent from './friends/friends';
 import SettingsProfileContent from './profile/profile';
 import SettingsGeneralContent from './general/general';

@@ -4,9 +4,9 @@ import Alert from '../../components/atoms/alert/alert';
 import { Button } from '../../components/atoms/button/button';
 
 import Logo from '../../public/svgs/logo.svg';
+import { logout } from '../../utils';
 import { Error } from '../../interfaces';
 import styles from './onboardingTemplate.module.scss';
-import { logout } from '../../utils';
 
 const OnboardingTemplate: React.FC = ({ children }) => {
   const [error, setError] = useState<Error | null>(null);
