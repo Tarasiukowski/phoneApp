@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { props, propsImage } from './types';
 import { selectUser } from '../../../reducers/userReducer';
+import { getInitials } from '../../../utils';
 
 const ImageUser = ({ member, ...props }: props) => {
   let defaultMember: any = {
@@ -15,24 +16,28 @@ const ImageUser = ({ member, ...props }: props) => {
     const user = useSelector(selectUser);
 
     if (user) {
-      const { fullname, color, image: imageProfile } = user;
-
-      const splitedFullname = fullname.split(' ');
+      const {
+        fullname: { firstname, lastname },
+        color,
+        image: imageProfile,
+      } = user;
 
       defaultMember = {
         colorImage: color,
         image: imageProfile ? imageProfile : null,
-        initials: `${splitedFullname[0][0]}${splitedFullname[1][0]}`.toUpperCase(),
+        initials: getInitials(firstname, lastname),
       };
     }
   } else {
-    const { fullname, image: profileImage, colorImage } = member;
-
-    const splitedFullname = Object.values(fullname);
+    const {
+      fullname: { firstname, lastname },
+      image: profileImage,
+      colorImage,
+    } = member;
 
     defaultMember = {
       image: profileImage,
-      initials: `${splitedFullname[0][0]}${splitedFullname[1][0]}`.toUpperCase(),
+      initials: getInitials(firstname, lastname),
       colorImage,
     };
   }

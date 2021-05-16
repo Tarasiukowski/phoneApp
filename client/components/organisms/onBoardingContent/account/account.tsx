@@ -43,7 +43,7 @@ const OnboardingAccountContent = () => {
 
     fetcher('PUT', 'user/update', {
       email: user.email,
-      ...formValues,
+      fullname: formValues
     }).then(async (data) => {
       if (data.error) {
         setError({ msg: data.errorMsg, id: Math.random() });

@@ -35,14 +35,13 @@ class User {
   }
 
   static format(user: UserDocument) {
-    const { email, number, firstname, lastname, color, image } = user;
+    const { email, number, fullname, color, image } = user;
 
     return {
       image,
       email,
       number,
-      firstname,
-      lastname,
+      fullname,
       color,
     };
   }

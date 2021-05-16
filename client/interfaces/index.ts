@@ -9,21 +9,22 @@ export type propsOnboardingNumberPage = {
 export type User = {
   email: string;
   number: string;
-  firstname: string;
-  lastname: string;
+  fullname: {
+    firstname: string;
+    lastname: string;
+  };
   color: string;
-  fullname: string
-  image: string
+  image: string;
 };
 
 export type Member = {
-  email: string,
-  color: string,
-  firstname: string,
-  lastname: string,
+  email: string;
+  color: string;
+  firstname: string;
+  lastname: string;
   image?: string;
-  number: string
-}
+  number: string;
+};
 
 export type Error = {
   msg: string;

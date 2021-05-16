@@ -19,7 +19,10 @@ const SettingsProfileContent = () => {
   const [error, setError] = useState<Error | null>(null);
   const [openMultiTask, setOpenMultiTask] = useState<boolean>(false);
 
-  const { firstname, lastname, email } = useSelector(selectUser);
+  const {
+    fullname: { firstname, lastname },
+    email,
+  } = useSelector(selectUser);
 
   const [inputsValues, setInputsValues] = useReducer(
     (prevState: InputsValues, state: InputsValues) => ({ ...prevState, ...state }),
@@ -40,8 +43,7 @@ const SettingsProfileContent = () => {
     if (firstnameValue !== firstname || lastnameValue !== lastname) {
       const data = await fetcher('POST', 'user/verifyByCode', {
         email,
-        firstname: firstnameValue,
-        lastname: lastnameValue,
+        fullname: { firstname: firstnameValue, lastname: lastnameValue },
       });
 
       if (data.error) {

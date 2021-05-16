@@ -5,16 +5,18 @@ export const userSchema: Schema = new Schema({
   number: String,
   code: String,
   onboarding: Boolean,
-  firstname: String,
-  lastname: String,
+  fullname: {
+    firstname: String,
+    lastname: String,
+  },
   onBoarding: Boolean,
   redirectTo: String,
   color: String,
   newEmail: {
     value: String,
-    code: String
+    code: String,
   },
   invites: [String],
   friends: [String],
-  image: String
+  image: String,
 });

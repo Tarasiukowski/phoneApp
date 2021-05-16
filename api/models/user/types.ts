@@ -7,8 +7,10 @@ export interface UserDocument extends Document {
   number: string;
   code: string;
   onboarding: boolean;
-  firstname: string;
-  lastname: string;
+  fullname: {
+    firstname: string;
+    lastname: string;
+  };
   onBoarding: boolean;
   redirectTo: string;
   color: string;
@@ -18,5 +20,5 @@ export interface UserDocument extends Document {
     code: string;
   };
   invites: string[];
-  friends: string[]
+  friends: string[];
 }

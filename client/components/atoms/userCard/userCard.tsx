@@ -26,7 +26,7 @@ const UserCard = ({ elemList, member, big, withDetailed }: props) => {
     const user = useSelector(selectUser);
 
     if (user) {
-      const { firstname, lastname } = user;
+      const { fullname: { firstname, lastname } } = user;
 
       name = `${firstname} ${lastname}`;
     }
