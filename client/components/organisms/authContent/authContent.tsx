@@ -51,7 +51,10 @@ const AuthContent = () => {
   };
 
   return (
-    <RedirectTemplate isRedirect={redirect} redirectTo="/onboarding/number">
+    <RedirectTemplate
+      isRedirect={redirect}
+      redirectTo={activePath === 'login' ? '/contacts' : '/onboarding/number'}
+    >
       <div className={styles.card}>
         <h4>{activePath === 'login' ? 'Log into OpenPhone' : 'Sign up on OpenPhone'}</h4>
         <h6>Use one of the methods below to continue</h6>

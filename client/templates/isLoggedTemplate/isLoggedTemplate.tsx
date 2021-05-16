@@ -27,7 +27,9 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
 
       if (settings[allow] === isLogged) {
         if (status) {
-          const { loading, redirectTo } = checkOnboardingStage(status, router.asPath);
+          const { loading, redirectTo } = checkOnboardingStage(status, router.asPath)
+          
+          console.log(redirectTo)
 
           !loading ? setLoading(false) : router.push(redirectTo);
         } else {
