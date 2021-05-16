@@ -5,7 +5,7 @@ import IsLoggedTemplate from '../templates/isLoggedTemplate/isLoggedTemplate';
 const LoginPage = () => (
   <IsLoggedTemplate allow="notLogged">
     <AuthTemplate>
-      <AuthContent login />
+      <AuthContent />
     </AuthTemplate>
   </IsLoggedTemplate>
 );
