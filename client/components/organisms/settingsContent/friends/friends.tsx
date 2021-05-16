@@ -75,7 +75,7 @@ const SettingsFriendsContent = () => {
               }
             })
             .map((friend) => {
-              const { firstname, lastname, color, image } = friend;
+              const { firstname, lastname, color, image, email: friendEmail } = friend;
 
               const passingProps = {
                 fullname: {
@@ -86,10 +86,18 @@ const SettingsFriendsContent = () => {
                 image,
               };
 
+              const removeFriend = async () => {
+                const data = await fetcher('POST', 'user/friends/remove', { email, friendEmail });
+
+                console.log(data);
+              };
+
               return (
                 <div className={styles.elementList}>
                   <UserCard {...passingProps} big />
-                  <Button width="auto">Remove</Button>
+                  <Button onClick={removeFriend} width="auto">
+                    Remove
+                  </Button>
                 </div>
               );
             })

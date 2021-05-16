@@ -15,10 +15,6 @@ const SettingsContent = () => (
 
 const routes = [
   {
-    slug: 'friends',
-    component: <SettingsFriendsContent />,
-  },
-  {
     slug: 'profile',
     component: <SettingsProfileContent />,
   },

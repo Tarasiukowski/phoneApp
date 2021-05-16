@@ -65,7 +65,7 @@ class User {
       setField: { $set: setEmail ? { email: newEmail } : { ...data } },
       newEmail: { $set: { newEmail: { value: newEmail, code: generateCode() } } },
       pushToField: { $push: { [fieldName]: pushValue } },
-      pull: { $pull: { invites: removeValue } }
+      pull: { $pull: { [fieldName]: removeValue } },
     };
 
     await userModel.updateOne({ email }, availableOptions[option]);
