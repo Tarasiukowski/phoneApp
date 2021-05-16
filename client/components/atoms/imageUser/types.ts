@@ -15,11 +15,17 @@ export type props = {
 };
 
 export type propsImage = {
-  image?: string;
-  colorImage?: string;
+  image?: string | null | undefined;
+  colorImage?: string | null | undefined;
   fontSize?: string;
   size?: string;
   margin?: string;
   big?: boolean;
   mini?: boolean;
+};
+
+export type DefaultMember = {
+  colorImage: string | null | undefined;
+  image: string | null | undefined;
+  initials: string | null;
 };

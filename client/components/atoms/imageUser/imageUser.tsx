@@ -1,16 +1,17 @@
+import { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useSelector } from 'react-redux';
 
-import { props, propsImage } from './types';
+import { props, propsImage, DefaultMember } from './types';
 import { selectUser } from '../../../reducers/userReducer';
 import { getInitials } from '../../../utils';
 
-const ImageUser = ({ member, ...props }: props) => {
-  let defaultMember: any = {
+const ImageUser = ({ member, ...restProps }: props) => {
+  const [defaultMember, setDefaultMember] = useState<DefaultMember>({
     colorImage: null,
     image: null,
     initials: null,
-  };
+  });
 
   if (!member) {
     const user = useSelector(selectUser);
@@ -22,11 +23,11 @@ const ImageUser = ({ member, ...props }: props) => {
         image: imageProfile,
       } = user;
 
-      defaultMember = {
+      setDefaultMember({
         colorImage,
         image: imageProfile ? imageProfile : null,
         initials: getInitials(firstname, lastname),
-      };
+      });
     }
   } else {
     const {
@@ -35,17 +36,17 @@ const ImageUser = ({ member, ...props }: props) => {
       colorImage,
     } = member;
 
-    defaultMember = {
+    setDefaultMember({
       image: profileImage,
       initials: getInitials(firstname, lastname),
       colorImage,
-    };
+    });
   }
 
   const { colorImage, initials, image } = defaultMember;
 
   return (
-    <Image image={image} colorImage={colorImage} {...props}>
+    <Image image={image} colorImage={colorImage} {...restProps}>
       {!image && <p>{initials}</p>}
     </Image>
   );
@@ -83,6 +84,7 @@ const Image = styled.div<propsImage>`
       width: ${size};
       height: ${size};
     `}
+    
   ${({ fontSize }) =>
     fontSize &&
     css`
