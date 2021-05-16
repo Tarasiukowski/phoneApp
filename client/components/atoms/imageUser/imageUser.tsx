@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useSelector } from 'react-redux';
 
@@ -7,11 +6,11 @@ import { selectUser } from '../../../reducers/userReducer';
 import { getInitials } from '../../../utils';
 
 const ImageUser = ({ member, ...restProps }: props) => {
-  const [defaultMember, setDefaultMember] = useState<DefaultMember>({
+  let defaultMember: DefaultMember = {
     colorImage: null,
     image: null,
     initials: null,
-  });
+  };
 
   if (!member) {
     const user = useSelector(selectUser);
@@ -23,11 +22,11 @@ const ImageUser = ({ member, ...restProps }: props) => {
         image: imageProfile,
       } = user;
 
-      setDefaultMember({
+      defaultMember = {
         colorImage,
         image: imageProfile ? imageProfile : null,
         initials: getInitials(firstname, lastname),
-      });
+      };
     }
   } else {
     const {
@@ -36,11 +35,11 @@ const ImageUser = ({ member, ...restProps }: props) => {
       colorImage,
     } = member;
 
-    setDefaultMember({
+    defaultMember = {
       image: profileImage,
       initials: getInitials(firstname, lastname),
       colorImage,
-    });
+    };
   }
 
   const { colorImage, initials, image } = defaultMember;
@@ -84,7 +83,6 @@ const Image = styled.div<propsImage>`
       width: ${size};
       height: ${size};
     `}
-    
   ${({ fontSize }) =>
     fontSize &&
     css`
