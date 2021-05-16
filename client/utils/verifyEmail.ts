@@ -1,10 +1,12 @@
+import { EMAIL_REGEX } from '../common/regex'
+
 type returnValueVerifyEmail = {
   verify: boolean;
   errorMsg: string | null;
 };
 
 export const verifyEmail = (email: string): returnValueVerifyEmail => {
-  const verify = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+  const verify = EMAIL_REGEX.test(email);
 
   if (verify) {
     return {
