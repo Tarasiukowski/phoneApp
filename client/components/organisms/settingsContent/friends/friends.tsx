@@ -63,27 +63,38 @@ const SettingsFriendsContent = () => {
       >
         Invite a member
       </Button>
-      <ElementFinder>
-        {friends.map((friend) => {
-          const { firstname, lastname, color, image } = friend;
+      <ElementFinder
+        renderList={(inputValue) =>
+          friends
+            .filter((friend) => {
+              const { firstname, lastname } = friend;
+              const fullname = `${firstname} ${lastname}`;
 
-          const passingProps = {
-            fullname: {
-              firstname,
-              lastname,
-            },
-            colorImage: color,
-            image,
-          };
+              if (fullname.startsWith(inputValue)) {
+                return friend;
+              }
+            })
+            .map((friend) => {
+              const { firstname, lastname, color, image } = friend;
 
-          return (
-            <div className={styles.elementList}>
-              <UserCard {...passingProps} big />
-              <Button width="auto">Remove</Button>
-            </div>
-          );
-        })}
-      </ElementFinder>
+              const passingProps = {
+                fullname: {
+                  firstname,
+                  lastname,
+                },
+                colorImage: color,
+                image,
+              };
+
+              return (
+                <div className={styles.elementList}>
+                  <UserCard {...passingProps} big />
+                  <Button width="auto">Remove</Button>
+                </div>
+              );
+            })
+        }
+      />
       <Alert error={error} />
       <Multitask name="InviteFriend" open={openMultiTask} onClose={close} onEnd={end} />
     </SettingsTemplate>

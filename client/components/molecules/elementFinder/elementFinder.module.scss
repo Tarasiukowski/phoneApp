@@ -7,7 +7,7 @@
   flex-direction: column;
   margin-top: 3.4vh;
   padding: 0 2.9rem 1.7rem 2.9rem;
-  height: 47vh;
+  max-height: 43.1vh;
 
   input {
     height: 35px;
@@ -25,4 +25,5 @@
 .list {
   overflow: scroll;
   height: 100%;
+  padding: 6px 0 6px 0;
 }
