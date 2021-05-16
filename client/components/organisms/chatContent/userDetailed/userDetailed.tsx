@@ -7,15 +7,15 @@ import { MailSvg, MoreSvg } from '../../../../public/svgs';
 import { props } from './types';
 import { keysToArray } from '../../../../utils/keysToArray';
 
-const UserDetailed = ({ member, ...restProps }: props) => {
+const UserDetailed = ({ email, number, ...restProps }: props) => {
   const {
     fullname: { firstname, lastname },
-  } = member;
+  } = restProps;
 
   return (
     <div className={styles.box}>
       <div className={styles.header}>
-        <ImageUser member={member} size="80px" fontSize="2.5rem" />
+        <ImageUser member={restProps} size="80px" fontSize="2.5rem" />
         <p className={styles.name}>
           {firstname} {lastname}
         </p>
@@ -28,7 +28,7 @@ const UserDetailed = ({ member, ...restProps }: props) => {
           </Button>
         </div>
       </div>
-      <DetailedChatUserList list={keysToArray(restProps)} />
+      <DetailedChatUserList list={keysToArray({ email, number })} />
     </div>
   );
 };

@@ -13,7 +13,7 @@ export interface UserDocument extends Document {
   };
   onBoarding: boolean;
   redirectTo: string;
-  color: string;
+  colorImage: string;
   image: string;
   newEmail: {
     value: string;

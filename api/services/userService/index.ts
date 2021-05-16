@@ -38,9 +38,9 @@ class UserService extends InviteService {
       const user = await UserModel.findOne(key, elem);
 
       if (user) {
-        const { email, fullname, color, image, number } = user;
+        const { email, fullname, colorImage, image, number } = user;
 
-        return { email, fullname, color, image, number };
+        return { email, fullname, colorImage, image, number };
       }
     });
 

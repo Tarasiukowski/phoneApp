@@ -5,28 +5,18 @@ import UserCard from '../../atoms/userCard/userCard';
 
 import styles from './usersList.module.scss';
 import { SearchSvg } from '../../../public/svgs';
+import { User } from '../../../interfaces';
 import { props } from './types';
 
-const UsersList = ({ name, data }: props) => {
-  const [DetailedUser, setDetailedUser] = useState<any | null>(null);
+const UsersList = ({ name, data, defaultDetailedUser }: props) => {
+  const [detailedUser, setDetailedUser] = useState<User | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
 
-  const updateUserDetailed = (userData: any) => {
-    const { firstname, lastname, color, image } = userData;
-
-    const data = {
-      member: {
-        fullname: {
-          firstname,
-          lastname,
-        },
-        colorImage: color,
-        image,
-      },
-    };
-
-    setDetailedUser(data);
+  const updateUserDetailed = (userData: User) => {
+    setDetailedUser(userData);
   };
+
+  console.log(defaultDetailedUser)
 
   return (
     <>
@@ -54,7 +44,9 @@ const UsersList = ({ name, data }: props) => {
           <div>
             {data
               .filter((elem) => {
-                const { firstname, lastname } = elem;
+                const {
+                  fullname: { firstname, lastname },
+                } = elem;
 
                 const fullnane = `${firstname} ${lastname}`;
 
@@ -63,38 +55,23 @@ const UsersList = ({ name, data }: props) => {
                 }
               })
               .map((elem) => {
-                const { color, firstname, lastname, email, image } = elem;
-
-                const propsUserCard = {
-                  member: {
-                    fullname: {
-                      firstname,
-                      lastname,
-                    },
-                    colorImage: color,
-                    image,
-                  },
-                };
-
                 return (
                   <div
                     onClick={() => updateUserDetailed(elem)}
-                    key={email}
+                    key={elem.number}
                     className={styles.listElement}
                   >
-                    <UserCard {...propsUserCard} />
+                    <UserCard member={elem} />
                   </div>
                 );
               })}
           </div>
         </div>
       </div>
-      {DetailedUser ? (
-        <UserDetailed {...DetailedUser} />
+      {detailedUser ? (
+        <UserDetailed {...detailedUser} />
       ) : (
-        <UserDetailed
-          member={{ fullname: { firstname: 'Michał', lastname: 'Tarasiuk' }, colorImage: 'red' }}
-        />
+        <UserDetailed {...defaultDetailedUser} />
       )}
     </>
   );

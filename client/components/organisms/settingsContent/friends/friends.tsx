@@ -67,7 +67,9 @@ const SettingsFriendsContent = () => {
         renderList={(inputValue) =>
           friends
             .filter((friend) => {
-              const { firstname, lastname } = friend;
+              const {
+                fullname: { firstname, lastname },
+              } = friend;
               const fullname = `${firstname} ${lastname}`;
 
               if (fullname.startsWith(inputValue)) {
@@ -75,25 +77,10 @@ const SettingsFriendsContent = () => {
               }
             })
             .map((friend) => {
-              const { firstname, lastname, color, image } = friend;
-
-              const passingProps = {
-                member: {
-                  fullname: {
-                    firstname,
-                    lastname,
-                  },
-                  colorImage: color,
-                  image,
-                },
-              };
-
               return (
                 <div className={styles.elementList}>
-                  <UserCard {...passingProps} big />
-                  <Button width="auto">
-                    Remove
-                  </Button>
+                  <UserCard member={friend} big />
+                  <Button width="auto">Remove</Button>
                 </div>
               );
             })

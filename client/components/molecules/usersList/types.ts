@@ -1,7 +1,7 @@
-import { Member } from "../../../interfaces";
+import { User } from "../../../interfaces";
 
 export type props = {
   name: 'contacts' | 'invites';
-  data: Member[];
-  detailedUser: Member
+  data: User[];
+  defaultDetailedUser: User
 };

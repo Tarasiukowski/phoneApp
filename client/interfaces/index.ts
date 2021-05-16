@@ -13,17 +13,8 @@ export type User = {
     firstname: string;
     lastname: string;
   };
-  color: string;
+  colorImage: string;
   image: string;
-};
-
-export type Member = {
-  email: string;
-  color: string;
-  firstname: string;
-  lastname: string;
-  image?: string;
-  number: string;
 };
 
 export type Error = {

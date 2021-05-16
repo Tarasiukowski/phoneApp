@@ -11,7 +11,7 @@ export const userSchema: Schema = new Schema({
   },
   onBoarding: Boolean,
   redirectTo: String,
-  color: String,
+  colorImage: String,
   newEmail: {
     value: String,
     code: String,

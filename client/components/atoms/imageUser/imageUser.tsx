@@ -18,12 +18,12 @@ const ImageUser = ({ member, ...props }: props) => {
     if (user) {
       const {
         fullname: { firstname, lastname },
-        color,
+        colorImage,
         image: imageProfile,
       } = user;
 
       defaultMember = {
-        colorImage: color,
+        colorImage,
         image: imageProfile ? imageProfile : null,
         initials: getInitials(firstname, lastname),
       };

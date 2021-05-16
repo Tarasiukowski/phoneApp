@@ -18,7 +18,7 @@ class User {
   by: By;
   onBoarding: boolean;
   number: string;
-  color: string;
+  colorImage: string;
   image: string;
   invites: string[];
   friends: string[];
@@ -27,7 +27,7 @@ class User {
     this.email = email;
     this.by = by;
     this.onBoarding = false;
-    this.color = randomColor();
+    this.colorImage = randomColor();
     this.invites = [];
     this.friends = [];
     this.redirectTo = this.by === 'Google' ? '/onboarding/number' : '/onboarding/code';
@@ -35,14 +35,14 @@ class User {
   }
 
   static format(user: UserDocument) {
-    const { email, number, fullname, color, image } = user;
+    const { email, number, fullname, colorImage, image } = user;
 
     return {
       image,
       email,
       number,
       fullname,
-      color,
+      colorImage,
     };
   }
 
