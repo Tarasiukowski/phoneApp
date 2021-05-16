@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import GoogleLogin from 'react-google-login';
 
 import ButtonGoogle from '../../atoms/buttonGoogle/buttonGoogle';
@@ -19,6 +20,9 @@ const AuthContent = ({ login }: props) => {
   const [redirect, setRedirect] = useState<boolean>(false);
 
   const dispatch = useDispatch();
+  const { asPath } = useRouter();
+
+  const activePath: any = asPath.slice(1);
 
   const hanldeGoogleLogin = async (res: any) => {
     const {
@@ -51,7 +55,7 @@ const AuthContent = ({ login }: props) => {
         <GoogleLogin
           clientId={`${process.env.NEXT_PUBLIC_CLIENT_ID}`}
           onSuccess={hanldeGoogleLogin}
-          render={({ onClick }) => <ButtonGoogle onClick={onClick} login={login} />}
+          render={({ onClick }) => <ButtonGoogle onClick={onClick} auth={activePath} />}
         />
         <p>Or continue with email</p>
         <AuthForm login={login} setError={setError} />

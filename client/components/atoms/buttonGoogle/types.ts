@@ -1,4 +1,4 @@
 export type props = {
-  login?: boolean;
+  auth: 'login' | 'singup';
   onClick: (res: any) => void;
 };
