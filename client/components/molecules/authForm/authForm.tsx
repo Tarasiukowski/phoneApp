@@ -9,10 +9,10 @@ import RedirectTemplate from '../../../templates/redirectTemplate/redirectTempla
 import { fetcher } from '../../../utils';
 import { login as authLogin } from '../../../reducers/userReducer';
 import { formData } from '../../../interfaces';
-import { props } from "./types"
+import { props } from './types';
 import styles from './authForm.module.scss';
 
-const AuthForm = ({ login, setError }: props) => {
+const AuthForm = ({ auth, setError }: props) => {
   const [disabled, setDisabled] = useState<boolean>(true);
   const [redirect, setRedirect] = useState<boolean>(false);
 
@@ -28,9 +28,13 @@ const AuthForm = ({ login, setError }: props) => {
 
     setDisabled(true);
 
-    const { error, errorMsg, user } = await fetcher('post', `auth/${login ? 'login' : 'singup'}`, {
-      email,
-    });
+    const { error, errorMsg, user } = await fetcher(
+      'post',
+      `auth/${auth === 'login' ? 'login' : 'singup'}`,
+      {
+        email,
+      },
+    );
 
     if (error) {
       setError({ msg: errorMsg, id: Math.random() });

@@ -22,7 +22,6 @@ const AuthContent = () => {
   const { asPath } = useRouter();
 
   const activePath: any = asPath.slice(1);
-  const isLogin = activePath === 'login' ? true : false;
 
   const hanldeGoogleLogin = async (res: any) => {
     const {
@@ -62,7 +61,7 @@ const AuthContent = () => {
           render={({ onClick }) => <ButtonGoogle onClick={onClick} auth={activePath} />}
         />
         <p>Or continue with email</p>
-        <AuthForm login={isLogin} setError={setError} />
+        <AuthForm auth={activePath} setError={setError} />
         <ToggleAuth auth={activePath} />
         <Alert error={error} />
       </div>

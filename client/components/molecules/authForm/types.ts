@@ -2,6 +2,6 @@ import { Dispatch, SetStateAction } from 'react';
 import { Error } from '../../../interfaces'
 
 export type props = {
-  login?: boolean;
+  auth: "login" | "singup";
   setError: Dispatch<SetStateAction<Error | null>>;
 };
