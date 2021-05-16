@@ -21,7 +21,7 @@ const AuthContent = () => {
   const dispatch = useDispatch();
   const { asPath } = useRouter();
 
-  const activePath: any = asPath.slice(1);
+  const activePath = asPath.slice(1) as 'login' | 'singup';
 
   const hanldeGoogleLogin = async (res: any) => {
     const {

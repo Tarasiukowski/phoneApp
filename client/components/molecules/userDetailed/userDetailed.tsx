@@ -8,17 +8,15 @@ import { props } from './types';
 import { keysToArray } from '../../../utils/keysToArray';
 
 const UserDetailed = ({ email, number, ...restProps }: props) => {
-  //   const {
-  //     fullname: { firstname, lastname },
-  //   } = restProps;
-
-  console.log(restProps);
+    const {
+      fullname: { firstname, lastname },
+    } = restProps;
 
   return (
     <div className={styles.box}>
       <div className={styles.header}>
-        <ImageUser size="80px" fontSize="2.5rem" />
-        <p className={styles.name}>Michał Tarasiuk</p>
+        <ImageUser {...restProps} size="80px" fontSize="2.5rem" />
+        <p className={styles.name}>{firstname} {lastname}</p>
         <div className={styles.options}>
           <Button width="auto">
             <MailSvg />
