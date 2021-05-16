@@ -31,7 +31,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
         if (status) {
           const { loading, redirectTo } = checkOnboardingStage(status, router.asPath);
 
-          if (!friends.length) {
+          if (!friends.length && status.onBoarding) {
             if (redirectTo === '/contacts') {
               fetcher('POST', 'user/friends', { email: user.email }).then((data) => {
                 dispatch(update(data));
