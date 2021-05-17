@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTemplate';
 import { Button } from '../../../atoms/button/button';
@@ -13,7 +13,7 @@ import { fetcher } from '../../../../utils';
 import { selectUser } from '../../../../reducers/userReducer';
 import { Error } from '../../../../interfaces';
 import { ERROR_NOT_ALLOWED } from '../../../../common/errors';
-import { selectFriends } from '../../../../reducers/friendsReducer';
+import { remove, selectFriends } from '../../../../reducers/friendsReducer';
 
 const SettingsFriendsContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState<boolean>(false);
@@ -21,6 +21,8 @@ const SettingsFriendsContent = () => {
 
   const { email } = useSelector(selectUser);
   const friends = useSelector(selectFriends);
+
+  const dispatch = useDispatch()
 
   const multitaskHandle = {
     close: () => {
@@ -77,8 +79,16 @@ const SettingsFriendsContent = () => {
               }
             })
             .map((friend) => {
+              const { email: friendEmail } = friend;
+
+              const removeFriend = () => {
+                fetcher('POST', 'user/friends/remove', { email, friendEmail });
+
+                dispatch(remove({ email: friendEmail }))
+              };
+
               return (
-                <div className={styles.elementList}>
+                <div onClick={removeFriend} className={styles.elementList}>
                   <UserCard member={friend} big />
                   <Button width="auto">Remove</Button>
                 </div>
