@@ -6,23 +6,24 @@ import styled, { css } from 'styled-components';
 import { props, propsButton } from './types';
 
 const Button = forwardRef<HTMLButtonElement, props>(
-  ({ icon, active, button, href, content, ...settings }, ref) => {
+  ({ icon, active, button, href, content, id, ...settings }, ref) => {
     const { asPath } = useRouter();
 
     return (
       <StyledButton
         ref={ref}
+        id={id}
         active={asPath === href || asPath.startsWith(`/${content.toLocaleLowerCase()}`)}
         {...settings}
       >
-        {icon} <span>{content}</span>
+        {icon} <span id={id}>{content}</span>
       </StyledButton>
     );
   },
 );
 
 const ButtonNavigation = ({ href, ...restProps }: props) => {
-  return (
+  return ( 
     <>
       {href ? (
         <Link href={href} children={<Button href={href} {...restProps} />} />

@@ -5,3 +5,4 @@ export { getAllChildreenOfElement } from './getAllChildreenOfElement';
 export { isCorrectValue } from './isCorrectValue';
 export { swrFetcher } from './swrFetcher';
 export { getInitials } from './getInitials';
+export { getSearcherData } from './getSearcherData'
