@@ -62,12 +62,14 @@ const UsersList = ({ name, data, defaultDetailedUser }: props) => {
               })
               .map((elem) => {
                 const addUser = () => {
-                  dispatch(remove({ email: elem.email }));
-                  dispatch(add({ user: elem }));
-
                   fetcher('POST', 'user/invite/accept', {
                     email,
                     from: elem.email,
+                  }).then(({ error }) => {
+                    if (!error) {
+                      dispatch(remove({ email: elem.email }));
+                      dispatch(add({ user: elem }));
+                    }
                   });
                 };
 
