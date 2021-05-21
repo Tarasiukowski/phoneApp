@@ -1,0 +1,48 @@
+.messageTemplate {
+  display: flex;
+  margin: 3px 0;
+
+  .message {
+    padding: 10px 15px;
+    font-weight: 600;
+    font-size: 1.3rem;
+    position: relative;
+    right: 0;
+    background: #7046e3;
+    max-width: 68%;
+  }
+}
+
+.logged {
+  justify-content: flex-end;
+
+  .message {
+    background: #7046e3;
+    color: white;
+  }
+}
+
+.notLogged {
+  justify-content: flex-start;
+  color: rgb(186, 186, 204);
+
+  .message {
+    background: #242433;
+  }
+}
+
+.prev {
+  border-radius: 15px 0 15px 15px;
+}
+
+.next {
+  border-radius: 15px 15px 0 15px;
+}
+
+.prevNext {
+  border-radius: 15px 0 0 15px;
+}
+
+.def {
+  border-radius: 15px;
+}

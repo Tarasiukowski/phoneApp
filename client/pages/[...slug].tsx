@@ -17,7 +17,7 @@ const MainPage = () => (
 const routes = [
   {
     slug: 'settings',
-    component: <ChatContent />,
+    component: <ChatContent />
   },
   {
     slug: 'chat',

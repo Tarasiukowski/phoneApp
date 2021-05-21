@@ -6,7 +6,12 @@ import styles from './chatContent.module.scss';
 const ChatContent = () => (
   <div className={styles.template}>
     <Chat />
-    <UserDetailed />
+    <UserDetailed
+      fullname={{ firstname: 'Michał', lastname: 'Tarasiuk' }}
+      number="987-8769"
+      email="tarasiuk.michal03@gmail.com"
+      image="https://lh3.googleusercontent.com/a-/AOh14GiGYJ6P_vuD4eWU4wi65J4z0FprFvtNLgdYmF4E=s96-c"
+    />
   </div>
 );
 
