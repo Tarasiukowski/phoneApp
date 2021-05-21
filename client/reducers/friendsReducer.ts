@@ -15,16 +15,21 @@ const friendsSlice = createSlice({
 
       const updatedState = state.filter((user) => {
         if (!(user.email === email)) {
-          return user
+          return user;
         }
       });
 
       return (state = updatedState);
     },
+    add(state, { payload }: PayloadAction<{ user: User }>) {
+      const { user } = payload;
+
+      return [...state, user];
+    },
   },
 });
 
-export const { update, remove } = friendsSlice.actions;
+export const { update, remove, add } = friendsSlice.actions;
 
 export const selectFriends = (state: RootState) => state.friends;
 
