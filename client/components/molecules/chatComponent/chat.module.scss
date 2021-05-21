@@ -2,23 +2,21 @@
   width: 64.5vw;
   height: 100vh;
   background-color: #1a1925;
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .header {
   height: 60px;
   width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  display: flex;
-  justify-content: center;
-  padding-right: 20px;
-}
-
-.headerContent {
-  width: 57%;
-  display: flex;
-  align-items: center;
   position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 14.5vw;
 }
 
 .name {
@@ -26,4 +24,18 @@
   font-size: 15px;
   margin-left: 14px;
   font-weight: 600;
+}
+
+.content {
+  height: 90%;
+  width: 100%;
+  padding: 0 14.5vw;
+}
+
+.inputTemplate {
+  width: 100%;
+  height: 6%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
