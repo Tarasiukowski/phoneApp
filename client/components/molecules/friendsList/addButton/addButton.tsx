@@ -12,6 +12,7 @@ const Button = styled.div`
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin-top: 2px;
 
   svg {
     margin-left: 13px;
@@ -28,10 +29,10 @@ const Button = styled.div`
   }
 `;
 
-const AddButton = () => (
-  <Button>
-    <AddSvg />
-    <p>Invite your friend</p>
+const AddButton = ({ id, onClick }: { id: string; onClick: () => void }) => (
+  <Button onClick={onClick} id={id}>
+    <AddSvg id={id} />
+    <p id={id}>Invite your friend</p>
   </Button>
 );
 
