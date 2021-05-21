@@ -12,6 +12,7 @@ class InviteService {
     }
 
     const findUser = await UserModel.findOne('email', to);
+    const user = await UserModel.findOne('email', from);
 
     if (!findUser) {
       return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
@@ -21,6 +22,12 @@ class InviteService {
 
     if (invites.includes(from)) {
       return { error: true, errorMsg: errorsMsgs.DUPLICATE_INVITATION };
+    }
+
+    const friends = user.friends;
+
+    if (friends.includes(to)) {
+      return { error: true, errorMsg: errorsMsgs.IS_YOUR_FRIEND };
     }
 
     UserModel.update({ email: to, fieldName: 'invites', pushValue: from }, 'pushToField');

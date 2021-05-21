@@ -6,5 +6,6 @@ export const errorsMsgs = {
   INVITE_TO_YOURSELF: 'error - you cannot send yourself an invitation',
   FUNCTIONALITY_NOT_ALLOWED: 'error - functionality not allowed',
   DUPLICATE_INVITATION: 'error - invitation has already been sent',
+  IS_YOUR_FRIEND: 'this user is already your friend',
   EMAIL_VALIDATION: (email) => `error in email - email format validation failed: ${email}`,
 };
