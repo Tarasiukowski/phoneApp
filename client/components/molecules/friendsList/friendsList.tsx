@@ -51,7 +51,7 @@ const FriendsList = () => {
       <h2 className={styles.heading}>Friensd List</h2>
       <div className={styles.template}>
         {friends.map((friend) => (
-          <FriendsListElement member={friend} elemList />
+          <FriendsListElement key={friend.email} member={friend} elemList />
         ))}
         <AddButton
           onClick={() => {

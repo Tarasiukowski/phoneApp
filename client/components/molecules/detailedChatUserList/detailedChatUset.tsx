@@ -16,12 +16,12 @@ const icons = {
 
 const DetailedChatUserList = ({ list }: { list: ListElem[] }) => (
   <div className={styles.list}>
-    {list.map((listElem) => {
+    {list.map((listElem, index) => {
       const keys: any[] = Object.keys(listElem);
       const key: 'email' | 'number' = keys[0];
 
       return (
-        <div className={styles.listElement}>
+        <div className={styles.listElement} key={index}>
           <div>
             {icons[key]}
             <p>{key}</p>

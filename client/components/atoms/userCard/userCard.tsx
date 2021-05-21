@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import Link from 'next/link';
 import styled, { css } from 'styled-components';
 
 import ImageUser from '../imageUser/imageUser';
@@ -57,18 +56,16 @@ const UserCard = ({ elemList, member, big, withDetailed }: props) => {
   }
 
   return (
-    <Link href="/chat">
-      <Template elemList={elemList} big={big} ref={templateRef}>
-        <ImageUser
-          member={member}
-          margin={elemList ? '0 0 0 13px' : '0 0 0 9px'}
-          mini={elemList}
-          big={big}
-        />
-        <p className="name">{name}</p>
-        {withDetailed && openDetailed && <UserDetailed userDetailedRef={userDetailedRef} />}
-      </Template>
-    </Link>
+    <Template elemList={elemList} big={big} ref={templateRef}>
+      <ImageUser
+        member={member}
+        margin={elemList ? '0 0 0 13px' : '0 0 0 9px'}
+        mini={elemList}
+        big={big}
+      />
+      <p className="name">{name}</p>
+      {withDetailed && openDetailed && <UserDetailed userDetailedRef={userDetailedRef} />}
+    </Template>
   );
 };
 
