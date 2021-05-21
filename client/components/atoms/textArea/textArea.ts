@@ -14,7 +14,7 @@ export const TextArea = styled.textarea`
   transition: 240ms ease 0ms;
   font-weight: 600;
   font-size: 1.5rem;
-  margin-top: 10px;
+  margin-top: 30px;
 
   :focus {
     border-color: rgb(112,70,227);
