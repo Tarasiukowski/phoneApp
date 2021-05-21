@@ -11,7 +11,9 @@ const Chat = () => (
       <p className={styles.name}>Michał Tarasiuk</p>
       <ChatOptions />
     </div>
-    <div className={styles.content}></div>
+    <div className={styles.content}>
+      
+    </div>
     <div className={styles.inputTemplate}>
       <Textarea placeholder="Write a message..." />
     </div>
