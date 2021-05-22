@@ -1,12 +1,17 @@
+import { useSelector } from 'react-redux';
+
 import { Button } from '../../../atoms/button/button';
 import ImageUser from '../../../atoms/imageUser/imageUser';
 
 import { MailSvg, MoreSvg } from '../../../../public/svgs';
 import { props } from './types'
 import styles from './header.module.scss'
+import { selectUser } from '../../../../reducers/userReducer';
 
 const Header = (props: props) => {
-  const { firstname, lastname } = props.fullname
+  const { fullname } = useSelector(selectUser)
+
+  const { firstname, lastname } = props.fullname ? props.fullname : fullname
 
   return (
     <div className={styles.header}>

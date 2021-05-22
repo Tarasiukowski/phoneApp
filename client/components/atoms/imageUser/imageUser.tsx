@@ -12,9 +12,9 @@ const ImageUser = ({ member, ...restProps }: props) => {
     initials: null,
   };
 
-  if (!member) {
-    const user = useSelector(selectUser);
+  const user = useSelector(selectUser);
 
+  if (!member) {
     if (user) {
       const {
         fullname: { firstname, lastname },
@@ -29,11 +29,9 @@ const ImageUser = ({ member, ...restProps }: props) => {
       };
     }
   } else {
-    const {
-      fullname: { firstname, lastname },
-      image: profileImage,
-      colorImage,
-    } = member;
+    const { fullname, image: profileImage, colorImage } = member;
+
+    const { firstname, lastname } = fullname ? fullname : user.fullname;
 
     defaultMember = {
       image: profileImage,

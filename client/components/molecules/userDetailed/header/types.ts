@@ -1,6 +1,6 @@
 export type props = {
   colorImage?: string,
-  fullname: {
+  fullname?: {
     firstname: string,
     lastname: string
   },

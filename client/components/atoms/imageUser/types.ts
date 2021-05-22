@@ -5,7 +5,7 @@ export type props = {
   fontSize?: string;
   margin?: string;
   member?: {
-    fullname: {
+    fullname?: {
       firstname: string;
       lastname: string;
     };

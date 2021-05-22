@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import UserDetailed from '../../molecules/userDetailed/userDetailed';
@@ -13,12 +13,18 @@ import { selectUser } from '../../../reducers/userReducer';
 import { add } from '../../../reducers/friendsReducer';
 import { remove } from '../../../reducers/invitesReducer';
 
-const UsersList = ({ name, data, defaultDetailedUser }: props) => {
+const UsersList = ({ name, data }: props) => {
   const [detailedUser, setDetailedUser] = useState<User | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
 
   const dispatch = useDispatch();
   const { email } = useSelector(selectUser);
+
+  useEffect(() => {
+    if (data) {
+      setDetailedUser(data[0]);
+    }
+  });
 
   const updateUserDetailed = (userData: User) => {
     setDetailedUser(userData);
@@ -91,11 +97,7 @@ const UsersList = ({ name, data, defaultDetailedUser }: props) => {
           </div>
         </div>
       </div>
-      {detailedUser ? (
-        <UserDetailed {...detailedUser} />
-      ) : (
-        <UserDetailed {...defaultDetailedUser} />
-      )}
+      <UserDetailed loading={detailedUser ? false : true} {...detailedUser} />
     </>
   );
 };
