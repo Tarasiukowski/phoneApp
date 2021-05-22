@@ -5,18 +5,19 @@ import { props } from './types';
 import styles from './message.module.scss';
 import { selectUser } from '../../../../reducers/userReducer';
 
-const Message = ({ content, from, id, messagesData }: props) => {
+const MessageComponent = ({ content, from, id, messagesData }: props) => {
   const { email } = useSelector(selectUser);
 
   const isLoggedUser = from === email;
 
   const messageIndex = messagesData.findIndex((message) => message.id === id);
 
+  const currentMsg = messagesData[messageIndex];
   const previousMsg = messagesData[messageIndex - 1];
   const nextMsg = messagesData[messageIndex + 1];
 
-  const previousMsgIsFromLogged = previousMsg ? previousMsg.from === email : false;
-  const nextMsgIsFromLogged = nextMsg ? nextMsg.from === email : false;
+  const previousMsgIsFromLogged = previousMsg ? previousMsg.from === currentMsg.from : false;
+  const nextMsgIsFromLogged = nextMsg ? nextMsg.from === currentMsg.from : false;
 
   const messageTemplateClasses = cl(
     styles.messageTemplate,
@@ -36,15 +37,15 @@ const Message = ({ content, from, id, messagesData }: props) => {
 };
 
 const defineStyle = (prevMsgFromLogged: boolean, nextMsgFromLogged: boolean) => {
-  if(prevMsgFromLogged && nextMsgFromLogged) {
+  if (prevMsgFromLogged && nextMsgFromLogged) {
     return styles.prevNext;
   } else if (prevMsgFromLogged) {
-    return styles.prev
+    return styles.prev;
   } else if (nextMsgFromLogged) {
-    return styles.next
+    return styles.next;
   }
 
   return styles.def;
 };
 
-export default Message;
+export default MessageComponent;

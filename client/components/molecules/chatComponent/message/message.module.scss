@@ -20,6 +20,22 @@
     background: #7046e3;
     color: white;
   }
+
+  .prev {
+    border-radius: 15px 0 15px 15px;
+  }
+
+  .next {
+    border-radius: 15px 15px 0 15px;
+  }
+
+  .prevNext {
+    border-radius: 15px 0 0 15px;
+  }
+
+  .def {
+    border-radius: 15px;
+  }
 }
 
 .notLogged {
@@ -29,20 +45,20 @@
   .message {
     background: #242433;
   }
-}
 
-.prev {
-  border-radius: 15px 0 15px 15px;
-}
+  .prev {
+    border-radius: 0 15px 15px 15px;
+  }
 
-.next {
-  border-radius: 15px 15px 0 15px;
-}
+  .next {
+    border-radius: 15px 15px 15px 0px;
+  }
 
-.prevNext {
-  border-radius: 15px 0 0 15px;
-}
+  .prevNext {
+    border-radius: 0 15px 15px 0;
+  }
 
-.def {
-  border-radius: 15px;
+  .def {
+    border-radius: 15px;
+  }
 }

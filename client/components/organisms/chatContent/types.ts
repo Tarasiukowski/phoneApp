@@ -7,6 +7,6 @@ export type Message = {
 };
 
 export type ChatData = {
-  user: User;
+  user: User | null;
   messages: Message[]
 };
