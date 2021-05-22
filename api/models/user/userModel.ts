@@ -36,17 +36,16 @@ class User {
     by !== 'Google' ? (this.code = generateCode()) : null;
   }
 
-  static format(user: UserDocument) {
+  static format(user: UserDocument, member?: boolean) {
     const { email, number, fullname, colorImage, image, conversations } = user;
 
-    const formatedConversations = conversations.map(({ with: email, id }) => ({ email, id }))
+    const formatedConversations = conversations.map(({ with: email, id }) => ({ email, id }));
 
     return {
       image,
       email,
       number,
       fullname,
-      colorImage,
       conversations: formatedConversations
     };
   }
