@@ -22,7 +22,7 @@ class User {
   image: string;
   invites: string[];
   friends: string[];
-  conversations: string[]
+  conversations: string[];
 
   constructor(email: string, by: By) {
     this.email = email;
@@ -31,13 +31,15 @@ class User {
     this.colorImage = randomColor();
     this.invites = [];
     this.friends = [];
-    this.conversations = []
+    this.conversations = [];
     this.redirectTo = this.by === 'Google' ? '/onboarding/number' : '/onboarding/code';
     by !== 'Google' ? (this.code = generateCode()) : null;
   }
 
   static format(user: UserDocument) {
-    const { email, number, fullname, colorImage, image } = user;
+    const { email, number, fullname, colorImage, image, conversations } = user;
+
+    const formatedConversations = conversations.map(({ with: email, id }) => ({ email, id }))
 
     return {
       image,
@@ -45,6 +47,7 @@ class User {
       number,
       fullname,
       colorImage,
+      conversations: formatedConversations
     };
   }
 

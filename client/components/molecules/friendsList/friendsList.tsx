@@ -17,7 +17,7 @@ const FriendsList = () => {
   const [openMultiTask, setOpenMultiTask] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const { email } = useSelector(selectUser);
+  const { email, conversations } = useSelector(selectUser);
   const friends = useSelector(selectFriends);
 
   const multitaskHandle = {
@@ -50,9 +50,13 @@ const FriendsList = () => {
     <div>
       <h2 className={styles.heading}>Friensd List</h2>
       <div className={styles.template}>
-        {friends.map((friend) => (
-          <FriendsListElement key={friend.email} member={friend} elemList />
-        ))}
+        {conversations.map((conversation) => {
+          const friend = friends.find(({ email }) => email === conversation.email);
+
+          if (friend) {
+            return <FriendsListElement key={friend.email} member={friend} elemList />;
+          }
+        })}
         <AddButton
           onClick={() => {
             setOpenMultiTask(true);
