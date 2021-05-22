@@ -3,7 +3,7 @@ import { Textarea } from './textarea/textarea';
 import Message from './message/message';
 
 import styles from './chat.module.scss';
-import { props } from './types'
+import { props } from './types';
 
 const Chat = ({ messages }: props) => (
   <div className={styles.template}>

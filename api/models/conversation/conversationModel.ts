@@ -14,6 +14,15 @@ class Conversation {
     this.messages = [];
   }
 
+  static send(content: string, email: string, id: string) {
+    conversationModel.updateOne(
+      { _id: id },
+      { $pull: { messages: { from: email, id: `${Math.random()}`, content } } },
+    );
+
+    return { sended: true }
+  }
+
   static async get(id: string) {
     const conversation = await conversationModel.findOne({ _id: id });
 

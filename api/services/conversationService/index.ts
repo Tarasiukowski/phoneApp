@@ -10,6 +10,14 @@ class ConversationService {
     this.email = email;
   }
 
+  send(content: string) {
+    const { email, id } = this;
+
+    const data = ConversationModel.send(content, email, id);
+
+    return data;
+  }
+
   async get() {
     const { id, email } = this;
 

@@ -4,4 +4,4 @@ import { conversationController } from '../controllers/conversationController';
 
 export const conversationRouter = Router();
 
-conversationRouter.post('/', conversationController.index);
+conversationRouter.post('/', conversationController.index).post('/send', conversationController.send);
