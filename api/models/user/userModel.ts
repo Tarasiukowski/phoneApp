@@ -22,6 +22,7 @@ class User {
   image: string;
   invites: string[];
   friends: string[];
+  conversations: string[]
 
   constructor(email: string, by: By) {
     this.email = email;
@@ -30,6 +31,7 @@ class User {
     this.colorImage = randomColor();
     this.invites = [];
     this.friends = [];
+    this.conversations = []
     this.redirectTo = this.by === 'Google' ? '/onboarding/number' : '/onboarding/code';
     by !== 'Google' ? (this.code = generateCode()) : null;
   }
