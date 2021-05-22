@@ -56,7 +56,7 @@ const UsersList = ({ name, data, defaultDetailedUser }: props) => {
 
                 const fullnane = `${firstname} ${lastname}`;
 
-                if (fullnane.startsWith(inputValue)) {
+                if (fullnane.includes(inputValue)) {
                   return elem;
                 }
               })
