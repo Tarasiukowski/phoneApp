@@ -15,7 +15,9 @@ class Conversation {
   }
 
   create() {
-    new conversationModel(this).save();
+    const conversation = new conversationModel(this).save();
+
+    return conversation;
   }
 }
 
