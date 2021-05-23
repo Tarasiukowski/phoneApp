@@ -1,4 +1,3 @@
-import UserModel from '../../models/user/userModel';
 import ConversationModel from '../../models/conversation/conversationModel';
 
 class ConversationService {
@@ -22,15 +21,13 @@ class ConversationService {
     const { id, email } = this;
 
     const { messages, users } = await await ConversationModel.get(id);
-    const emailF = users.find((emailF) => {
+    const friendEmail = users.find((emailF) => {
       if (emailF !== email) {
         return emailF;
       }
     });
-    const user = await UserModel.findOne('email', emailF);
-    const formatedUser = await UserModel.format(user);
 
-    return { messages, user: formatedUser };
+    return { messages, email: friendEmail };
   }
 }
 
