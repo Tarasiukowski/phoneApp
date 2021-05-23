@@ -22,10 +22,12 @@ const FriendsList = () => {
   const friends = useSelector(selectFriends);
 
   const multitaskHandle = {
-    close: () => {
+    name: 'InviteFriend' as 'InviteFriend',
+    open: openMultiTask,
+    onClose: () => {
       setOpenMultiTask(false);
     },
-    end: async (to: string) => {
+    onEnd: async (to: string) => {
       const { error, errorMsg } = await fetcher('POST', 'user/invite', {
         email,
         to,
@@ -44,8 +46,6 @@ const FriendsList = () => {
       return true;
     },
   };
-
-  const { close, end } = multitaskHandle;
 
   return (
     <div>
@@ -70,7 +70,7 @@ const FriendsList = () => {
           id="InviteFriend"
         />
       </div>
-      <Multitask name="InviteFriend" open={openMultiTask} onClose={close} onEnd={end} />
+      <Multitask {...multitaskHandle} />
       <Alert error={error} />
     </div>
   );

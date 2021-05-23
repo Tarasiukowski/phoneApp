@@ -22,13 +22,15 @@ const SettingsFriendsContent = () => {
   const { email } = useSelector(selectUser);
   const friends = useSelector(selectFriends);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const multitaskHandle = {
-    close: () => {
+    name: 'InviteFriend' as 'InviteFriend',
+    open: openMultiTask,
+    onClose: () => {
       setOpenMultiTask(false);
     },
-    end: async (to: string) => {
+    onEnd: async (to: string) => {
       const { error, errorMsg } = await fetcher('POST', 'user/invite', {
         email,
         to,
@@ -47,8 +49,6 @@ const SettingsFriendsContent = () => {
       return true;
     },
   };
-
-  const { close, end } = multitaskHandle;
 
   return (
     <SettingsTemplate>
@@ -84,7 +84,7 @@ const SettingsFriendsContent = () => {
               const removeFriend = () => {
                 fetcher('POST', 'user/friends/remove', { email, friendEmail });
 
-                dispatch(remove({ email: friendEmail }))
+                dispatch(remove({ email: friendEmail }));
               };
 
               return (
@@ -97,7 +97,7 @@ const SettingsFriendsContent = () => {
         }
       />
       <Alert error={error} />
-      <Multitask name="InviteFriend" open={openMultiTask} onClose={close} onEnd={end} />
+      <Multitask {...multitaskHandle} />
     </SettingsTemplate>
   );
 };

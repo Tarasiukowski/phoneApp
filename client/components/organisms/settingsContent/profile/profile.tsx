@@ -58,6 +58,8 @@ const SettingsProfileContent = () => {
   };
 
   const multitaskHandle = {
+    name: 'ChangeEmail' as 'ChangeEmail',
+    open: openMultiTask,
     onNext: async (newEmail: string) => {
       if (newEmail === email) {
         setError({ msg: WITHOUT_CHANGE('email', 'singular'), id: Math.random() });
@@ -107,8 +109,6 @@ const SettingsProfileContent = () => {
     },
   };
 
-  const { onNext, onEnd, onClose } = multitaskHandle;
-
   return (
     <SettingsTemplate>
       <h2 className="title">Account</h2>
@@ -151,13 +151,7 @@ const SettingsProfileContent = () => {
         </Button>
       </div>
       <Alert error={error} />
-      <Multitask
-        name="ChangeEmail"
-        open={openMultiTask}
-        onNext={onNext}
-        onEnd={onEnd}
-        onClose={onClose}
-      />
+      <Multitask {...multitaskHandle} />
     </SettingsTemplate>
   );
 };
