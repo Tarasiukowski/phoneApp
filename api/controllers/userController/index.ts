@@ -18,12 +18,12 @@ class UserController extends FriendsControllerMixin(InviteControllerMixin(class 
 
     const { valid, errorMsg } = await UserService.verifyByCode(restBody, option);
 
-    if (!valid) {
-      res.send({ errorMsg, error: true });
+    if (valid) {
+      res.send({ valid });
       return;
     }
 
-    res.send({ valid });
+    res.send({ errorMsg, error: true });
   }
 }
 

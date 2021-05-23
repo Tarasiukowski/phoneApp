@@ -20,12 +20,14 @@ class UserService {
 
       const user = await UserModel.findOne('_id', id);
 
-      const formatUser = UserModel.format(user);
+      if (user) {
+        const formatUser = UserModel.format(user);
 
-      return {
-        user: formatUser,
-        status: { onBoarding: user.onBoarding, redirectTo: user.redirectTo },
-      };
+        return {
+          user: formatUser,
+          status: { onBoarding: user.onBoarding, redirectTo: user.redirectTo },
+        };
+      }
     }
 
     return { user: null };
@@ -36,25 +38,23 @@ class UserService {
 
     const { verify, errorMsg } = verifyEmail(email);
 
-    if (!verify) {
-      return { errorMsg };
+    if (verify) {
+      const user = await UserModel.findOne('email', email);
+
+      if (user) {
+        const token = jwt.sign({ id: user._id }, process.env.JWT_PRIVATE_KEY, {
+          expiresIn: 9999999,
+        });
+
+        const formatedUser = UserModel.format(user);
+
+        return { user: formatedUser, token };
+      }
+
+      return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
     }
 
-    const user = await UserModel.findOne('email', email);
-
-    if (user) {
-      const { _id } = user;
-
-      const token = jwt.sign({ id: _id }, process.env.JWT_PRIVATE_KEY, {
-        expiresIn: 9999999,
-      });
-
-      const formatUser = UserModel.format(user);
-
-      return { user: formatUser, token };
-    }
-
-    return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
+    return { error: true, errorMsg };
   }
 
   async singup(data) {
@@ -62,27 +62,25 @@ class UserService {
 
     const { verify, errorMsg } = verifyEmail(email);
 
-    if (!verify) {
-      return { error: true, errorMsg };
+    if (verify) {
+      const duplicateUser = await UserModel.findOne('email', email);
+
+      if (duplicateUser) {
+        return { error: true, errorMsg: errorsMsgs.USER_EXIST };
+      }
+
+      const user = await new UserModel(email, this.by).save(data);
+
+      const token = jwt.sign({ id: user._id }, process.env.JWT_PRIVATE_KEY, {
+        expiresIn: 9999999,
+      });
+
+      const fromatedUser = UserModel.format(user);
+
+      return { user: fromatedUser, token };
     }
 
-    const findUser = await UserModel.findOne('email', email);
-
-    if (findUser) {
-      return { error: true, errorMsg: errorsMsgs.USER_EXIST };
-    }
-
-    const user = await new UserModel(email, this.by).save(data);
-
-    const { _id } = user;
-
-    const token = jwt.sign({ id: _id }, process.env.JWT_PRIVATE_KEY, {
-      expiresIn: 9999999,
-    });
-
-    const fromatUser = UserModel.format(user);
-
-    return { user: fromatUser, token };
+    return { error: true, errorMsg };
   }
 }
 
