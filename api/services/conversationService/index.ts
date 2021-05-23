@@ -20,14 +20,21 @@ class ConversationService {
   async get() {
     const { id, email } = this;
 
-    const { messages, users } = await await ConversationModel.get(id);
-    const friendEmail = users.find((emailF) => {
-      if (emailF !== email) {
-        return emailF;
-      }
-    });
+    const { succes, conversation } = await ConversationModel.get(id);
 
-    return { messages, email: friendEmail };
+    if (succes) {
+      const { users, messages } = conversation;
+
+      const friendEmail = users.find((emailF) => {
+        if (emailF !== email) {
+          return emailF;
+        }
+      });
+
+      return { succes, messages, email: friendEmail }
+    }
+
+    return { succes };
   }
 }
 

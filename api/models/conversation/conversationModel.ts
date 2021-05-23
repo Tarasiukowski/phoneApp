@@ -15,24 +15,36 @@ class Conversation {
   }
 
   static send(content: string, email: string, id: string) {
-    conversationModel.updateOne(
-      { _id: id },
-      { $pull: { messages: { from: email, id: `${Math.random()}`, content } } },
-    );
+    try {
+      conversationModel.updateOne(
+        { _id: id },
+        { $pull: { messages: { from: email, id: `${Math.random()}`, content } } },
+      );
+    } catch (e) {
+      return { succes: false };
+    }
 
     return { succes: true };
   }
 
   static async get(id: string) {
-    const conversation = await conversationModel.findOne({ _id: id });
+    try {
+      const conversation = await conversationModel.findOne({ _id: id });
 
-    return conversation;
+      return { succes: true, conversation };
+    } catch (err) {
+      return { succes: true };
+    }
   }
 
   create() {
-    const conversation = new conversationModel(this).save();
+    try {
+      new conversationModel(this).save();
 
-    return conversation;
+      return { succes: true };
+    } catch (err) {
+      return { succes: false };
+    }
   }
 }
 
