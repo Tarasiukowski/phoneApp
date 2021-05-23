@@ -1,1 +1,2 @@
-export { errorsMsgs } from './errorsMsgs'
+export { errorsMsgs } from './errorsMsgs';
+export { getDefaultDataUser } from './defaultDataUser';

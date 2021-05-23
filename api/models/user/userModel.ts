@@ -1,9 +1,9 @@
 import { model } from 'mongoose';
 
-import { generateCode, createNumber, sendMail, randomColor, formatUser } from '../../utils';
+import { generateCode, sendMail, formatUser, getUpdateOption } from '../../utils';
 import { userSchema } from './userSchema';
 import { By, UserDocument } from './types';
-import { errorsMsgs } from '../../data';
+import { errorsMsgs, getDefaultDataUser } from '../../data';
 import { updateOption } from '../../interface';
 
 export const userModel = model<UserDocument>('user', userSchema);
@@ -11,36 +11,28 @@ export const userModel = model<UserDocument>('user', userSchema);
 class User {
   email: string;
   code: string;
-  redirectTo: string;
   by: By;
-  onBoarding: boolean;
-  number: string;
-  colorImage: string;
-  image: string;
-  invites: string[];
-  friends: string[];
-  conversations: string[];
+  redirectTo: string;
 
   constructor(email: string, by: By) {
     this.email = email;
     this.by = by;
-    this.onBoarding = false;
-    this.colorImage = randomColor();
-    this.invites = [];
-    this.friends = [];
-    this.conversations = [];
     this.redirectTo = this.by === 'Google' ? '/onboarding/number' : '/onboarding/code';
-    by !== 'Google' ? (this.code = generateCode()) : null;
+
+    if (by !== 'Google') {
+      this.code = generateCode();
+      sendMail(this.email, this.code);
+    }
   }
 
-  static format(user: UserDocument, member?: boolean) {
-    const formatedUser = formatUser(user, 'conversations');
+  static format(user: UserDocument) {
+    const formatedUser = formatUser(user);
 
     return formatedUser;
   }
 
   static async update(data: any, option: updateOption = 'setField', setEmail?: boolean) {
-    const { email, newEmail, fieldName, pushValue, removeValue } = data;
+    const { email, newEmail } = data;
 
     delete data.email;
 
@@ -52,17 +44,13 @@ class User {
       }
     }
 
-    const availableOptions: any = {
-      removeField: { $unset: { [fieldName]: '' } },
-      setField: { $set: setEmail ? { email: newEmail } : { ...data } },
-      newEmail: { $set: { newEmail: { value: newEmail, code: generateCode() } } },
-      pushToField: { $push: { [fieldName]: pushValue } },
-      pull: { $pull: { [fieldName]: removeValue } },
-    };
+    try {
+      await userModel.updateOne({ email }, getUpdateOption(data, option, setEmail));
 
-    await userModel.updateOne({ email }, availableOptions[option]);
-
-    return { updated: true };
+      return { updated: true, error: false };
+    } catch (err) {
+      return { updated: false, error: true, errorMsg: err };
+    }
   }
 
   static async findOne(key: string, value: string) {
@@ -71,18 +59,12 @@ class User {
     return user;
   }
 
-  async save(data) {
-    const { image } = data;
-
-    this.number = await createNumber();
-
-    if (this.by !== 'Google') {
-      sendMail(this.email, this.code);
-    }
-
+  async save(extraDataUser) {
     delete this.by;
 
-    const user = new userModel({ ...this, image }).save();
+    const defaultDataUser = await getDefaultDataUser();
+
+    const user = new userModel({ ...this, ...extraDataUser, ...defaultDataUser }).save();
 
     return user;
   }

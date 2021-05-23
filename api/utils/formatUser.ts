@@ -1,10 +1,9 @@
 import { UserDocument } from '../models/user/types';
 
-export const formatUser = (user: UserDocument, ...extraKets: string[]) => {
-  const allowKeys = ['image', 'email', 'number', 'fullname', 'colorImage', ...extraKets];
-  const userData = user.toObject();
+const allowKeys = ['image', 'email', 'number', 'fullname', 'colorImage', 'conversations'];
 
-  console.log(allowKeys);
+export const formatUser = (user: UserDocument) => {
+  const userData = user.toObject();
 
   for (const key in user) {
     if (!allowKeys.includes(key)) {
