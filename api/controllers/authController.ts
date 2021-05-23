@@ -26,9 +26,9 @@ class AuthController {
   }
 
   async singUp(req: Request, res: Response) {
-    const { email, by, image } = req.body;
+    const { email, by, ...restBody } = req.body;
 
-    const { error, errorMsg, user, token } = await new AuthService(email, by).singup({ image });
+    const { error, errorMsg, user, token } = await new AuthService(email, by).singup(restBody);
 
     if (error) {
       res.send({ error, errorMsg });
@@ -40,11 +40,7 @@ class AuthController {
   }
 
   logout(_: Request, res: Response) {
-    try {
-      res.clearCookie('SESSID').send({ error: false });
-    } catch {
-      res.send({ error: true, msg: 'Can not logout.' });
-    }
+    res.clearCookie('SESSID').send({ success: true });
   }
 }
 

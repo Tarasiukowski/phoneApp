@@ -1,14 +1,7 @@
 import { fetcher } from './fetcher';
 
-export const logout = async (
-  errorCb: (msg: string) => void,
-) => {
-  const { error, msg } = await fetcher('get', 'auth/logout');
-
-  if (error) {
-    errorCb(msg);
-    return;
-  }
+export const logout = () => {
+  fetcher('get', 'auth/logout');
 
   window.location.reload();
 };
