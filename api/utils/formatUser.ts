@@ -1,8 +1,15 @@
 import { UserDocument } from '../models/user/types';
 
-const allowKeys = ['image', 'email', 'number', 'fullname', 'colorImage', 'conversations'];
-
-export const formatUser = (user: UserDocument) => {
+export const formatUser = (user: UserDocument, extraKeys?: string[]) => {
+  const allowKeys = [
+    'image',
+    'email',
+    'number',
+    'fullname',
+    'colorImage',
+    'conversations',
+    ...extraKeys,
+  ];
   const userData = user.toObject();
 
   for (const key in user) {

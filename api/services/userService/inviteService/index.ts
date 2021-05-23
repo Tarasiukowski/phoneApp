@@ -31,15 +31,15 @@ class InviteService {
       return { error: true, errorMsg: errorsMsgs.IS_YOUR_FRIEND };
     }
 
-    UserModel.update({ email: to, fieldName: 'invites', pushValue: from }, 'pushToField');
+    UserModel.update({ email: to, field: 'invites', value: from }, 'pushToField');
 
     return { error: false };
   }
 
   static async acceptInvite(email: string, from: string) {
-    UserModel.update({ email, fieldName: 'invites', removeValue: from }, 'pull');
-    UserModel.update({ email, fieldName: 'friends', pushValue: from }, 'pushToField');
-    UserModel.update({ email: from, fieldName: 'friends', pushValue: email }, 'pushToField');
+    UserModel.update({ email, field: 'invites', value: from }, 'pull');
+    UserModel.update({ email, field: 'friends', value: from }, 'pushToField');
+    UserModel.update({ email: from, field: 'friends', value: email }, 'pushToField');
 
     const data = new Conversation([email, from]).create();
 
@@ -47,16 +47,16 @@ class InviteService {
       UserModel.update(
         {
           email,
-          fieldName: 'conversations',
-          pushValue: { with: from, id: (await data.conversation)._id },
+          field: 'conversations',
+          value: { with: from, id: (await data.conversation)._id },
         },
         'pushToField',
       );
       UserModel.update(
         {
           email: from,
-          fieldName: 'conversations',
-          pushValue: { with: email, id: (await data.conversation)._id },
+          field: 'conversations',
+          value: { with: email, id: (await data.conversation)._id },
         },
         'pushToField',
       );
@@ -65,7 +65,7 @@ class InviteService {
   }
 
   static async rejectInvite(email: string, from: string) {
-    UserModel.update({ email, fieldName: 'invites', removeValue: from }, 'pull');
+    UserModel.update({ email, field: 'invites', value: from }, 'pull');
 
     return { error: false };
   }

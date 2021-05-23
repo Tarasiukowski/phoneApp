@@ -1,6 +1,7 @@
 import { errorsMsgs } from '../../data';
 import { updateOption } from '../../interface';
 import UserModel from '../../models/user/userModel';
+import { formatUser } from '../../utils';
 import { By } from '../types';
 import InviteService from './inviteService';
 
@@ -38,9 +39,9 @@ class UserService extends InviteService {
       const user = await UserModel.findOne(key, elem);
 
       if (user) {
-        const { email, fullname, colorImage, image, number } = user;
+        const formatedUser = UserModel.format(user);
 
-        return { email, fullname, colorImage, image, number };
+        return formatedUser;
       }
     });
 

@@ -84,7 +84,7 @@ const SettingsProfileContent = () => {
     onClose: (verify?: boolean) => {
       fetcher('PUT', 'user/update', {
         email,
-        fieldName: 'newEmail',
+        field: 'newEmail',
         option: 'removeField',
       });
 

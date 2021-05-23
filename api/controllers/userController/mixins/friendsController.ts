@@ -19,7 +19,7 @@ export function FriendsControllerMixin<Base extends Class>(base: Base) {
     async removeFriend(req: Request, res: Response) {
       const { email, friendEmail } = req.body;
 
-      UserService.update({ email, fieldName: 'friends', removeValue: friendEmail }, 'pull');
+      UserService.update({ email, field: 'friends', value: friendEmail }, 'pull');
 
       res.send({ email, friendEmail });
     }

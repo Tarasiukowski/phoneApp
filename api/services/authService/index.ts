@@ -21,7 +21,7 @@ class UserService {
       const user = await UserModel.findOne('_id', id);
 
       if (user) {
-        const formatUser = UserModel.format(user);
+        const formatUser = UserModel.format(user, 'conversation');
 
         return {
           user: formatUser,
@@ -46,7 +46,7 @@ class UserService {
           expiresIn: 9999999,
         });
 
-        const formatedUser = UserModel.format(user);
+        const formatedUser = UserModel.format(user, 'conversation');
 
         return { user: formatedUser, token };
       }
@@ -75,7 +75,7 @@ class UserService {
         expiresIn: 9999999,
       });
 
-      const fromatedUser = UserModel.format(user);
+      const fromatedUser = UserModel.format(user, 'conversation');
 
       return { user: fromatedUser, token };
     }

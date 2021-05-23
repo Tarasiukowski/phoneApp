@@ -27,8 +27,6 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
     async acceptInvite(req: Request, res: Response) {
       const { email, from } = req.body;
 
-      console.log(email, from)
-
       const data = await UserService.acceptInvite(email, from);
 
       res.send(data);

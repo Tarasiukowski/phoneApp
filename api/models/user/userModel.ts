@@ -25,8 +25,8 @@ class User {
     }
   }
 
-  static format(user: UserDocument) {
-    const formatedUser = formatUser(user);
+  static format(user: UserDocument, ...extraData: string[]) {
+    const formatedUser = formatUser(user, extraData);
 
     return formatedUser;
   }

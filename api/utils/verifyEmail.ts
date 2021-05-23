@@ -1,4 +1,4 @@
-import { errorsMsgs } from '../data';
+import { errorsMsgs, EMAIL_REGEX } from '../data';
 
 type returnValueVerifyEmail = {
   verify: boolean;
@@ -6,7 +6,7 @@ type returnValueVerifyEmail = {
 };
 
 export const verifyEmail = (email: string): returnValueVerifyEmail => {
-  const verify = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email);
+  const verify = EMAIL_REGEX.test(email);
 
   if (verify) {
     return {
