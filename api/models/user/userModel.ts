@@ -1,13 +1,10 @@
 import { model } from 'mongoose';
 
-import { generateCode } from '../../utils/generateCode';
-import { createNumber } from '../../utils/numbers/createNumber';
-import { sendMail } from '../../utils/sendMail';
+import { generateCode, createNumber, sendMail, randomColor, formatUser } from '../../utils';
 import { userSchema } from './userSchema';
 import { By, UserDocument } from './types';
-import { randomColor } from '../../utils';
-import { updateOption } from '../../interface';
 import { errorsMsgs } from '../../data';
+import { updateOption } from '../../interface';
 
 export const userModel = model<UserDocument>('user', userSchema);
 
@@ -37,17 +34,9 @@ class User {
   }
 
   static format(user: UserDocument, member?: boolean) {
-    const { email, number, fullname, colorImage, image, conversations } = user;
+    const formatedUser = formatUser(user, 'conversations');
 
-    const formatedConversations = conversations.map(({ with: email, id }) => ({ email, id }));
-
-    return {
-      image,
-      email,
-      number,
-      fullname,
-      conversations: formatedConversations
-    };
+    return formatedUser;
   }
 
   static async update(data: any, option: updateOption = 'setField', setEmail?: boolean) {

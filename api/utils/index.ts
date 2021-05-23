@@ -1,4 +1,7 @@
 export { verifyEmail } from './verifyEmail';
 export { connectDB } from './connectDB';
-export { randomNumbers } from './numbers';
-export { randomColor } from './randomColor'
+export { randomColor } from './randomColor';
+export { generateCode } from './generateCode';
+export { sendMail } from './sendMail';
+export { formatUser } from './formatUser'
+export * from './numbers';
