@@ -1,4 +1,5 @@
 export type props = {
+  href?: string,
   elemList?: boolean;
   big?: boolean;
   withDetailed?: boolean;

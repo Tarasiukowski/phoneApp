@@ -20,7 +20,7 @@ class Conversation {
       { $pull: { messages: { from: email, id: `${Math.random()}`, content } } },
     );
 
-    return { sended: true }
+    return { succes: true }
   }
 
   static async get(id: string) {

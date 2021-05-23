@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
 
 import AddButton from './addButton/addButton';
 import FriendsListElement from '../../atoms/userCard/userCard';
@@ -54,7 +55,12 @@ const FriendsList = () => {
           const friend = friends.find(({ email }) => email === conversation.email);
 
           if (friend) {
-            return <FriendsListElement key={friend.email} member={friend} elemList />;
+            return (
+              <Link
+                href={`/inbox/${conversation.id}`}
+                children={<FriendsListElement key={friend.email} member={friend} elemList />}
+              />
+            );
           }
         })}
         <AddButton

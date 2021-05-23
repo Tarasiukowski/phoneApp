@@ -4,14 +4,14 @@ import Notes from './notes/notes';
 
 import styles from './userDetailed.module.scss';
 import { props } from './types';
-import { keysToArray } from '../../../utils/keysToArray';
+import { formatToListData } from '../../../utils';
 
 const UserDetailed = ({ email, number, loading = false, ...restProps }: props) => {
   if (!loading) {
     return (
       <div className={styles.box}>
         <Header {...restProps} />
-        <DetailedChatUserList list={keysToArray({ email, number })} />
+        <DetailedChatUserList list={formatToListData({ email, number })} />
         <Notes />
       </div>
     );

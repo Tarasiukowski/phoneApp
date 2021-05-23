@@ -22,7 +22,7 @@ class ConversationService {
     const { id, email } = this;
 
     const { messages, users } = await await ConversationModel.get(id);
-    const emailF: any = users.find((emailF) => {
+    const emailF = users.find((emailF) => {
       if (emailF !== email) {
         return emailF;
       }
