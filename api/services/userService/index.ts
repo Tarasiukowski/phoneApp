@@ -1,7 +1,6 @@
 import { errorsMsgs } from '../../data';
 import { updateOption } from '../../interface';
 import UserModel from '../../models/user/userModel';
-import { formatUser } from '../../utils';
 import { By } from '../types';
 import InviteService from './inviteService';
 
@@ -34,8 +33,8 @@ class UserService extends InviteService {
     }
   }
 
-  static async get(data: any[], key: string) {
-    const formatData = data.map(async (elem: any) => {
+  static async formatData(data: string[], key: string) {
+    const formatData = data.map(async (elem) => {
       const user = await UserModel.findOne(key, elem);
 
       if (user) {

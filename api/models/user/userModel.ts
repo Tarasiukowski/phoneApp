@@ -54,9 +54,13 @@ class User {
   }
 
   static async findOne(key: string, value: string) {
-    const user = await userModel.findOne({ [key]: value });
+    try {
+      const user = await userModel.findOne({ [key]: value });
 
-    return user;
+      return user;
+    } catch (err) {
+      return null;
+    }
   }
 
   async save(extraDataUser) {

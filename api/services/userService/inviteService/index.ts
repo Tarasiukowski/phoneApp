@@ -7,33 +7,31 @@ class InviteService {
   email: string;
   by: By;
 
-  static async invite(from: any, to: string) {
+  static async invite(from: string, to: string) {
     if (from === to) {
       return { error: true, errorMsg: errorsMsgs.INVITE_TO_YOURSELF };
     }
 
-    const findUser = await UserModel.findOne('email', to);
-    const user = await UserModel.findOne('email', from);
+    const invitedUser = await UserModel.findOne('email', to);
+    const invitingUser = await UserModel.findOne('email', from);
 
-    if (!findUser) {
+    const invites = invitedUser.invites;
+    const friends = invitingUser.friends;
+
+    if (!invitedUser) {
       return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
-    }
-
-    const invites = findUser.invites;
-
-    if (invites.includes(from)) {
+    } else if (invites.includes(from)) {
       return { error: true, errorMsg: errorsMsgs.DUPLICATE_INVITATION };
-    }
-
-    const friends = user.friends;
-
-    if (friends.includes(to)) {
+    } else if (friends.includes(to)) {
       return { error: true, errorMsg: errorsMsgs.IS_YOUR_FRIEND };
     }
 
-    UserModel.update({ email: to, field: 'invites', value: from }, 'pushToField');
+    const data = await UserModel.update(
+      { email: to, field: 'invites', value: from },
+      'pushToField',
+    );
 
-    return { error: false };
+    return data;
   }
 
   static async acceptInvite(email: string, from: string) {
@@ -61,13 +59,14 @@ class InviteService {
         'pushToField',
       );
     }
-    return { error: false };
+    
+    return data;
   }
 
   static async rejectInvite(email: string, from: string) {
-    UserModel.update({ email, field: 'invites', value: from }, 'pull');
+    const data = await UserModel.update({ email, field: 'invites', value: from }, 'pull');
 
-    return { error: false };
+    return data;
   }
 }
 

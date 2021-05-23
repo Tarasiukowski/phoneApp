@@ -9,11 +9,11 @@ export function FriendsControllerMixin<Base extends Class>(base: Base) {
     async friends(req: Request, res: Response) {
       const { email } = req.body;
 
-      const invites = await (await UserModel.findOne('email', email)).friends;
+      const friends = await (await UserModel.findOne('email', email)).friends;
 
-      const data = await UserService.get(invites, 'email');
+      const formatedFriends = await UserService.formatData(friends, 'email');
 
-      res.send(data);
+      res.send(formatedFriends);
     }
 
     async removeFriend(req: Request, res: Response) {
