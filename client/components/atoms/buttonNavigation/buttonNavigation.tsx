@@ -22,15 +22,11 @@ const Button = forwardRef<HTMLButtonElement, props>(
   },
 );
 
-const ButtonNavigation = ({ href, ...restProps }: props) => {
-  return ( 
-    <>
-      {href ? (
-        <Link href={href} children={<Button href={href} {...restProps} />} />
-      ) : (
-        <Button {...restProps} />
-      )}
-    </>
+const ButtonNavigation = (props: props) => {
+  const { href } = props;
+
+  return (
+    <>{href ? <Link href={href} children={<Button {...props} />} /> : <Button {...props} />}</>
   );
 };
 
