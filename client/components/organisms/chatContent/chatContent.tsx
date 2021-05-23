@@ -9,9 +9,13 @@ import styles from './chatContent.module.scss';
 import { ChatData } from './types';
 import { fetcher } from '../../../utils';
 import { selectUser } from '../../../reducers/userReducer';
+import { selectFriends } from '../../../reducers/friendsReducer';
+import { User } from '../../../interfaces';
 
 const ChatContent = () => {
   const [dataChat, setDataChat] = useState<ChatData>({ user: null, messages: [] });
+
+  const friends = useSelector(selectFriends);
 
   const {
     query: { slug },
@@ -23,7 +27,15 @@ const ChatContent = () => {
       email: user.email,
       id: slug[1],
     }).then((data) => {
-      setDataChat(data);
+      const { email, messages } = data;
+
+      const friend = friends.find((friend) => {
+        if (friend.email === email) {
+          return friend;
+        }
+      }) as User;
+
+      setDataChat({ messages, user: friend });
     });
   }, []);
 
@@ -31,9 +43,7 @@ const ChatContent = () => {
 
   return (
     <div className={styles.template}>
-      <Chat
-        messages={messages}
-      />
+      <Chat messages={messages} />
       <UserDetailed loading={!member} {...member} />
     </div>
   );

@@ -41,19 +41,26 @@ class InviteService {
     UserModel.update({ email, fieldName: 'friends', pushValue: from }, 'pushToField');
     UserModel.update({ email: from, fieldName: 'friends', pushValue: email }, 'pushToField');
 
-    new Conversation([email, from]).create().then((data) => {
-      if (data) {
-        UserModel.update(
-          { email, fieldName: 'conversations', pushValue: { with: from, id: data._id } },
-          'pushToField',
-        );
-        UserModel.update(
-          { email: from, fieldName: 'conversations', pushValue: { with: email, id: data._id } },
-          'pushToField',
-        );
-      }
-    });
+    const data = new Conversation([email, from]).create();
 
+    if (data.succes) {
+      UserModel.update(
+        {
+          email,
+          fieldName: 'conversations',
+          pushValue: { with: from, id: (await data.conversation)._id },
+        },
+        'pushToField',
+      );
+      UserModel.update(
+        {
+          email: from,
+          fieldName: 'conversations',
+          pushValue: { with: email, id: (await data.conversation)._id },
+        },
+        'pushToField',
+      );
+    }
     return { error: false };
   }
 

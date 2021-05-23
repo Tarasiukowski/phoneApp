@@ -39,9 +39,9 @@ class Conversation {
 
   create() {
     try {
-      new conversationModel(this).save();
+      const conversation = new conversationModel(this).save();
 
-      return { succes: true };
+      return { succes: true, conversation };
     } catch (err) {
       return { succes: false };
     }
