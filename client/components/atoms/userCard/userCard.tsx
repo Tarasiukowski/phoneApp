@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, forwardRef } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 
@@ -9,65 +9,72 @@ import { props } from './types';
 import { getAllChildreenOfElement } from '../../../utils';
 import { selectUser } from '../../../reducers/userReducer';
 
-const UserCard = ({ elemList, member, big, withDetailed }: props) => {
-  const [openDetailed, setOpenDetailed] = useState<boolean>(false);
+const UserCard = forwardRef<HTMLDivElement, props>(
+  ({ elemList, member, big, withDetailed, onClick }, ref) => {
+    const [openDetailed, setOpenDetailed] = useState<boolean>(false);
 
-  const templateRef = useRef<HTMLDivElement>(null);
-  const userDetailedRef = useRef<HTMLDivElement>(null);
+    const templateRef = useRef<HTMLDivElement>(null);
+    const userDetailedRef = useRef<HTMLDivElement>(null);
 
-  let name = '';
+    let name = '';
 
-  if (member) {
-    const { fullname } = member;
-    const { firstname, lastname } = fullname;
-
-    name = `${firstname} ${lastname}`;
-  } else {
-    const user = useSelector(selectUser);
-
-    if (user) {
-      const {
-        fullname: { firstname, lastname },
-      } = user;
+    if (member) {
+      const { fullname } = member;
+      const { firstname, lastname } = fullname;
 
       name = `${firstname} ${lastname}`;
+    } else {
+      const user = useSelector(selectUser);
+
+      if (user) {
+        const {
+          fullname: { firstname, lastname },
+        } = user;
+
+        name = `${firstname} ${lastname}`;
+      }
     }
-  }
 
-  if (withDetailed) {
-    useEffect(() => {
-      const handleClickEvent = (e: Event) => {
-        const target = e.target as HTMLElement;
-        const userDetailedRefCurrent = userDetailedRef.current;
+    if (withDetailed) {
+      useEffect(() => {
+        const handleClickEvent = (e: Event) => {
+          const target = e.target as HTMLElement;
+          const userDetailedRefCurrent = userDetailedRef.current;
 
-        const allowElements: HTMLElement[] = userDetailedRefCurrent
-          ? getAllChildreenOfElement(userDetailedRefCurrent)
-          : [];
+          const allowElements: HTMLElement[] = userDetailedRefCurrent
+            ? getAllChildreenOfElement(userDetailedRefCurrent)
+            : [];
 
-        if (templateRef.current === target) {
-          setOpenDetailed(true);
-        } else if (!allowElements.includes(target)) {
-          setOpenDetailed(false);
-        }
-      };
+          if (templateRef.current === target) {
+            setOpenDetailed(true);
+          } else if (!allowElements.includes(target)) {
+            setOpenDetailed(false);
+          }
+        };
 
-      window.addEventListener('click', handleClickEvent);
-    });
-  }
+        window.addEventListener('click', handleClickEvent);
+      });
+    }
 
-  return (
-    <Template elemList={elemList} big={big} ref={templateRef}>
-      <ImageUser
-        member={member}
-        margin={elemList ? '0 0 0 13px' : '0 0 0 9px'}
-        mini={elemList}
+    return (
+      <Template
+        onClick={onClick}
+        elemList={elemList}
         big={big}
-      />
-      <p className="name">{name}</p>
-      {withDetailed && openDetailed && <UserDetailed userDetailedRef={userDetailedRef} />}
-    </Template>
-  );
-};
+        ref={withDetailed ? templateRef : ref}
+      >
+        <ImageUser
+          member={member}
+          margin={elemList ? '0 0 0 13px' : '0 0 0 9px'}
+          mini={elemList}
+          big={big}
+        />
+        <p className="name">{name}</p>
+        {withDetailed && openDetailed && <UserDetailed userDetailedRef={userDetailedRef} />}
+      </Template>
+    );
+  },
+);
 
 export const Template = styled.div<props>`
   width: 90%;

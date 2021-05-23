@@ -11,4 +11,5 @@ export type props = {
     colorImage?: string;
     image?: string;
   };
+  onClick?: () => void
 };
