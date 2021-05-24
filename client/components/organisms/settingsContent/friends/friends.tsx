@@ -26,8 +26,16 @@ const SettingsFriendsContent = () => {
 
   useEffect(() => {});
 
-  const removeFriend = (email: string) => {
-    fetcher('POST', 'user/friends/remove', { email });
+  const removeFriend = async (friendEmail: string) => {
+    const { error, errorMsg } = await fetcher('POST', 'user/friends/remove', {
+      email,
+      friendEmail,
+    });
+
+    if (error) {
+      setError({ msg: errorMsg, id: Math.random() });
+      return;
+    }
 
     dispatch(remove({ email }));
   };
