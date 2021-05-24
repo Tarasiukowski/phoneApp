@@ -19,7 +19,7 @@ const friendsSlice = createSlice({
         }
       });
 
-      return (state = updatedState);
+      return [...updatedState];
     },
     add(state, { payload }: PayloadAction<{ user: User }>) {
       const { user } = payload;

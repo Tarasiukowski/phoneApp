@@ -52,7 +52,7 @@ const FriendsList = () => {
       <h2 className={styles.heading}>Friensd List</h2>
       <div className={styles.template}>
         {conversations.map((conversation) => {
-          const friend = friends.find(({ email }) => email === conversation.email);
+          const friend = friends.find((friend) => friend.email === conversation.with);
 
           if (friend) {
             return (

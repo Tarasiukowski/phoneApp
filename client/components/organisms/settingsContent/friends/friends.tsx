@@ -37,7 +37,7 @@ const SettingsFriendsContent = () => {
       return;
     }
 
-    dispatch(remove({ email }));
+    dispatch(remove({ email: friendEmail }));
   };
 
   const multitaskHandle = {

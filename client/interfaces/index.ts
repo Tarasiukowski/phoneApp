@@ -7,7 +7,7 @@ export type propsOnboardingNumberPage = {
 // Others
 
 type conversation = {
-  email: string,
+  with: string,
   id: string
 }
 
