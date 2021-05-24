@@ -28,7 +28,7 @@ const AuthContent = () => {
       profileObj: { email, imageUrl },
     } = res;
 
-    const { user, errorMsg } = await fetcher(
+    const { user, errorMsg, error } = await fetcher(
       'post',
       `auth/${activePath === 'login' ? 'login' : 'singup'}`,
       {
@@ -38,7 +38,7 @@ const AuthContent = () => {
       },
     );
 
-    if (errorMsg) {
+    if (error) {
       setError({ msg: errorMsg, id: Math.random() });
       return;
     } else {
