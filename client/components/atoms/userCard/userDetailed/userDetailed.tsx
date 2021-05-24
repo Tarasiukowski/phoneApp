@@ -28,20 +28,20 @@ const buttonNavigationSettings = {
 const buttonsData = [
   {
     href: '/settings/profile',
-    icon: <SettingsSvg />,
+    icon: SettingsSvg,
     content: 'Edit account',
   },
   {
     href: '/settings/general',
-    icon: <SettingsSvg />,
+    icon: SettingsSvg,
     content: 'Workspace settings',
   },
   {
-    icon: <PlusSvg />,
+    icon: PlusSvg,
     content: 'Invite your friends',
   },
   {
-    icon: <SingOutSvg />,
+    icon: SingOutSvg,
     content: 'Sing out',
     onClick: logout,
   },

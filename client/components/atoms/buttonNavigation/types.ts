@@ -1,5 +1,5 @@
 export type props = {
-  icon: any;
+  icon: () => JSX.Element;
   content: string;
   size?: {
     width?: string;

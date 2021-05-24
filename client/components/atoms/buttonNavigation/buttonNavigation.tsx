@@ -16,7 +16,7 @@ const Button = forwardRef<HTMLButtonElement, props>(
         active={asPath === href || asPath.startsWith(`/${content.toLocaleLowerCase()}`)}
         {...settings}
       >
-        {icon} <span id={id}>{content}</span>
+        {icon()} <span id={id}>{content}</span>
       </StyledButton>
     );
   },

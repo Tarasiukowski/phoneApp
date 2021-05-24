@@ -24,13 +24,13 @@ const Navigation = () => {
             onClick={() => {
               setSearcherOpen(true);
             }}
-            icon={<SearchSvg />}
+            icon={SearchSvg}
             content="Search"
             id="searcher"
           />
-          <ButtonNavigation icon={<ContactsSvg />} href="/contacts" content="Contacts" />
-          <ButtonNavigation icon={<MembersSvg />} href="/invites" content="Invites" />
-          <ButtonNavigation icon={<SettingsSvg />} href="/settings/profile" content="Settings" />
+          <ButtonNavigation icon={ContactsSvg} href="/contacts" content="Contacts" />
+          <ButtonNavigation icon={MembersSvg} href="/invites" content="Invites" />
+          <ButtonNavigation icon={SettingsSvg} href="/settings/profile" content="Settings" />
         </div>
         <div>
           <GroupsList />
