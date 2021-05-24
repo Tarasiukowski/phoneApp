@@ -13,7 +13,7 @@ import { InputsValues } from './types';
 import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
-import { ERROR_NOT_ALLOWED, WITHOUT_CHANGE } from '../../../../common/errors';
+import { ERROR_NOT_ALLOWED, ERROR_WITHOUT_CHANGE } from '../../../../common/errors';
 
 const SettingsProfileContent = () => {
   const [error, setError] = useState<Error | null>(null);
@@ -41,7 +41,7 @@ const SettingsProfileContent = () => {
 
   const save = async () => {
     if (firstnameValue !== firstname || lastnameValue !== lastname) {
-      const data = await fetcher('POST', 'user/verifyByCode', {
+      const data = await fetcher('PUT', 'user/update', {
         email,
         fullname: { firstname: firstnameValue, lastname: lastnameValue },
       });
@@ -54,7 +54,7 @@ const SettingsProfileContent = () => {
       return;
     }
 
-    setError({ msg: WITHOUT_CHANGE('name and surname', 'plural'), id: Math.random() });
+    setError({ msg: ERROR_WITHOUT_CHANGE('name and surname', 'plural'), id: Math.random() });
   };
 
   const multitaskHandle = {
@@ -62,7 +62,7 @@ const SettingsProfileContent = () => {
     open: openMultiTask,
     onNext: async (newEmail: string) => {
       if (newEmail === email) {
-        setError({ msg: WITHOUT_CHANGE('email', 'singular'), id: Math.random() });
+        setError({ msg: ERROR_WITHOUT_CHANGE('email', 'singular'), id: Math.random() });
         return false;
       }
 
