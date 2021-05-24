@@ -6,16 +6,19 @@ import UserCard from '../../atoms/userCard/userCard';
 
 import styles from './usersList.module.scss';
 import { SearchSvg, PlusSvg } from '../../../public/svgs';
-import { User } from '../../../interfaces';
+import { User, Error } from '../../../interfaces';
 import { props } from './types';
 import { fetcher } from '../../../utils';
 import { selectUser } from '../../../reducers/userReducer';
 import { add } from '../../../reducers/friendsReducer';
 import { remove } from '../../../reducers/invitesReducer';
+import Alert from '../../atoms/alert/alert';
 
 const UsersList = ({ name, data }: props) => {
   const [detailedUser, setDetailedUser] = useState<User | null>(null);
   const [inputValue, setInputValue] = useState<string>('');
+  const [listData, setListData] = useState<User[]>([]);
+  const [error, setError] = useState<Error | null>(null);
 
   const dispatch = useDispatch();
   const { email } = useSelector(selectUser);
@@ -24,10 +27,60 @@ const UsersList = ({ name, data }: props) => {
     if (data) {
       setDetailedUser(data[0]);
     }
-  });
+
+    setListData(data);
+  }, []);
+
+  useEffect(() => {
+    if (inputValue.length) {
+      const filterData = (data: User[]) =>
+        data.filter((elem) => {
+          const {
+            fullname: { firstname, lastname },
+          } = elem;
+
+          const fullnane = `${firstname} ${lastname}`.toLowerCase();
+
+          if (fullnane.startsWith(inputValue.toLowerCase())) {
+            return elem;
+          }
+        });
+
+      const filteredData = filterData(listData);
+
+      setListData(filteredData);
+    } else {
+      setListData(data);
+    }
+  }, [inputValue]);
 
   const updateUserDetailed = (userData: User) => {
     setDetailedUser(userData);
+  };
+
+  const addUser = async (user: User) => {
+    const { error, errorMsg } = await fetcher('POST', 'user/invite/accept', {
+      email,
+      from: user.email,
+    });
+
+    if (error) {
+      setError({ msg: errorMsg, id: Math.random() });
+      return;
+    }
+
+    const filteredData = listData.filter((user) => {
+      const { email } = user;
+
+      if (email !== user.email) {
+        return user;
+      }
+    });
+
+    setListData(filteredData);
+
+    dispatch(remove({ email: user.email }));
+    dispatch(add({ user: user }));
   };
 
   return (
@@ -54,49 +107,26 @@ const UsersList = ({ name, data }: props) => {
             </div>
           </div>
           <div>
-            {data
-              .filter((elem) => {
-                const {
-                  fullname: { firstname, lastname },
-                } = elem;
-
-                const fullnane = `${firstname} ${lastname}`;
-
-                if (fullnane.includes(inputValue)) {
-                  return elem;
-                }
-              })
-              .map((elem) => {
-                const addUser = () => {
-                  fetcher('POST', 'user/invite/accept', {
-                    email,
-                    from: elem.email,
-                  }).then(({ error }) => {
-                    if (!error) {
-                      dispatch(remove({ email: elem.email }));
-                      dispatch(add({ user: elem }));
-                    }
-                  });
-                };
-
-                return (
-                  <div
-                    onClick={() => updateUserDetailed(elem)}
-                    key={elem.number}
-                    className={styles.listElement}
-                  >
-                    <UserCard member={elem} />
-                    {name === 'invites' && (
-                      <div onClick={addUser} className={styles.svgTemplate}>
-                        <PlusSvg />
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+            {listData.map((user) => {
+              return (
+                <div
+                  onClick={() => updateUserDetailed(user)}
+                  key={user.number}
+                  className={styles.listElement}
+                >
+                  <UserCard member={user} />
+                  {name === 'invites' && (
+                    <div onClick={() => addUser(user)} className={styles.svgTemplate}>
+                      <PlusSvg />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
+      <Alert error={error} />
       <UserDetailed loading={detailedUser ? false : true} {...detailedUser} />
     </>
   );
