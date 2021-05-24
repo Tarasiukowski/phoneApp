@@ -9,6 +9,9 @@ const SettingsBlocklistContent = () => (
     <h2 className="title">Blocklist</h2>
     <p className="description">Your list of blocked phone numbers.</p>
     <ElementFinder
+      data={[]}
+      filterKey=""
+      info=""
       renderList={() => (
         <div className={styles.listElement}>
           <p>876-8768</p>

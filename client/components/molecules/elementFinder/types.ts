@@ -1,5 +1,8 @@
 import { ReactNode } from 'react';
 
-export type props = {
-  renderList: (inputValue: string) => ReactNode;
+export type props<T> = {
+  data: T[],
+  filterKey: keyof T,
+  renderList: (data: T[]) => ReactNode;
+  info: string
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTemplate';
@@ -23,6 +23,14 @@ const SettingsFriendsContent = () => {
   const friends = useSelector(selectFriends);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {});
+
+  const removeFriend = (email: string) => {
+    fetcher('POST', 'user/friends/remove', { email });
+
+    dispatch(remove({ email }));
+  };
 
   const multitaskHandle = {
     name: 'InviteFriend' as 'InviteFriend',
@@ -66,34 +74,20 @@ const SettingsFriendsContent = () => {
         Invite a member
       </Button>
       <ElementFinder
-        renderList={(inputValue) =>
-          friends
-            .filter((friend) => {
-              const {
-                fullname: { firstname, lastname },
-              } = friend;
-              const fullname = `${firstname} ${lastname}`;
+        data={friends}
+        filterKey="fullname"
+        info="User not found"
+        renderList={(data) =>
+          data.map((friend) => {
+            const { email } = friend;
 
-              if (fullname.startsWith(inputValue)) {
-                return friend;
-              }
-            })
-            .map((friend) => {
-              const { email: friendEmail } = friend;
-
-              const removeFriend = () => {
-                fetcher('POST', 'user/friends/remove', { email, friendEmail });
-
-                dispatch(remove({ email: friendEmail }));
-              };
-
-              return (
-                <div onClick={removeFriend} className={styles.elementList}>
-                  <UserCard member={friend} big />
-                  <Button width="auto">Remove</Button>
-                </div>
-              );
-            })
+            return (
+              <div onClick={() => removeFriend(email)} className={styles.elementList} key={email}>
+                <UserCard member={friend} big />
+                <Button width="auto">Remove</Button>
+              </div>
+            );
+          })
         }
       />
       <Alert error={error} />
