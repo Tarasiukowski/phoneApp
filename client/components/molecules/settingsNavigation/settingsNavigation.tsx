@@ -7,7 +7,7 @@ const SettingsNavigation = () => (
   <div className={styles.box}>
     <p className={styles.heading}>Account</p>
     <div className={styles.template}>
-      {buttonsNavigationData.workspace.map((dataButton) => (
+      {buttonsNavigationData.account.map((dataButton) => (
         <ButtonNavigation {...dataButton} {...buttonNavigationSettings} key={dataButton.content} />
       ))}
     </div>

@@ -15,8 +15,8 @@ class InviteService {
     const invitedUser = await UserModel.findOne('email', to);
     const invitingUser = await UserModel.findOne('email', from);
 
-    const invites = invitedUser.invites;
-    const friends = invitingUser.friends;
+    const invites = invitedUser ? invitedUser.invites : [];
+    const friends = invitingUser ? invitingUser.friends : [];
 
     if (!invitedUser) {
       return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
@@ -59,7 +59,7 @@ class InviteService {
         'pushToField',
       );
     }
-    
+
     return data;
   }
 
