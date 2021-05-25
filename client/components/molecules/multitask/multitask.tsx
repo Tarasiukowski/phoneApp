@@ -4,7 +4,7 @@ import { Button } from '../../atoms/button/button';
 
 import styles from './multitask.module.scss';
 import { isCorrectValue, getAllChildreenOfElement } from '../../../utils';
-import { optionsComponent } from './data'
+import { optionsComponent } from './data';
 import { props } from './types';
 
 const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
@@ -50,7 +50,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
         return;
       }
 
-      const allowNextStage = onNext ? await onNext(inputValue) : name === "InviteFriend";
+      const allowNextStage = onNext ? await onNext(inputValue) : name === 'InviteFriend';
 
       if (allowNextStage) {
         setCounterStage(counterStage + 1);

@@ -1,4 +1,4 @@
-import DetailedChatUserList from '../../molecules/detailedChatUserList/detailedChatUset';
+import List from './list/list';
 import Header from './header/header';
 import Notes from './notes/notes';
 
@@ -11,7 +11,7 @@ const UserDetailed = ({ email, number, loading = false, ...restProps }: props) =
     return (
       <div className={styles.box}>
         <Header {...restProps} />
-        <DetailedChatUserList list={formatToListData({ email, number })} />
+        <List list={formatToListData({ email, number })} />
         <Notes />
       </div>
     );
