@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import useSWR from 'swr';
 
 import UserDetailed from '../../molecules/userDetailed/userDetailed';
 import Chat from '../../molecules/chatComponent/chat';
@@ -16,14 +17,14 @@ const ChatContent = () => {
   const [dataChat, setDataChat] = useState<ChatData>({ user: null, messages: [] });
 
   const friends = useSelector(selectFriends);
+  const user = useSelector(selectUser);
 
   const {
     query: { slug },
   } = useRouter();
-  const user = useSelector(selectUser);
 
-  useEffect(() => {
-    fetcher('POST', 'conversation', {
+  const swrFetcher = (url: string) => {
+    fetcher('POST', url, {
       email: user.email,
       id: slug[1],
     }).then((data) => {
@@ -37,7 +38,9 @@ const ChatContent = () => {
 
       setDataChat({ messages, user: friend });
     });
-  }, []);
+  };
+
+  useSWR('conversation', swrFetcher, { refreshInterval: 1 });
 
   const { messages, user: member } = dataChat;
 

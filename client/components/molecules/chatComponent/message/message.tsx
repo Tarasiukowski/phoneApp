@@ -19,6 +19,8 @@ const MessageComponent = ({ content, from, id, data }: props) => {
   const previousMsgIsFromLogged = previousMsg ? previousMsg.from === currentMsg.from : false;
   const nextMsgIsFromLogged = nextMsg ? nextMsg.from === currentMsg.from : false;
 
+  const withMarginTop = messageIndex !== 0 && !previousMsgIsFromLogged ? '10px' : undefined
+
   const messageTemplateClasses = cl(
     styles.messageTemplate,
     isLoggedUser ? styles.logged : styles.notLogged,
@@ -30,7 +32,10 @@ const MessageComponent = ({ content, from, id, data }: props) => {
   );
 
   return (
-    <div className={messageTemplateClasses}>
+    <div
+      className={messageTemplateClasses}
+      style={{ marginTop: withMarginTop && "24px" }}
+    >
       <div className={messageClasses}>{content}</div>
     </div>
   );

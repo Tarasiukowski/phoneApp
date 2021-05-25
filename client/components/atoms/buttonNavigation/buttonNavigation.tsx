@@ -22,8 +22,12 @@ const Button = forwardRef<HTMLButtonElement, props>(
 );
 
 const ButtonNavigation = ({ href, ...restProps }: props) =>
-  href ? <Link href={href} children={<Button {...restProps} />} /> : <Button {...restProps} />;
-  
+  href ? (
+    <Link href={href} children={<Button href={href} {...restProps} />} />
+  ) : (
+    <Button {...restProps} />
+  );
+
 const StyledButton = styled.button<propsButton>`
   color: #eeeef0;
   cursor: pointer;
