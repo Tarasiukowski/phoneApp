@@ -6,30 +6,24 @@ import styled, { css } from 'styled-components';
 import { props, propsButton } from './types';
 
 const Button = forwardRef<HTMLButtonElement, props>(
-  ({ icon, active, button, href, content, id, ...settings }, ref) => {
+  ({ icon, active, button, href, content, ...restProps }, ref) => {
     const { asPath } = useRouter();
 
     return (
       <StyledButton
         ref={ref}
-        id={id}
         active={asPath === href || asPath.startsWith(`/${content.toLocaleLowerCase()}`)}
-        {...settings}
+        {...restProps}
       >
-        {icon()} <span id={id}>{content}</span>
+        {icon()} <span>{content}</span>
       </StyledButton>
     );
   },
 );
 
-const ButtonNavigation = (props: props) => {
-  const { href } = props;
-
-  return (
-    <>{href ? <Link href={href} children={<Button {...props} />} /> : <Button {...props} />}</>
-  );
-};
-
+const ButtonNavigation = ({ href, ...restProps }: props) =>
+  href ? <Link href={href} children={<Button {...restProps} />} /> : <Button {...restProps} />;
+  
 const StyledButton = styled.button<propsButton>`
   color: #eeeef0;
   cursor: pointer;
@@ -48,11 +42,13 @@ const StyledButton = styled.button<propsButton>`
     margin-left: 15px;
     font-weight: 600;
     font-size: 1.4rem;
+    pointer-events: none;
   }
 
   svg {
     margin-left: 2px;
     fill: rgb(151, 151, 176);
+    pointer-events: none;
   }
 
   :hover {
