@@ -4,6 +4,7 @@ import { Button } from '../../atoms/button/button';
 
 import styles from './multitask.module.scss';
 import { isCorrectValue, getAllChildreenOfElement } from '../../../utils';
+import { optionsComponent } from './data'
 import { props } from './types';
 
 const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
@@ -89,36 +90,5 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
 
   return null;
 };
-
-const optionsComponent = [
-  {
-    name: 'ChangeEmail',
-    stages: [
-      {
-        title: 'Pass new e-mail',
-        description: 'to which the code will be sent',
-        inputName: 'email',
-        inputPlaceholder: 'Enter an email adress',
-      },
-      {
-        title: 'Pass verify code',
-        description: 'to which send to your e-mail',
-        inputName: 'code',
-        inputPlaceholder: 'Enter an verify code',
-      },
-    ],
-  },
-  {
-    name: 'InviteFriend',
-    stages: [
-      {
-        title: 'Pass friend e-mail',
-        description: 'to send invite',
-        inputName: 'email',
-        inputPlaceholder: 'Enter an email adress',
-      },
-    ],
-  },
-];
 
 export default Multitask;
