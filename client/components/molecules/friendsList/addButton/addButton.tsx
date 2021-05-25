@@ -16,12 +16,14 @@ const Button = styled.div`
 
   svg {
     margin-left: 13px;
+    pointer-events: none;
   }
 
   p {
     font-size: 1.2rem;
     font-weight: 600;
     margin-left: 15px;
+    pointer-events: none;
   }
 
   :hover {
@@ -31,8 +33,8 @@ const Button = styled.div`
 
 const AddButton = ({ id, onClick }: { id: string; onClick: () => void }) => (
   <Button onClick={onClick} id={id}>
-    <AddSvg id={id} />
-    <p id={id}>Invite your friend</p>
+    <AddSvg />
+    <p>Invite your friend</p>
   </Button>
 );
 
