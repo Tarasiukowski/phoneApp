@@ -4,19 +4,24 @@ import ButtonNavigation from '../../atoms/buttonNavigation/buttonNavigation';
 import UserCard from '../../atoms/userCard/userCard';
 import GroupsList from '../groupsList/groupsList';
 import FriendsList from '../friendsList/friendsList';
+import SearcherTemplate from '../../../templates/sarcherTemplate/searcherTemplate';
 
 import { SearchSvg, ContactsSvg, SettingsSvg, MembersSvg } from '../../../public/svgs';
 // import ContactsSvg from "../../../public/svgs/contacts.svg"
 // import SearchSvg from "../../../public/svgs/search.svg"
 // import Settings from "../../../public/svgs/settings.svg"
 import styles from './navigation.module.scss';
-import Searcher from '../searcher/searcher';
 
 const Navigation = () => {
   const [searcherOpen, setSearcherOpen] = useState<boolean>(false);
 
   return (
-    <>
+    <SearcherTemplate
+      open={searcherOpen}
+      onClose={() => {
+        setSearcherOpen(false);
+      }}
+    >
       <div className={styles.box}>
         <div className={styles.header}>
           <UserCard withDetailed />
@@ -37,13 +42,7 @@ const Navigation = () => {
           <FriendsList />
         </div>
       </div>
-      <Searcher
-        open={searcherOpen}
-        onClose={() => {
-          setSearcherOpen(false);
-        }}
-      />
-    </>
+    </SearcherTemplate>
   );
 };
 
