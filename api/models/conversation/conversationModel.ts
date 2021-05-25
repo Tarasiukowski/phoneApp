@@ -14,11 +14,11 @@ class Conversation {
     this.messages = [];
   }
 
-  static send(content: string, email: string, id: string) {
+  static async send(content: string, email: string, id: string) {
     try {
-      conversationModel.updateOne(
+      await conversationModel.updateOne(
         { _id: id },
-        { $pull: { messages: { from: email, id: `${Math.random()}`, content } } },
+        { $push: { messages: { from: email, content, id: Math.random() } } },
       );
     } catch (e) {
       return { succes: false };
