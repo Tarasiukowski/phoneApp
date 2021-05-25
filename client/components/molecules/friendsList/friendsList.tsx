@@ -58,7 +58,8 @@ const FriendsList = () => {
             return (
               <Link
                 href={`/inbox/${conversation.id}`}
-                children={<FriendsListElement key={friend.email} member={friend} elemList />}
+                key={friend.email}
+                children={<FriendsListElement member={friend} elemList />}
               />
             );
           }

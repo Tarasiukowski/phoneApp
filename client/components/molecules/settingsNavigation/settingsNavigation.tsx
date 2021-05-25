@@ -8,13 +8,13 @@ const SettingsNavigation = () => (
     <p className={styles.heading}>Account</p>
     <div className={styles.template}>
       {buttonsNavigationData.workspace.map((dataButton) => (
-        <ButtonNavigation {...dataButton} {...buttonNavigationSettings} />
+        <ButtonNavigation {...dataButton} {...buttonNavigationSettings} key={dataButton.content} />
       ))}
     </div>
     <p className={styles.heading}>Workspace</p>
     <div className={styles.template}>
       {buttonsNavigationData.workspace.map((dataButton) => (
-        <ButtonNavigation {...dataButton} {...buttonNavigationSettings} />
+        <ButtonNavigation {...dataButton} {...buttonNavigationSettings} key={dataButton.content} />
       ))}
     </div>
   </div>
