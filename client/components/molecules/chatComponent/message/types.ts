@@ -4,5 +4,5 @@ export type props = {
   content: string;
   from: string,
   id: string
-  messagesData: Message[],
+  data: Message[],
 }

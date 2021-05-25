@@ -10,7 +10,7 @@ const Chat = ({ messages }: props) => (
     <Header />
     <div className={styles.content}>
       {messages.map((message) => (
-        <Message {...message} messagesData={messages} />
+        <Message {...message} data={messages} />
       ))}
     </div>
     <div className={styles.inputTemplate}>

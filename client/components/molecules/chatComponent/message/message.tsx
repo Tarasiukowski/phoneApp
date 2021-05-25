@@ -5,16 +5,16 @@ import { props } from './types';
 import styles from './message.module.scss';
 import { selectUser } from '../../../../reducers/userReducer';
 
-const MessageComponent = ({ content, from, id, messagesData }: props) => {
+const MessageComponent = ({ content, from, id, data }: props) => {
   const { email } = useSelector(selectUser);
 
   const isLoggedUser = from === email;
 
-  const messageIndex = messagesData.findIndex((message) => message.id === id);
+  const messageIndex = data.findIndex((message) => message.id === id);
 
-  const currentMsg = messagesData[messageIndex];
-  const previousMsg = messagesData[messageIndex - 1];
-  const nextMsg = messagesData[messageIndex + 1];
+  const currentMsg = data[messageIndex];
+  const previousMsg = data[messageIndex - 1];
+  const nextMsg = data[messageIndex + 1];
 
   const previousMsgIsFromLogged = previousMsg ? previousMsg.from === currentMsg.from : false;
   const nextMsgIsFromLogged = nextMsg ? nextMsg.from === currentMsg.from : false;
