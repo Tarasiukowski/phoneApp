@@ -1,7 +1,6 @@
 import { Response, Request } from 'express';
 
 import { Class } from '../../../interface';
-import UserModel from '../../../models/user/userModel';
 import UserService from '../../../services/userService';
 
 export function FriendsControllerMixin<Base extends Class>(base: Base) {
@@ -9,19 +8,17 @@ export function FriendsControllerMixin<Base extends Class>(base: Base) {
     async friends(req: Request, res: Response) {
       const { email } = req.body;
 
-      const friends = await (await UserModel.findOne('email', email)).friends;
+      const data = await UserService.getFriends(email)
 
-      const formatedFriends = await UserService.formatData(friends, 'email');
-
-      res.send(formatedFriends);
+      res.send(data)
     }
 
     async removeFriend(req: Request, res: Response) {
       const { email, friendEmail } = req.body;
 
-      UserService.update({ email, field: 'friends', value: friendEmail }, 'pull');
+      const data = await UserService.removeFriend(email, friendEmail)
 
-      res.send({ email, friendEmail });
+      res.send(data);
     }
   };
 }

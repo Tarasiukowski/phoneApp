@@ -1,17 +1,27 @@
 import { model } from 'mongoose';
 
 import { conversationSchema } from './conversationSchema';
-import { ConversationDocument, Message } from './types';
+import { Conversation, ConversationDocument, Message } from './types';
 
 export const conversationModel = model<ConversationDocument>('conversation', conversationSchema);
 
-class Conversation {
+class ConversationModel {
   users: string[];
   messages: Message[];
 
   constructor(users: string[]) {
     this.users = users;
     this.messages = [];
+  }
+
+  static async remove(by: keyof Conversation, value) {
+    try {
+      await conversationModel.remove({ [by]: value });
+    } catch (err) {
+      return { succes: false };
+    }
+
+    return { succes: true };
   }
 
   static async send(content: string, email: string, id: string) {
@@ -48,4 +58,4 @@ class Conversation {
   }
 }
 
-export default Conversation;
+export default ConversationModel;

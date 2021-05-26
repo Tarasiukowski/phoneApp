@@ -2,9 +2,9 @@ import { errorsMsgs } from '../../data';
 import { updateOption } from '../../interface';
 import UserModel from '../../models/user/userModel';
 import { By } from '../types';
-import InviteService from './inviteService';
+import { FriendServiceMixin, InviteServiceMixin } from './mixins';
 
-class UserService extends InviteService {
+class UserService extends InviteServiceMixin(FriendServiceMixin(class {})) {
   email: string;
   by: By;
 
