@@ -6,14 +6,14 @@ import useSWR from 'swr';
 import UserDetailed from '../../molecules/userDetailed/userDetailed';
 import Chat from '../../molecules/chatComponent/chat';
 
-import styles from './chatContent.module.scss';
 import { ChatData } from './types';
 import { fetcher } from '../../../utils';
 import { selectUser } from '../../../reducers/userReducer';
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { User } from '../../../interfaces';
+import styles from './inboxContent.module.scss';
 
-const ChatContent = () => {
+export const InboxContent = () => {
   const [dataChat, setDataChat] = useState<ChatData>({ user: null, messages: [] });
 
   const friends = useSelector(selectFriends);
@@ -51,5 +51,3 @@ const ChatContent = () => {
     </div>
   );
 };
-
-export default ChatContent;

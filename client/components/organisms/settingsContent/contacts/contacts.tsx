@@ -3,7 +3,7 @@ import { Button } from '../../../atoms/button/button';
 
 import styles from './contacts.module.scss';
 
-const SettingsContactContent = () => (
+export const SettingsContactContent = () => (
   <SettingsTemplate>
     <h2 className="title">Contacts</h2>
     <p className="description">Manage the settings.</p>
@@ -18,5 +18,3 @@ const SettingsContactContent = () => (
     </div>
   </SettingsTemplate>
 );
-
-export default SettingsContactContent;

@@ -12,7 +12,7 @@ import { fetcher } from '../../../../utils';
 import styles from './number.module.scss';
 import { Error } from '../../../../interfaces';
 
-const OnboardingNumberContent = () => {
+export const OnboardingNumberContent = () => {
   const [openList, setOpenList] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<boolean>(false);
   const [number, setNumber] = useState<string | null>(null);
@@ -68,5 +68,3 @@ const OnboardingNumberContent = () => {
     </RedirectTemplate>
   );
 };
-
-export default OnboardingNumberContent;

@@ -1,12 +1,14 @@
+import {
+  SettingsFriendsContent,
+  SettingsBlocklistContent,
+  SettingsContactContent,
+  SettingsProfileContent,
+  SettingsGeneralContent,
+} from './index';
 import SettingsNavigation from '../../molecules/settingsNavigation/settingsNavigation';
 import Subpage from '../../molecules/subpage/subpage';
-import SettingsFriendsContent from './friends/friends';
-import SettingsProfileContent from './profile/profile';
-import SettingsGeneralContent from './general/general';
-import SettingsBlocklistContent from './blocklist/blocklist';
-import SettingsContactContent from './contacts/contacts';
 
-const SettingsContent = () => (
+export const SettingsContent = () => (
   <>
     <SettingsNavigation />
     <Subpage routes={routes} slugNumber={1} />
@@ -35,5 +37,3 @@ const routes = [
     component: <SettingsFriendsContent />,
   },
 ];
-
-export default SettingsContent;

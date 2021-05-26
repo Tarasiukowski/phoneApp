@@ -4,10 +4,8 @@ import UsersList from '../../molecules/usersList/usersList';
 
 import { selectFriends } from '../../../reducers/friendsReducer';
 
-const ContactsContent = () => {
+export const ContactsContent = () => {
   const friends = useSelector(selectFriends);
 
   return <UsersList name="contacts" data={friends} />;
 };
-
-export default ContactsContent;

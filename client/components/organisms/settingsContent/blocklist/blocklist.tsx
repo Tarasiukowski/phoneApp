@@ -4,7 +4,7 @@ import ElementFinder from '../../../molecules/elementFinder/elementFinder';
 
 import styles from './blocklist.module.scss';
 
-const SettingsBlocklistContent = () => (
+export const SettingsBlocklistContent = () => (
   <SettingsTemplate>
     <h2 className="title">Blocklist</h2>
     <p className="description">Your list of blocked phone numbers.</p>
@@ -22,5 +22,3 @@ const SettingsBlocklistContent = () => (
     />
   </SettingsTemplate>
 );
-
-export default SettingsBlocklistContent;

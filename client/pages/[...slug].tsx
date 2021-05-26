@@ -1,10 +1,13 @@
-import ContactsContent from '../components/organisms/contactsContent/contactsContent';
-import InvitesContent from '../components/organisms/invitesContent/invitesContent';
-import SettingsContent from '../components/organisms/settingsContent';
-import Subpage from '../components/molecules/subpage/subpage'
+import {
+  InboxContent,
+  GroupContent,
+  ContactsContent,
+  InvitesContent,
+  SettingsContent,
+} from '../components/organisms/index';
+import Subpage from '../components/molecules/subpage/subpage';
 import IsLoggedTemplate from '../templates/isLoggedTemplate/isLoggedTemplate';
 import MainTemplate from '../templates/mainTemplate/mainTemplate';
-import ChatContent from '../components/organisms/chatContent/chatContent';
 
 const MainPage = () => (
   <IsLoggedTemplate allow="logged">
@@ -17,11 +20,15 @@ const MainPage = () => (
 const routes = [
   {
     slug: 'settings',
-    component: <SettingsContent />
+    component: <SettingsContent />,
   },
   {
     slug: 'inbox',
-    component: <ChatContent />
+    component: <InboxContent />,
+  },
+  {
+    slug: 'group',
+    component: <GroupContent />,
   },
   {
     slug: 'contacts',
@@ -29,8 +36,8 @@ const routes = [
   },
   {
     slug: 'invites',
-    component: <InvitesContent />
-  }
+    component: <InvitesContent />,
+  },
 ];
 
 export default MainPage;

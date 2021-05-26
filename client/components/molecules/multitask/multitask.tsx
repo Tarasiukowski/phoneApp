@@ -45,6 +45,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
         const verifyCode = await onEnd(inputValue);
         if (verifyCode) {
           onClose(verifyCode);
+          setInputValue('');
           setCounterStage(0);
         }
         return;

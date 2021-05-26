@@ -14,7 +14,7 @@ import { fetcher } from '../../../utils';
 import { Error } from '../../../interfaces';
 import styles from './authContent.module.scss';
 
-const AuthContent = () => {
+export const AuthContent = () => {
   const [error, setError] = useState<Error | null>(null);
   const [redirect, setRedirect] = useState<boolean>(false);
 
@@ -71,5 +71,3 @@ const AuthContent = () => {
     </RedirectTemplate>
   );
 };
-
-export default AuthContent;

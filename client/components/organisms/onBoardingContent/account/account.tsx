@@ -12,7 +12,7 @@ import { Error } from '../../../../interfaces';
 import { FormValues } from './types';
 import styles from './account.module.scss';
 
-const OnboardingAccountContent = () => {
+export const OnboardingAccountContent = () => {
   const [formValues, setFormValues] = useReducer(
     (prevState: FormValues, state: FormValues) => ({ ...prevState, ...state }),
     { firstname: '', lastname: '' },
@@ -98,5 +98,3 @@ const OnboardingAccountContent = () => {
     </RedirectTemplate>
   );
 };
-
-export default OnboardingAccountContent;

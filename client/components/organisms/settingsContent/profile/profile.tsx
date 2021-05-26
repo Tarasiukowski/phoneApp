@@ -15,7 +15,7 @@ import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
 import { ERROR_NOT_ALLOWED, ERROR_WITHOUT_CHANGE } from '../../../../common/errors';
 
-const SettingsProfileContent = () => {
+export const SettingsProfileContent = () => {
   const [error, setError] = useState<Error | null>(null);
   const [openMultiTask, setOpenMultiTask] = useState<boolean>(false);
 

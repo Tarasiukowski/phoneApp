@@ -5,7 +5,7 @@ import { Button } from '../../../atoms/button/button';
 
 import styles from './general.module.scss';
 
-const SettingsGeneralContent = () => (
+export const SettingsGeneralContent = () => (
   <SettingsTemplate>
     <h2 className="title">Workspace</h2>
     <p className="description">General information about your workspace.</p>

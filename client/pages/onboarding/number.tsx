@@ -1,11 +1,11 @@
+import { OnboardingCodeContent } from '../../components/organisms';
 import OnboardingTemplate from '../../templates/onboardingTemplate/onboardingTemplate';
-import OnboardingNumberContent from '../../components/organisms/onBoardingContent/number/number';
 import IsLoggedTemplate from '../../templates/isLoggedTemplate/isLoggedTemplate';
 
 const OnboardingNumberPage = () => (
   <IsLoggedTemplate allow="logged">
     <OnboardingTemplate>
-      <OnboardingNumberContent />
+      <OnboardingCodeContent />
     </OnboardingTemplate>
   </IsLoggedTemplate>
 );

@@ -1,4 +1,4 @@
-import OnboardingCodeContent from '../../components/organisms/onBoardingContent/codeVerify/code';
+import { OnboardingCodeContent } from '../../components/organisms'
 import IsLoggedTemplate from '../../templates/isLoggedTemplate/isLoggedTemplate';
 import OnboardingTemplate from '../../templates/onboardingTemplate/onboardingTemplate';
 
