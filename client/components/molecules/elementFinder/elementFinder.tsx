@@ -15,8 +15,8 @@ const ElementFinder = <T,>({ renderList, data, filterKey, info }: props<T>) => {
   };
 
   useEffect(() => {
-    setGetData(data);
-  }, []);
+    setGetData(data)
+  }, [data]);
 
   useEffect(() => {
     if (inputValue.length) {
