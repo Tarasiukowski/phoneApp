@@ -58,7 +58,7 @@ class UserService {
   }
 
   async singup(data) {
-    const { email } = this;
+    const { email, by } = this;
 
     const { verify, errorMsg } = verifyEmail(email);
 
@@ -69,7 +69,7 @@ class UserService {
         return { error: true, errorMsg: errorsMsgs.USER_EXIST };
       }
 
-      const user = await new UserModel(email, this.by).save(data);
+      const user = await new UserModel(email, by).save(data);
 
       const token = jwt.sign({ id: user._id }, process.env.JWT_PRIVATE_KEY, {
         expiresIn: 9999999,

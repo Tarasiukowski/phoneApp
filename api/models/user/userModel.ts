@@ -17,11 +17,13 @@ class User {
   constructor(email: string, by: By) {
     this.email = email;
     this.by = by;
-    this.redirectTo = this.by === 'Google' ? '/onboarding/number' : '/onboarding/code';
 
     if (by !== 'Google') {
       this.code = generateCode();
+      this.redirectTo = '/onboarding/code';
       sendMail(this.email, this.code);
+    } else {
+      this.redirectTo = '/onboarding/number';
     }
   }
 

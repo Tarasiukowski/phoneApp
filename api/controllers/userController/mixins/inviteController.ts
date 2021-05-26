@@ -10,7 +10,7 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
       async index(req: Request, res: Response) {
         const { email, to } = req.body;
 
-        const data = await UserService.invite(email, to);
+        const data = await UserService.invite.index(email, to);
 
         res.send(data);
       },
@@ -28,7 +28,7 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
       async accept(req: Request, res: Response) {
         const { email, from } = req.body;
 
-        const data = await UserService.acceptInvite(email, from);
+        const data = await UserService.invite.accept(email, from);
 
         res.send(data);
       },
@@ -36,7 +36,7 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
       async reject(req: Request, res: Response) {
         const { email, from } = req.body;
 
-        const data = await UserService.rejectInvite(email, from);
+        const data = await UserService.invite.reject(email, from);
 
         res.send(data);
       },

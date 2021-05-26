@@ -9,14 +9,14 @@ export function FriendsControllerMixin<Base extends Class>(base: Base) {
       async index(req: Request, res: Response) {
         const { email } = req.body;
 
-        const data = await UserService.getFriends(email);
+        const data = await UserService.friend.get(email);
 
         res.send(data);
       },
       async remove(req: Request, res: Response) {
         const { email, friendEmail } = req.body;
 
-        const data = await UserService.removeFriend(email, friendEmail);
+        const data = await UserService.friend.remove(email, friendEmail);
 
         res.send(data);
       },
