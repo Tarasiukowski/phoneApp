@@ -6,38 +6,40 @@ import { Class } from '../../../interface';
 
 export function InviteControllerMixin<Base extends Class>(base: Base) {
   return class extends base {
-    async invite(req: Request, res: Response) {
-      const { email, to } = req.body;
+    invite = {
+      async index(req: Request, res: Response) {
+        const { email, to } = req.body;
 
-      const data = await UserService.invite(email, to);
+        const data = await UserService.invite(email, to);
 
-      res.send(data);
-    }
+        res.send(data);
+      },
 
-    async getInvites(req: Request, res: Response) {
-      const { email } = req.body;
+      async get(req: Request, res: Response) {
+        const { email } = req.body;
 
-      const invites = await (await UserModel.findOne('email', email)).invites;
+        const invites = await (await UserModel.findOne('email', email)).invites;
 
-      const formatedInvites = await UserService.formatData(invites, 'email');
+        const formatedInvites = await UserService.formatData(invites, 'email');
 
-      res.send(formatedInvites);
-    }
+        res.send(formatedInvites);
+      },
 
-    async acceptInvite(req: Request, res: Response) {
-      const { email, from } = req.body;
+      async accept(req: Request, res: Response) {
+        const { email, from } = req.body;
 
-      const data = await UserService.acceptInvite(email, from);
+        const data = await UserService.acceptInvite(email, from);
 
-      res.send(data);
-    }
+        res.send(data);
+      },
 
-    async rejectInvite(req: Request, res: Response) {
-      const { email, from } = req.body;
+      async reject(req: Request, res: Response) {
+        const { email, from } = req.body;
 
-      const data = await UserService.rejectInvite(email, from);
+        const data = await UserService.rejectInvite(email, from);
 
-      res.send(data);
-    }
+        res.send(data);
+      },
+    };
   };
 }

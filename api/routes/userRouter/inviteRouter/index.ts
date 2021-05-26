@@ -5,7 +5,7 @@ import { userController } from '../../../controllers/userController';
 export const inviteRouter = Router();
 
 inviteRouter
-  .post('/', userController.invite)
-  .post('/accept', userController.acceptInvite)
-  .post('/reject', userController.rejectInvite)
-  .post('/get', userController.getInvites)
+  .post('/', userController.invite.index)
+  .post('/accept', userController.invite.accept)
+  .post('/reject', userController.invite.reject)
+  .post('/get', userController.invite.get);
