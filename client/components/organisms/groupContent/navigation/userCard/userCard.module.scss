@@ -1,0 +1,30 @@
+.box {
+  width: 100%;
+  height: 60px;
+  background-color: #4B4B663B;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  cursor: pointer;
+
+  .content {
+    margin-left: 10px;
+
+    .name {
+      color: rgb(186, 186, 204);
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .msg {
+      color: #9797B0;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+  }
+
+  &:hover {
+    background-color: #2F3043;
+  }
+}
