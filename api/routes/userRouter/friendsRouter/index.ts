@@ -4,4 +4,6 @@ import { userController } from '../../../controllers/userController/index';
 
 export const friendsRouter = Router();
 
-friendsRouter.post('/', userController.friends).post('/remove', userController.removeFriend);
+friendsRouter
+  .post('/', userController.friends.index)
+  .post('/remove', userController.friends.remove);
