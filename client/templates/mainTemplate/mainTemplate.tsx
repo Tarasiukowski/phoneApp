@@ -7,25 +7,30 @@ import Navigation from '../../components/molecules/navigation/navigation';
 
 import { swrFetcher } from '../../utils';
 import { selectUser } from '../../reducers/userReducer';
-import { update as updateI } from '../../reducers/invitesReducer';
-import { update as updateF } from '../../reducers/friendsReducer';
+import { selectInvites, update as updateI } from '../../reducers/invitesReducer';
+import { selectFriends, update as updateF } from '../../reducers/friendsReducer';
 
 const MainTemplate: React.FC = ({ children }) => {
-  const { email } = useSelector(selectUser);
+  const user = useSelector(selectUser);
+  const friends = useSelector(selectFriends);
+  const invites = useSelector(selectInvites);
 
   const disptach = useDispatch();
 
-  const { data: fetchedFriends, error: errorF } = useSwr(['user/friends', email], swrFetcher);
-  const { data: fetchedInvites, error: errorI } = useSwr(['user/invite/get', email], swrFetcher);
+  const { data: fetchedFriends, error: errorF } = useSwr(['user/friends', user.email], swrFetcher);
+  const { data: fetchedInvites, error: errorI } = useSwr(
+    ['user/invite/get', user.email],
+    swrFetcher,
+  );
 
   useEffect(() => {
-    if (!errorF) {
+    if (!errorF && fetchedFriends && fetchedFriends.length !== friends.length) {
       disptach(updateF(fetchedFriends));
     }
   }, [fetchedFriends, errorF]);
 
   useEffect(() => {
-    if (!errorI) {
+    if (!errorI && fetchedInvites && fetchedInvites.length !== invites.length) {
       disptach(updateI(fetchedInvites));
     }
   }, [fetchedInvites, errorI]);

@@ -70,6 +70,11 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
               <input
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
+                onKeyUp={(e) => {
+                  if (e.key === 'Enter') {
+                    next();
+                  }
+                }}
                 placeholder={inputPlaceholder}
                 name={inputName}
                 autoComplete="off"
