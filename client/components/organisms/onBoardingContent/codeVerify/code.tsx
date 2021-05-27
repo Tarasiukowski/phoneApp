@@ -23,7 +23,7 @@ export const OnboardingCodeContent = () => {
   const verifyByCode = async (e: FormEvent) => {
     e.preventDefault();
 
-    const { valid, errorMsg, error } = await fetcher('post', 'user/verifyByCode', {
+    const { valid, errorMsg, error } = await fetcher('post', '/user/verifyByCode', {
       email: user.email,
       code: valueInput,
     });
@@ -38,7 +38,7 @@ export const OnboardingCodeContent = () => {
     }
 
     if (valid) {
-      const { error, errorMsg } = await fetcher('PUT', 'user/update', {
+      const { error, errorMsg } = await fetcher('PUT', '/user/update', {
         email: user.email,
         redirectTo: '/onboarding/number',
       });

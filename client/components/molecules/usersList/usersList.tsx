@@ -59,7 +59,7 @@ const UsersList = ({ name, data }: props) => {
   };
 
   const addUser = async (user: User) => {
-    const { error, errorMsg } = await fetcher('POST', 'user/invite/accept', {
+    const { error, errorMsg } = await fetcher('POST', '/user/invite/accept', {
       email,
       from: user.email,
     });

@@ -17,9 +17,9 @@ const MainTemplate: React.FC = ({ children }) => {
 
   const disptach = useDispatch();
 
-  const { data: fetchedFriends, error: errorF } = useSwr(['user/friends', user.email], swrFetcher);
+  const { data: fetchedFriends, error: errorF } = useSwr(['/user/friends', user.email], swrFetcher);
   const { data: fetchedInvites, error: errorI } = useSwr(
-    ['user/invite/get', user.email],
+    ['/user/invite/get', user.email],
     swrFetcher,
   );
 

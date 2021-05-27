@@ -31,7 +31,7 @@ const List = ({ setOpenList, setNumber }: propsSelectList) => {
     const clientHeight = refListItemsCurrent ? refListItemsCurrent.clientHeight : 0;
 
     if (scrollHeight - clientHeight === y && y !== 0) {
-      fetcher('post', 'generate/allNumbers', {
+      fetcher('post', '/generate/allNumbers', {
         filter: valueDigits,
         lastNumber: allNumbers[allNumbers.length - 1],
       }).then((data) => {
@@ -47,7 +47,7 @@ const List = ({ setOpenList, setNumber }: propsSelectList) => {
   }, [y]);
 
   useEffect(() => {
-    fetcher('get', 'generate/randomNumbers').then((data) => {
+    fetcher('get', '/generate/randomNumbers').then((data) => {
       if (data.error) {
         setError({ msg: data.errorMsg, id: Math.random() });
         window.location.reload();
@@ -59,7 +59,7 @@ const List = ({ setOpenList, setNumber }: propsSelectList) => {
   }, []);
 
   useEffect(() => {
-    fetcher('post', 'generate/allNumbers', { filter: valueDigits }).then((data) => {
+    fetcher('post', '/generate/allNumbers', { filter: valueDigits }).then((data) => {
       if (data.error) {
         setError({ msg: data.errorMsg, id: Math.random() });
         window.location.reload();

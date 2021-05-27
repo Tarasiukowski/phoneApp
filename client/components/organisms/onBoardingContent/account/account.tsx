@@ -41,7 +41,7 @@ export const OnboardingAccountContent = () => {
 
     setDisabledByRequest(true);
 
-    fetcher('PUT', 'user/update', {
+    fetcher('PUT', '/user/update', {
       email: user.email,
       fullname: formValues
     }).then(async (data) => {
@@ -51,7 +51,7 @@ export const OnboardingAccountContent = () => {
         return;
       }
 
-      const { error, errorMsg } = await fetcher('PUT', 'user/update', {
+      const { error, errorMsg } = await fetcher('PUT', '/user/update', {
         email: user.email,
         redirectTo: '/contacts',
         onBoarding: true,

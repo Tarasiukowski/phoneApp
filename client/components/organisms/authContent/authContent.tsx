@@ -30,7 +30,7 @@ export const AuthContent = () => {
 
     const { user, errorMsg, error } = await fetcher(
       'post',
-      `auth/${activePath === 'login' ? 'login' : 'singup'}`,
+      `/auth/${activePath === 'login' ? 'login' : 'singup'}`,
       {
         email,
         image: imageUrl,

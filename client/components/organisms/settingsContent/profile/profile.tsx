@@ -41,7 +41,7 @@ export const SettingsProfileContent = () => {
 
   const save = async () => {
     if (firstnameValue !== firstname || lastnameValue !== lastname) {
-      const data = await fetcher('PUT', 'user/update', {
+      const data = await fetcher('PUT', '/user/update', {
         email,
         fullname: { firstname: firstnameValue, lastname: lastnameValue },
       });
@@ -66,7 +66,7 @@ export const SettingsProfileContent = () => {
         return false;
       }
 
-      const data = await fetcher('PUT', 'user/update', {
+      const data = await fetcher('PUT', '/user/update', {
         email,
         newEmail,
         option: 'newEmail',
@@ -84,7 +84,7 @@ export const SettingsProfileContent = () => {
       return true;
     },
     onClose: (verify?: boolean) => {
-      fetcher('PUT', 'user/update', {
+      fetcher('PUT', '/user/update', {
         email,
         field: 'newEmail',
         option: 'removeField',
@@ -94,7 +94,7 @@ export const SettingsProfileContent = () => {
       verify ? window.location.reload() : null;
     },
     onEnd: async (code: string) => {
-      const data = await fetcher('POST', 'user/verifyByCode', {
+      const data = await fetcher('POST', '/user/verifyByCode', {
         email,
         code,
         option: 'verifyNewEmail',

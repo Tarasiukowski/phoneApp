@@ -28,7 +28,7 @@ const FriendsList = () => {
       setOpenMultiTask(false);
     },
     onEnd: async (to: string) => {
-      const { error, errorMsg } = await fetcher('POST', 'user/invite', {
+      const { error, errorMsg } = await fetcher('POST', '/user/invite', {
         email,
         to,
       });

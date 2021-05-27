@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import SelectNumberButton from '../../../atoms/selectNumber/button/button';
-import SelectNumberList from '../../../atoms/selectNumber/list/list';
+import SelectNumberButton from '../../../molecules/selectNumber/button/button';
+import SelectNumberList from '../../../molecules/selectNumber/list/list';
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
 import { Button } from '../../../atoms/button/button';
 import Alert from '../../../atoms/alert/alert';
@@ -31,7 +31,7 @@ export const OnboardingNumberContent = () => {
   const next = async () => {
     let data;
 
-    data = await fetcher('PUT', 'user/update', { email: user.email, number });
+    data = await fetcher('PUT', '/user/update', { email: user.email, number });
 
     if (data.error) {
       setError({ msg: data.errorMsg, id: Math.random() });
@@ -39,7 +39,7 @@ export const OnboardingNumberContent = () => {
       return;
     }
 
-    data = await fetcher('PUT', 'user/update', {
+    data = await fetcher('PUT', '/user/update', {
       email: user.email,
       redirectTo: '/onboarding/account',
     });

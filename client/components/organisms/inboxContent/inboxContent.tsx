@@ -40,7 +40,7 @@ export const InboxContent = () => {
     });
   };
 
-  useSWR('conversation', swrFetcher, { refreshInterval: 1 });
+  useSWR('/conversation', swrFetcher, { refreshInterval: 1 });
 
   const { messages, user: member } = dataChat;
 

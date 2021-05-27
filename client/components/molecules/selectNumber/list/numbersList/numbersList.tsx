@@ -1,5 +1,5 @@
 import Item from '../item/item';
-import Spinner from '../../../spinner/spinner';
+import Spinner from '../../../../atoms/spinner/spinner';
 
 import { propsSelectNumbersList } from '../../types';
 

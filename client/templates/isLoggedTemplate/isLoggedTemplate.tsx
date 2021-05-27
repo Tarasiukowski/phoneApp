@@ -22,7 +22,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
   const router = useRouter();
 
   useEffect(() => {
-    fetcher('post', 'auth').then(({ user, status }) => {
+    fetcher('post', '/auth').then(({ user, status }) => {
       dispatch(login(user));
 
       const isLogged = user ? true : false;
@@ -33,7 +33,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
 
           if (!friends.length && status.onBoarding) {
             if (redirectTo === '/contacts') {
-              fetcher('POST', 'user/friends', { email: user.email }).then((data) => {
+              fetcher('POST', '/user/friends', { email: user.email }).then((data) => {
                 dispatch(update(data));
                 !loading ? setLoading(false) : router.push(redirectTo);
               });

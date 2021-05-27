@@ -30,7 +30,7 @@ const AuthForm = ({ auth, setError }: props) => {
 
     const { error, errorMsg, user } = await fetcher(
       'post',
-      `auth/${auth === 'login' ? 'login' : 'singup'}`,
+      `/auth/${auth === 'login' ? 'login' : 'singup'}`,
       {
         email,
       },

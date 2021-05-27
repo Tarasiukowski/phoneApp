@@ -27,7 +27,7 @@ export const SettingsFriendsContent = () => {
   useEffect(() => {});
 
   const removeFriend = async (friendEmail: string) => {
-    const { error, errorMsg } = await fetcher('POST', 'user/friends/remove', {
+    const { error, errorMsg } = await fetcher('POST', '/user/friends/remove', {
       email,
       friendEmail,
     });
@@ -47,7 +47,7 @@ export const SettingsFriendsContent = () => {
       setOpenMultiTask(false);
     },
     onEnd: async (to: string) => {
-      const { error, errorMsg } = await fetcher('POST', 'user/invite', {
+      const { error, errorMsg } = await fetcher('POST', '/user/invite', {
         email,
         to,
       });

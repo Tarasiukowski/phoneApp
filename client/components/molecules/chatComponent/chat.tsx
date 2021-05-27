@@ -37,7 +37,7 @@ const Chat = ({ messages }: props) => {
     },
     onKeyUp: (e: any) => {
       if (e.key === 'Enter' && valueTextarea.length) {
-        fetcher('PUT', 'conversation/send', {
+        fetcher('PUT', '/conversation/send', {
           email,
           content: valueTextarea,
           id: slug[1],
