@@ -4,7 +4,7 @@ export const Textarea = styled.input`
   resize: none;
   background: #21212c;
   border: 1px solid #4c4d56; 
-  width: 55%;
+  width: 100%;
   height: 75%;
   border-radius: 5px;
   transition: 240ms ease 0ms;

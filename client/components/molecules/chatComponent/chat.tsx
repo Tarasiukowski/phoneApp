@@ -11,7 +11,7 @@ import { props } from './types';
 import { selectUser } from '../../../reducers/userReducer';
 import { fetcher } from '../../../utils';
 
-const Chat = ({ messages }: props) => {
+const Chat = ({ messages, width }: props) => {
   const [valueTextarea, setValueTextarea] = useState<string>('');
 
   const refMessagesTemplate = useRef<HTMLDivElement>(null);
@@ -51,12 +51,14 @@ const Chat = ({ messages }: props) => {
   };
 
   return (
-    <div className={styles.template}>
+    <div className={styles.template} style={{ width: width ? width : "64.5vw" }}>
       <Header />
       <div className={styles.messagesTemplate} ref={refMessagesTemplate}>
-        {messages.map((message) => (
-          <Message {...message} data={messages} key={message.id} />
-        ))}
+        <div className={styles.messagesList}>
+          {messages.map((message) => (
+            <Message {...message} data={messages} key={message.id} />
+          ))}
+        </div>
       </div>
       <div className={styles.inputTemplate}>
         <Textarea {...inputHandle} />

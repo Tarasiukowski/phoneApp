@@ -1,5 +1,6 @@
 export type props = {
   messages: Message[]
+  width?: string
 }
 
 export type Message = {

@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
@@ -10,7 +10,6 @@ import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
 import styles from './code.module.scss';
-import { handleOnChange } from './utils';
 import { ERROR_NOT_ALLOWED } from '../../../../common/errors';
 
 export const OnboardingCodeContent = () => {
@@ -19,6 +18,10 @@ export const OnboardingCodeContent = () => {
   const [redirect, setRedirect] = useState<boolean>(false);
 
   const user = useSelector(selectUser);
+
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValueInput(e.target.value);
+  };
 
   const verifyByCode = async (e: FormEvent) => {
     e.preventDefault();
@@ -62,9 +65,7 @@ export const OnboardingCodeContent = () => {
         <p>We just sent you a 6-digit code to {user.email}. Enter the code below to continue</p>
         <Input
           value={valueInput}
-          onChange={(e) => {
-            handleOnChange(e, setValueInput);
-          }}
+          onChange={handleOnChange}
           placeholder="6-digit code"
           autoComplete="off"
         />

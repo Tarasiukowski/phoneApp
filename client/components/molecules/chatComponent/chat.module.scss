@@ -1,5 +1,4 @@
 .template {
-  width: 64.5vw;
   height: 100vh;
   background-color: #1a1925;
   display: flex;
@@ -11,12 +10,19 @@
 .messagesTemplate {
   height: 90%;
   width: 100%;
-  padding: 30px 14.5vw 30px 14.5vw;
+  padding: 30px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   overflow: scroll;
+  display: flex;
+  justify-content: center;
+
+  .messagesList {
+    width: 35.5vw;
+  }
 }
 
 .inputTemplate {
-  width: 100%;
+  width: 35.5vw;
   height: 6%;
   display: flex;
   justify-content: center;
