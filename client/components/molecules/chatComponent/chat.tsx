@@ -10,7 +10,6 @@ import styles from './chat.module.scss';
 import { props } from './types';
 import { selectUser } from '../../../reducers/userReducer';
 import { fetcher } from '../../../utils';
-// import { fetcher } from '../../../utils';
 
 const Chat = ({ messages }: props) => {
   const [valueTextarea, setValueTextarea] = useState<string>('');

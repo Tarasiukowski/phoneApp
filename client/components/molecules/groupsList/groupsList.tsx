@@ -1,8 +1,8 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
-import GroupElementList from "../../atoms/groupElementList/groupElementList"
+import GroupElementList from './elementList/elementList';
 
-import styles from "./groupsList.module.scss"
+import styles from './groupsList.module.scss';
 
 const GroupsList = () => (
   <div>
@@ -11,6 +11,6 @@ const GroupsList = () => (
       <Link href="/group/1" children={<GroupElementList />} />
     </div>
   </div>
-)
+);
 
-export default GroupsList
+export default GroupsList;

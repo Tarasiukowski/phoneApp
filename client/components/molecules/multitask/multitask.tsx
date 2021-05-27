@@ -29,6 +29,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
 
         if (!allowElements.includes(target) && target.id !== name) {
           setInputValue('');
+          setCounterStage(0)
           onClose();
         }
       };

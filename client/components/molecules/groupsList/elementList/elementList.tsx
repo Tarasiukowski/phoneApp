@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 
-import styles from './groupElementList.module.scss';
+import styles from './elementList.module.scss';
 
-const GroupElementList = forwardRef<HTMLDivElement, any>(({ onClick }, ref) => (
+const ElementList = forwardRef<HTMLDivElement, any>(({ onClick }, ref) => (
   <div onClick={onClick} className={styles.box} ref={ref}>
     <div className={styles.image}>
       <span>🚌</span>
@@ -11,4 +11,4 @@ const GroupElementList = forwardRef<HTMLDivElement, any>(({ onClick }, ref) => (
   </div>
 ));
 
-export default GroupElementList;
+export default ElementList;
