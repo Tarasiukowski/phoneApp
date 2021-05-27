@@ -29,7 +29,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
 
         if (!allowElements.includes(target) && target.id !== name) {
           setInputValue('');
-          setCounterStage(0)
+          setCounterStage(0);
           onClose();
         }
       };
@@ -39,7 +39,9 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
 
     const { title, description, inputPlaceholder, inputName } = activeStage;
 
-    const disabled = !isCorrectValue(inputName, inputValue);
+    const nameInput = inputName as 'code' | 'email';
+
+    const disabled = !isCorrectValue(nameInput, inputValue);
 
     const next = async () => {
       if (end) {

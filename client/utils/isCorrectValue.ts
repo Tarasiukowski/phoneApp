@@ -1,12 +1,14 @@
 import { verifyEmail } from './verifyEmail';
 
-export const isCorrectValue = (type: string, value: string) => {
+type Type = 'email' | 'code';
+
+export const isCorrectValue = (type: Type, value: string) => {
   switch (type) {
     case 'email':
       const data = verifyEmail(value);
 
       return data.verify;
-    case "code":
-      return value.length === 6 ? true : false
+    case 'code':
+      return value.length === 6 ? true : false;
   }
 };
