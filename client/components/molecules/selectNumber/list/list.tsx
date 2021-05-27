@@ -4,7 +4,7 @@ import { useScroll } from 'react-use';
 
 import Input from './input/input';
 import NumbersList from './numbersList/numbersList';
-import Alert from '../../alert/alert';
+import Alert from '../../../atoms/alert/alert';
 
 import { fetcher } from '../../../../utils';
 import { propsSelectList } from '../types';
