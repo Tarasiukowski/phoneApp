@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 import useSwr from 'swr';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import _ from 'lodash';
 
 import Navigation from '../../components/molecules/navigation/navigation';
 
 import { swrFetcher } from '../../utils';
-import { selectUser } from '../../reducers/userReducer';
-import { selectInvites, update as updateI } from '../../reducers/invitesReducer';
-import { selectFriends, update as updateF } from '../../reducers/friendsReducer';
+import { login, selectUser } from '../../reducers/userReducer';
+import { selectInvites, update as updateInvites } from '../../reducers/invitesReducer';
+import { selectFriends, update as updateFriends } from '../../reducers/friendsReducer';
 
 const MainTemplate: React.FC = ({ children }) => {
   const user = useSelector(selectUser);
@@ -17,23 +18,39 @@ const MainTemplate: React.FC = ({ children }) => {
 
   const disptach = useDispatch();
 
-  const { data: fetchedFriends, error: errorF } = useSwr(['/user/friends', user.email], swrFetcher);
-  const { data: fetchedInvites, error: errorI } = useSwr(
-    ['/user/invite/get', user.email],
+  const { data: fetchedFriends, error: errorF } = useSwr(
+    ['/user/friends', 'POST', { email: user.email }],
     swrFetcher,
   );
+  const { data: fetchedInvites, error: errorI } = useSwr(
+    ['/user/invite/get', 'POST', { email: user.email }],
+    swrFetcher,
+  );
+  const { data: fetchedUser, error: errorU } = useSwr(['/auth', 'POST'], swrFetcher, {
+    refreshInterval: 1,
+  });
 
   useEffect(() => {
     if (!errorF && fetchedFriends && fetchedFriends.length !== friends.length) {
-      disptach(updateF(fetchedFriends));
+      disptach(updateFriends(fetchedFriends));
     }
   }, [fetchedFriends, errorF]);
 
   useEffect(() => {
     if (!errorI && fetchedInvites && fetchedInvites.length !== invites.length) {
-      disptach(updateI(fetchedInvites));
+      disptach(updateInvites(fetchedInvites));
     }
   }, [fetchedInvites, errorI]);
+
+  useEffect(() => {
+    if (!errorU && fetchedUser) {
+      if (!_.isEqual(fetchedUser.user, user)) {
+        const { user } = fetchedUser;
+
+        disptach(login(user));
+      }
+    }
+  }, [fetchedUser, errorU]);
 
   return (
     <Template>
