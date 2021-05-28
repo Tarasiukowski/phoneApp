@@ -32,6 +32,10 @@ const UsersList = ({ name, data }: props) => {
   }, []);
 
   useEffect(() => {
+    setListData(data);
+  }, [data]);
+
+  useEffect(() => {
     if (inputValue.length) {
       const filterData = (data: User[]) =>
         data.filter((elem) => {
