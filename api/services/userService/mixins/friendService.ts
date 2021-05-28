@@ -25,7 +25,12 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
 
         if (friend) {
           UserModel.update({ email, field: 'friends', value: friendEmail }, 'pull');
+          UserModel.update({ email, field: 'conversations', value: { with: friendEmail } }, 'pull');
           UserModel.update({ email: friendEmail, field: 'friends', value: email }, 'pull');
+          UserModel.update(
+            { email: friendEmail, field: 'conversations', value: { with: email } },
+            'pull',
+          );
 
           ConversationModel.remove('users', [email, friendEmail]);
 
