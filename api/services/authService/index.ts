@@ -16,7 +16,7 @@ class UserService {
 
   static async index(token: string) {
     if (token) {
-      const { id } = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
+      const { id }: any = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 
       const user = await UserModel.findOne('_id', id);
 
