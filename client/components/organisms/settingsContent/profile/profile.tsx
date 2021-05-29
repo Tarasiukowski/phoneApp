@@ -31,6 +31,8 @@ export const SettingsProfileContent = () => {
 
   const { firstname: firstnameValue, lastname: lastnameValue } = inputsValues;
 
+  const disabled = firstnameValue !== firstname || lastnameValue !== lastname
+
   const handleOnChange = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
 
@@ -40,7 +42,7 @@ export const SettingsProfileContent = () => {
   };
 
   const save = async () => {
-    if (firstnameValue !== firstname || lastnameValue !== lastname) {
+    if (disabled) {
       const data = await fetcher('PUT', '/user/update', {
         email,
         fullname: { firstname: firstnameValue, lastname: lastnameValue },
@@ -132,9 +134,6 @@ export const SettingsProfileContent = () => {
           autoComplete="off"
         />
       </div>
-      <Button onClick={save} disabled={false} width="auto">
-        save
-      </Button>
       <p className={styles.label}>Email</p>
       <div className={styles.emailSet}>
         <p>{email}</p>
@@ -150,6 +149,9 @@ export const SettingsProfileContent = () => {
           Change
         </Button>
       </div>
+      <Button onClick={save} disabled={!disabled} style={{ marginTop: '40px' }} width="auto">
+        save
+      </Button>
       <Alert error={error} />
       <Multitask {...multitaskHandle} />
     </SettingsTemplate>
