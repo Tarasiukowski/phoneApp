@@ -37,15 +37,15 @@ const Searcher = ({ open, onClose }: props) => {
 
   useEffect(() => {
     if (inputValue.length) {
-      const filterData = searchData.filter((elem) => {
-        const { filterValue } = elem;
+      const filteredSearchData = getSearcherData().filter((item) => {
+        const { filterValue } = item;
 
         if (filterValue.startsWith(inputValue)) {
-          return elem;
+          return item;
         }
       });
 
-      setSearcherData(filterData);
+      setSearcherData(filteredSearchData);
     } else {
       const fetchData = getSearcherData();
 
