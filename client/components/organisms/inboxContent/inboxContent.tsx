@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import useSWR from 'swr';
 
 import UserDetailed from '../../molecules/userDetailed/userDetailed';
 import Chat from '../../molecules/chatComponent/chat';
@@ -23,7 +22,7 @@ export const InboxContent = () => {
     query: { slug },
   } = useRouter();
 
-  const swrFetcher = (url: string) => {
+  const getDataChat = (url: string) => {
     fetcher('POST', url, {
       email: user.email,
       id: slug[1],
@@ -40,7 +39,7 @@ export const InboxContent = () => {
     });
   };
 
-  useSWR('/conversation', swrFetcher, { refreshInterval: 1 });
+  getDataChat('/conversation');
 
   const { messages, user: member } = dataChat;
 
