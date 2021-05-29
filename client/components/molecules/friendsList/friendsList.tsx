@@ -51,10 +51,12 @@ const FriendsList = () => {
     <div>
       <h2 className={styles.heading}>Friensd List</h2>
       <div className={styles.template}>
-        {conversations.map((conversation) => {
-          const friend = friends.find((friend) => friend.email === conversation.with);
+        {friends.map((friend) => {
+          const conversation = conversations.find(
+            (conversation) => friend.email === conversation.with,
+          );
 
-          if (friend) {
+          if (conversation) {
             return (
               <Link
                 href={`/inbox/${conversation.id}`}
@@ -62,6 +64,8 @@ const FriendsList = () => {
                 children={<FriendsListElement member={friend} elemList />}
               />
             );
+          } else {
+            return <FriendsListElement member={friend} elemList />;
           }
         })}
         <AddButton
