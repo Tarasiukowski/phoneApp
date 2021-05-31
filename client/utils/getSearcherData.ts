@@ -1,4 +1,6 @@
-export const getSearcherData = () => {
+import { DetailedConversation } from '../interfaces';
+
+export const getSearcherData = (conversations: DetailedConversation[]) => {
   const routes = [
     { filterValue: 'contacts', value: '/contacts', href: '/contacts' },
     { filterValue: 'invites', value: '/invites', href: '/invites' },
@@ -15,5 +17,12 @@ export const getSearcherData = () => {
     },
   ];
 
-  return [...routes];
+  return {
+    routes: {
+      data: routes,
+    },
+    conversations: {
+      data: conversations,
+    },
+  };
 };

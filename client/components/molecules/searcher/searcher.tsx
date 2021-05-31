@@ -1,16 +1,35 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 import styles from './searcher.module.scss';
 import { SearchSvg } from '../../../public/svgs/index';
 import { getAllChildreenOfElement, getSearcherData } from '../../../utils';
-import { props } from './types';
+import { props, SearchData } from './types';
+import { selectFriends } from '../../../reducers/friendsReducer';
+import { selectUser } from '../../../reducers/userReducer';
+import { DetailedConversation } from '../../../interfaces';
+import ImageUser from '../../atoms/imageUser/imageUser';
 
 const Searcher = ({ open, onClose }: props) => {
-  const [searchData, setSearcherData] = useState<any[]>([]);
+  const [searchData, setSearcherData] = useState<SearchData>({
+    routes: { data: [] },
+    conversations: { data: [] },
+  });
   const [inputValue, setValueInput] = useState<string>('');
 
   const templateRef = useRef<HTMLDivElement>(null);
+
+  const user = useSelector(selectUser);
+  const friends = useSelector(selectFriends);
+
+  const formatedConversations = user.conversations.map((conversation) => {
+    return friends.map((friend) => {
+      if (friend.email === conversation.with) {
+        return { user: friend, ...conversation };
+      }
+    });
+  })[0] as DetailedConversation[];
 
   useEffect(() => {
     const handleClickEvent = (e: Event) => {
@@ -30,24 +49,39 @@ const Searcher = ({ open, onClose }: props) => {
   });
 
   useEffect(() => {
-    const fetchData = getSearcherData();
+    const fetchedSearchData = getSearcherData(formatedConversations);
 
-    setSearcherData(fetchData);
+    setSearcherData(fetchedSearchData);
   }, []);
 
   useEffect(() => {
     if (inputValue.length) {
-      const filteredSearchData = getSearcherData().filter((item) => {
-        const { filterValue } = item;
+      const { routes, conversations } = getSearcherData(formatedConversations);
 
-        if (filterValue.startsWith(inputValue)) {
-          return item;
+      const filteredRoutes = routes.data.filter((route) => {
+        if (route.filterValue.toLowerCase().startsWith(inputValue.toLowerCase())) {
+          return route;
         }
       });
 
-      setSearcherData(filteredSearchData);
+      const filteredConversations = conversations.data.filter((conversation) => {
+        const {
+          user: {
+            fullname: { firstname, lastname },
+          },
+        } = conversation;
+
+        if (`${firstname} ${lastname}`.toLowerCase().startsWith(inputValue.toLowerCase())) {
+          return conversation;
+        }
+      });
+
+      setSearcherData({
+        routes: { data: filteredRoutes },
+        conversations: { data: filteredConversations },
+      });
     } else {
-      const fetchData = getSearcherData();
+      const fetchData = getSearcherData(formatedConversations);
 
       setSearcherData(fetchData);
     }
@@ -59,6 +93,8 @@ const Searcher = ({ open, onClose }: props) => {
   };
 
   if (open) {
+    const { conversations, routes } = searchData;
+
     return (
       <div className={styles.template} ref={templateRef}>
         <div className={styles.box}>
@@ -79,33 +115,87 @@ const Searcher = ({ open, onClose }: props) => {
           </div>
           <div className={styles.lists}>
             {inputValue.length ? (
-              searchData.length ? (
-                searchData.map(({ value }) => {
-                  if (typeof value === 'string') {
-                    return (
-                      <div onClick={handleClickElement} key={value}>
-                        <Link href={value}>
-                          <div className={styles.elementList} key={value}>
-                            <p>{value}</p>
-                          </div>
-                        </Link>
-                      </div>
-                    );
-                  }
+              <>
+                {conversations.data.length || routes.data.length ? (
+                  <>
+                    {(() => {
+                      const elems: JSX.Element[] = [];
 
-                  return value.map((val: string) => (
-                    <div onClick={handleClickElement} key={val}>
-                      <Link href={val}>
-                        <div className={styles.elementList} key={val}>
-                          <p>{val}</p>
-                        </div>
-                      </Link>
-                    </div>
-                  ));
-                })
-              ) : (
-                <p className={styles.info}>Not found</p>
-              )
+                      let key: keyof SearchData;
+
+                      for (key in searchData) {
+                        const dataOfKey = searchData[key].data as any[];
+
+                        dataOfKey.map((elem) => {
+                          if (key === 'conversations') {
+                            const {
+                              user: {
+                                fullname: { firstname, lastname },
+                              },
+                              id,
+                            } = elem;
+
+                            elems.push(
+                              <Link
+                                href={`/inbox/${id}`}
+                                key={id}
+                                children={
+                                  <div onClick={handleClickElement} className={styles.elementList}>
+                                    <ImageUser />
+                                    <p style={{ marginLeft: '10px' }}>
+                                      {firstname} {lastname}
+                                    </p>
+                                  </div>
+                                }
+                              />,
+                            );
+                          } else {
+                            const { value } = elem;
+
+                            if (typeof value === 'string') {
+                              elems.push(
+                                <Link
+                                  href={`${value}`}
+                                  key={value}
+                                  children={
+                                    <div
+                                      onClick={handleClickElement}
+                                      className={styles.elementList}
+                                    >
+                                      <p>{value}</p>
+                                    </div>
+                                  }
+                                />,
+                              );
+                            } else {
+                              value.map((val: string) => {
+                                elems.push(
+                                  <Link
+                                    href={`${val}`}
+                                    key={val}
+                                    children={
+                                      <div
+                                        onClick={handleClickElement}
+                                        className={styles.elementList}
+                                      >
+                                        <p>{val}</p>
+                                      </div>
+                                    }
+                                  />,
+                                );
+                              });
+                            }
+                          }
+                        });
+                      }
+
+                      return elems;
+                    })()}
+                  </>
+                ) : (
+                  <p className={styles.info}>Not found</p>
+                )}
+              </>
             ) : (
               <p className={styles.info}>I will find what you need for you.</p>
             )}

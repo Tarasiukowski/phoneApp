@@ -6,10 +6,12 @@ export type propsOnboardingNumberPage = {
 
 // Others
 
-type conversation = {
-  with: string,
-  id: string
-}
+export type Conversation = {
+  with: string;
+  id: string;
+};
+
+export type DetailedConversation = { user: User } & Conversation;
 
 export type User = {
   email: string;
@@ -20,7 +22,7 @@ export type User = {
   };
   colorImage: string;
   image: string;
-  conversations: conversation[]
+  conversations: Conversation[];
 };
 
 export type Error = {
