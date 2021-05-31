@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
+import ImageUser from '../../atoms/imageUser/imageUser';
+
 import styles from './searcher.module.scss';
 import { SearchSvg } from '../../../public/svgs/index';
 import { getAllChildreenOfElement, getSearcherData } from '../../../utils';
@@ -9,7 +11,6 @@ import { props, SearchData } from './types';
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { selectUser } from '../../../reducers/userReducer';
 import { DetailedConversation } from '../../../interfaces';
-import ImageUser from '../../atoms/imageUser/imageUser';
 
 const Searcher = ({ open, onClose }: props) => {
   const [searchData, setSearcherData] = useState<SearchData>({
@@ -141,7 +142,7 @@ const Searcher = ({ open, onClose }: props) => {
                                 key={id}
                                 children={
                                   <div onClick={handleClickElement} className={styles.elementList}>
-                                    <ImageUser />
+                                    <ImageUser member={elem.user} />
                                     <p style={{ marginLeft: '10px' }}>
                                       {firstname} {lastname}
                                     </p>
