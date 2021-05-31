@@ -32,7 +32,7 @@ export const OnboardingNumberContent = () => {
     let data;
 
     data = await fetcher('PUT', '/user/update', { email: user.email, number });
-
+    
     if (data.error) {
       setError({ msg: data.errorMsg, id: Math.random() });
       window.location.reload();

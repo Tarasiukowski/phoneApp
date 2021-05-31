@@ -31,7 +31,7 @@ export const SettingsProfileContent = () => {
 
   const { firstname: firstnameValue, lastname: lastnameValue } = inputsValues;
 
-  const disabled = firstnameValue !== firstname || lastnameValue !== lastname
+  const disabled = firstnameValue !== firstname || lastnameValue !== lastname;
 
   const handleOnChange = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
@@ -42,21 +42,17 @@ export const SettingsProfileContent = () => {
   };
 
   const save = async () => {
-    if (disabled) {
-      const data = await fetcher('PUT', '/user/update', {
-        email,
-        fullname: { firstname: firstnameValue, lastname: lastnameValue },
-      });
+    const data = await fetcher('PUT', '/user/update', {
+      email,
+      fullname: { firstname: firstnameValue, lastname: lastnameValue },
+    });
 
-      if (data.error) {
-        setError({ msg: data.errorMsg, id: Math.random() });
-      }
-
-      window.location.reload();
-      return;
+    if (data.error) {
+      setError({ msg: data.errorMsg, id: Math.random() });
     }
 
-    setError({ msg: ERROR_WITHOUT_CHANGE('name and surname', 'plural'), id: Math.random() });
+    window.location.reload();
+    return;
   };
 
   const multitaskHandle = {
@@ -71,7 +67,6 @@ export const SettingsProfileContent = () => {
       const data = await fetcher('PUT', '/user/update', {
         email,
         newEmail,
-        option: 'newEmail',
       });
 
       if (data.error) {

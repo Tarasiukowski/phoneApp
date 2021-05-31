@@ -5,10 +5,9 @@ import { FriendsControllerMixin } from './mixins/friendsController';
 import { InviteControllerMixin } from './mixins/inviteController';
 
 class UserController extends FriendsControllerMixin(InviteControllerMixin(class {})) {
-  async update(req: Request, res: Response) {
-    const { option, ...restBody } = req.body;
+  async update({ body }: Request, res: Response) {
 
-    const data = await UserService.update(restBody, option);
+    const data = await UserService.update(body);
 
     res.send(data);
   }

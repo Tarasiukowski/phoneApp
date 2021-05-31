@@ -8,8 +8,10 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(class {})) {
   email: string;
   by: By;
 
-  static async update(data: any, option: updateOption) {
-    const returnData = await UserModel.update(data, option);
+  static async update(data: any) {
+    const { newEmail } = data
+
+    const returnData = await UserModel.update(data, newEmail ? "newEmail" : undefined);
 
     return returnData;
   }
@@ -24,7 +26,7 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(class {})) {
       if (isVerifyNewEmail) {
         const newEmail = findUser.newEmail.value;
 
-        UserModel.update({ email, newEmail }, null, true);
+        UserModel.update({ email, newEmail }, "setEmail");
       }
 
       return { valid: true };

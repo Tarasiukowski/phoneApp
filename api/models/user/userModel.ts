@@ -33,8 +33,9 @@ class User {
     return formatedUser;
   }
 
-  static async update(data: any, option: updateOption = 'setField', setEmail?: boolean) {
+  static async update(data: any, option: updateOption = 'setField') {
     const { email, newEmail } = data;
+
 
     delete data.email;
 
@@ -47,7 +48,7 @@ class User {
     }
 
     try {
-      await userModel.updateOne({ email }, getUpdateOption(data, option, setEmail));
+      await userModel.updateOne({ email }, getUpdateOption(data, option));
 
       return { updated: true, error: false };
     } catch (err) {
