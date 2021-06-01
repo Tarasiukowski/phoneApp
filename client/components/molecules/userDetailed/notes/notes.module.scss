@@ -5,7 +5,7 @@
   align-items: flex-start;
   flex-direction: column;
   margin-top: 30px;
-  padding-left: 25px;
+  padding: 0 25px;
 }
 
 .heading {
@@ -18,40 +18,4 @@
 .notes {
   margin-top: 10px;
   width: 100%;
-}
-
-.note {
-  width: 87%;
-  min-height: 50px;
-  height: auto;
-  display: grid;
-  grid-template-columns: 20% 80%;
-  grid-template-rows: 100%;
-  font-weight: 600;
-
-  div {
-    display: flex;
-    justify-content: center;
-  }
-
-  div:first-child {
-    align-items: flex-start;
-    font-size: 1.4rem;
-  }
-
-  div:nth-child(2) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .author {
-    color: white;
-    font-size: 1.4rem;
-  }
-
-  .content {
-    color: #9797b0;
-    font-size: 1.2rem;
-    margin-top: 3px;
-  }
 }
