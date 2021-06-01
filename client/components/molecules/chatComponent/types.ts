@@ -1,6 +1,9 @@
+import { User } from "../../../interfaces"
+
 export type props = {
   messages: Message[]
   width?: string
+  user: User | null
 }
 
 export type Message = {

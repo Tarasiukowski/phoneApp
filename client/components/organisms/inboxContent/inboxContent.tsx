@@ -41,11 +41,11 @@ export const InboxContent = () => {
 
   getDataChat('/conversation');
 
-  const { messages, user: member } = dataChat;
+  const { user: member } = dataChat;
 
   return (
     <div className={styles.template}>
-      <Chat messages={messages} />
+      <Chat {...dataChat} />
       <UserDetailed loading={!member} {...member} />
     </div>
   );
