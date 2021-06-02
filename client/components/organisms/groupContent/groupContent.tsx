@@ -5,7 +5,7 @@ import UserDetailed from '../../molecules/userDetailed/userDetailed';
 export const GroupContent = () => (
   <>
     <Navigation />
-    <Chat messages={[]} width="42.1vw" />
+    <Chat messages={[]} user={null} width="42.1vw" />
     <UserDetailed loading={true} />
   </>
 );

@@ -91,7 +91,7 @@ export const SettingsProfileContent = () => {
       verify ? window.location.reload() : null;
     },
     onEnd: async (code: string) => {
-      const data = await fetcher('POST', '/user/verifyByCode', {
+      const data = await fetcher('POST', '/user/verify', {
         email,
         code,
         option: 'verifyNewEmail',

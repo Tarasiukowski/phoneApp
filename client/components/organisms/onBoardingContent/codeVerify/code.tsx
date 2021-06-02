@@ -26,7 +26,7 @@ export const OnboardingCodeContent = () => {
   const verifyByCode = async (e: FormEvent) => {
     e.preventDefault();
 
-    const { valid, errorMsg, error } = await fetcher('post', '/user/verifyByCode', {
+    const { valid, errorMsg, error } = await fetcher('post', '/user/verify', {
       email: user.email,
       code: valueInput,
     });

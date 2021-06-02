@@ -1,5 +1,4 @@
 import { errorsMsgs } from '../../data';
-import { updateOption } from '../../interface';
 import UserModel from '../../models/user/userModel';
 import { By } from '../types';
 import { FriendServiceMixin, InviteServiceMixin } from './mixins';
