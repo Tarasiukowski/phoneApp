@@ -25,12 +25,10 @@ const Searcher = ({ open, onClose }: props) => {
   const friends = useSelector(selectFriends);
 
   const formatedConversations = user.conversations.map((conversation) => {
-    return friends.map((friend) => {
-      if (friend.email === conversation.with) {
-        return { user: friend, ...conversation };
-      }
-    });
-  })[0] as DetailedConversation[];
+    const friend = friends.find((friend) => friend.email === conversation.with);
+
+    return { user: friend, ...conversation };
+  }) as DetailedConversation[];
 
   useEffect(() => {
     const handleClickEvent = (e: Event) => {

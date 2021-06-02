@@ -22,7 +22,7 @@ export const getSearcherData = (conversations: DetailedConversation[]) => {
       data: routes,
     },
     conversations: {
-      data: conversations ? conversations : [],
+      data: conversations,
     },
   };
 };
