@@ -32,8 +32,8 @@ export const OnboardingNumberContent = () => {
     let data;
 
     data = await fetcher('PUT', '/user/update', { email: user.email, number });
-    
-    if (data.error) {
+
+    if (data.errorMsg) {
       setError({ msg: data.errorMsg, id: Math.random() });
       window.location.reload();
       return;
@@ -44,7 +44,7 @@ export const OnboardingNumberContent = () => {
       redirectTo: '/onboarding/account',
     });
 
-    if (data.error) {
+    if (data.errorMsg) {
       setError({ msg: data.errorMsg, id: Math.random() });
       window.location.reload();
       return;
