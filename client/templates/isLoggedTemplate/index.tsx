@@ -64,4 +64,4 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
   return <>{loading ? <Loader /> : children}</>;
 };
 
-export default IsLoggedTemplate;
+export { IsLoggedTemplate };

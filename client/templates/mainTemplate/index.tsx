@@ -50,10 +50,9 @@ const MainTemplate: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (!errorU && fetchedUserData) {
-        const fetchedUser = fetchedUserData.user.value
+      const fetchedUser = fetchedUserData.user.value;
 
       if (!_.isEqual(fetchedUser, user)) {
-
         disptach(login(fetchedUser));
       }
     }
@@ -73,4 +72,4 @@ const Template = styled.div`
   display: flex;
 `;
 
-export default MainTemplate;
+export { MainTemplate };

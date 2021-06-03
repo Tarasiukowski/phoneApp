@@ -2,8 +2,8 @@ import { ChangeEvent, useReducer, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { ImageUser, Input, Button, Alert } from '../../../atoms';
-import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTemplate';
 import Multitask from '../../../molecules/multitask/multitask';
+import { SettingsTemplate } from '../../../../templates';
 
 import styles from './profile.module.scss';
 import { InputsValues } from './types';

@@ -6,8 +6,7 @@ import {
   SettingsContent,
 } from '../components/organisms/index';
 import Subpage from '../components/molecules/subpage/subpage';
-import IsLoggedTemplate from '../templates/isLoggedTemplate/isLoggedTemplate';
-import MainTemplate from '../templates/mainTemplate/mainTemplate';
+import { MainTemplate, IsLoggedTemplate } from '../templates';
 
 const MainPage = () => (
   <IsLoggedTemplate allow="logged">

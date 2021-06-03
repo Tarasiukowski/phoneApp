@@ -1,5 +1,5 @@
 import { Button } from '../../../atoms';
-import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTemplate';
+import { SettingsTemplate } from '../../../../templates';
 
 import styles from './contacts.module.scss';
 

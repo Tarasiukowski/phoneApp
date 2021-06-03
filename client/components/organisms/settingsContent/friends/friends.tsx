@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { UserCard, Button, Alert } from '../../../atoms';
-import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTemplate';
 import ElementFinder from '../../../molecules/elementFinder/elementFinder';
 import Multitask from '../../../molecules/multitask/multitask';
+import { SettingsTemplate } from '../../../../templates';
 
 import styles from './friends.module.scss';
 import { fetcher } from '../../../../utils';

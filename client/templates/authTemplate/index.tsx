@@ -8,4 +8,4 @@ const AuthTemplate: React.FC = ({ children }) => (
   </div>
 );
 
-export default AuthTemplate;
+export { AuthTemplate };

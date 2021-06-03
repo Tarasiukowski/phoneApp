@@ -1,6 +1,5 @@
 import { AuthContent } from '../components/organisms';
-import AuthTemplate from '../templates/authTemplate/authTemplate';
-import IsLoggedTemplate from '../templates/isLoggedTemplate/isLoggedTemplate';
+import { IsLoggedTemplate, AuthTemplate } from '../templates';
 
 const SingUpPage = () => (
   <IsLoggedTemplate allow="notLogged">

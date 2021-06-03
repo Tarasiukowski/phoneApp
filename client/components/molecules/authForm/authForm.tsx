@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import { Input, Button } from '../../atoms';
-import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
+import { RedirectTemplate } from '../../../templates';
 
 import { fetcher } from '../../../utils';
 import { login as authLogin } from '../../../reducers/userReducer';

@@ -1,6 +1,6 @@
 import { Button } from '../../../atoms';
-import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTemplate';
 import ElementFinder from '../../../molecules/elementFinder/elementFinder';
+import { SettingsTemplate } from '../../../../templates';
 
 import styles from './blocklist.module.scss';
 

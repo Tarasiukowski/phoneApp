@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Alert, Button } from '../../../atoms';
 import SelectNumberButton from '../../../molecules/selectNumber/button/button';
 import SelectNumberList from '../../../molecules/selectNumber/list/list';
-import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
+import { RedirectTemplate } from '../../../../templates';
 
 import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher } from '../../../../utils';

@@ -20,4 +20,4 @@ const RedirectTemplate: React.FC<props> = ({
   return <>{children}</>;
 };
 
-export default RedirectTemplate;
+export { RedirectTemplate };

@@ -5,7 +5,7 @@ import GoogleLogin from 'react-google-login';
 
 import { ButtonGoogle, ToggleAuth, Alert } from '../../atoms';
 import AuthForm from '../../molecules/authForm/authForm';
-import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
+import { RedirectTemplate } from '../../../templates';
 
 import { login as loginAuth } from '../../../reducers/userReducer';
 import { fetcher } from '../../../utils';

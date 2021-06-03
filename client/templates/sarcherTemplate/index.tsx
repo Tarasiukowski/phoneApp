@@ -9,4 +9,4 @@ const SearcherTemplate: React.FC<props> = ({ children, ...restProps }) => (
   </>
 );
 
-export default SearcherTemplate;
+export { SearcherTemplate };

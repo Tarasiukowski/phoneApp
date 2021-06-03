@@ -1,6 +1,5 @@
 import { OnboardingNumberContent } from '../../components/organisms';
-import OnboardingTemplate from '../../templates/onboardingTemplate/onboardingTemplate';
-import IsLoggedTemplate from '../../templates/isLoggedTemplate/isLoggedTemplate';
+import { IsLoggedTemplate, OnboardingTemplate } from '../../templates';
 
 const OnboardingNumberPage = () => (
   <IsLoggedTemplate allow="logged">

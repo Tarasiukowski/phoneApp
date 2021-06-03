@@ -18,4 +18,4 @@ const OnboardingTemplate: React.FC = ({ children }) => (
   </div>
 );
 
-export default OnboardingTemplate;
+export { OnboardingTemplate };

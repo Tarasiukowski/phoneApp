@@ -22,4 +22,4 @@ const Template = styled.div`
   }
 `;
 
-export default SettingsTemplate;
+export { SettingsTemplate };
