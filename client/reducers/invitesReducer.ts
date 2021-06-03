@@ -14,7 +14,7 @@ const invitesSlice = createSlice({
       const { email } = payload;
 
       const updatedState = state.filter((user) => {
-        if (!(user.email === email)) {
+        if (user.email !== email) {
           return user;
         }
       });
