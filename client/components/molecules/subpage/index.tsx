@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { useRouter } from 'next/router';
 
-import Loader from '../../molecules/loader/loader';
+import { Loader } from '../index';
 
 import { route } from './types';
 
@@ -28,4 +28,4 @@ const Subpage = ({ routes, slugNumber }: { routes: route[]; slugNumber: number }
   );
 };
 
-export default Subpage;
+export { Subpage };

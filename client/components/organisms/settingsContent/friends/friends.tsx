@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { UserCard, Button, Alert } from '../../../atoms';
-import ElementFinder from '../../../molecules/elementFinder/elementFinder';
-import Multitask from '../../../molecules/multitask/multitask';
+import { Multitask, ElementFinder } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 
 import styles from './friends.module.scss';

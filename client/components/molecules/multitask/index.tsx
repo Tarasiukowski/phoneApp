@@ -100,4 +100,4 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
   return null;
 };
 
-export default Multitask;
+export { Multitask };

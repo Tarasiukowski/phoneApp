@@ -2,7 +2,7 @@ import { ChangeEvent, useReducer, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { ImageUser, Input, Button, Alert } from '../../../atoms';
-import Multitask from '../../../molecules/multitask/multitask';
+import { Multitask } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 
 import styles from './profile.module.scss';

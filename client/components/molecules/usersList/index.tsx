@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { UserCard, Alert } from '../../atoms';
-import UserDetailed from '../../molecules/userDetailed/userDetailed';
+import { UserDetailed } from '../index';
 
 import styles from './usersList.module.scss';
 import { SearchSvg, PlusSvg } from '../../../public/svgs';
@@ -135,4 +135,4 @@ const UsersList = ({ name, data }: props) => {
   );
 };
 
-export default UsersList;
+export { UsersList };

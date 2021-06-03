@@ -20,4 +20,4 @@ const UserDetailed = ({ email, number, loading = false, ...restProps }: props) =
   return <div className={styles.box}></div>;
 };
 
-export default UserDetailed;
+export { UserDetailed };

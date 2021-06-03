@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
 import { UserCard, Alert } from '../../atoms';
+import { Multitask } from '../index';
 import AddButton from './addButton/addButton';
-import Multitask from '../multitask/multitask';
 
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { selectUser } from '../../../reducers/userReducer';
@@ -80,4 +80,4 @@ const FriendsList = () => {
   );
 };
 
-export default FriendsList;
+export { FriendsList };

@@ -1,3 +1,4 @@
+import { Subpage, SettingsNavigation } from '../../molecules';
 import {
   SettingsFriendsContent,
   SettingsBlocklistContent,
@@ -5,8 +6,6 @@ import {
   SettingsProfileContent,
   SettingsGeneralContent,
 } from './index';
-import SettingsNavigation from '../../molecules/settingsNavigation/settingsNavigation';
-import Subpage from '../../molecules/subpage/subpage';
 
 const SettingsContent = () => (
   <>

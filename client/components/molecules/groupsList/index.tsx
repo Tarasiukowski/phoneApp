@@ -13,4 +13,4 @@ const GroupsList = () => (
   </div>
 );
 
-export default GroupsList;
+export { GroupsList };

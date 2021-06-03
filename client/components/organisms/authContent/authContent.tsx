@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import GoogleLogin from 'react-google-login';
 
 import { ButtonGoogle, ToggleAuth, Alert } from '../../atoms';
-import AuthForm from '../../molecules/authForm/authForm';
+import { AuthForm } from '../../molecules';
 import { RedirectTemplate } from '../../../templates';
 
 import { login as loginAuth } from '../../../reducers/userReducer';

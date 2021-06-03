@@ -20,4 +20,4 @@ const SettingsNavigation = () => (
   </div>
 );
 
-export default SettingsNavigation;
+export { SettingsNavigation };

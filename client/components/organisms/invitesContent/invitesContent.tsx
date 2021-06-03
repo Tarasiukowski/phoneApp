@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import UsersList from '../../molecules/usersList/usersList';
+import { UsersList } from '../../molecules';
 
 import { selectInvites } from '../../../reducers/invitesReducer';
 
@@ -10,4 +10,4 @@ const InvitesContent = () => {
   return <UsersList name="invites" data={invites} />;
 };
 
-export { InvitesContent }
+export { InvitesContent };

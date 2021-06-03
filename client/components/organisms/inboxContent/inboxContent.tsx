@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import UserDetailed from '../../molecules/userDetailed/userDetailed';
-import Chat from '../../molecules/chatComponent/chat';
+import { UserDetailed, Chat } from '../../molecules';
 
 import { ChatData } from './types';
 import { fetcher } from '../../../utils';
@@ -51,4 +50,4 @@ const InboxContent = () => {
   );
 };
 
-export { InboxContent }
+export { InboxContent };

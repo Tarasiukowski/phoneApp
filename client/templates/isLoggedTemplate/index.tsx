@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Loader from '../../components/molecules/loader/loader';
+import { Loader } from '../../components/molecules';
 
 import { login } from '../../reducers/userReducer';
 import { checkOnboardingStage, fetcher } from '../../utils';

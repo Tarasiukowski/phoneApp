@@ -17,4 +17,4 @@ const SelectNumberButton = ({ onClick, number }: propsSelectNumberButton) => {
   );
 };
 
-export default SelectNumberButton;
+export { SelectNumberButton };

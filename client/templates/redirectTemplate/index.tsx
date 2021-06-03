@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import Loader from '../../components/molecules/loader/loader';
+import { Loader } from '../../components/molecules';
 
 import { props } from './types';
 

@@ -1,3 +1,4 @@
+import { Subpage } from '../components/molecules';
 import {
   InboxContent,
   GroupContent,
@@ -5,7 +6,6 @@ import {
   InvitesContent,
   SettingsContent,
 } from '../components/organisms/index';
-import Subpage from '../components/molecules/subpage/subpage';
 import { MainTemplate, IsLoggedTemplate } from '../templates';
 
 const MainPage = () => (

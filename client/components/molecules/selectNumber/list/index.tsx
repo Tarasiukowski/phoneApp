@@ -11,7 +11,7 @@ import { propsSelectList } from '../types';
 import { Error } from '../../../../interfaces';
 import styles from './list.module.scss';
 
-const List = ({ setOpenList, setNumber }: propsSelectList) => {
+const SelectNumberList = ({ setOpenList, setNumber }: propsSelectList) => {
   const [activeList, setActiveList] = useState<'Recommended' | 'All'>('Recommended');
   const [valueDigits, setValueDigits] = useState('');
   const [recommendedNumbers, setRecommendedNumbers] = useState<string[]>([]);
@@ -138,4 +138,4 @@ const List = ({ setOpenList, setNumber }: propsSelectList) => {
   );
 };
 
-export default List;
+export { SelectNumberList };

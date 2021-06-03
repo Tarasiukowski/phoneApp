@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
 import { UserCard, ButtonNavigation } from '../../atoms';
-import GroupsList from '../groupsList/groupsList';
-import FriendsList from '../friendsList/friendsList';
+import { GroupsList, FriendsList } from '../index';
 import { SearcherTemplate } from '../../../templates';
 
 import { SearchSvg, ContactsSvg, SettingsSvg, MembersSvg } from '../../../public/svgs';
@@ -45,4 +44,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export { Navigation };

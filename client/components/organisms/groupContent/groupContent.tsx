@@ -1,6 +1,5 @@
+import { Chat, UserDetailed } from '../../molecules';
 import Navigation from './navigation/navigation';
-import Chat from '../../molecules/chatComponent/chat';
-import UserDetailed from '../../molecules/userDetailed/userDetailed';
 
 const GroupContent = () => (
   <>
@@ -10,4 +9,4 @@ const GroupContent = () => (
   </>
 );
 
-export { GroupContent }
+export { GroupContent };

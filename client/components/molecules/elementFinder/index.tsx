@@ -55,4 +55,4 @@ const ElementFinder = <T,>({ renderList, data, filterKey, info }: props<T>) => {
   );
 };
 
-export default ElementFinder;
+export { ElementFinder };

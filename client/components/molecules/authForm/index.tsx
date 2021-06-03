@@ -59,4 +59,4 @@ const AuthForm = ({ auth, setError }: props) => {
   );
 };
 
-export default AuthForm;
+export { AuthForm };

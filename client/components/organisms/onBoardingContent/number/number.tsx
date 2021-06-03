@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Alert, Button } from '../../../atoms';
-import SelectNumberButton from '../../../molecules/selectNumber/button/button';
-import SelectNumberList from '../../../molecules/selectNumber/list/list';
+import { SelectNumberButton, SelectNumberList } from '../../../molecules';
 import { RedirectTemplate } from '../../../../templates';
 
 import { selectUser } from '../../../../reducers/userReducer';

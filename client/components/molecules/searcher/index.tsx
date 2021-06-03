@@ -207,4 +207,4 @@ const Searcher = ({ open, onClose }: props) => {
   return null;
 };
 
-export default Searcher;
+export { Searcher };

@@ -67,4 +67,4 @@ const Chat = ({ messages, user, width }: props) => {
   );
 };
 
-export default Chat;
+export { Chat };

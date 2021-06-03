@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import _ from 'lodash';
 
-import Navigation from '../../components/molecules/navigation/navigation';
+import { Navigation } from '../../components/molecules';
 
 import { swrFetcher } from '../../utils';
 import { login, selectUser } from '../../reducers/userReducer';

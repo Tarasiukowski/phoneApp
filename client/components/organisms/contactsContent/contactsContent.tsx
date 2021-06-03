@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import UsersList from '../../molecules/usersList/usersList';
+import { UsersList } from '../../molecules';
 
 import { selectFriends } from '../../../reducers/friendsReducer';
 
