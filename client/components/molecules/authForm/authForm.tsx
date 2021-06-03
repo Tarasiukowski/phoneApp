@@ -28,7 +28,7 @@ const AuthForm = ({ auth, setError }: props) => {
 
     setDisabled(true);
 
-    const { error, errorMsg, user } = await fetcher(
+    const { errorMsg, user } = await fetcher(
       'post',
       `/auth/${auth === 'login' ? 'login' : 'singup'}`,
       {
@@ -36,7 +36,7 @@ const AuthForm = ({ auth, setError }: props) => {
       },
     );
 
-    if (error) {
+    if (errorMsg) {
       setError({ msg: errorMsg, id: Math.random() });
       setDisabled(false);
       return;
