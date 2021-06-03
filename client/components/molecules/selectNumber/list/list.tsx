@@ -12,8 +12,8 @@ import { Error } from '../../../../interfaces';
 import styles from './list.module.scss';
 
 const List = ({ setOpenList, setNumber }: propsSelectList) => {
-  const [activeList, setActiveList] = useState<string | null>('Recommended');
-  const [valueDigits, setValueDigits] = useState<string | undefined>('');
+  const [activeList, setActiveList] = useState<'Recommended' | 'All'>('Recommended');
+  const [valueDigits, setValueDigits] = useState('');
   const [recommendedNumbers, setRecommendedNumbers] = useState<string[]>([]);
   const [allNumbers, setAllNumbers] = useState<string[]>([]);
   const [error, setError] = useState<Error | null>(null);

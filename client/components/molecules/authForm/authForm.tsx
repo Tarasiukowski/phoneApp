@@ -13,8 +13,8 @@ import { props } from './types';
 import styles from './authForm.module.scss';
 
 const AuthForm = ({ auth, setError }: props) => {
-  const [disabled, setDisabled] = useState<boolean>(true);
-  const [redirect, setRedirect] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState(true);
+  const [redirect, setRedirect] = useState(false);
 
   const { register, handleSubmit, watch } = useForm();
   const dispatch = useDispatch();

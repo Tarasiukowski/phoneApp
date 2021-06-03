@@ -16,7 +16,7 @@ import styles from './authContent.module.scss';
 
 export const AuthContent = () => {
   const [error, setError] = useState<Error | null>(null);
-  const [redirect, setRedirect] = useState<boolean>(false);
+  const [redirect, setRedirect] = useState(false);
 
   const dispatch = useDispatch();
   const { asPath } = useRouter();

@@ -16,7 +16,7 @@ import Alert from '../../atoms/alert/alert';
 
 const UsersList = ({ name, data }: props) => {
   const [detailedUser, setDetailedUser] = useState<User | null>(null);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState('');
   const [listData, setListData] = useState<User[]>([]);
   const [error, setError] = useState<Error | null>(null);
 

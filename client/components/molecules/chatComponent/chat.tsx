@@ -12,7 +12,7 @@ import { selectUser } from '../../../reducers/userReducer';
 import { fetcher } from '../../../utils';
 
 const Chat = ({ messages, user, width }: props) => {
-  const [valueTextarea, setValueTextarea] = useState<string>('');
+  const [valueTextarea, setValueTextarea] = useState('');
 
   const refMessagesTemplate = useRef<HTMLDivElement>(null);
 

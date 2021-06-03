@@ -31,7 +31,7 @@ class ConversationService {
         }
       });
 
-      return { succes, status, conversation: { user: friendEmail, messages } };
+      return { succes, status, conversation: { email: friendEmail, messages } };
     }
 
     return { succes, status, conversation: null };

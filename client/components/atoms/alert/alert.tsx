@@ -6,7 +6,7 @@ import { props } from './types';
 import styles from './alert.module.scss';
 
 const Alert = ({ error }: props) => {
-  const [isOpen, setIsOpen] = useState<boolean>(Boolean);
+  const [isOpen, setIsOpen] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
 
   useEffect(() => {

@@ -11,7 +11,7 @@ import { selectUser } from '../../../reducers/userReducer';
 
 const UserCard = forwardRef<HTMLDivElement, props>(
   ({ elemList, member, big, withDetailed, onClick }, ref) => {
-    const [openDetailed, setOpenDetailed] = useState<boolean>(false);
+    const [openDetailed, setOpenDetailed] = useState(false);
 
     const templateRef = useRef<HTMLDivElement>(null);
     const userDetailedRef = useRef<HTMLDivElement>(null);

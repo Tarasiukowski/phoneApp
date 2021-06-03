@@ -15,7 +15,7 @@ const settings = {
 };
 
 const IsLoggedTemplate = ({ children, allow }: props) => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
   const friends = useSelector(selectFriends);

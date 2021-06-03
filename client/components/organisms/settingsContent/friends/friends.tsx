@@ -16,7 +16,7 @@ import { ERROR_NOT_ALLOWED } from '../../../../common/errors';
 import { remove, selectFriends } from '../../../../reducers/friendsReducer';
 
 export const SettingsFriendsContent = () => {
-  const [openMultiTask, setOpenMultiTask] = useState<boolean>(false);
+  const [openMultiTask, setOpenMultiTask] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   const { email } = useSelector(selectUser);

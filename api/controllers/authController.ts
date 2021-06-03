@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { errorsMsgs } from '../data';
 
 import AuthService from '../services/authService';
 
@@ -17,7 +16,7 @@ class AuthController {
 
     const { status, user, token, errorMsg } = await new AuthService(email, by).login();
 
-    errorsMsgs || res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
+    errorMsg || res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
     res.send({ user, errorMsg });
   }
 

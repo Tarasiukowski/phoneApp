@@ -17,7 +17,7 @@ const Searcher = ({ open, onClose }: props) => {
     routes: { data: [] },
     conversations: { data: [] },
   });
-  const [inputValue, setValueInput] = useState<string>('');
+  const [inputValue, setValueInput] = useState('');
 
   const templateRef = useRef<HTMLDivElement>(null);
 

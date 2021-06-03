@@ -13,8 +13,8 @@ import styles from './number.module.scss';
 import { Error } from '../../../../interfaces';
 
 export const OnboardingNumberContent = () => {
-  const [openList, setOpenList] = useState<boolean>(false);
-  const [redirect, setRedirect] = useState<boolean>(false);
+  const [openList, setOpenList] = useState(false);
+  const [redirect, setRedirect] = useState(false);
   const [number, setNumber] = useState<string | null>(null);
   const [error, setError] = useState<Error | null>(null);
 

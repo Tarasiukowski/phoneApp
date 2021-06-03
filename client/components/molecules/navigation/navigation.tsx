@@ -13,7 +13,7 @@ import { SearchSvg, ContactsSvg, SettingsSvg, MembersSvg } from '../../../public
 import styles from './navigation.module.scss';
 
 const Navigation = () => {
-  const [searcherOpen, setSearcherOpen] = useState<boolean>(false);
+  const [searcherOpen, setSearcherOpen] = useState(false);
 
   return (
     <SearcherTemplate

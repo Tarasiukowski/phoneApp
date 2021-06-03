@@ -17,7 +17,7 @@ import { ERROR_NOT_ALLOWED, ERROR_WITHOUT_CHANGE } from '../../../../common/erro
 
 export const SettingsProfileContent = () => {
   const [error, setError] = useState<Error | null>(null);
-  const [openMultiTask, setOpenMultiTask] = useState<boolean>(false);
+  const [openMultiTask, setOpenMultiTask] = useState(false);
 
   const {
     fullname: { firstname, lastname },

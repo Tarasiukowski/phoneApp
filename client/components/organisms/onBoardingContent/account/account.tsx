@@ -17,9 +17,9 @@ export const OnboardingAccountContent = () => {
     (prevState: FormValues, state: FormValues) => ({ ...prevState, ...state }),
     { firstname: '', lastname: '' },
   );
-  const [disabledByRequest, setDisabledByRequest] = useState<boolean>(false);
+  const [disabledByRequest, setDisabledByRequest] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [redirect, setRedirect] = useState<boolean>(false);
+  const [redirect, setRedirect] = useState(false);
 
   const user = useSelector(selectUser);
 

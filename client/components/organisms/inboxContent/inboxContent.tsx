@@ -26,8 +26,8 @@ export const InboxContent = () => {
     fetcher('POST', url, {
       email: user.email,
       id: slug[1],
-    }).then((data) => {
-      const { email, messages } = data;
+    }).then(({ conversation }) => {
+      const { email, messages } = conversation;
 
       const friend = friends.find((friend) => {
         if (friend.email === email) {

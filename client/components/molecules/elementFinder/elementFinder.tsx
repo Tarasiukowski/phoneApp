@@ -7,7 +7,7 @@ import { props } from './types';
 
 const ElementFinder = <T,>({ renderList, data, filterKey, info }: props<T>) => {
   const [getData, setGetData] = useState<T[]>([]);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState('');
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

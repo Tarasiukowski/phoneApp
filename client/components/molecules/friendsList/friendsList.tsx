@@ -15,7 +15,7 @@ import { Error } from '../../../interfaces';
 import styles from './friendsList.module.scss';
 
 const FriendsList = () => {
-  const [openMultiTask, setOpenMultiTask] = useState<boolean>(false);
+  const [openMultiTask, setOpenMultiTask] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   const { email, conversations } = useSelector(selectUser);

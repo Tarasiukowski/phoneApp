@@ -13,9 +13,9 @@ import styles from './code.module.scss';
 import { ERROR_NOT_ALLOWED } from '../../../../common/errors';
 
 export const OnboardingCodeContent = () => {
-  const [valueInput, setValueInput] = useState<string>('');
+  const [valueInput, setValueInput] = useState('');
   const [error, setError] = useState<Error | null>(null);
-  const [redirect, setRedirect] = useState<boolean>(false);
+  const [redirect, setRedirect] = useState(false);
 
   const user = useSelector(selectUser);
 
