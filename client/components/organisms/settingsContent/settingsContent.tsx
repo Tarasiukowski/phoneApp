@@ -8,7 +8,7 @@ import {
 import SettingsNavigation from '../../molecules/settingsNavigation/settingsNavigation';
 import Subpage from '../../molecules/subpage/subpage';
 
-export const SettingsContent = () => (
+const SettingsContent = () => (
   <>
     <SettingsNavigation />
     <Subpage routes={routes} slugNumber={1} />
@@ -37,3 +37,5 @@ const routes = [
     component: <SettingsFriendsContent />,
   },
 ];
+
+export { SettingsContent };

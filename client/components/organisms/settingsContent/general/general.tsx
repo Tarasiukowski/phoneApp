@@ -3,7 +3,7 @@ import { SettingsTemplate } from '../../../../templates';
 
 import styles from './general.module.scss';
 
-export const SettingsGeneralContent = () => (
+const SettingsGeneralContent = () => (
   <SettingsTemplate>
     <h2 className="title">Workspace</h2>
     <p className="description">General information about your workspace.</p>
@@ -20,4 +20,4 @@ export const SettingsGeneralContent = () => (
   </SettingsTemplate>
 );
 
-export default SettingsGeneralContent;
+export { SettingsGeneralContent };

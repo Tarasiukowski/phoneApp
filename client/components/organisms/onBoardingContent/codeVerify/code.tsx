@@ -10,7 +10,7 @@ import { Error } from '../../../../interfaces';
 import styles from './code.module.scss';
 import { ERROR_NOT_ALLOWED } from '../../../../common/errors';
 
-export const OnboardingCodeContent = () => {
+const OnboardingCodeContent = () => {
   const [valueInput, setValueInput] = useState('');
   const [error, setError] = useState<Error | null>(null);
   const [redirect, setRedirect] = useState(false);
@@ -73,3 +73,5 @@ export const OnboardingCodeContent = () => {
     </RedirectTemplate>
   );
 };
+
+export { OnboardingCodeContent };

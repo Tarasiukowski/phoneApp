@@ -12,7 +12,7 @@ import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
 import { ERROR_NOT_ALLOWED, ERROR_WITHOUT_CHANGE } from '../../../../common/errors';
 
-export const SettingsProfileContent = () => {
+const SettingsProfileContent = () => {
   const [error, setError] = useState<Error | null>(null);
   const [openMultiTask, setOpenMultiTask] = useState(false);
 
@@ -150,4 +150,4 @@ export const SettingsProfileContent = () => {
   );
 };
 
-export default SettingsProfileContent;
+export { SettingsProfileContent };

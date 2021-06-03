@@ -13,7 +13,7 @@ import { Error } from '../../../../interfaces';
 import { ERROR_NOT_ALLOWED } from '../../../../common/errors';
 import { remove, selectFriends } from '../../../../reducers/friendsReducer';
 
-export const SettingsFriendsContent = () => {
+const SettingsFriendsContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -99,3 +99,5 @@ export const SettingsFriendsContent = () => {
     </SettingsTemplate>
   );
 };
+
+export { SettingsFriendsContent };

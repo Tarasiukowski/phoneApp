@@ -4,7 +4,7 @@ import { SettingsTemplate } from '../../../../templates';
 
 import styles from './blocklist.module.scss';
 
-export const SettingsBlocklistContent = () => (
+const SettingsBlocklistContent = () => (
   <SettingsTemplate>
     <h2 className="title">Blocklist</h2>
     <p className="description">Your list of blocked phone numbers.</p>
@@ -22,3 +22,5 @@ export const SettingsBlocklistContent = () => (
     />
   </SettingsTemplate>
 );
+
+export { SettingsBlocklistContent };

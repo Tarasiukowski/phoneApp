@@ -12,7 +12,7 @@ import { selectFriends } from '../../../reducers/friendsReducer';
 import { User } from '../../../interfaces';
 import styles from './inboxContent.module.scss';
 
-export const InboxContent = () => {
+const InboxContent = () => {
   const [dataChat, setDataChat] = useState<ChatData>({ user: null, messages: [] });
 
   const friends = useSelector(selectFriends);
@@ -50,3 +50,5 @@ export const InboxContent = () => {
     </div>
   );
 };
+
+export { InboxContent }
