@@ -29,7 +29,3 @@ export type Error = {
   msg: string;
   id: number;
 };
-
-export type formData = {
-  email: String;
-};

@@ -8,8 +8,7 @@ import RedirectTemplate from '../../../templates/redirectTemplate/redirectTempla
 
 import { fetcher } from '../../../utils';
 import { login as authLogin } from '../../../reducers/userReducer';
-import { formData } from '../../../interfaces';
-import { props } from './types';
+import { props, formData } from './types';
 import styles from './authForm.module.scss';
 
 const AuthForm = ({ auth, setError }: props) => {
