@@ -10,12 +10,12 @@ class userMiddleware {
 
     const { user } = await AuthService.index(token);
 
-    if (user?.email === email) {
+    if (user.value.email === email) {
       next();
       return;
     }
 
-    res.send({ error: true, errorMsg: errorsMsgs.FUNCTIONALITY_NOT_ALLOWED });
+    res.send({ status: 405, errorMsg: errorsMsgs.FUNCTIONALITY_NOT_ALLOWED });
   }
 }
 

@@ -6,18 +6,18 @@ class AuthController {
   async index(req: Request, res: Response) {
     const token = req.cookies['SESSID'];
 
-    const data = await AuthService.index(token);
+    const { status, user } = await AuthService.index(token);
 
-    res.send(data);
+    res.send({ user });
   }
 
   async login(req: Request, res: Response) {
     const { email, by } = req.body;
 
-    const { error, errorMsg, user, token } = await new AuthService(email, by).login();
+    const { status, user, token, errorMsg } = await new AuthService(email, by).login();
 
-    if (error) {
-      res.send({ error, errorMsg });
+    if (errorMsg) {
+      res.send({ user, errorMsg });
       return;
     }
 
@@ -28,10 +28,10 @@ class AuthController {
   async singUp(req: Request, res: Response) {
     const { email, by, ...restBody } = req.body;
 
-    const { error, errorMsg, user, token } = await new AuthService(email, by).singup(restBody);
+    const { status, user, token, errorMsg } = await new AuthService(email, by).singup(restBody);
 
-    if (error) {
-      res.send({ error, errorMsg });
+    if (errorMsg) {
+      res.send({ errorMsg });
       return;
     }
 

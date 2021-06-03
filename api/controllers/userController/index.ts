@@ -5,17 +5,18 @@ import { FriendsControllerMixin } from './mixins/friendsController';
 import { InviteControllerMixin } from './mixins/inviteController';
 
 class UserController extends FriendsControllerMixin(InviteControllerMixin(class {})) {
-  async update({ body }: Request, res: Response) {
+  async update(req: Request, res: Response) {
+    const body = req.body;
 
-    const data = await UserService.update(body);
+    const { status, ...restData } = await UserService.update(body);
 
-    res.send(data);
+    res.send(restData);
   }
 
   async verify(req: Request, res: Response) {
     const { option, ...restBody } = req.body;
 
-    const { valid, errorMsg } = await UserService.verifyByCode(restBody, option);
+    const { status, valid, errorMsg } = await UserService.verify(restBody, option);
 
     if (valid) {
       res.send({ valid });

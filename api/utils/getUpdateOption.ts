@@ -1,5 +1,5 @@
 import { generateCode } from './generateCode';
-import { updateOption } from '../interface';
+import { updateOption } from '../interfaces';
 
 export const getUpdateOption = (data, option: updateOption) => {
   const { newEmail, field, value } = data;

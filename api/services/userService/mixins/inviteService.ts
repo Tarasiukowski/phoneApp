@@ -1,7 +1,7 @@
 import { errorsMsgs } from '../../../data';
 import Conversation from '../../../models/conversation/conversationModel';
 import UserModel from '../../../models/user/userModel';
-import { Class } from '../../../interface';
+import { Class } from '../../../interfaces';
 
 export function InviteServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
@@ -11,8 +11,8 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
           return { error: true, errorMsg: errorsMsgs.INVITE_TO_YOURSELF };
         }
 
-        const invitedUser = await UserModel.findOne('email', to);
-        const invitingUser = await UserModel.findOne('email', from);
+        const { user: invitedUser } = await UserModel.findOne('email', to);
+        const { user: invitingUser } = await UserModel.findOne('email', from);
 
         if (!invitedUser) {
           return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };

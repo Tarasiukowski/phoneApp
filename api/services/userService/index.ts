@@ -8,35 +8,35 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(class {})) {
   by: By;
 
   static async update(data: any) {
-    const { newEmail } = data
+    const { newEmail } = data;
 
-    const returnData = await UserModel.update(data, newEmail ? "newEmail" : undefined);
+    const returnedData = await UserModel.update(data, newEmail ? 'newEmail' : undefined);
 
-    return returnData;
+    return returnedData;
   }
 
-  static async verifyByCode(data, option?: 'verifyNewEmail') {
+  static async verify(data, option?: 'verifyNewEmail') {
     const { code, email } = data;
     const isVerifyNewEmail = option === 'verifyNewEmail';
 
-    const findUser = await UserModel.findOne('email', email);
+    const { status, user } = await UserModel.findOne('email', email);
 
-    if (isVerifyNewEmail ? findUser.newEmail.value : findUser.code === code) {
+    if (isVerifyNewEmail ? user.newEmail.value : user.code === code) {
       if (isVerifyNewEmail) {
-        const newEmail = findUser.newEmail.value;
+        const newEmail = user.newEmail.value;
 
-        UserModel.update({ email, newEmail }, "setEmail");
+        UserModel.update({ email, newEmail }, 'setEmail');
       }
 
-      return { valid: true };
-    } else {
-      return { valid: false, error: true, errorMsg: errorsMsgs.WRONG_VERIFICATION_CODE };
+      return { valid: true, status };
     }
+
+    return { valid: false, status, errorMsg: errorsMsgs.WRONG_VERIFICATION_CODE };
   }
 
   static async formatData(data: string[], key: string) {
     const formatData = data.map(async (elem) => {
-      const user = await UserModel.findOne(key, elem);
+      const { user } = await UserModel.findOne(key, elem);
 
       if (user) {
         const formatedUser = UserModel.format(user);
@@ -45,7 +45,9 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(class {})) {
       }
     });
 
-    return Promise.all(formatData);
+    return {
+      data: Promise.all(formatData),
+    };
   }
 }
 

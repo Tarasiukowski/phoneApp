@@ -6,17 +6,17 @@ class ConversationController {
   async index({ body }: Request, res: Response) {
     const { id, email } = body;
 
-    const data = await new ConversationService(id, email).get();
+    const { status, ...restData } = await new ConversationService(id, email).get();
 
-    res.send(data);
+    res.send(restData);
   }
 
-  send({ body }: Request, res: Response) {
-    const { id, email, content } = body
+  async send({ body }: Request, res: Response) {
+    const { id, email, content } = body;
 
-    const data = new ConversationService(id, email).send(content)
+    const { status, ...restData } = await new ConversationService(id, email).send(content);
 
-    res.send(data)
+    res.send(restData);
   }
 }
 

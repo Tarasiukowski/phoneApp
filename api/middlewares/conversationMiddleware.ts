@@ -3,13 +3,14 @@ import { Request, Response, NextFunction } from 'express';
 import AuthService from '../services/authService';
 import { errorsMsgs } from '../data';
 
-class generateMiddleware {
+class conversationMiddleware {
   async index(req: Request, res: Response, next: NextFunction) {
+    const { email } = req.body;
     const token = req.cookies.SESSID;
 
     const { user } = await AuthService.index(token);
 
-    if (user) {
+    if (user.value.email === email) {
       next();
       return;
     }
@@ -18,6 +19,6 @@ class generateMiddleware {
   }
 }
 
-const GenerateMiddleware = new generateMiddleware();
+const ConversationMiddleware = new conversationMiddleware();
 
-export default GenerateMiddleware;
+export default ConversationMiddleware;

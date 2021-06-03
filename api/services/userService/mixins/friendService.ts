@@ -1,27 +1,27 @@
 import UserService from '../../../services/userService';
 import UserModel from '../../../models/user/userModel';
 import { errorsMsgs } from '../../../data';
-import { Class } from '../../../interface';
+import { Class } from '../../../interfaces';
 import ConversationModel from '../../../models/conversation/conversationModel';
 
 export function FriendServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
     static friend = {
       async get(email: string) {
-        const user = UserModel.findOne('email', email);
+        const { user } = await UserModel.findOne('email', email);
 
         if (user) {
-          const { friends } = await user;
+          const { friends } = user;
 
-          const formatedFriends = await UserService.formatData(friends, 'email');
+          const { data } = await UserService.formatData(friends, 'email');
 
-          return formatedFriends;
+          return { status: 200, data };
         }
 
-        return null;
+        return { status: 404, data: null };
       },
       async remove(email: string, friendEmail: string) {
-        const friend = await UserModel.findOne('email', friendEmail);
+        const { user: friend } = await UserModel.findOne('email', friendEmail);
 
         if (friend) {
           UserModel.update({ email, field: 'friends', value: friendEmail }, 'pull');

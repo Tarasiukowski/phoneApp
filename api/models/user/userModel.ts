@@ -4,11 +4,11 @@ import { generateCode, sendMail, formatUser, getUpdateOption } from '../../utils
 import { userSchema } from './userSchema';
 import { By, UserDocument } from './types';
 import { errorsMsgs, getDefaultDataUser } from '../../data';
-import { updateOption } from '../../interface';
+import { updateOption } from '../../interfaces';
 
 export const userModel = model<UserDocument>('user', userSchema);
 
-class User {
+class UserModel {
   email: string;
   code: string;
   by: By;
@@ -36,23 +36,22 @@ class User {
   static async update(data: any, option: updateOption = 'setField') {
     const { email, newEmail } = data;
 
-
     delete data.email;
 
     if (newEmail) {
-      const findUser = await this.findOne('email', newEmail);
+      const { user } = await this.findOne('email', newEmail);
 
-      if (findUser) {
-        return { error: true, errorMsg: errorsMsgs.EMAIL_IN_USE };
+      if (user) {
+        return { status: 403, errorMsg: errorsMsgs.EMAIL_IN_USE };
       }
     }
 
     try {
       await userModel.updateOne({ email }, getUpdateOption(data, option));
 
-      return { updated: true, error: false };
+      return { status: 200, errorMsg: null };
     } catch (err) {
-      return { updated: false, error: true, errorMsg: err };
+      return { status: 409, errorMsg: err };
     }
   }
 
@@ -60,21 +59,29 @@ class User {
     try {
       const user = await userModel.findOne({ [key]: value });
 
-      return user;
+      return { status: 200, user };
     } catch (err) {
-      return null;
+      return { status: 404, user: null };
     }
   }
 
-  async save(extraDataUser) {
+  async save(extraData) {
     delete this.by;
 
-    const defaultDataUser = await getDefaultDataUser();
+    const defaultData = await getDefaultDataUser();
 
-    const user = new userModel({ ...this, ...extraDataUser, ...defaultDataUser }).save();
+    const user = new userModel({ ...this, ...extraData, ...defaultData });
 
-    return user;
+    try {
+      user.save();
+
+      const formatedUser = UserModel.format(user);
+
+      return { status: 201, user: formatedUser };
+    } catch (err) {
+      return { status: 409, user: null };
+    }
   }
 }
 
-export default User;
+export default UserModel;

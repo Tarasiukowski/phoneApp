@@ -2,7 +2,7 @@ import { Response, Request } from 'express';
 
 import UserService from '../../../services/userService';
 import UserModel from '../../../models/user/userModel';
-import { Class } from '../../../interface';
+import { Class } from '../../../interfaces';
 
 export function InviteControllerMixin<Base extends Class>(base: Base) {
   return class extends base {
@@ -18,11 +18,13 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
       async get(req: Request, res: Response) {
         const { email } = req.body;
 
-        const invites = await (await UserModel.findOne('email', email)).invites;
+        const { status, user } = await UserModel.findOne('email', email);
 
-        const formatedInvites = await UserService.formatData(invites, 'email');
+        const invites = user.invites;
 
-        res.send(formatedInvites);
+        const { data } = await UserService.formatData(invites, 'email');
+
+        res.send(data);
       },
 
       async accept(req: Request, res: Response) {

@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 
-import { Class } from '../../../interface';
+import { Class } from '../../../interfaces';
 import UserService from '../../../services/userService';
 
 export function FriendsControllerMixin<Base extends Class>(base: Base) {
@@ -9,9 +9,9 @@ export function FriendsControllerMixin<Base extends Class>(base: Base) {
       async index(req: Request, res: Response) {
         const { email } = req.body;
 
-        const data = await UserService.friend.get(email);
+        const { status, ...restData } = await UserService.friend.get(email);
 
-        res.send(data);
+        res.send(restData);
       },
       async remove(req: Request, res: Response) {
         const { email, friendEmail } = req.body;

@@ -18,19 +18,22 @@ class UserService {
     if (token) {
       const { id }: any = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 
-      const user = await UserModel.findOne('_id', id);
+      const { user } = await UserModel.findOne('_id', id);
 
       if (user) {
-        const formatUser = UserModel.format(user, 'conversation');
+        const formatedUser = UserModel.format(user, 'conversation');
 
         return {
-          user: formatUser,
-          status: { onBoarding: user.onBoarding, redirectTo: user.redirectTo },
+          user: {
+            value: formatedUser,
+            status: { onBoarding: user.onBoarding, redirectTo: user.redirectTo },
+          },
+          status: 200
         };
       }
     }
 
-    return { user: null };
+    return { user: null, status: 409 };
   }
 
   async login() {
@@ -39,7 +42,7 @@ class UserService {
     const { verify, errorMsg } = verifyEmail(email);
 
     if (verify) {
-      const user = await UserModel.findOne('email', email);
+      const { status, user } = await UserModel.findOne('email', email);
 
       if (user) {
         const token = jwt.sign({ id: user._id }, process.env.JWT_PRIVATE_KEY, {
@@ -48,13 +51,13 @@ class UserService {
 
         const formatedUser = UserModel.format(user, 'conversation');
 
-        return { user: formatedUser, token };
+        return { user: formatedUser, token, status, errorMsg: null };
       }
 
-      return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
+      return { user: null, token: null, status, errorMsg: errorsMsgs.USER_NOT_EXIST };
     }
 
-    return { error: true, errorMsg };
+    return { user: null, token: null, status: 403, errorMsg };
   }
 
   async singup(data) {
@@ -63,24 +66,22 @@ class UserService {
     const { verify, errorMsg } = verifyEmail(email);
 
     if (verify) {
-      const duplicateUser = await UserModel.findOne('email', email);
+      const { user: duplicateUser } = await UserModel.findOne('email', email);
 
       if (duplicateUser) {
-        return { error: true, errorMsg: errorsMsgs.USER_EXIST };
+        return { user: null, token: null, status: 403, errorMsg: errorsMsgs.USER_EXIST };
       }
 
-      const user = await new UserModel(email, by).save(data);
+      const { status, user } = await new UserModel(email, by).save(data);
 
       const token = jwt.sign({ id: user._id }, process.env.JWT_PRIVATE_KEY, {
         expiresIn: 9999999,
       });
 
-      const fromatedUser = UserModel.format(user, 'conversation');
-
-      return { user: fromatedUser, token };
+      return { user, token, status, errorMsg: null };
     }
 
-    return { error: true, errorMsg };
+    return { user: null, token: null, status: 403, errorMsg };
   }
 }
 

@@ -17,11 +17,11 @@ class ConversationModel {
   static async remove(by: keyof Conversation, value) {
     try {
       await conversationModel.remove({ [by]: value });
-    } catch (err) {
-      return { succes: false };
-    }
 
-    return { succes: true };
+      return { succes: true, status: 200 };
+    } catch (err) {
+      return { succes: false, status: 409 };
+    }
   }
 
   static async send(content: string, email: string, id: string) {
@@ -30,30 +30,32 @@ class ConversationModel {
         { _id: id },
         { $push: { messages: { from: email, content, id: Math.random() } } },
       );
-    } catch (e) {
-      return { succes: false };
-    }
 
-    return { succes: true };
+      return { succes: true, status: 200 };
+    } catch (e) {
+      return { succes: false, status: 409 };
+    }
   }
 
   static async get(id: string) {
     try {
       const conversation = await conversationModel.findOne({ _id: id });
 
-      return { succes: true, conversation };
+      return { succes: true, status: 200, conversation };
     } catch (err) {
-      return { succes: true };
+      return { succes: true, status: 404, conversation: null };
     }
   }
 
   create() {
-    try {
-      const conversation = new conversationModel(this).save();
+    const conversation = new conversationModel(this);
 
-      return { succes: true, conversation };
+    try {
+      conversation.save();
+
+      return { succes: true, status: 200, conversation };
     } catch (err) {
-      return { succes: false };
+      return { succes: false, status: 409, conversation: null };
     }
   }
 }
