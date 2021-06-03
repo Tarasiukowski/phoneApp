@@ -14,8 +14,9 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
           const { friends } = user;
 
           const { data } = await UserService.formatData(friends, 'email');
+          const formatedFriends = await data
 
-          return { status: 200, data };
+          return { status: 200, data: formatedFriends };
         }
 
         return { status: 404, data: null };

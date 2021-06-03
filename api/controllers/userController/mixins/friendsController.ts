@@ -9,9 +9,9 @@ export function FriendsControllerMixin<Base extends Class>(base: Base) {
       async index(req: Request, res: Response) {
         const { email } = req.body;
 
-        const { status, ...restData } = await UserService.friend.get(email);
+        const { status, data } = await UserService.friend.get(email);
 
-        res.send(restData);
+        res.send(data);
       },
       async remove(req: Request, res: Response) {
         const { email, friendEmail } = req.body;

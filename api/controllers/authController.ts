@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { errorsMsgs } from '../data';
 
 import AuthService from '../services/authService';
 
@@ -6,9 +7,9 @@ class AuthController {
   async index(req: Request, res: Response) {
     const token = req.cookies['SESSID'];
 
-    const { status, user } = await AuthService.index(token);
+    const { status, ...restData } = await AuthService.index(token);
 
-    res.send({ user });
+    res.send(restData);
   }
 
   async login(req: Request, res: Response) {
@@ -16,13 +17,8 @@ class AuthController {
 
     const { status, user, token, errorMsg } = await new AuthService(email, by).login();
 
-    if (errorMsg) {
-      res.send({ user, errorMsg });
-      return;
-    }
-
-    res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
-    res.send({ user });
+    errorsMsgs || res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
+    res.send({ user, errorMsg });
   }
 
   async singUp(req: Request, res: Response) {
@@ -30,13 +26,8 @@ class AuthController {
 
     const { status, user, token, errorMsg } = await new AuthService(email, by).singup(restBody);
 
-    if (errorMsg) {
-      res.send({ errorMsg });
-      return;
-    }
-
-    res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
-    res.send({ user });
+    errorMsg || res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
+    res.send({ user, errorMsg });
   }
 
   logout(_: Request, res: Response) {

@@ -18,7 +18,7 @@ class UserService {
     if (token) {
       const { id }: any = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
 
-      const { user } = await UserModel.findOne('_id', id);
+      const { user, status } = await UserModel.findOne('_id', id);
 
       if (user) {
         const formatedUser = UserModel.format(user, 'conversation');
@@ -28,7 +28,7 @@ class UserService {
             value: formatedUser,
             status: { onBoarding: user.onBoarding, redirectTo: user.redirectTo },
           },
-          status: 200,
+          status,
         };
       }
     }

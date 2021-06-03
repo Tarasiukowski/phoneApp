@@ -32,7 +32,7 @@ const MainTemplate: React.FC = ({ children }) => {
       refreshInterval: 1,
     },
   );
-  const { data: fetchedUser, error: errorU } = useSwr(['/auth', 'POST'], swrFetcher, {
+  const { data: fetchedUserData, error: errorU } = useSwr(['/auth', 'POST'], swrFetcher, {
     refreshInterval: 1,
   });
 
@@ -49,14 +49,15 @@ const MainTemplate: React.FC = ({ children }) => {
   }, [fetchedInvites, errorI]);
 
   useEffect(() => {
-    if (!errorU && fetchedUser) {
-      if (!_.isEqual(fetchedUser.user, user)) {
-        const { user } = fetchedUser;
+    if (!errorU && fetchedUserData) {
+        const fetchedUser = fetchedUserData.user.value
 
-        disptach(login(user));
+      if (!_.isEqual(fetchedUser, user)) {
+
+        disptach(login(fetchedUser));
       }
     }
-  }, [fetchedUser, errorU]);
+  }, [fetchedUserData, errorU]);
 
   return (
     <Template>

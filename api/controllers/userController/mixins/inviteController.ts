@@ -23,8 +23,9 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
         const invites = user.invites;
 
         const { data } = await UserService.formatData(invites, 'email');
+        const formatedInvites = await data
 
-        res.send(data);
+        res.send(formatedInvites);
       },
 
       async accept(req: Request, res: Response) {
