@@ -7,7 +7,6 @@ export const formatUser = (user: UserDocument, extraKeys?: string[]) => {
     'number',
     'fullname',
     'colorImage',
-    'conversations',
     ...extraKeys,
   ];
   const userData = user.toObject();
