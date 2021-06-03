@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
+import { UserCard, Alert } from '../../atoms';
 import AddButton from './addButton/addButton';
-import FriendsListElement from '../../atoms/userCard/userCard';
 import Multitask from '../multitask/multitask';
-import Alert from '../../atoms/alert/alert';
 
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { selectUser } from '../../../reducers/userReducer';
@@ -61,11 +60,11 @@ const FriendsList = () => {
               <Link
                 href={`/inbox/${conversation.id}`}
                 key={friend.email}
-                children={<FriendsListElement member={friend} elemList />}
+                children={<UserCard member={friend} elemList />}
               />
             );
           } else {
-            return <FriendsListElement member={friend} elemList />;
+            return <UserCard member={friend} elemList />;
           }
         })}
         <AddButton

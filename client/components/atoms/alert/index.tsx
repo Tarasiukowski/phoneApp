@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Button } from '../button/button';
+import { Button } from '../button';
 
 import { props } from './types';
 import styles from './alert.module.scss';
@@ -42,4 +42,4 @@ const Alert = ({ error }: props) => {
   );
 };
 
-export default Alert;
+export { Alert };

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 
-import { Button } from '../../atoms/button/button';
+import { Button } from '../../atoms';
 
 import styles from './multitask.module.scss';
 import { isCorrectValue, getAllChildreenOfElement } from '../../../utils';

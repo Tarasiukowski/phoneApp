@@ -1,4 +1,4 @@
-import { Button } from '../../components/atoms/button/button';
+import { Button } from '../../components/atoms';
 
 import Logo from '../../public/svgs/logo.svg';
 import { logout } from '../../utils';

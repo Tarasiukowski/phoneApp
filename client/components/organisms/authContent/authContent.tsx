@@ -3,10 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import GoogleLogin from 'react-google-login';
 
-import ButtonGoogle from '../../atoms/buttonGoogle/buttonGoogle';
+import { ButtonGoogle, ToggleAuth, Alert } from '../../atoms';
 import AuthForm from '../../molecules/authForm/authForm';
-import ToggleAuth from '../../atoms/toggleAauth/toggleAuth';
-import Alert from '../../atoms/alert/alert';
 import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
 
 import { login as loginAuth } from '../../../reducers/userReducer';

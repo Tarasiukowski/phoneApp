@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { UserCard, Alert } from '../../atoms';
 import UserDetailed from '../../molecules/userDetailed/userDetailed';
-import UserCard from '../../atoms/userCard/userCard';
 
 import styles from './usersList.module.scss';
 import { SearchSvg, PlusSvg } from '../../../public/svgs';
@@ -12,7 +12,6 @@ import { fetcher } from '../../../utils';
 import { selectUser } from '../../../reducers/userReducer';
 import { add } from '../../../reducers/friendsReducer';
 import { remove } from '../../../reducers/invitesReducer';
-import Alert from '../../atoms/alert/alert';
 
 const UsersList = ({ name, data }: props) => {
   const [detailedUser, setDetailedUser] = useState<User | null>(null);

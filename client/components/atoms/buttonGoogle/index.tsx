@@ -9,4 +9,4 @@ const ButtonGoogle = ({ auth, onClick }: props) => (
   </button>
 );
 
-export default ButtonGoogle;
+export { ButtonGoogle }

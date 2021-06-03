@@ -81,4 +81,4 @@ const StyledButton = styled.button<propsButton>`
     `}
 `;
 
-export default ButtonNavigation;
+export { ButtonNavigation };

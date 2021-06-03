@@ -1,11 +1,8 @@
 import { ChangeEvent, useReducer, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { ImageUser, Input, Button, Alert } from '../../../atoms';
 import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTemplate';
-import ImageUser from '../../../atoms/imageUser/imageUser';
-import { Input } from '../../../atoms/input/input';
-import { Button } from '../../../atoms/button/button';
-import Alert from '../../../atoms/alert/alert';
 import Multitask from '../../../molecules/multitask/multitask';
 
 import styles from './profile.module.scss';

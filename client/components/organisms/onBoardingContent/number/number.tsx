@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { Alert, Button } from '../../../atoms';
 import SelectNumberButton from '../../../molecules/selectNumber/button/button';
 import SelectNumberList from '../../../molecules/selectNumber/list/list';
 import RedirectTemplate from '../../../../templates/redirectTemplate/redirectTemplate';
-import { Button } from '../../../atoms/button/button';
-import Alert from '../../../atoms/alert/alert';
 
 import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher } from '../../../../utils';

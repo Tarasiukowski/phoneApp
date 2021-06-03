@@ -1,4 +1,4 @@
-import { Button } from '../../../atoms/button/button';
+import { Button } from '../../../atoms';
 
 import styles from './chatOptions.module.scss';
 import { MoreSvg, UnreadSvg } from '../../../../public/svgs';

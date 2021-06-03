@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-import { Input } from '../../atoms/input/input';
+import { Input } from '../../atoms';
 
 import styles from './ElementFinder.module.scss';
 import { props } from './types';
@@ -15,7 +15,7 @@ const ElementFinder = <T,>({ renderList, data, filterKey, info }: props<T>) => {
   };
 
   useEffect(() => {
-    setGetData(data)
+    setGetData(data);
   }, [data]);
 
   useEffect(() => {

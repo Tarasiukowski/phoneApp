@@ -1,4 +1,4 @@
-import { TextArea } from '../../../atoms/textArea/textArea';
+import { TextArea } from '../../../atoms';
 import Note from './note/note';
 
 import styles from './notes.module.scss';

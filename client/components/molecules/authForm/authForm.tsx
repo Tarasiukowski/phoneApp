@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { Input } from '../../atoms/input/input';
-import { Button } from '../../atoms/button/button';
+import { Input, Button } from '../../atoms';
 import RedirectTemplate from '../../../templates/redirectTemplate/redirectTemplate';
 
 import { fetcher } from '../../../utils';

@@ -1,9 +1,8 @@
-import ButtonNavigation from '../../buttonNavigation/buttonNavigation';
-import UserCard from '../userCard';
+import { UserCard, ButtonNavigation } from '../../index';
 
 import styles from './UserDetailed.module.scss';
 import { props } from './types';
-import { logout } from '../../../../utils'
+import { logout } from '../../../../utils';
 import { SingOutSvg, SettingsSvg, PlusSvg } from '../../../../public/svgs';
 
 const UserDetailed = ({ userDetailedRef }: props) => (

@@ -113,4 +113,4 @@ const Image = styled.div<propsImage>`
     `}
 `;
 
-export default ImageUser;
+export { ImageUser } 

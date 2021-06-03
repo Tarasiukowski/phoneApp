@@ -16,4 +16,4 @@ const ToggleAuth = ({ auth }: props) => {
   );
 };
 
-export default ToggleAuth;
+export { ToggleAuth };

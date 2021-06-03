@@ -1,4 +1,4 @@
-import ImageUser from '../../../../atoms/imageUser/imageUser';
+import { ImageUser } from '../../../../atoms';
 
 import styles from './note.module.scss';
 

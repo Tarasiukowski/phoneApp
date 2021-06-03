@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, forwardRef } from 'react';
 import { useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 
-import ImageUser from '../imageUser/imageUser';
+import { ImageUser } from '../index';
 import UserDetailed from './userDetailed/userDetailed';
 
 import { props } from './types';
@@ -135,4 +135,4 @@ export const Template = styled.div<props>`
     `}
 `;
 
-export default UserCard;
+export { UserCard };

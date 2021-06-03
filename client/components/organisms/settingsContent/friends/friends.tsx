@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { UserCard, Button, Alert } from '../../../atoms';
 import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTemplate';
-import { Button } from '../../../atoms/button/button';
-import UserCard from '../../../atoms/userCard/userCard';
 import ElementFinder from '../../../molecules/elementFinder/elementFinder';
 import Multitask from '../../../molecules/multitask/multitask';
-import Alert from '../../../atoms/alert/alert';
 
 import styles from './friends.module.scss';
 import { fetcher } from '../../../../utils';

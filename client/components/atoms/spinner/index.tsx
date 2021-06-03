@@ -1,5 +1,5 @@
-import SpinnerSvg from '../../../public/svgs/spinner.svg'
-import styles from './spinner.module.scss'
+import SpinnerSvg from '../../../public/svgs/spinner.svg';
+import styles from './spinner.module.scss';
 
 const Spinner = () => (
   <div className={styles.content}>
@@ -9,4 +9,4 @@ const Spinner = () => (
   </div>
 );
 
-export default Spinner;
+export { Spinner };

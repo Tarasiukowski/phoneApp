@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import ButtonNavigation from '../../atoms/buttonNavigation/buttonNavigation';
-import UserCard from '../../atoms/userCard/userCard';
+import { UserCard, ButtonNavigation } from '../../atoms';
 import GroupsList from '../groupsList/groupsList';
 import FriendsList from '../friendsList/friendsList';
 import SearcherTemplate from '../../../templates/sarcherTemplate/searcherTemplate';

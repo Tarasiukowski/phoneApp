@@ -2,9 +2,9 @@ import { useRef, MouseEvent, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useScroll } from 'react-use';
 
+import { Alert } from '../../../atoms';
 import Input from './input/input';
 import NumbersList from './numbersList/numbersList';
-import Alert from '../../../atoms/alert/alert';
 
 import { fetcher } from '../../../../utils';
 import { propsSelectList } from '../types';
