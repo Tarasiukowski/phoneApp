@@ -16,14 +16,9 @@ class UserController extends FriendsControllerMixin(InviteControllerMixin(class 
   async verify(req: Request, res: Response) {
     const { option, ...restBody } = req.body;
 
-    const { status, valid, errorMsg } = await UserService.verify(restBody, option);
+    const data = await UserService.verify(restBody, option);
 
-    if (valid) {
-      res.send({ valid });
-      return;
-    }
-
-    res.send({ errorMsg, error: true });
+    res.send(data);
   }
 }
 

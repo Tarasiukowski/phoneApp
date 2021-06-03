@@ -28,7 +28,7 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(class {})) {
         UserModel.update({ email, newEmail }, 'setEmail');
       }
 
-      return { valid: true, status };
+      return { valid: true, status, errorMsg: null };
     }
 
     return { valid: false, status, errorMsg: errorsMsgs.WRONG_VERIFICATION_CODE };

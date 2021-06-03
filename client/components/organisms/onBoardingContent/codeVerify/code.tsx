@@ -26,27 +26,18 @@ export const OnboardingCodeContent = () => {
   const verifyByCode = async (e: FormEvent) => {
     e.preventDefault();
 
-    const { valid, errorMsg, error } = await fetcher('post', '/user/verify', {
+    const { valid, errorMsg } = await fetcher('post', '/user/verify', {
       email: user.email,
       code: valueInput,
     });
 
-    if (error) {
-      setError({ msg: errorMsg, id: Math.random() });
-
-      if (errorMsg === ERROR_NOT_ALLOWED) {
-        window.location.reload();
-      }
-      return;
-    }
-
     if (valid) {
-      const { error, errorMsg } = await fetcher('PUT', '/user/update', {
+      const { errorMsg } = await fetcher('PUT', '/user/update', {
         email: user.email,
         redirectTo: '/onboarding/number',
       });
 
-      if (error) {
+      if (errorMsg) {
         setError({ msg: errorMsg, id: Math.random() });
         window.location.reload();
         return;
@@ -54,6 +45,13 @@ export const OnboardingCodeContent = () => {
 
       setRedirect(true);
       setError(null);
+      return;
+    }
+
+    setError({ msg: errorMsg, id: Math.random() });
+
+    if (errorMsg === ERROR_NOT_ALLOWED) {
+      window.location.reload();
     }
   };
 
