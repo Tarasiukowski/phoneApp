@@ -77,7 +77,7 @@ class UserModel {
 
       const formatedUser = UserModel.format(user);
 
-      return { status: 201, user: formatedUser };
+      return { status: 201, user: { value: formatedUser, id: user._id } };
     } catch (err) {
       return { status: 409, user: null };
     }

@@ -28,7 +28,7 @@ class UserService {
             value: formatedUser,
             status: { onBoarding: user.onBoarding, redirectTo: user.redirectTo },
           },
-          status: 200
+          status: 200,
         };
       }
     }
@@ -74,11 +74,11 @@ class UserService {
 
       const { status, user } = await new UserModel(email, by).save(data);
 
-      const token = jwt.sign({ id: user._id }, process.env.JWT_PRIVATE_KEY, {
+      const token = jwt.sign({ id: user.id }, process.env.JWT_PRIVATE_KEY, {
         expiresIn: 9999999,
       });
 
-      return { user, token, status, errorMsg: null };
+      return { user: user.value, token, status, errorMsg: null };
     }
 
     return { user: null, token: null, status: 403, errorMsg };

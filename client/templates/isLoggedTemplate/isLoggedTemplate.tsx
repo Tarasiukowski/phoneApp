@@ -22,13 +22,17 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
   const router = useRouter();
 
   useEffect(() => {
-    fetcher('post', '/auth').then(({ user, status }) => {
+    fetcher('post', '/auth').then((data) => {
+      const user = data.user ? data.user.value : null;
+
       dispatch(login(user));
 
       const isLogged = user ? true : false;
 
       if (settings[allow] === isLogged) {
-        if (status) {
+        if (isLogged) {
+          const status = data.user.status;
+
           const { loading, redirectTo } = checkOnboardingStage(status, router.asPath);
 
           if (!friends.length && status.onBoarding) {
@@ -46,6 +50,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
         }
       } else {
         if (isLogged) {
+          const status = data.user.status;
           const { loading, redirectTo } = checkOnboardingStage(status, router.asPath);
 
           !loading ? setLoading(false) : router.push(redirectTo);
