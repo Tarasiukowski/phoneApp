@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import SettingsTemplate from '../../../../templates/settingsTemplate/settingsTemplate';
@@ -23,8 +23,6 @@ export const SettingsFriendsContent = () => {
   const friends = useSelector(selectFriends);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {});
 
   const removeFriend = async (friendEmail: string) => {
     const { error, errorMsg } = await fetcher('POST', '/user/friends/remove', {
