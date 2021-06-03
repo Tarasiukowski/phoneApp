@@ -43,21 +43,21 @@ export const OnboardingAccountContent = () => {
 
     fetcher('PUT', '/user/update', {
       email: user.email,
-      fullname: formValues
+      fullname: formValues,
     }).then(async (data) => {
-      if (data.error) {
+      if (data.errorMsg) {
         setError({ msg: data.errorMsg, id: Math.random() });
         window.location.reload();
         return;
       }
 
-      const { error, errorMsg } = await fetcher('PUT', '/user/update', {
+      const { errorMsg } = await fetcher('PUT', '/user/update', {
         email: user.email,
         redirectTo: '/contacts',
         onBoarding: true,
       });
 
-      if (error) {
+      if (errorMsg) {
         setError({ msg: errorMsg, id: Math.random() });
         window.location.reload();
         return;
