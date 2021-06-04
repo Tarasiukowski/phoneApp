@@ -10,9 +10,9 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
       async index(req: Request, res: Response) {
         const { email, to } = req.body;
 
-        const data = await UserService.invite.index(email, to);
+        const { status, ...restData } = await UserService.invite.index(email, to);
 
-        res.send(data);
+        res.send(restData);
       },
 
       async get(req: Request, res: Response) {
@@ -23,7 +23,7 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
         const invites = user.invites;
 
         const { data } = await UserService.formatData(invites, 'email');
-        const formatedInvites = await data
+        const formatedInvites = await data;
 
         res.send(formatedInvites);
       },
@@ -31,17 +31,17 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
       async accept(req: Request, res: Response) {
         const { email, from } = req.body;
 
-        const data = await UserService.invite.accept(email, from);
+        const { status, ...restData } = await UserService.invite.accept(email, from);
 
-        res.send(data);
+        res.send(restData);
       },
 
       async reject(req: Request, res: Response) {
         const { email, from } = req.body;
 
-        const data = await UserService.invite.reject(email, from);
+        const { status, ...restData } = await UserService.invite.reject(email, from);
 
-        res.send(data);
+        res.send(restData);
       },
     };
   };

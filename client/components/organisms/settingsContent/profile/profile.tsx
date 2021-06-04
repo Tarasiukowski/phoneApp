@@ -91,7 +91,6 @@ const SettingsProfileContent = () => {
       const data = await fetcher('POST', '/user/verify/email', {
         email,
         code,
-        option: 'verifyNewEmail',
       });
 
       if (data.error) {

@@ -14,7 +14,7 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
           const { friends } = user;
 
           const { data } = await UserService.formatData(friends, 'email', ...extraData);
-          const formatedFriends = await data
+          const formatedFriends = await data;
 
           return { status: 200, data: formatedFriends };
         }
@@ -35,10 +35,10 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
 
           ConversationModel.remove('users', [email, friendEmail]);
 
-          return { error: false };
+          return { status: 200, errorMsg: null };
         }
 
-        return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
+        return { status: 404, errorMsg: errorsMsgs.USER_NOT_EXIST };
       },
     };
   };

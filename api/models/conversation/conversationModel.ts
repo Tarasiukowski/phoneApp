@@ -18,12 +18,11 @@ class ConversationModel {
     try {
       await conversationModel.updateOne({ _id: id }, { [option]: { ...data } });
 
-      if (data.users && option === "$push") {
+      if (data.users && option === '$push') {
         const conversation = await (await conversationModel.findOne({ _id: id })).toObject();
 
-        conversation.messages.map((message) => {
-            
-        })
+        // FIX ME
+        conversation.messages.map((message) => {});
       }
 
       return { succes: true, status: 200 };

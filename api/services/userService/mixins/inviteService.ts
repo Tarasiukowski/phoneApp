@@ -8,31 +8,28 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
     static invite = {
       async index(from: string, to: string) {
         if (from === to) {
-          return { error: true, errorMsg: errorsMsgs.INVITE_TO_YOURSELF };
+          return { status: 401, errorMsg: errorsMsgs.INVITE_TO_YOURSELF };
         }
 
         const { user: invitedUser } = await UserModel.findOne('email', to);
         const { user: invitingUser } = await UserModel.findOne('email', from);
 
         if (!invitedUser) {
-          return { error: true, errorMsg: errorsMsgs.USER_NOT_EXIST };
+          return { status: 404, errorMsg: errorsMsgs.USER_NOT_EXIST };
         }
 
         const invites = invitedUser.invites;
         const friends = invitingUser.friends;
 
         if (invites.includes(from)) {
-          return { error: true, errorMsg: errorsMsgs.DUPLICATE_INVITATION };
+          return { status: 409, errorMsg: errorsMsgs.DUPLICATE_INVITATION };
         } else if (friends.includes(to)) {
-          return { error: true, errorMsg: errorsMsgs.IS_YOUR_FRIEND };
+          return { status: 409, errorMsg: errorsMsgs.IS_YOUR_FRIEND };
         }
 
-        const data = await UserModel.update(
-          { email: to, field: 'invites', value: from },
-          'pushToField',
-        );
+        UserModel.update({ email: to, field: 'invites', value: from }, 'pushToField');
 
-        return data;
+        return { status: 200, errorMsg: null };
       },
 
       async accept(email: string, from: string) {
@@ -42,26 +39,24 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
 
         const data = new Conversation([email, from]).create();
 
-        if (data.succes) {
-          UserModel.update(
-            {
-              email,
-              field: 'conversations',
-              value: { with: from, id: (await data.conversation)._id },
-            },
-            'pushToField',
-          );
-          UserModel.update(
-            {
-              email: from,
-              field: 'conversations',
-              value: { with: email, id: (await data.conversation)._id },
-            },
-            'pushToField',
-          );
-        }
+        UserModel.update(
+          {
+            email,
+            field: 'conversations',
+            value: { with: from, id: (await data.conversation)._id },
+          },
+          'pushToField',
+        );
+        UserModel.update(
+          {
+            email: from,
+            field: 'conversations',
+            value: { with: email, id: (await data.conversation)._id },
+          },
+          'pushToField',
+        );
 
-        return data;
+        return { status: 200, errorMsg: null };
       },
 
       async reject(email: string, from: string) {
