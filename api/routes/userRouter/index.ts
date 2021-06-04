@@ -7,7 +7,7 @@ import { inviteRouter } from './inviteRouter';
 export const userRouter = Router();
 
 userRouter
-  .post('/verify', userController.verify)
+  .post('/verify/:name', userController.verify)
   .put('/update', userController.update)
   .use('/invite', inviteRouter)
   .use('/friends', friendsRouter);

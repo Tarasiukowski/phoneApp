@@ -7,13 +7,13 @@ import ConversationModel from '../../../models/conversation/conversationModel';
 export function FriendServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
     static friend = {
-      async get(email: string) {
+      async get(email: string, ...extraData: string[]) {
         const { user } = await UserModel.findOne('email', email);
 
         if (user) {
           const { friends } = user;
 
-          const { data } = await UserService.formatData(friends, 'email');
+          const { data } = await UserService.formatData(friends, 'email', ...extraData);
           const formatedFriends = await data
 
           return { status: 200, data: formatedFriends };

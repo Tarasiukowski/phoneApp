@@ -1,4 +1,5 @@
 import { errorsMsgs } from '../../data';
+import ConversationModel from '../../models/conversation/conversationModel';
 import UserModel from '../../models/user/userModel';
 import { By } from '../types';
 import { FriendServiceMixin, InviteServiceMixin } from './mixins';
@@ -15,31 +16,12 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(class {})) {
     return returnedData;
   }
 
-  static async verify(data, option?: 'verifyNewEmail') {
-    const { code, email } = data;
-    const isVerifyNewEmail = option === 'verifyNewEmail';
-
-    const { status, user } = await UserModel.findOne('email', email);
-
-    if (isVerifyNewEmail ? user.newEmail.value : user.code === code) {
-      if (isVerifyNewEmail) {
-        const newEmail = user.newEmail.value;
-
-        UserModel.update({ email, newEmail }, 'setEmail');
-      }
-
-      return { valid: true, status, errorMsg: null };
-    }
-
-    return { valid: false, status, errorMsg: errorsMsgs.WRONG_VERIFICATION_CODE };
-  }
-
-  static async formatData(data: string[], key: string) {
+  static async formatData(data: string[], key: string, ...extraData: string[]) {
     const formatData = data.map(async (elem) => {
       const { user } = await UserModel.findOne(key, elem);
 
       if (user) {
-        const formatedUser = UserModel.format(user);
+        const formatedUser = UserModel.format(user, ...extraData);
 
         return formatedUser;
       }
@@ -48,6 +30,40 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(class {})) {
     return {
       data: Promise.all(formatData),
     };
+  }
+
+  static async verify(data, option: 'account' | 'email') {
+    const { code, email } = data;
+    const isVerifyAccount = option === 'account' ? true : false;
+
+    const { status, user } = await UserModel.findOne('email', email);
+
+    if (isVerifyAccount ? user.code === code : user.newEmail.code === code) {
+      if (!isVerifyAccount) {
+        const newEmail = user.newEmail.value;
+
+        UserModel.update({ email, newEmail }, 'setEmail');
+
+        const friends = await this.friend.get(email, 'conversations');
+
+        friends.data.map((friend) => {
+          UserModel.update({ email: friend.email, field: 'friends', value: email }, 'pull');
+          UserModel.update(
+            { email: friend.email, field: 'friends', value: newEmail },
+            'pushToField',
+          );
+
+          friend.conversations.map((conversation) => {
+            ConversationModel.update(conversation.id, { users: email }, '$pull');
+            ConversationModel.update(conversation.id, { users: newEmail }, '$push');
+          });
+        });
+      }
+
+      return { valid: true, status, errorMsg: null };
+    }
+
+    return { valid: false, status, errorMsg: errorsMsgs.WRONG_VERIFICATION_CODE };
   }
 }
 

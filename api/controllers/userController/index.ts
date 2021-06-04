@@ -14,11 +14,12 @@ class UserController extends FriendsControllerMixin(InviteControllerMixin(class 
   }
 
   async verify(req: Request, res: Response) {
-    const { option, ...restBody } = req.body;
+    const { name } = req.params as { name: 'account' | 'email' };
+    const body = req.body;
 
-    const data = await UserService.verify(restBody, option);
+    const { status, ...restData } = await UserService.verify(body, name);
 
-    res.send(data);
+    res.send(restData);
   }
 }
 
