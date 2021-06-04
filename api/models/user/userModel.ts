@@ -42,7 +42,7 @@ class UserModel {
       const { user } = await this.findOne('email', newEmail);
 
       if (user) {
-        return { status: 403, errorMsg: errorsMsgs.EMAIL_IN_USE };
+        return { status: 401, errorMsg: errorsMsgs.EMAIL_IN_USE };
       }
     }
 
@@ -77,7 +77,7 @@ class UserModel {
 
       const formatedUser = UserModel.format(user, 'conversations');
 
-      return { status: 201, user: { value: formatedUser, id: user._id } };
+      return { status: 200, user: { value: formatedUser, id: user._id } };
     } catch (err) {
       return { status: 409, user: null };
     }

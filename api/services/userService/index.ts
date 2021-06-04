@@ -63,7 +63,7 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(class {})) {
       return { valid: true, status, errorMsg: null };
     }
 
-    return { valid: false, status, errorMsg: errorsMsgs.WRONG_VERIFICATION_CODE };
+    return { valid: false, status: 401, errorMsg: errorsMsgs.WRONG_VERIFICATION_CODE };
   }
 }
 

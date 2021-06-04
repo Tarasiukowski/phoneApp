@@ -31,9 +31,11 @@ class UserService {
           status,
         };
       }
+
+      return { user: null, status: 404 }
     }
 
-    return { user: null, status: 409 };
+    return { user: null, status: 401 };
   }
 
   async login() {
@@ -54,10 +56,10 @@ class UserService {
         return { user: formatedUser, token, status, errorMsg: null };
       }
 
-      return { user: null, token: null, status, errorMsg: errorsMsgs.USER_NOT_EXIST };
+      return { user: null, token: null, status: 404, errorMsg: errorsMsgs.USER_NOT_EXIST };
     }
 
-    return { user: null, token: null, status: 403, errorMsg };
+    return { user: null, token: null, status: 401, errorMsg };
   }
 
   async singup(data) {
@@ -81,7 +83,7 @@ class UserService {
       return { user: user.value, token, status, errorMsg: null };
     }
 
-    return { user: null, token: null, status: 403, errorMsg };
+    return { user: null, token: null, status: 401, errorMsg };
   }
 }
 
