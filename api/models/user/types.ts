@@ -22,4 +22,5 @@ export interface UserDocument extends Document {
   invites: string[];
   friends: string[];
   conversations: { with: string, id: string }[];
+  groups: string[]
 }

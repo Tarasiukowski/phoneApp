@@ -10,5 +10,6 @@ export const getDefaultDataUser = async () => {
     colorImage: randomColor(),
     number,
     onBoarding: false,
+    groups: []
   };
 };
