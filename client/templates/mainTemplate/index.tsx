@@ -38,7 +38,7 @@ const MainTemplate: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (!errorF && fetchedFriends && fetchedFriends.length !== friends.length) {
-      disptach(updateFriends(fetchedFriends));
+      disptach(updateFriends(fetchedFriends.data));
     }
   }, [fetchedFriends, errorF]);
 

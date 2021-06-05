@@ -1,12 +1,20 @@
 import { Button } from '../../../atoms';
+import { ElementFinder } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 
-import styles from './contacts.module.scss';
+import styles from './lists.module.scss';
 
-const SettingsContactContent = () => (
+const SettingsListsContent = () => (
   <SettingsTemplate>
-    <h2 className="title">Contacts</h2>
+    <h2 className="title">Manage Lists</h2>
     <p className="description">Manage the settings.</p>
+    <ElementFinder
+      data={[]}
+      filterKey=""
+      placeholder="Search for a group name"
+      info="No groups to show"
+      renderList={() => null}
+    />
     <div className={styles.dangerZone}>
       <h4>Danger Zone</h4>
       <p className={styles.info}>This will permanently delete all your contacts from OpenPhone.</p>
@@ -17,4 +25,4 @@ const SettingsContactContent = () => (
   </SettingsTemplate>
 );
 
-export { SettingsContactContent };
+export { SettingsListsContent };

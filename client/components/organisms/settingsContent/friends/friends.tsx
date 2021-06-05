@@ -79,6 +79,7 @@ const SettingsFriendsContent = () => {
       <ElementFinder
         data={friends}
         filterKey="fullname"
+        placeholder="Search for a number"
         info="User not found"
         renderList={(data) =>
           data.map((friend) => {

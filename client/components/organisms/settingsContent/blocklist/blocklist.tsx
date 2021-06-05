@@ -11,6 +11,7 @@ const SettingsBlocklistContent = () => (
     <ElementFinder
       data={[]}
       filterKey=""
+      placeholder="Search for a number"
       info=""
       renderList={() => (
         <div className={styles.listElement}>

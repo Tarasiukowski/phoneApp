@@ -2,7 +2,7 @@ import { Subpage, SettingsNavigation } from '../../molecules';
 import {
   SettingsFriendsContent,
   SettingsBlocklistContent,
-  SettingsContactContent,
+  SettingsListsContent,
   SettingsProfileContent,
   SettingsGeneralContent,
 } from './index';
@@ -29,7 +29,7 @@ const routes = [
   },
   {
     slug: 'manageLists',
-    component: <SettingsContactContent />,
+    component: <SettingsListsContent />,
   },
   {
     slug: 'members',

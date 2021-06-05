@@ -5,7 +5,7 @@ import { Input } from '../../atoms';
 import styles from './ElementFinder.module.scss';
 import { props } from './types';
 
-const ElementFinder = <T,>({ renderList, data, filterKey, info }: props<T>) => {
+const ElementFinder = <T,>({ renderList, data, filterKey, info, placeholder }: props<T>) => {
   const [getData, setGetData] = useState<T[]>([]);
   const [inputValue, setInputValue] = useState('');
 
@@ -44,7 +44,7 @@ const ElementFinder = <T,>({ renderList, data, filterKey, info }: props<T>) => {
         <Input
           value={inputValue}
           onChange={handleOnChange}
-          placeholder="Select for a number"
+          placeholder={placeholder}
           autoComplete="off"
         />
       </div>

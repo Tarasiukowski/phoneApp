@@ -5,4 +5,5 @@ export type props<T> = {
   filterKey: keyof T,
   renderList: (data: T[]) => ReactNode;
   info: string
+  placeholder: string
 };
