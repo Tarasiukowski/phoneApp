@@ -1,4 +1,17 @@
-export const optionsComponent = [
+type Stage = {
+  title: string;
+  description: string;
+  inputName: 'email' | 'code' | 'text';
+  inputPlaceholder: string;
+  unlimited?: boolean;
+};
+
+type OptionComponent = {
+  name: 'ChangeEmail' | 'InviteFriend' | 'CreateGroup';
+  stages: Stage[];
+};
+
+export const optionsComponent: OptionComponent[] = [
   {
     name: 'ChangeEmail',
     stages: [
@@ -24,6 +37,24 @@ export const optionsComponent = [
         description: 'to send invite',
         inputName: 'email',
         inputPlaceholder: 'Enter an email adress',
+      },
+    ],
+  },
+  {
+    name: 'CreateGroup',
+    stages: [
+      {
+        title: 'Group name',
+        description: 'you will be found this group by name',
+        inputName: 'text',
+        inputPlaceholder: 'Enter an group name',
+      },
+      {
+        title: 'Pass a member',
+        description: 'to join the group',
+        inputName: 'email',
+        inputPlaceholder: 'Enter an friend email',
+        unlimited: true,
       },
     ],
   },

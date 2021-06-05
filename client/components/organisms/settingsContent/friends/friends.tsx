@@ -42,12 +42,12 @@ const SettingsFriendsContent = () => {
       setOpenMultiTask(false);
     },
     onEnd: async (to: string) => {
-      const { error, errorMsg } = await fetcher('POST', '/user/invite', {
+      const { errorMsg } = await fetcher('POST', '/user/invite', {
         email,
         to,
       });
 
-      if (error) {
+      if (errorMsg) {
         setError({ msg: errorMsg, id: Math.random() });
 
         if (errorMsg === ERROR_NOT_ALLOWED) {

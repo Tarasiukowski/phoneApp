@@ -1,11 +1,11 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useReducer } from 'react';
 
 import { Button } from '../../atoms';
 
 import styles from './multitask.module.scss';
 import { isCorrectValue, getAllChildreenOfElement } from '../../../utils';
 import { optionsComponent } from './data';
-import { props } from './types';
+import { props, GroupData } from './types';
 
 const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
   const option = optionsComponent.find((option) => option.name === name);
@@ -13,6 +13,10 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
   if (option) {
     const [inputValue, setInputValue] = useState('');
     const [counterStage, setCounterStage] = useState(0);
+    const [groupData, setGroupData] = useReducer(
+      (prevState: GroupData, state: GroupData) => ({ ...prevState, ...state }),
+      { name: null, members: [] },
+    );
 
     const templateRef = useRef<HTMLDivElement>(null);
 
@@ -37,29 +41,37 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
       window.addEventListener('click', handleClickEvent);
     });
 
-    const { title, description, inputPlaceholder, inputName } = activeStage;
+    const { title, description, inputPlaceholder, inputName, unlimited } = activeStage;
 
-    const nameInput = inputName as 'code' | 'email';
-
-    const disabled = !isCorrectValue(nameInput, inputValue);
+    const disabled = !isCorrectValue(inputName, inputValue);
 
     const next = async () => {
-      if (end) {
-        const verifyCode = await onEnd(inputValue);
-        if (verifyCode) {
-          onClose(verifyCode);
+      if (end && !unlimited) {
+        const allowResetData = await onEnd(inputValue);
+        if (allowResetData) {
+          onClose(allowResetData);
           setInputValue('');
           setCounterStage(0);
         }
         return;
       }
 
-      const allowNextStage = onNext ? await onNext(inputValue) : name === 'InviteFriend';
+      const allowNextStage =
+        (onNext ? await onNext(inputValue) : false) &&
+        (stages.length > 1 ? true : false) &&
+        !unlimited;
 
       if (allowNextStage) {
         setCounterStage(counterStage + 1);
-        setInputValue('');
       }
+
+      const { members } = groupData;
+
+      name === 'CreateGroup' && counterStage > 0
+        ? setGroupData({ members: members ? [...members, inputValue] : [inputValue] })
+        : setGroupData({ name: inputValue });
+
+      setInputValue('');
     };
 
     if (open) {
@@ -76,7 +88,9 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyUp={(e) => {
                   if (e.key === 'Enter') {
-                    next();
+                    if (!disabled) {
+                      next();
+                    }
                   }
                 }}
                 placeholder={inputPlaceholder}
@@ -88,6 +102,18 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
               <Button onClick={next} disabled={disabled} width="auto">
                 {end ? (name === 'InviteFriend' ? 'Send' : 'Ok') : 'Next'}
               </Button>
+              {unlimited && (
+                <Button
+                  onClick={() => {
+                    onEnd(groupData);
+                    onClose();
+                  }}
+                  width="auto"
+                  style={{ marginLeft: '10px' }}
+                >
+                  Create
+                </Button>
+              )}
             </div>
           </div>
         </div>

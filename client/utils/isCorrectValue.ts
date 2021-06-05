@@ -1,6 +1,6 @@
 import { verifyEmail } from './verifyEmail';
 
-type Type = 'email' | 'code';
+type Type = 'email' | 'code' | 'text';
 
 export const isCorrectValue = (type: Type, value: string) => {
   switch (type) {
@@ -10,5 +10,7 @@ export const isCorrectValue = (type: Type, value: string) => {
       return data.verify;
     case 'code':
       return value.length === 6 ? true : false;
+    case 'text':
+      return value.length ? true : false;
   }
 };

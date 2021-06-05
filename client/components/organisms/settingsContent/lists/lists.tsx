@@ -1,18 +1,38 @@
+import { useState } from 'react';
+
 import { Button } from '../../../atoms';
-import { ElementFinder } from '../../../molecules';
+import { ElementFinder, Multitask } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 
 import styles from './lists.module.scss';
 
 const SettingsListsContent = () => {
+  const [openMultiTask, setOpenMultiTask] = useState(false);
+
+  const multitaskHandle = {
+    name: 'CreateGroup' as 'CreateGroup',
+    open: openMultiTask,
+    onNext: () => {
+      return true;
+    },
+    onClose: () => {
+      setOpenMultiTask(false);
+    },
+    onEnd: async (data: string) => {
+      return true;
+    },
+  };
+
   return (
     <SettingsTemplate>
       <h2 className="title">Manage Lists</h2>
       <p className="description">Manage the settings.</p>
       <Button
-        onClick={() => {}}
-        disabled={false}
-        id="Create a group"
+        onClick={() => {
+          setOpenMultiTask(true);
+        }}
+        disabled={openMultiTask}
+        id="CreateGroup"
         style={{ margin: '37px 0 17px 0' }}
         width="auto"
       >
@@ -34,6 +54,7 @@ const SettingsListsContent = () => {
           Delete All Contacts
         </Button>
       </div>
+      <Multitask {...multitaskHandle} />
     </SettingsTemplate>
   );
 };

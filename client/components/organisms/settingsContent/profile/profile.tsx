@@ -44,7 +44,7 @@ const SettingsProfileContent = () => {
       fullname: { firstname: firstnameValue, lastname: lastnameValue },
     });
 
-    if (data.error) {
+    if (data.errorMsg) {
       setError({ msg: data.errorMsg, id: Math.random() });
     }
 
@@ -66,7 +66,7 @@ const SettingsProfileContent = () => {
         newEmail,
       });
 
-      if (data.error) {
+      if (data.errorMsg) {
         setError({ msg: data.errorMsg, id: Math.random() });
 
         if (data.errorMsg === ERROR_NOT_ALLOWED) {
