@@ -19,6 +19,8 @@ const SettingsListsContent = () => {
       setOpenMultiTask(false);
     },
     onEnd: async (data: string) => {
+      console.log(data)
+
       return true;
     },
   };

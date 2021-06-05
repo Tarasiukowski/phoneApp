@@ -20,5 +20,5 @@ export const userSchema: Schema = new Schema({
   friends: [String],
   image: String,
   conversations: [{ with: String, id: String }],
-  groups: [String],
+  groups: [{ name: String, members: [String] }],
 });

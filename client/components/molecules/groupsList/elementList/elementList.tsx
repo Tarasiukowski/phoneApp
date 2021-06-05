@@ -1,13 +1,14 @@
 import { forwardRef } from 'react';
 
+import { props } from './types';
 import styles from './elementList.module.scss';
 
-const ElementList = forwardRef<HTMLDivElement, any>(({ onClick }, ref) => (
+const ElementList = forwardRef<HTMLDivElement, props>(({ onClick, name }, ref) => (
   <div onClick={onClick} className={styles.box} ref={ref}>
     <div className={styles.image}>
       <span>🚌</span>
     </div>
-    <p>Primary</p>
+    <p>{name}</p>
   </div>
 ));
 

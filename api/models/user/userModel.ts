@@ -75,7 +75,7 @@ class UserModel {
     try {
       user.save();
 
-      const formatedUser = UserModel.format(user, 'conversations');
+      const formatedUser = UserModel.format(user, 'conversations', 'groups');
 
       return { status: 200, user: { value: formatedUser, id: user._id } };
     } catch (err) {

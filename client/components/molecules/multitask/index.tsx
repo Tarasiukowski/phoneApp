@@ -10,7 +10,7 @@ import { props, GroupData } from './types';
 const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
   const option = optionsComponent.find((option) => option.name === name);
 
-  if (option && open) {
+  if (option) {
     const [inputValue, setInputValue] = useState('');
     const [counterStage, setCounterStage] = useState(0);
     const [groupData, setGroupData] = useReducer(
@@ -42,6 +42,8 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
     });
 
     const { title, description, inputPlaceholder, inputName, unlimited } = activeStage;
+
+    const members = groupData.members as string[];
 
     const disabled = !isCorrectValue(inputName, inputValue);
 
@@ -100,14 +102,22 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
             </div>
             <div className={styles.footer}>
               <Button onClick={next} disabled={disabled} width="auto">
-                {end ? (name === 'InviteFriend' ? 'Send' : 'Ok') : 'Next'}
+                {end
+                  ? name === 'InviteFriend'
+                    ? 'Send'
+                    : name === 'CreateGroup'
+                    ? 'Add'
+                    : 'Ok'
+                  : 'Next'}
               </Button>
               {unlimited && (
                 <Button
                   onClick={() => {
                     onEnd(groupData);
                     onClose();
+                    setGroupData({ name: null, members: [] });
                   }}
+                  disabled={members.length ? false : true}
                   width="auto"
                   style={{ marginLeft: '10px' }}
                 >

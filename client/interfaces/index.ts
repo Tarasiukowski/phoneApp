@@ -11,6 +11,12 @@ export type Conversation = {
   id: string;
 };
 
+export type Group = {
+  name: string;
+  members: string[];
+  _id: string;
+};
+
 export type DetailedConversation = { user: User } & Conversation;
 
 export type User = {
@@ -23,6 +29,7 @@ export type User = {
   colorImage: string;
   image: string;
   conversations: Conversation[];
+  groups: Group[];
 };
 
 export type Error = {
