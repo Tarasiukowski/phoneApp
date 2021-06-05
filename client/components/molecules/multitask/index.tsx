@@ -10,7 +10,7 @@ import { props, GroupData } from './types';
 const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
   const option = optionsComponent.find((option) => option.name === name);
 
-  if (option) {
+  if (option && open) {
     const [inputValue, setInputValue] = useState('');
     const [counterStage, setCounterStage] = useState(0);
     const [groupData, setGroupData] = useReducer(
