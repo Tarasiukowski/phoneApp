@@ -21,10 +21,12 @@ const InboxContent = () => {
     query: { slug },
   } = useRouter();
 
+  const conversationId = slug[1]
+
   const getDataChat = (url: string) => {
     fetcher('POST', url, {
       email: user.email,
-      id: slug[1],
+      id: conversationId,
     }).then(({ conversation }) => {
       const { email, messages } = conversation;
 
@@ -44,7 +46,7 @@ const InboxContent = () => {
 
   return (
     <div className={styles.template}>
-      <Chat {...dataChat} />
+      <Chat {...dataChat} id={conversationId} />
       <UserDetailed loading={!member} {...member} />
     </div>
   );

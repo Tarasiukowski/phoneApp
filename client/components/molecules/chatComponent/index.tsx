@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 
 import Header from './header/header';
 import { Textarea } from './textarea/textarea';
@@ -11,16 +10,12 @@ import { props } from './types';
 import { selectUser } from '../../../reducers/userReducer';
 import { fetcher } from '../../../utils';
 
-const Chat = ({ messages, user, width }: props) => {
+const Chat = ({ messages, user, id, width }: props) => {
   const [valueTextarea, setValueTextarea] = useState('');
 
   const refMessagesTemplate = useRef<HTMLDivElement>(null);
 
   const { email } = useSelector(selectUser);
-
-  const {
-    query: { slug },
-  } = useRouter();
 
   useEffect(() => {
     const messagesTemplate = refMessagesTemplate.current;
@@ -40,7 +35,7 @@ const Chat = ({ messages, user, width }: props) => {
         fetcher('PUT', '/conversation/send', {
           email,
           content: valueTextarea,
-          id: slug[1],
+          id,
         });
 
         setValueTextarea('');
