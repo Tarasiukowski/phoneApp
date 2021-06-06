@@ -1,11 +1,11 @@
 import { errorsMsgs, EMAIL_REGEX } from '../data';
 
-type returnValueVerifyEmail = {
+type returnValuevalidEmail = {
   verify: boolean;
   errorMsg: string | null;
 };
 
-export const verifyEmail = (email: string): returnValueVerifyEmail => {
+export const validEmail = (email: string): returnValuevalidEmail => {
   const verify = EMAIL_REGEX.test(email);
 
   if (verify) {

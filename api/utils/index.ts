@@ -1,4 +1,4 @@
-export { verifyEmail } from './verifyEmail';
+export { validEmail } from './validEmail';
 export { connectDB } from './connectDB';
 export { randomColor } from './randomColor';
 export { generateCode } from './generateCode';

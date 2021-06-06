@@ -1,11 +1,11 @@
-import { verifyEmail } from './verifyEmail';
+import { validEmail } from './validEmail';
 
 type Type = 'email' | 'code' | 'text';
 
 export const isCorrectValue = (type: Type, value: string) => {
   switch (type) {
     case 'email':
-      const data = verifyEmail(value);
+      const data = validEmail(value);
 
       return data.verify;
     case 'code':

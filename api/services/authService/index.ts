@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 
 import UserModel from '../../models/user/userModel';
-import { verifyEmail } from '../../utils';
+import { validEmail } from '../../utils';
 import { errorsMsgs } from '../../data';
 import { By } from '../types';
 
@@ -41,7 +41,7 @@ class UserService {
   async login() {
     const { email } = this;
 
-    const { verify, errorMsg } = verifyEmail(email);
+    const { verify, errorMsg } = validEmail(email);
 
     if (verify) {
       const { status, user } = await UserModel.findOne('email', email);
@@ -65,7 +65,7 @@ class UserService {
   async singup(data) {
     const { email, by } = this;
 
-    const { verify, errorMsg } = verifyEmail(email);
+    const { verify, errorMsg } = validEmail(email);
 
     if (verify) {
       const { user: duplicateUser } = await UserModel.findOne('email', email);
