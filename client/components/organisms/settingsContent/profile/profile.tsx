@@ -85,7 +85,7 @@ const SettingsProfileContent = () => {
       });
 
       setOpenMultiTask(false);
-      verify ? window.location.reload() : null;
+      verify && window.location.reload()
     },
     onEnd: async (code: string) => {
       const data = await fetcher('POST', '/user/verify/email', {
@@ -93,7 +93,7 @@ const SettingsProfileContent = () => {
         code,
       });
 
-      if (data.error) {
+      if (data.errorMsg) {
         setError({ msg: data.errorMsg, id: Math.random() });
         return false;
       }

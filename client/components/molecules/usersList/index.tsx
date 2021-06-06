@@ -62,12 +62,12 @@ const UsersList = ({ name, data }: props) => {
   };
 
   const addUser = async (user: User) => {
-    const { error, errorMsg } = await fetcher('POST', '/user/invite/accept', {
+    const { errorMsg } = await fetcher('POST', '/user/invite/accept', {
       email,
       from: user.email,
     });
 
-    if (error) {
+    if (errorMsg) {
       setError({ msg: errorMsg, id: Math.random() });
       return;
     }

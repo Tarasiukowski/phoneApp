@@ -22,12 +22,12 @@ const SettingsFriendsContent = () => {
   const dispatch = useDispatch();
 
   const removeFriend = async (friendEmail: string) => {
-    const { error, errorMsg } = await fetcher('POST', '/user/friends/remove', {
+    const { errorMsg } = await fetcher('POST', '/user/friends/remove', {
       email,
       friendEmail,
     });
 
-    if (error) {
+    if (errorMsg) {
       setError({ msg: errorMsg, id: Math.random() });
       return;
     }

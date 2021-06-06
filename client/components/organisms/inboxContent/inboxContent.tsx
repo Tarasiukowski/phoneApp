@@ -21,26 +21,26 @@ const InboxContent = () => {
     query: { slug },
   } = useRouter();
 
-  const conversationId = slug[1]
+  const conversationId = slug[1];
 
-  const getDataChat = (url: string) => {
-    fetcher('POST', url, {
+  const fetchDataChat = async (url: string) => {
+    const { conversation } = await fetcher('POST', url, {
       email: user.email,
       id: conversationId,
-    }).then(({ conversation }) => {
-      const { email, messages } = conversation;
-
-      const friend = friends.find((friend) => {
-        if (friend.email === email) {
-          return friend;
-        }
-      }) as User;
-
-      setDataChat({ messages, user: friend });
     });
+
+    const { email, messages } = conversation;
+
+    const friend = friends.find((friend) => {
+      if (friend.email === email) {
+        return friend;
+      }
+    }) as User;
+
+    setDataChat({ messages, user: friend });
   };
 
-  getDataChat('/conversation');
+  fetchDataChat('/conversation');
 
   const { user: member } = dataChat;
 

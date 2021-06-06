@@ -23,28 +23,25 @@ const GroupContent = () => {
     query: { slug },
   } = router;
 
-  const conversationId = slug[2] 
+  const conversationId = slug[2];
 
-  const getDataChat = (url: string) => {
-    console.log('k')
-
-    fetcher('POST', url, {
+  const fetchDataChat = async (url: string) => {
+    const { conversation } = await fetcher('POST', url, {
       email: user.email,
       id: conversationId,
-    }).then(({ conversation }) => {
-      const { email, messages } = conversation;
-
-      const friend = friends.find((friend) => {
-        if (friend.email === email) {
-          return friend;
-        }
-      }) as User;
-
-      setDataChat({ messages, user: friend });
     });
+    const { email, messages } = conversation;
+
+    const friend = friends.find((friend) => {
+      if (friend.email === email) {
+        return friend;
+      }
+    }) as User;
+
+    setDataChat({ messages, user: friend });
   };
 
-  getDataChat('/conversation');
+  fetchDataChat('/conversation');
 
   const { user: member } = dataChat;
 

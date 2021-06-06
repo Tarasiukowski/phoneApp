@@ -23,8 +23,7 @@ const Chat = ({ messages, user, id, width }: props) => {
     messagesTemplate?.scrollTo(0, messagesTemplate.scrollHeight);
   });
 
-  const inputHandle = {
-    value: valueTextarea,
+  const textareaHandle = {
     onChange: (e: ChangeEvent) => {
       const target = e.target as HTMLTextAreaElement;
 
@@ -41,8 +40,6 @@ const Chat = ({ messages, user, id, width }: props) => {
         setValueTextarea('');
       }
     },
-    onDragEnter: () => {},
-    placeholder: 'Write a message...',
   };
 
   return (
@@ -56,7 +53,7 @@ const Chat = ({ messages, user, id, width }: props) => {
         </div>
       </div>
       <div className={styles.inputTemplate}>
-        <Textarea {...inputHandle} />
+        <Textarea value={valueTextarea} placeholder="Write a message..." {...textareaHandle} />
       </div>
     </div>
   );
