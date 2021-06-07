@@ -6,7 +6,7 @@ export const getSearcherData = (conversations: DetailedConversation[]) => {
     { filterValue: 'invites', value: '/invites', href: '/invites' },
     {
       filterValue: 'settings',
-      value: [
+      values: [
         '/settings/profile',
         '/settings/members',
         '/settings/manageLists',

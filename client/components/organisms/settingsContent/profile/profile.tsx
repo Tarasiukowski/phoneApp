@@ -28,7 +28,7 @@ const SettingsProfileContent = () => {
 
   const { firstname: firstnameValue, lastname: lastnameValue } = inputsValues;
 
-  const disabled = firstnameValue !== firstname || lastnameValue !== lastname;
+  const implementedChange = firstnameValue !== firstname || lastnameValue !== lastname;
 
   const handleOnChange = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
@@ -85,7 +85,7 @@ const SettingsProfileContent = () => {
       });
 
       setOpenMultiTask(false);
-      verify && window.location.reload()
+      verify && window.location.reload();
     },
     onEnd: async (code: string) => {
       const data = await fetcher('POST', '/user/verify/email', {
@@ -140,7 +140,12 @@ const SettingsProfileContent = () => {
           Change
         </Button>
       </div>
-      <Button onClick={save} disabled={!disabled} style={{ marginTop: '40px' }} width="auto">
+      <Button
+        onClick={save}
+        disabled={!implementedChange}
+        style={{ marginTop: '40px' }}
+        width="auto"
+      >
         save
       </Button>
       <Alert error={error} />

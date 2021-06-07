@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
-import { ImageUser } from '../../atoms';
+import ElementList from './elementList/elementList';
 
 import styles from './searcher.module.scss';
 import { SearchSvg } from '../../../public/svgs/index';
@@ -127,29 +127,27 @@ const Searcher = ({ open, onClose }: props) => {
 
                         dataOfKey.map((elem) => {
                           if (key === 'conversations') {
+                            const { user, id } = elem;
+
                             const {
-                              user: {
-                                fullname: { firstname, lastname },
-                              },
-                              id,
-                            } = elem;
+                              fullname: { firstname, lastname },
+                            } = user;
 
                             elems.push(
                               <Link
                                 href={`/inbox/${id}`}
                                 key={id}
                                 children={
-                                  <div onClick={handleClickElement} className={styles.elementList}>
-                                    <ImageUser member={elem.user} />
-                                    <p style={{ marginLeft: '10px' }}>
-                                      {firstname} {lastname}
-                                    </p>
-                                  </div>
+                                  <ElementList
+                                    content={`${firstname} ${lastname}`}
+                                    onClick={handleClickElement}
+                                    user={user}
+                                  />
                                 }
                               />,
                             );
                           } else {
-                            const { value } = elem;
+                            const { values, value } = elem;
 
                             if (typeof value === 'string') {
                               elems.push(
@@ -157,28 +155,18 @@ const Searcher = ({ open, onClose }: props) => {
                                   href={`${value}`}
                                   key={value}
                                   children={
-                                    <div
-                                      onClick={handleClickElement}
-                                      className={styles.elementList}
-                                    >
-                                      <p>{value}</p>
-                                    </div>
+                                    <ElementList content={value} onClick={handleClickElement} />
                                   }
                                 />,
                               );
                             } else {
-                              value.map((val: string) => {
+                              values.map((value: string) => {
                                 elems.push(
                                   <Link
-                                    href={`${val}`}
-                                    key={val}
+                                    href={`${value}`}
+                                    key={value}
                                     children={
-                                      <div
-                                        onClick={handleClickElement}
-                                        className={styles.elementList}
-                                      >
-                                        <p>{val}</p>
-                                      </div>
+                                      <ElementList content={value} onClick={handleClickElement} />
                                     }
                                   />,
                                 );

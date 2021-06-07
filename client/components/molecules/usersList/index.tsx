@@ -26,8 +26,6 @@ const UsersList = ({ name, data }: props) => {
     if (data) {
       setDetailedUser(data[0]);
     }
-
-    setListData(data);
   }, []);
 
   useEffect(() => {

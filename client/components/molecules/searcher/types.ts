@@ -7,7 +7,7 @@ export type props = {
 
 export type Route =
   | { filterValue: string; value: string; href: string }
-  | { filterValue: string; value: string[] };
+  | { filterValue: string; values: string[] };
 
 export type SearchData = {
   routes: {
