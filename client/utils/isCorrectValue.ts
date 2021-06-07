@@ -1,13 +1,13 @@
-import { validEmail } from './validEmail';
+import { isValidEmail } from './isValidEmail';
 
 type Type = 'email' | 'code' | 'text';
 
 export const isCorrectValue = (type: Type, value: string) => {
   switch (type) {
     case 'email':
-      const data = validEmail(value);
+      const { valid } = isValidEmail(value);
 
-      return data.verify;
+      return valid;
     case 'code':
       return value.length === 6 ? true : false;
     case 'text':
