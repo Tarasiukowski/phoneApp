@@ -1,6 +1,6 @@
 const alllowRoutes = ['/settings', '/inbox', '/contacts', "/invites", "/group"];
 
-export const checkOnboardingStage = (
+export const getOnboardingStage = (
   status: { onBoarding: boolean; redirectTo: string },
   path: string,
 ) => {

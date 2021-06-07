@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '../../components/molecules';
 
 import { login } from '../../reducers/userReducer';
-import { checkOnboardingStage, fetcher } from '../../utils';
+import { getOnboardingStage, fetcher } from '../../utils';
 import { props } from './types';
 import { selectFriends, update } from '../../reducers/friendsReducer';
 
@@ -33,7 +33,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
         if (isLogged) {
           const status = data.user.status;
 
-          const { loading, redirectTo } = checkOnboardingStage(status, router.asPath);
+          const { loading, redirectTo } = getOnboardingStage(status, router.asPath);
 
           if (!friends.length && status.onBoarding) {
             if (redirectTo === '/contacts') {
@@ -51,7 +51,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
       } else {
         if (isLogged) {
           const status = data.user.status;
-          const { loading, redirectTo } = checkOnboardingStage(status, router.asPath);
+          const { loading, redirectTo } = getOnboardingStage(status, router.asPath);
 
           !loading ? setLoading(false) : router.push(redirectTo);
         } else {
