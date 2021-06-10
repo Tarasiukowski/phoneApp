@@ -8,7 +8,7 @@ const OnboardingTemplate: React.FC = ({ children }) => (
   <div className={styles.wrapper}>
     <Logo className={styles.logo} />
     <Button
-      onClick={() => logout()}
+      onClick={logout}
       style={{ position: 'absolute', right: '25px', top: '25px' }}
       transparent
     >
