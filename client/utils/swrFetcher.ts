@@ -2,8 +2,8 @@ import { Method } from 'axios';
 
 import { fetcher } from './fetcher';
 
-export const swrFetcher = async (url: string, method: Method, email: string) => {
-  const data = await fetcher(method, url, email ? { email } : undefined);
+export const swrFetcher = async (url: string, method: Method, body: Object) => {
+  const data = await fetcher(method, url, body);
 
   return data;
 };

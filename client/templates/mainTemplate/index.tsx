@@ -19,14 +19,14 @@ const MainTemplate: React.FC = ({ children }) => {
   const disptach = useDispatch();
 
   const { data: fetchedFriends, error: errorF } = useSwr(
-    ['/user/friends', 'POST', user.email],
+    ['/user/friends', 'POST', { email: user.email }],
     swrFetcher,
     {
       refreshInterval: 1,
     },
   );
   const { data: fetchedInvites, error: errorI } = useSwr(
-    ['/user/invite/get', 'POST', user.email],
+    ['/user/invite/get', 'POST', { email: user.email }],
     swrFetcher,
     {
       refreshInterval: 1,
