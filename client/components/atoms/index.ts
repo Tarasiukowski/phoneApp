@@ -1,6 +1,6 @@
 export { UserCard } from './userCard';
 export { ToggleAuth } from './toggleAauth';
-export { TextArea } from './textArea/textArea';
+export { TextArea } from './textArea';
 export { Spinner } from './spinner';
 export { Input } from './input/input';
 export { ImageUser } from './imageUser';
