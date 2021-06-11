@@ -4,3 +4,5 @@ export const EMAIL_NOT_VALID = (email: string) =>
 export const ERROR_WITHOUT_CHANGE = (param: string, type: 'singular' | 'plural') => {
   return `error - ${param} ${type === 'singular' ? 'is' : 'are'} the same`;
 };
+export const ERROR_IS_NOT_FRIEND = (email: string) =>
+  `error - this user is not your friend ${email}`;

@@ -7,3 +7,4 @@ export { swrFetcher } from './swrFetcher';
 export { getInitials } from './getInitials';
 export { getSearcherData } from './getSearcherData';
 export { formatToListData } from './formatToListData';
+export { getObjectsKeysFromArray } from './getObjectsKeysFromArray';
