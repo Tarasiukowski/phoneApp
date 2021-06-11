@@ -8,7 +8,7 @@ import AddButton from './addButton';
 
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { selectUser } from '../../../reducers/userReducer';
-import { ERROR_NOT_ALLOWED } from '../../../common/errors';
+import { ERROR } from '../../../common/errors';
 import { fetcher } from '../../../utils';
 import { Error } from '../../../interfaces';
 import styles from './friendsList.module.scss';
@@ -35,7 +35,7 @@ const FriendsList = () => {
       if (errorMsg) {
         setError({ msg: errorMsg, id: Math.random() });
 
-        if (errorMsg === ERROR_NOT_ALLOWED) {
+        if (errorMsg === ERROR.NOT_ALLOWED) {
           window.location.reload();
         }
 

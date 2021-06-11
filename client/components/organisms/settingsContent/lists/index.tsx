@@ -8,7 +8,7 @@ import { SettingsTemplate } from '../../../../templates';
 import { GroupData } from '../../../molecules/multitask/types';
 import { selectFriends } from '../../../../reducers/friendsReducer';
 import { Error } from '../../../../interfaces';
-import { ERROR_IS_NOT_FRIEND } from '../../../../common/errors';
+import { ERROR} from '../../../../common/errors';
 import { fetcher, getObjectsKeysFromArray } from '../../../../utils';
 import { selectUser } from '../../../../reducers/userReducer';
 import styles from './lists.module.scss';
@@ -30,7 +30,7 @@ const SettingsListsContent = () => {
         return true;
       }
 
-      setError({ msg: ERROR_IS_NOT_FRIEND(email), id: Math.random() });
+      setError({ msg: ERROR.IS_NOT_FRIEND(email), id: Math.random() });
       return true;
     },
     onClose: () => {

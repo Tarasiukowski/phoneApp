@@ -10,7 +10,7 @@ import { InputsValues } from './types';
 import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
-import { ERROR_NOT_ALLOWED, ERROR_WITHOUT_CHANGE } from '../../../../common/errors';
+import { ERROR } from '../../../../common/errors';
 
 const SettingsProfileContent = () => {
   const [error, setError] = useState<Error | null>(null);
@@ -57,7 +57,7 @@ const SettingsProfileContent = () => {
     open: openMultiTask,
     onNext: async (newEmail: string) => {
       if (newEmail === email) {
-        setError({ msg: ERROR_WITHOUT_CHANGE('email', 'singular'), id: Math.random() });
+        setError({ msg: ERROR.WITHOUT_CHANGE('email', 'singular'), id: Math.random() });
         return false;
       }
 
@@ -69,7 +69,7 @@ const SettingsProfileContent = () => {
       if (data.errorMsg) {
         setError({ msg: data.errorMsg, id: Math.random() });
 
-        if (data.errorMsg === ERROR_NOT_ALLOWED) {
+        if (data.errorMsg === ERROR.NOT_ALLOWED) {
           window.location.reload();
         }
         return false;

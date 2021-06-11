@@ -9,7 +9,7 @@ import styles from './friends.module.scss';
 import { fetcher } from '../../../../utils';
 import { selectUser } from '../../../../reducers/userReducer';
 import { Error } from '../../../../interfaces';
-import { ERROR_NOT_ALLOWED } from '../../../../common/errors';
+import { ERROR } from '../../../../common/errors';
 import { remove, selectFriends } from '../../../../reducers/friendsReducer';
 
 const SettingsFriendsContent = () => {
@@ -50,7 +50,7 @@ const SettingsFriendsContent = () => {
       if (errorMsg) {
         setError({ msg: errorMsg, id: Math.random() });
 
-        if (errorMsg === ERROR_NOT_ALLOWED) {
+        if (errorMsg === ERROR.NOT_ALLOWED) {
           window.location.reload();
         }
 

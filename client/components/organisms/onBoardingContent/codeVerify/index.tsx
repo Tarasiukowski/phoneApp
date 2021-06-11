@@ -7,8 +7,8 @@ import { RedirectTemplate } from '../../../../templates';
 import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
+import { ERROR } from '../../../../common/errors';
 import styles from './code.module.scss';
-import { ERROR_NOT_ALLOWED } from '../../../../common/errors';
 
 const OnboardingCodeContent = () => {
   const [valueInput, setValueInput] = useState('');
@@ -48,7 +48,7 @@ const OnboardingCodeContent = () => {
 
     setError({ msg: errorMsg, id: Math.random() });
 
-    if (errorMsg === ERROR_NOT_ALLOWED) {
+    if (errorMsg === ERROR.NOT_ALLOWED) {
       window.location.reload();
     }
   };
