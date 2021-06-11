@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import useSwr from 'swr';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import _ from 'lodash';
 
 import { Navigation } from '../../components/molecules';
@@ -10,6 +9,7 @@ import { swrFetcher } from '../../utils';
 import { login, selectUser } from '../../reducers/userReducer';
 import { selectInvites, update as updateInvites } from '../../reducers/invitesReducer';
 import { selectFriends, update as updateFriends } from '../../reducers/friendsReducer';
+import { Template } from './styles';
 
 const MainTemplate: React.FC = ({ children }) => {
   const user = useSelector(selectUser);
@@ -65,11 +65,5 @@ const MainTemplate: React.FC = ({ children }) => {
     </Template>
   );
 };
-
-const Template = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-`;
 
 export { MainTemplate };
