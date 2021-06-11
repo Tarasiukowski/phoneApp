@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import { Chat, UserDetailed } from '../../molecules';
-import Navigation from './navigation/navigation';
+import Navigation from './navigation';
 
 import { selectUser } from '../../../reducers/userReducer';
 import { selectFriends } from '../../../reducers/friendsReducer';

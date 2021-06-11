@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import Header from './header/header';
-import { Textarea } from './textarea/textarea';
-import Message from './message/message';
+import Header from './header';
+import { Textarea } from './textarea';
+import Message from './message';
 
 import styles from './chat.module.scss';
 import { props } from './types';

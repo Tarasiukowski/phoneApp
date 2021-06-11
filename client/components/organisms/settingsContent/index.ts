@@ -1,5 +1,5 @@
-export { SettingsBlocklistContent } from './blocklist/blocklist';
-export { SettingsListsContent } from './lists/lists';
-export { SettingsFriendsContent } from './friends//friends';
-export { SettingsGeneralContent } from './general/general';
-export { SettingsProfileContent } from './profile/profile';
+export { SettingsBlocklistContent } from './blocklist';
+export { SettingsListsContent } from './lists';
+export { SettingsFriendsContent } from './friends';
+export { SettingsGeneralContent } from './general';
+export { SettingsProfileContent } from './profile';

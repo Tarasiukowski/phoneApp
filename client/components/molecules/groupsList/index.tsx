@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
-import GroupElementList from './elementList/elementList';
+import GroupElementList from './elementList';
 
 import { selectUser } from '../../../reducers/userReducer';
 import styles from './groupsList.module.scss';

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { UserCard, Alert } from '../../atoms';
 import { Multitask } from '../index';
-import AddButton from './addButton/addButton';
+import AddButton from './addButton';
 
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { selectUser } from '../../../reducers/userReducer';

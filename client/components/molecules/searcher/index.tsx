@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
-import ElementList from './elementList/elementList';
+import ElementList from './elementList';
 
 import styles from './searcher.module.scss';
 import { SearchSvg } from '../../../public/svgs/index';

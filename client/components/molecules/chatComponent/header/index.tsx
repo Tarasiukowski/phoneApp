@@ -1,5 +1,5 @@
 import { ImageUser } from '../../../atoms';
-import ChatOptions from '../chatOptions/chatOptions';
+import ChatOptions from '../chatOptions';
 
 import { props } from './types';
 import styles from './header.module.scss';

@@ -1,3 +1,3 @@
-export { OnboardingAccountContent } from './account/account'
-export { OnboardingCodeContent } from './codeVerify/code'
-export { OnboardingNumberContent } from './number/number'
+export { OnboardingAccountContent } from './account'
+export { OnboardingCodeContent } from './codeVerify'
+export { OnboardingNumberContent } from './number'

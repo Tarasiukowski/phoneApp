@@ -1,5 +1,5 @@
 import { TextArea } from '../../../atoms';
-import Note from './note/note';
+import Note from './note';
 
 import styles from './notes.module.scss';
 

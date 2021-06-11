@@ -3,8 +3,8 @@ import gsap from 'gsap';
 import { useScroll } from 'react-use';
 
 import { Alert } from '../../../atoms';
-import Input from './input/input';
-import NumbersList from './numbersList/numbersList';
+import Input from './input';
+import NumbersList from './numbersList';
 
 import { fetcher } from '../../../../utils';
 import { propsSelectList } from '../types';

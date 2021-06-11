@@ -1,6 +1,6 @@
 import List from './list/list';
 import Header from './header/header';
-import Notes from './notes/notes';
+import Notes from './notes';
 
 import styles from './userDetailed.module.scss';
 import { props } from './types';
