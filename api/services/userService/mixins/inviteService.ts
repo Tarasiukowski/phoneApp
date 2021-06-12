@@ -1,4 +1,4 @@
-import { errorsMsgs } from '../../../data';
+import { ERROR } from '../../../data';
 import Conversation from '../../../models/conversation/conversationModel';
 import UserModel from '../../../models/user/userModel';
 import { Class } from '../../../interfaces';
@@ -8,23 +8,23 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
     static invite = {
       async index(from: string, to: string) {
         if (from === to) {
-          return { status: 401, errorMsg: errorsMsgs.INVITE_TO_YOURSELF };
+          return { status: 401, errorMsg: ERROR.INVITE_TO_YOURSELF };
         }
 
         const { user: invitedUser } = await UserModel.findOne('email', to);
         const { user: invitingUser } = await UserModel.findOne('email', from);
 
         if (!invitedUser) {
-          return { status: 404, errorMsg: errorsMsgs.USER_NOT_EXIST };
+          return { status: 404, errorMsg: ERROR.USER_NOT_EXIST };
         }
 
         const invites = invitedUser.invites;
         const friends = invitingUser.friends;
 
         if (invites.includes(from)) {
-          return { status: 409, errorMsg: errorsMsgs.DUPLICATE_INVITATION };
+          return { status: 409, errorMsg: ERROR.DUPLICATE_INVITATION };
         } else if (friends.includes(to)) {
-          return { status: 409, errorMsg: errorsMsgs.IS_YOUR_FRIEND };
+          return { status: 409, errorMsg: ERROR.IS_YOUR_FRIEND };
         }
 
         UserModel.update({ email: to, field: 'invites', value: from }, 'pushToField');

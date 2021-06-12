@@ -1,4 +1,4 @@
-export const errorsMsgs = {
+export const ERROR = {
   USER_EXIST: 'error - user with that email address exists',
   USER_NOT_EXIST: "error - user with this e-mail does't exist",
   EMAIL_IN_USE: 'error - this email is pinned to another account',

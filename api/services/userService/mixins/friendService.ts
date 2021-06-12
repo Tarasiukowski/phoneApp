@@ -1,6 +1,6 @@
 import UserService from '../../../services/userService';
 import UserModel from '../../../models/user/userModel';
-import { errorsMsgs } from '../../../data';
+import { ERROR } from '../../../data';
 import { Class } from '../../../interfaces';
 import ConversationModel from '../../../models/conversation/conversationModel';
 
@@ -38,7 +38,7 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
           return { status: 200, errorMsg: null };
         }
 
-        return { status: 404, errorMsg: errorsMsgs.USER_NOT_EXIST };
+        return { status: 404, errorMsg: ERROR.USER_NOT_EXIST };
       },
     };
   };

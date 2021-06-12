@@ -1,4 +1,4 @@
-import { errorsMsgs } from '../../data';
+import { ERROR } from '../../data';
 import ConversationModel from '../../models/conversation/conversationModel';
 import UserModel from '../../models/user/userModel';
 import { By } from '../types';
@@ -63,7 +63,7 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(class {})) {
       return { valid: true, status, errorMsg: null };
     }
 
-    return { valid: false, status: 401, errorMsg: errorsMsgs.WRONG_VERIFICATION_CODE };
+    return { valid: false, status: 401, errorMsg: ERROR.WRONG_VERIFICATION_CODE };
   }
 }
 

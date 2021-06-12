@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 
 import UserModel from '../../models/user/userModel';
 import { isValidEmail } from '../../utils';
-import { errorsMsgs } from '../../data';
+import { ERROR } from '../../data';
 import { By } from '../types';
 
 class UserService {
@@ -56,7 +56,7 @@ class UserService {
         return { user: formatedUser, token, status, errorMsg: null };
       }
 
-      return { user: null, token: null, status: 404, errorMsg: errorsMsgs.USER_NOT_EXIST };
+      return { user: null, token: null, status: 404, errorMsg: ERROR.USER_NOT_EXIST };
     }
 
     return { user: null, token: null, status: 401, errorMsg };
@@ -71,7 +71,7 @@ class UserService {
       const { user: duplicateUser } = await UserModel.findOne('email', email);
 
       if (duplicateUser) {
-        return { user: null, token: null, status: 403, errorMsg: errorsMsgs.USER_EXIST };
+        return { user: null, token: null, status: 403, errorMsg: ERROR.USER_EXIST };
       }
 
       const { status, user } = await new UserModel(email, by).save(data);

@@ -3,7 +3,7 @@ import { model } from 'mongoose';
 import { generateCode, sendMail, formatUser, getUpdateOption } from '../../utils';
 import { userSchema } from './userSchema';
 import { By, UserDocument } from './types';
-import { errorsMsgs, getDefaultDataUser } from '../../data';
+import { ERROR, getDefaultDataUser } from '../../data';
 import { updateOption } from '../../interfaces';
 
 export const userModel = model<UserDocument>('user', userSchema);
@@ -42,7 +42,7 @@ class UserModel {
       const { user } = await this.findOne('email', newEmail);
 
       if (user) {
-        return { status: 401, errorMsg: errorsMsgs.EMAIL_IN_USE };
+        return { status: 401, errorMsg: ERROR.EMAIL_IN_USE };
       }
     }
 
