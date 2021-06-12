@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { Chat, UserDetailed } from '../../molecules';
 import Navigation from './navigation';
 
-import { selectUser } from '../../../reducers/userReducer';
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { ChatData } from './types';
 import { User } from '../../../interfaces';
@@ -15,7 +14,6 @@ const GroupContent = () => {
   const [dataChat, setDataChat] = useState<ChatData>({ user: null, messages: [] });
 
   const friends = useSelector(selectFriends);
-  const user = useSelector(selectUser);
 
   const router = useRouter();
 
@@ -27,7 +25,6 @@ const GroupContent = () => {
 
   const fetchDataChat = async (url: string) => {
     const { conversation } = await fetcher('POST', url, {
-      email: user.email,
       id: conversationId,
     });
     const { email, messages } = conversation;

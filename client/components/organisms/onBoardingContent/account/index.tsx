@@ -1,10 +1,8 @@
 import { ChangeEvent, FormEvent, useState, useReducer } from 'react';
-import { useSelector } from 'react-redux';
 
 import { Alert, Button, Input } from '../../../atoms';
 import { RedirectTemplate } from '../../../../templates';
 
-import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher } from '../../../../utils';
 import { Error } from '../../../../interfaces';
 import { FormValues } from './types';
@@ -18,8 +16,6 @@ const OnboardingAccountContent = () => {
   const [disabledByRequest, setDisabledByRequest] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [redirect, setRedirect] = useState(false);
-
-  const user = useSelector(selectUser);
 
   const { firstname, lastname } = formValues;
 
@@ -40,7 +36,6 @@ const OnboardingAccountContent = () => {
     setDisabledByRequest(true);
 
     fetcher('PUT', '/user/update', {
-      email: user.email,
       fullname: formValues,
     }).then(async (data) => {
       if (data.errorMsg) {
@@ -50,7 +45,6 @@ const OnboardingAccountContent = () => {
       }
 
       const { errorMsg } = await fetcher('PUT', '/user/update', {
-        email: user.email,
         redirectTo: '/contacts',
         onBoarding: true,
       });

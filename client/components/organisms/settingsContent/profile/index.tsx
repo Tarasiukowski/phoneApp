@@ -40,7 +40,6 @@ const SettingsProfileContent = () => {
 
   const save = async () => {
     const data = await fetcher('PUT', '/user/update', {
-      email,
       fullname: { firstname: firstnameValue, lastname: lastnameValue },
     });
 
@@ -62,7 +61,6 @@ const SettingsProfileContent = () => {
       }
 
       const data = await fetcher('PUT', '/user/update', {
-        email,
         newEmail,
       });
 
@@ -79,7 +77,6 @@ const SettingsProfileContent = () => {
     },
     onClose: (verify?: boolean) => {
       fetcher('PUT', '/user/update', {
-        email,
         field: 'newEmail',
         option: 'removeField',
       });
@@ -89,7 +86,6 @@ const SettingsProfileContent = () => {
     },
     onEnd: async (code: string) => {
       const data = await fetcher('POST', '/user/verify/email', {
-        email,
         code,
       });
 

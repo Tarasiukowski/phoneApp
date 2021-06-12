@@ -7,7 +7,6 @@ import { SettingsTemplate } from '../../../../templates';
 
 import styles from './friends.module.scss';
 import { fetcher } from '../../../../utils';
-import { selectUser } from '../../../../reducers/userReducer';
 import { Error } from '../../../../interfaces';
 import { ERROR } from '../../../../common/errors';
 import { remove, selectFriends } from '../../../../reducers/friendsReducer';
@@ -16,14 +15,12 @@ const SettingsFriendsContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const { email } = useSelector(selectUser);
   const friends = useSelector(selectFriends);
 
   const dispatch = useDispatch();
 
   const removeFriend = async (friendEmail: string) => {
     const { errorMsg } = await fetcher('POST', '/user/friends/remove', {
-      email,
       friendEmail,
     });
 
@@ -43,7 +40,6 @@ const SettingsFriendsContent = () => {
     },
     onEnd: async (to: string) => {
       const { errorMsg } = await fetcher('POST', '/user/invite', {
-        email,
         to,
       });
 

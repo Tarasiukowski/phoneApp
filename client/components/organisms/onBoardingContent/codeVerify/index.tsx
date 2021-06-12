@@ -25,13 +25,11 @@ const OnboardingCodeContent = () => {
     e.preventDefault();
 
     const { valid, errorMsg } = await fetcher('post', '/user/verify/account', {
-      email: user.email,
       code: valueInput,
     });
 
     if (valid) {
       const { errorMsg } = await fetcher('PUT', '/user/update', {
-        email: user.email,
         redirectTo: '/onboarding/number',
       });
 

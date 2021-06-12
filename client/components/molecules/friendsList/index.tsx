@@ -17,7 +17,7 @@ const FriendsList = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const { email, conversations } = useSelector(selectUser);
+  const { conversations } = useSelector(selectUser);
   const friends = useSelector(selectFriends);
 
   const multitaskHandle = {
@@ -28,7 +28,6 @@ const FriendsList = () => {
     },
     onEnd: async (to: string) => {
       const { errorMsg } = await fetcher('POST', '/user/invite', {
-        email,
         to,
       });
 

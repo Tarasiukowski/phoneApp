@@ -10,7 +10,6 @@ import { selectFriends } from '../../../../reducers/friendsReducer';
 import { Error } from '../../../../interfaces';
 import { ERROR} from '../../../../common/errors';
 import { fetcher, getObjectsKeysFromArray } from '../../../../utils';
-import { selectUser } from '../../../../reducers/userReducer';
 import styles from './lists.module.scss';
 
 const SettingsListsContent = () => {
@@ -18,7 +17,6 @@ const SettingsListsContent = () => {
   const [error, setError] = useState<Error | null>(null);
 
   const friends = useSelector(selectFriends);
-  const { email } = useSelector(selectUser);
 
   const multitaskHandle = {
     name: 'CreateGroup' as 'CreateGroup',
@@ -37,7 +35,7 @@ const SettingsListsContent = () => {
       setOpenMultiTask(false);
     },
     onEnd: async (groupData: GroupData) => {
-      const { errorMsg } = await fetcher('POST', '/group/create', { email, ...groupData });
+      const { errorMsg } = await fetcher('POST', '/group/create', { ...groupData });
 
       if (errorMsg) {
         setError({ msg: errorMsg, id: Math.random() });

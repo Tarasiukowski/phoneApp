@@ -29,7 +29,7 @@ const OnboardingNumberContent = () => {
   const next = async () => {
     let data;
 
-    data = await fetcher('PUT', '/user/update', { email: user.email, number });
+    data = await fetcher('PUT', '/user/update', { number });
 
     if (data.errorMsg) {
       setError({ msg: data.errorMsg, id: Math.random() });
@@ -38,7 +38,6 @@ const OnboardingNumberContent = () => {
     }
 
     data = await fetcher('PUT', '/user/update', {
-      email: user.email,
       redirectTo: '/onboarding/account',
     });
 

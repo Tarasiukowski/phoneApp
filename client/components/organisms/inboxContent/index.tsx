@@ -6,7 +6,6 @@ import { UserDetailed, Chat } from '../../molecules';
 
 import { ChatData } from './types';
 import { fetcher } from '../../../utils';
-import { selectUser } from '../../../reducers/userReducer';
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { User } from '../../../interfaces';
 import styles from './inboxContent.module.scss';
@@ -15,7 +14,6 @@ const InboxContent = () => {
   const [dataChat, setDataChat] = useState<ChatData>({ user: null, messages: [] });
 
   const friends = useSelector(selectFriends);
-  const user = useSelector(selectUser);
 
   const {
     query: { slug },
@@ -25,7 +23,6 @@ const InboxContent = () => {
 
   const fetchDataChat = async (url: string) => {
     const { conversation } = await fetcher('POST', url, {
-      email: user.email,
       id: conversationId,
     });
 

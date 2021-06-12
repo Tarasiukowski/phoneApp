@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { UserCard, Alert } from '../../atoms';
 import { UserDetailed } from '../index';
@@ -9,7 +9,6 @@ import { SearchSvg, PlusSvg } from '../../../public/svgs';
 import { User, Error } from '../../../interfaces';
 import { props } from './types';
 import { fetcher } from '../../../utils';
-import { selectUser } from '../../../reducers/userReducer';
 import { add } from '../../../reducers/friendsReducer';
 import { remove } from '../../../reducers/invitesReducer';
 
@@ -20,7 +19,6 @@ const UsersList = ({ name, data }: props) => {
   const [error, setError] = useState<Error | null>(null);
 
   const dispatch = useDispatch();
-  const { email } = useSelector(selectUser);
 
   useEffect(() => {
     if (data) {
@@ -61,7 +59,6 @@ const UsersList = ({ name, data }: props) => {
 
   const addUser = async (user: User) => {
     const { errorMsg } = await fetcher('POST', '/user/invite/accept', {
-      email,
       from: user.email,
     });
 

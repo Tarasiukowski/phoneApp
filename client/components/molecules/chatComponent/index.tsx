@@ -1,5 +1,4 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import Header from './header';
 import { Textarea } from './textarea';
@@ -7,15 +6,12 @@ import Message from './message';
 
 import styles from './chat.module.scss';
 import { props } from './types';
-import { selectUser } from '../../../reducers/userReducer';
 import { fetcher } from '../../../utils';
 
 const Chat = ({ messages, user, id, width }: props) => {
   const [valueTextarea, setValueTextarea] = useState('');
 
   const refMessagesTemplate = useRef<HTMLDivElement>(null);
-
-  const { email } = useSelector(selectUser);
 
   useEffect(() => {
     const messagesTemplate = refMessagesTemplate.current;
@@ -32,7 +28,6 @@ const Chat = ({ messages, user, id, width }: props) => {
     onKeyUp: (e: any) => {
       if (e.key === 'Enter' && valueTextarea.length) {
         fetcher('PUT', '/conversation/send', {
-          email,
           content: valueTextarea,
           id,
         });
