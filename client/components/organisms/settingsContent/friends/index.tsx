@@ -82,9 +82,9 @@ const SettingsFriendsContent = () => {
             const { email } = friend;
 
             return (
-              <div onClick={() => removeFriend(email)} className={styles.elementList} key={email}>
+              <div className={styles.elementList} key={email}>
                 <UserCard member={friend} big />
-                <Button width="auto">Remove</Button>
+                <Button onClick={() => removeFriend(email)}  width="auto">Remove</Button>
               </div>
             );
           })

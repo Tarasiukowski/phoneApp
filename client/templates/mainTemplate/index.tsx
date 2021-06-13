@@ -41,7 +41,7 @@ const MainTemplate: React.FC = ({ children }) => {
   }, [fetchedInvites, errorI]);
 
   useEffect(() => {
-    if (!errorU && fetchedUserData) {
+    if (!errorU && fetchedUserData && fetchedUserData.user) {
       const fetchedUser = fetchedUserData.user.value;
 
       if (!_.isEqual(fetchedUser, user)) {
