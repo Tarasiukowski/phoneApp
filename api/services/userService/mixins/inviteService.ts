@@ -2,6 +2,7 @@ import { ERROR } from '../../../data';
 import Conversation from '../../../models/conversation/conversationModel';
 import UserModel from '../../../models/user/userModel';
 import { Class } from '../../../interfaces';
+import { getStagesOfRemoveInvite } from '../../../data/getStagesOfAcceptInvite';
 
 export function InviteServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
@@ -33,9 +34,9 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
       },
 
       async accept(email: string, from: string) {
-        UserModel.update({ email, field: 'invites', value: from }, 'pull');
-        UserModel.update({ email, field: 'friends', value: from }, 'pushToField');
-        UserModel.update({ email: from, field: 'friends', value: email }, 'pushToField');
+        getStagesOfRemoveInvite(email, from).map(({ data, option }) => {
+          UserModel.update(data, option);
+        });
 
         const data = new Conversation([email, from]).create();
 
