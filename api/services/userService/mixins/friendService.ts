@@ -3,6 +3,7 @@ import UserModel from '../../../models/user/userModel';
 import { ERROR } from '../../../data';
 import { Class } from '../../../interfaces';
 import ConversationModel from '../../../models/conversation/conversationModel';
+import { getStagesOfRemoveFriend } from '../../../data/getStagesOfRemoveFriend';
 
 export function FriendServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
@@ -25,13 +26,9 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
         const { user: friend } = await UserModel.findOne('email', friendEmail);
 
         if (friend) {
-          UserModel.update({ email, field: 'friends', value: friendEmail }, 'pull');
-          UserModel.update({ email, field: 'conversations', value: { with: friendEmail } }, 'pull');
-          UserModel.update({ email: friendEmail, field: 'friends', value: email }, 'pull');
-          UserModel.update(
-            { email: friendEmail, field: 'conversations', value: { with: email } },
-            'pull',
-          );
+          getStagesOfRemoveFriend(email, friendEmail).map(({ data, option }) => {
+            UserModel.update(data, option);
+          });
 
           ConversationModel.remove('users', [email, friendEmail]);
 
