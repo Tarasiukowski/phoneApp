@@ -3,6 +3,7 @@ import Conversation from '../../../models/conversation/conversationModel';
 import UserModel from '../../../models/user/userModel';
 import { Class } from '../../../interfaces';
 import { getStagesOfRemoveInvite } from '../../../data/getStagesOfAcceptInvite';
+import { getStagesOfCreateConversation } from '../../../data/getStagesOfCreateConversation';
 
 export function InviteServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
@@ -38,24 +39,11 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
           UserModel.update(data, option);
         });
 
-        const data = new Conversation([email, from]).create();
+        const { conversation } = await new Conversation([email, from]).create();
 
-        UserModel.update(
-          {
-            email,
-            field: 'conversations',
-            value: { with: from, id: (await data.conversation)._id },
-          },
-          'pushToField',
-        );
-        UserModel.update(
-          {
-            email: from,
-            field: 'conversations',
-            value: { with: email, id: (await data.conversation)._id },
-          },
-          'pushToField',
-        );
+        getStagesOfCreateConversation(email, from, conversation.id).map(({ data, option }) => {
+          UserModel.update(data, option);
+        });
 
         return { status: 200, errorMsg: null };
       },
