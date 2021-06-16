@@ -11,7 +11,7 @@ class GroupService {
     this.users = users;
   }
 
-  async save() {
+  async create() {
     const { author, name, users } = this;
 
     const data = await UserModel.update(

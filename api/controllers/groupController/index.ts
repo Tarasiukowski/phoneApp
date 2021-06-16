@@ -5,7 +5,7 @@ class GroupController {
   async create({ body }: Request, res: Response) {
     const { email, name, members } = body;
 
-    const { status, ...restData } = await new GroupService(email, name, members).save();
+    const { status, ...restData } = await new GroupService(email, name, members).create();
 
     res.send(restData);
   }
