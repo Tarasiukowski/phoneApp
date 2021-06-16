@@ -59,21 +59,20 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
       }
 
       const allowNextStage =
-        (onNext ? await onNext(inputValue) : false) &&
-        (stages.length > 1 ? true : false) &&
-        !unlimited;
+        (onNext ? await onNext(inputValue, counterStage) : false) &&
+        (Boolean(stages.length));
 
       if (allowNextStage) {
-        setCounterStage(counterStage + 1);
+        unlimited || setCounterStage(counterStage + 1);
+
+        const { members } = groupData;
+
+        name === 'CreateGroup' && counterStage > 0
+          ? setGroupData({ members: members ? [...members, inputValue] : [inputValue] })
+          : setGroupData({ name: inputValue });
       }
 
-      const { members } = groupData;
-
-      name === 'CreateGroup' && counterStage > 0
-        ? setGroupData({ members: members ? [...members, inputValue] : [inputValue] })
-        : setGroupData({ name: inputValue });
-
-      setInputValue('');
+      allowNextStage && setInputValue('');
     };
 
     if (open) {

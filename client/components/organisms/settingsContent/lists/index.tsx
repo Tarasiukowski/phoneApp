@@ -8,7 +8,7 @@ import { SettingsTemplate } from '../../../../templates';
 import { GroupData } from '../../../molecules/multitask/types';
 import { selectFriends } from '../../../../reducers/friendsReducer';
 import { Error } from '../../../../interfaces';
-import { ERROR} from '../../../../common/errors';
+import { ERROR } from '../../../../common/errors';
 import { fetcher, getObjectsKeysFromArray } from '../../../../utils';
 import styles from './lists.module.scss';
 
@@ -21,14 +21,18 @@ const SettingsListsContent = () => {
   const multitaskHandle = {
     name: 'CreateGroup' as 'CreateGroup',
     open: openMultiTask,
-    onNext: (email: string) => {
-      const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
+    onNext: (email: string, stage: number) => {
+      if (stage > 0) {
+        const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
 
-      if (emailsOfFriends.includes(email)) {
-        return true;
+        if (emailsOfFriends.includes(email)) {
+          return true;
+        }
+
+        setError({ msg: ERROR.IS_NOT_FRIEND(email), id: Math.random() });
+        return false;
       }
 
-      setError({ msg: ERROR.IS_NOT_FRIEND(email), id: Math.random() });
       return true;
     },
     onClose: () => {
