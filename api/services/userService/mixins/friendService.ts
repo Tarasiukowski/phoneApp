@@ -3,7 +3,7 @@ import UserModel from '../../../models/user/userModel';
 import { ERROR } from '../../../data';
 import { Class } from '../../../interfaces';
 import ConversationModel from '../../../models/conversation/conversationModel';
-import { getStagesOfRemoveFriend } from '../../../data/getStagesOfRemoveFriend';
+import { getStagesOfRemoveFriend } from '../../../data/stages/getStagesOfRemoveFriend';
 import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
 
 export function FriendServiceMixin<Base extends Class>(base: Base) {

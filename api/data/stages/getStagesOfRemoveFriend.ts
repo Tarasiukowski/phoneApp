@@ -1,4 +1,4 @@
-import { updateOption } from "../interfaces";
+import { updateOption } from "../../interfaces";
 
 export const getStagesOfRemoveFriend = (
   email: string,

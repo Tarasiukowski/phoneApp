@@ -3,7 +3,7 @@ import Conversation from '../../../models/conversation/conversationModel';
 import UserModel from '../../../models/user/userModel';
 import { Class } from '../../../interfaces';
 import { getStagesOfRemoveInvite } from '../../../data/getStagesOfAcceptInvite';
-import { getStagesOfCreateConversation } from '../../../data/getStagesOfCreateConversation';
+import { getStagesOfCreateConversation } from '../../../data/stages/getStagesOfCreateConversation';
 import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
 
 export function InviteServiceMixin<Base extends Class>(base: Base) {
