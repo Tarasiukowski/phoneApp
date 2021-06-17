@@ -25,20 +25,23 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
     const end = counterStage === stages.length - 1 ? true : false;
 
     useEffect(() => {
-      const handleClickEvent = (e: Event) => {
-        const target = e.target as HTMLElement;
-        const allowElements = templateRef.current
-          ? getAllChildreenOfElement(templateRef.current, true)
-          : [];
+      if (open) {
+        const handleClickEvent = (e: Event) => {
+          const target = e.target as HTMLElement;
+          const allowElements = templateRef.current
+            ? getAllChildreenOfElement(templateRef.current, true)
+            : [];
 
-        if (!allowElements.includes(target) && target.id !== name) {
-          setInputValue('');
-          setCounterStage(0);
-          onClose();
-        }
-      };
+          if (!allowElements.includes(target) && target.id !== name) {
+            setInputValue('');
+            setCounterStage(0);
+            setGroupData({ name: null, members: [] })
+            onClose();
+          }
+        };
 
-      window.addEventListener('click', handleClickEvent);
+        window.addEventListener('click', handleClickEvent);
+      }
     });
 
     const { title, description, inputPlaceholder, inputName, unlimited } = activeStage;
@@ -59,8 +62,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
       }
 
       const allowNextStage =
-        (onNext ? await onNext(inputValue, counterStage) : false) &&
-        (Boolean(stages.length));
+        (onNext ? await onNext(inputValue, counterStage) : false) && Boolean(stages.length);
 
       if (allowNextStage) {
         unlimited || setCounterStage(counterStage + 1);
