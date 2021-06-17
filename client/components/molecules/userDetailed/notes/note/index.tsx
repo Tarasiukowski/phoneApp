@@ -1,17 +1,29 @@
+import { useSelector } from 'react-redux';
+
 import { ImageUser } from '../../../../atoms';
 
+import { props } from './types';
 import styles from './note.module.scss';
+import { selectUser } from '../../../../../reducers/userReducer';
 
-const Note = () => (
-  <div className={styles.note}>
-    <div>
-      <ImageUser size="45px" fontSize="12px" />
+const Note = ({ content }: props) => {
+  const {
+    fullname: { firstname, lastname },
+  } = useSelector(selectUser);
+
+  return (
+    <div className={styles.note}>
+      <div>
+        <ImageUser size="45px" fontSize="12px" />
+      </div>
+      <div>
+        <p className={styles.author}>
+          {firstname} {lastname}
+        </p>
+        <p className={styles.content}>{content}</p>
+      </div>
     </div>
-    <div>
-      <p className={styles.author}>Michał Tarasiuk</p>
-      <p className={styles.content}>Something...</p>
-    </div>
-  </div>
-);
+  );
+};
 
 export default Note;

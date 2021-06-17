@@ -55,6 +55,22 @@ class UserModel {
     }
   }
 
+  static async find(data: any[], key: string, ...extraData: string[]) {
+    const formatedData = await data.map(async (elem) => {
+      const { user } = await UserModel.findOne(key, elem);
+
+      if (user) {
+        const formatedUser = UserModel.format(user, ...extraData);
+
+        return formatedUser;
+      }
+    });
+
+    return {
+      data: Promise.all(formatedData),
+    };
+  }
+
   static async findOne(key: string, value: string) {
     try {
       const user = await userModel.findOne({ [key]: value });

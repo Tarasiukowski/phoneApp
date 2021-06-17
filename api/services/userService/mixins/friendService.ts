@@ -4,6 +4,7 @@ import { ERROR } from '../../../data';
 import { Class } from '../../../interfaces';
 import ConversationModel from '../../../models/conversation/conversationModel';
 import { getStagesOfRemoveFriend } from '../../../data/getStagesOfRemoveFriend';
+import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
 
 export function FriendServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
@@ -14,8 +15,20 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
         if (user) {
           const { friends } = user;
 
-          const { data } = await UserService.formatData(friends, 'email', ...extraData);
-          const formatedFriends = await data;
+          const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
+
+          const { data: findedUsers } = await UserModel.find(
+            emailsOfFriends,
+            'email',
+            ...extraData,
+          );
+          const formatedFriends = await (
+            await findedUsers
+          ).map((findedUser) => {
+            const notes = friends.find((friend) => friend.email === findedUser.email).notes;
+
+            return { ...findedUser, notes };
+          });
 
           return { status: 200, data: formatedFriends };
         }

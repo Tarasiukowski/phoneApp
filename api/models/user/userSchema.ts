@@ -17,7 +17,7 @@ export const userSchema: Schema = new Schema({
     code: String,
   },
   invites: [String],
-  friends: [String],
+  friends: [{ email: String, notes: [{ content: String }] }],
   image: String,
   conversations: [{ with: String, id: String }],
   groups: [{ name: String, members: [String] }],

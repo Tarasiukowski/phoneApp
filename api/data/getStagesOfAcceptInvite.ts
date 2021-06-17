@@ -9,11 +9,11 @@ export const getStagesOfRemoveInvite = (
     option: 'pull',
   },
   {
-    data: { email, field: 'friends', value: from },
+    data: { email, field: 'friends', value: { email: from, notes: [] } },
     option: 'pushToField',
   },
   {
-    data: { email: from, field: 'friends', value: email },
+    data: { email: from, field: 'friends', value: { email, notes: [] } },
     option: 'pushToField',
-  }
+  },
 ];

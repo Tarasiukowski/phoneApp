@@ -12,7 +12,7 @@ const getChildren = (
       if (withButton) {
         arr.push(element);
       } else {
-        if (!(elem.nodeName === 'BUTTON')) {
+        if (elem.nodeName !== 'BUTTON') {
           const element = elem as HTMLElement;
 
           arr.push(element);

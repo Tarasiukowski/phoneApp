@@ -5,7 +5,7 @@ export const getStagesOfRemoveFriend = (
   friendEmail: string,
 ): { data: object; option: updateOption }[] => [
   {
-    data: { email, field: 'friends', value: friendEmail },
+    data: { email, field: 'friends', value: { email: friendEmail } },
     option: 'pull',
   },
   {
@@ -13,7 +13,7 @@ export const getStagesOfRemoveFriend = (
     option: 'pull',
   },
   {
-    data: { email: friendEmail, field: 'friends', value: email },
+    data: { email: friendEmail, field: 'friends', value: { email } },
     option: 'pull',
   },
   {

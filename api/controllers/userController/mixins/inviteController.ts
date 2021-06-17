@@ -22,10 +22,9 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
 
         const invites = user.invites;
 
-        const { data } = await UserService.formatData(invites, 'email');
-        const formatedInvites = await data;
+        const { data: findedUsers } = await UserModel.find(invites, 'email');
 
-        res.send(formatedInvites);
+        res.send(await findedUsers);
       },
 
       async accept(req: Request, res: Response) {

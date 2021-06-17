@@ -16,22 +16,6 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(class {})) {
     return returnedData;
   }
 
-  static async formatData(data: string[], key: string, ...extraData: string[]) {
-    const formatData = data.map(async (elem) => {
-      const { user } = await UserModel.findOne(key, elem);
-
-      if (user) {
-        const formatedUser = UserModel.format(user, ...extraData);
-
-        return formatedUser;
-      }
-    });
-
-    return {
-      data: Promise.all(formatData),
-    };
-  }
-
   static async verify(data, option: 'account' | 'email') {
     const { code, email } = data;
     const isVerifyAccount = option === 'account' ? true : false;

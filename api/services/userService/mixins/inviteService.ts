@@ -4,6 +4,7 @@ import UserModel from '../../../models/user/userModel';
 import { Class } from '../../../interfaces';
 import { getStagesOfRemoveInvite } from '../../../data/getStagesOfAcceptInvite';
 import { getStagesOfCreateConversation } from '../../../data/getStagesOfCreateConversation';
+import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
 
 export function InviteServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
@@ -23,9 +24,11 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
         const invites = invitedUser.invites;
         const friends = invitingUser.friends;
 
+        const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
+
         if (invites.includes(from)) {
           return { status: 409, errorMsg: ERROR.DUPLICATE_INVITATION };
-        } else if (friends.includes(to)) {
+        } else if (emailsOfFriends.includes(to)) {
           return { status: 409, errorMsg: ERROR.IS_YOUR_FRIEND };
         }
 

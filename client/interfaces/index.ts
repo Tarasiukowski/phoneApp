@@ -17,6 +17,10 @@ export type Group = {
   _id: string;
 };
 
+type Note = {
+  content: string
+}
+
 export type DetailedConversation = { user: User } & Conversation;
 
 export type User = {
@@ -30,6 +34,7 @@ export type User = {
   image: string;
   conversations: Conversation[];
   groups: Group[];
+  notes: Note[]
 };
 
 export type Error = {
