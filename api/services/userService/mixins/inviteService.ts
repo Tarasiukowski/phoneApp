@@ -2,7 +2,7 @@ import { ERROR } from '../../../data';
 import Conversation from '../../../models/conversation/conversationModel';
 import UserModel from '../../../models/user/userModel';
 import { Class } from '../../../interfaces';
-import { getStagesOfRemoveInvite } from '../../../data/getStagesOfAcceptInvite';
+import { getStagesOfAcceptInvite } from '../../../data/stages/getStagesOfAcceptInvite';
 import { getStagesOfCreateConversation } from '../../../data/stages/getStagesOfCreateConversation';
 import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
 
@@ -24,7 +24,7 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
         const invites = invitedUser.invites;
         const friends = invitingUser.friends;
 
-        const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
+        const emailsOfFriends = getObjectsKeysFromArray(friends, "email")
 
         if (invites.includes(from)) {
           return { status: 409, errorMsg: ERROR.DUPLICATE_INVITATION };
@@ -38,7 +38,7 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
       },
 
       async accept(email: string, from: string) {
-        getStagesOfRemoveInvite(email, from).map(({ data, option }) => {
+        getStagesOfAcceptInvite(email, from).map(({ data, option }) => {
           UserModel.update(data, option);
         });
 

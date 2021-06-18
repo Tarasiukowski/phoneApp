@@ -1,6 +1,6 @@
 import { updateOption } from '../../interfaces';
 
-export const getStagesOfRemoveInvite = (
+export const getStagesOfAcceptInvite = (
   email: string,
   from: string,
 ): { data: object; option: updateOption }[] => [

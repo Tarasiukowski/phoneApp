@@ -49,9 +49,9 @@ export const buttonsNavigationData: ButtonsNavigationData = {
       content: 'General',
     },
     {
-      href: '/settings/numbers',
+      href: '/settings/number',
       icon: PhoneNumberSvg,
-      content: 'Phone Numbers',
+      content: 'Phone Number',
     },
   ],
 };

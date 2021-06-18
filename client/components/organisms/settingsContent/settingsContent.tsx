@@ -5,6 +5,7 @@ import {
   SettingsListsContent,
   SettingsProfileContent,
   SettingsGeneralContent,
+  SettingsNumberContent
 } from './index';
 
 const SettingsContent = () => (
@@ -35,6 +36,10 @@ const routes = [
     slug: 'members',
     component: <SettingsFriendsContent />,
   },
+  {
+    slug: "number",
+    component: <SettingsNumberContent />
+  }
 ];
 
 export { SettingsContent };

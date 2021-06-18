@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 export type propsSelectNumberButton = {
   onClick: () => void;
   number: string | null;
+  mini?: boolean
 };
 
 export type propsSelectList = {
