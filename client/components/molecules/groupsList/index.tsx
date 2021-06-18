@@ -7,7 +7,8 @@ import { selectUser } from '../../../reducers/userReducer';
 import styles from './groupsList.module.scss';
 
 const GroupsList = () => {
-  const { groups } = useSelector(selectUser);
+  const user = useSelector(selectUser);
+  const groups = user ? user.groups : [];
 
   if (groups.length) {
     return (
