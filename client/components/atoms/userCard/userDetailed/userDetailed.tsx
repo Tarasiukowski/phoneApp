@@ -1,9 +1,8 @@
 import { UserCard, ButtonNavigation } from '../../index';
 
-import styles from './UserDetailed.module.scss';
+import { buttonsData, buttonNavigationSettings } from './data';
 import { props } from './types';
-import { logout } from '../../../../utils';
-import { SingOutSvg, SettingsSvg, PlusSvg } from '../../../../public/svgs';
+import styles from './UserDetailed.module.scss';
 
 const UserDetailed = ({ userDetailedRef }: props) => (
   <div className={styles.box} ref={userDetailedRef}>
@@ -17,33 +16,5 @@ const UserDetailed = ({ userDetailedRef }: props) => (
     </div>
   </div>
 );
-
-const buttonNavigationSettings = {
-  size: {
-    width: '93%',
-  },
-};
-
-const buttonsData = [
-  {
-    href: '/settings/profile',
-    icon: SettingsSvg,
-    content: 'Edit account',
-  },
-  {
-    href: '/settings/general',
-    icon: SettingsSvg,
-    content: 'Workspace settings',
-  },
-  {
-    icon: PlusSvg,
-    content: 'Invite your friends',
-  },
-  {
-    icon: SingOutSvg,
-    content: 'Sing out',
-    onClick: logout,
-  },
-];
 
 export default UserDetailed;
