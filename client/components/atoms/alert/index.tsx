@@ -5,6 +5,8 @@ import { Button } from '../button';
 import { props } from './types';
 import styles from './alert.module.scss';
 
+const allowLengthOfErrorMsg = 70;
+
 const Alert = ({ error }: props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -13,8 +15,8 @@ const Alert = ({ error }: props) => {
     if (error) {
       const { msg } = error;
 
-      if (msg.length - 49 > 20) {
-        const sliceMsg = msg.substring(0, 67) + '...';
+      if (msg.length > allowLengthOfErrorMsg) {
+        const sliceMsg = msg.substring(0, allowLengthOfErrorMsg) + '...';
 
         setMsg(sliceMsg);
       } else {
@@ -30,14 +32,14 @@ const Alert = ({ error }: props) => {
 
   return (
     <>
-      {error && isOpen ? (
+      {error && isOpen && (
         <div className={styles.wrapper}>
           <p>{msg}</p>
           <Button onClick={close} transparent alert>
             Close
           </Button>
         </div>
-      ) : null}
+      )}
     </>
   );
 };
