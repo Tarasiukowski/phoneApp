@@ -17,7 +17,7 @@ export const getStagesOfCreateConversation = (
     data: {
       email: from,
       field: 'conversations',
-      value: { with: email },
+      value: { with: email, id },
     },
     option: 'pushToField',
   },
