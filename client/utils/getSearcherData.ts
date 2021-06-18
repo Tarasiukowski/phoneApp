@@ -12,7 +12,7 @@ export const getSearcherData = (conversations: DetailedConversation[]) => {
         '/settings/manageLists',
         '/settings/blocklist',
         '/settings/general',
-        '/settings/numbers',
+        '/settings/number',
       ],
     },
   ];
