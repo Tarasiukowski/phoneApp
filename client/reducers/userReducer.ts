@@ -7,17 +7,26 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {} as User,
   reducers: {
+    update(state, { payload }: PayloadAction<{ key: keyof User; data: any }>) {
+      const { key, data } = payload;
+
+      const prevDataOfKey: any = state[key];
+
+      const updatedUser = { ...state, [key]: [...prevDataOfKey, data] };
+
+      return updatedUser;
+    },
     login(state, { payload }: PayloadAction<User>) {
-      if(payload) {
+      if (payload) {
         return (state = { ...payload });
       }
 
-      return (state = payload)
+      return (state = payload);
     },
   },
 });
 
-export const { login } = userSlice.actions;
+export const { login, update } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 

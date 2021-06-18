@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Alert, Button } from '../../../atoms';
 import { ElementFinder, Multitask } from '../../../molecules';
@@ -10,11 +10,14 @@ import { selectFriends } from '../../../../reducers/friendsReducer';
 import { Error } from '../../../../interfaces';
 import { ERROR } from '../../../../common/errors';
 import { fetcher, getObjectsKeysFromArray } from '../../../../utils';
+import { update } from '../../../../reducers/userReducer';
 import styles from './lists.module.scss';
 
 const SettingsListsContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+
+  const dispatch = useDispatch();
 
   const friends = useSelector(selectFriends);
 
@@ -45,6 +48,8 @@ const SettingsListsContent = () => {
         setError({ msg: errorMsg, id: Math.random() });
         return false;
       }
+
+      dispatch(update({ key: 'groups', data: groupData }));
 
       return true;
     },

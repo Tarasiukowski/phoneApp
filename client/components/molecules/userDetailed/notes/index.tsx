@@ -5,8 +5,8 @@ import { TextArea } from '../../../atoms';
 import Note from './note';
 
 import { props } from '../notes/types';
-import styles from './notes.module.scss';
 import { updateOne } from '../../../../reducers/friendsReducer';
+import styles from './notes.module.scss';
 
 const Notes = ({ data, email }: props) => {
   const [valueTextArea, setValueTextArea] = useState('');
