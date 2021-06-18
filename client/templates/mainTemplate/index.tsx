@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import useSwr from 'swr';
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 
@@ -17,6 +18,7 @@ const MainTemplate: React.FC = ({ children }) => {
   const invites = useSelector(selectInvites);
 
   const disptach = useDispatch();
+  const router = useRouter();
 
   const { data: fetchedFriends, error: errorF } = useSwr(['/user/friends', 'POST'], swrFetcher, {
     refreshInterval: 1,
@@ -27,6 +29,12 @@ const MainTemplate: React.FC = ({ children }) => {
   const { data: fetchedUserData, error: errorU } = useSwr(['/auth', 'POST'], swrFetcher, {
     refreshInterval: 1,
   });
+
+  useEffect(() => {
+    if (!user) {
+      router.push('/singup');
+    }
+  }, [router.asPath]);
 
   useEffect(() => {
     if (!errorF && fetchedFriends && fetchedFriends.length !== friends.length) {
