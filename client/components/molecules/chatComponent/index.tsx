@@ -17,7 +17,7 @@ const Chat = ({ messages, user, id, width }: props) => {
     const messagesTemplate = refMessagesTemplate.current;
 
     messagesTemplate?.scrollTo(0, messagesTemplate.scrollHeight);
-  });
+  }, [messages.length]);
 
   const textareaHandle = {
     onChange: (e: ChangeEvent) => {
@@ -47,7 +47,7 @@ const Chat = ({ messages, user, id, width }: props) => {
           ))}
         </div>
       </div>
-      <div className={styles.inputTemplate}>
+      <div className={styles.textareaTemplate}>
         <Textarea value={valueTextarea} placeholder="Write a message..." {...textareaHandle} />
       </div>
     </div>

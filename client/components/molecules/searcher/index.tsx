@@ -24,7 +24,9 @@ const Searcher = ({ open, onClose }: props) => {
   const user = useSelector(selectUser);
   const friends = useSelector(selectFriends);
 
-  const formatedConversations = user.conversations.map((conversation) => {
+  const conversations = user ? user.conversations : [];
+
+  const formatedConversations = conversations.map((conversation) => {
     const friend = friends.find((friend) => friend.email === conversation.with);
 
     return { user: friend, ...conversation };

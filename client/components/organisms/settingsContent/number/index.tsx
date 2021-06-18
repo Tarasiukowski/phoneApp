@@ -17,7 +17,7 @@ const SettingsNumberContent = () => {
 
   const user = useSelector(selectUser);
 
-  const implementedChange = user ? user.number === number : true;
+  const implementedChange = user.number === number;
 
   useEffect(() => {
     setNumber(user ? user.number : null);
