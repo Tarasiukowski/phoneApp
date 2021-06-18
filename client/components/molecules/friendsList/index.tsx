@@ -17,8 +17,10 @@ const FriendsList = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const { conversations } = useSelector(selectUser);
+  const user = useSelector(selectUser);
   const friends = useSelector(selectFriends);
+
+  const conversations = user ? user.conversations : [];
 
   const multitaskHandle = {
     name: 'InviteFriend' as 'InviteFriend',
@@ -49,7 +51,7 @@ const FriendsList = () => {
     <div>
       <h2 className={styles.heading}>Friensd List</h2>
       <div className={styles.template}>
-        {friends.map((friend) => {
+        {(friends ? friends : []).map((friend) => {
           const conversation = conversations.find(
             (conversation) => friend.email === conversation.with,
           );
