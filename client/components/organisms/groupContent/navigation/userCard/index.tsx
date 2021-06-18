@@ -13,7 +13,7 @@ const UserCard = forwardRef<HTMLDivElement, props>(({ member, onClick }, ref) =>
 
     return (
       <div onClick={onClick} className={styles.box} ref={ref}>
-        <ImageUser member={member} size="45px" fontSize="12px" />
+        <ImageUser member={member} extraStyle={{ size: '45px', fontSize: '12px' }} />
         <div className={styles.content}>
           <p className={styles.name}>
             {firstname} {lastname}

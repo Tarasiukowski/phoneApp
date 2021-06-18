@@ -103,7 +103,7 @@ const SettingsProfileContent = () => {
       <h2 className="title">Account</h2>
       <p className="description">Manage your OpenPhone profile.</p>
       <div className={styles.templateImage}>
-        <ImageUser size="90%" fontSize="3rem" />
+        <ImageUser extraStyle={{ size: '90%', fontSize: '3rem' }} />
       </div>
       <div className={styles.templateInputs}>
         <Input

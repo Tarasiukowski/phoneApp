@@ -14,7 +14,7 @@ const Note = ({ content }: props) => {
   return (
     <div className={styles.note}>
       <div>
-        <ImageUser size="45px" fontSize="12px" />
+        <ImageUser extraStyle={{ size: "45px", fontSize: "12px" }} />
       </div>
       <div>
         <p className={styles.author}>

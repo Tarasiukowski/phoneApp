@@ -14,7 +14,7 @@ const Header = (props: props) => {
 
   return (
     <div className={styles.header}>
-      <ImageUser member={props} size="80px" fontSize="2.5rem" />
+      <ImageUser member={props} extraStyle={{ size: '80px', fontSize: '2.5rem' }} />
       <p className={styles.name}>
         {firstname} {lastname}
       </p>

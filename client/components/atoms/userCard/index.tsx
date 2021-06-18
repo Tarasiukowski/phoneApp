@@ -65,7 +65,7 @@ const UserCard = forwardRef<HTMLDivElement, props>(
       >
         <ImageUser
           member={member}
-          margin={elemList ? '0 0 0 13px' : '0 0 0 9px'}
+          extraStyle={{ margin: elemList ? '0 0 0 13px' : '0 0 0 9px' }}
           mini={elemList}
           big={big}
         />
