@@ -29,24 +29,11 @@ export const Button = styled.button<props>`
   ${({ transparent }) =>
     transparent &&
     css`
-      width: auto;
-      height: auto;
-      padding: 8px 12px;
-      font-size: 1.3rem;
-      margin-left: 37px;
       background: transparent;
 
       :hover {
         background: rgba(235, 235, 245, 0.08);
       }
-    `}
-
-  ${({ disabled }) =>
-    disabled &&
-    css`
-      color: rgba(255, 255, 255, 0.3) !important;
-      background: rgb(36, 36, 51) !important;
-      cursor: default !important;
     `}
 
   ${({ alert }) =>
@@ -57,5 +44,13 @@ export const Button = styled.button<props>`
       :hover {
         background: rgba(232, 92, 92, 0.1);
       }
+    `}
+
+    ${({ disabled }) =>
+    disabled &&
+    css`
+      color: rgba(255, 255, 255, 0.3) !important;
+      background: rgb(36, 36, 51) !important;
+      cursor: default;
     `}
 `;

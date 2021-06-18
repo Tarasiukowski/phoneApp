@@ -11,6 +11,13 @@
   align-items: center;
   z-index: 9999999999999;
 
+  button {
+    padding: 8px, 12px;
+    width: auto;
+    font-size: 1.3rem;
+    margin-left: 37px;
+  }
+
   p {
     color: rgb(245, 108, 78) !important;
     font-size: 1.38rem !important;
