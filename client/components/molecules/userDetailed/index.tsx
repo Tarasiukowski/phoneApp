@@ -14,13 +14,13 @@ const UserDetailed = ({ email, number, loading = false, ...restProps }: props) =
   if (!loading) {
     const friends = useSelector(selectFriends);
     const friend = friends.find((friend) => friend.email === email) as User;
-    const dataOfNotes = friend.notes;
+    const dataOfNotes = friend?.notes;
 
     return (
       <div className={styles.box}>
         <Header {...restProps} />
         <List list={formatToListData({ email, number })} />
-        <Notes data={dataOfNotes} />
+        {dataOfNotes && <Notes data={dataOfNotes} />}
       </div>
     );
   }
