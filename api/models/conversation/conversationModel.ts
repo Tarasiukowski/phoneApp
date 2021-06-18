@@ -54,11 +54,19 @@ class ConversationModel {
     }
   }
 
-  static async get(id: string) {
+  static async get(id: string, email: string) {
     try {
       const conversation = await conversationModel.findOne({ _id: id });
 
-      return { succes: true, status: 200, conversation };
+      const { users, messages } = conversation;
+
+      const emailOfFriend = users.find((emailOfMember) => {
+        if (emailOfMember !== email) {
+          return emailOfMember;
+        }
+      });
+
+      return { succes: true, status: 200, conversation: { email: emailOfFriend, messages } };
     } catch (err) {
       return { succes: true, status: 404, conversation: null };
     }

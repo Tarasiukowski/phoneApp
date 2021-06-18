@@ -7,7 +7,7 @@ const friendsSlice = createSlice({
   name: 'friends',
   initialState: [] as User[],
   reducers: {
-    updateOne(state, { payload }: PayloadAction<{ email: string; key: keyof User; data: any }>) {
+    updateOne(state, { payload }: PayloadAction<{ email: string; key: keyof User; data: object }>) {
       const { email, key, data } = payload;
 
       const updatedState = state.map((user) => {
