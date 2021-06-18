@@ -59,7 +59,16 @@ const OnboardingNumberContent = () => {
         <Button onClick={next} disabled={!number} style={{ margin: '32px 0 0 0' }} width="100%">
           Continue
         </Button>
-        {openList && <SelectNumberList setNumber={setNumber} setOpenList={setOpenList} />}
+        {openList && (
+          <SelectNumberList
+            onSelectNumber={(number) => {
+              setNumber(number);
+            }}
+            onClose={() => {
+              setOpenList(false);
+            }}
+          />
+        )}
       </div>
       <Alert error={error} />
     </RedirectTemplate>

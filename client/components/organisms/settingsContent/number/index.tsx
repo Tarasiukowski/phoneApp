@@ -24,9 +24,9 @@ const SettingsNumberContent = () => {
   }, []);
 
   useEffect(() => {
-    if(disabledByRequest) {
-      if(user.number === number) {
-        setDisabledByRequest(false)
+    if (disabledByRequest) {
+      if (user.number === number) {
+        setDisabledByRequest(false);
       }
     }
   }, [user]);
@@ -51,7 +51,16 @@ const SettingsNumberContent = () => {
       <h2 className="title">Phone number</h2>
       <p className="description">Manage your phone number</p>
       <SelectNumberButton number={number} onClick={toggleOpenList} mini />
-      {openList && <SelectNumberList setNumber={setNumber} setOpenList={setOpenList} />}
+      {openList && (
+        <SelectNumberList
+          onSelectNumber={(number) => {
+            setNumber(number);
+          }}
+          onClose={() => {
+            setOpenList(false);
+          }}
+        />
+      )}
       <Button
         onClick={onSave}
         disabled={disabledByRequest ? disabledByRequest : implementedChange}

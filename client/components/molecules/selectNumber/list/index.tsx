@@ -11,7 +11,7 @@ import { propsSelectList } from '../types';
 import { Error } from '../../../../interfaces';
 import styles from './list.module.scss';
 
-const SelectNumberList = ({ setOpenList, setNumber }: propsSelectList) => {
+const SelectNumberList = ({ onSelectNumber, onClose }: propsSelectList) => {
   const [activeList, setActiveList] = useState<'Recommended' | 'All'>('Recommended');
   const [valueDigits, setValueDigits] = useState('');
   const [recommendedNumbers, setRecommendedNumbers] = useState<string[]>([]);
@@ -26,9 +26,9 @@ const SelectNumberList = ({ setOpenList, setNumber }: propsSelectList) => {
   const { y } = useScroll(refListItems);
 
   useEffect(() => {
-    const refListItemsCurrent = refListItems.current;
-    const scrollHeight = refListItemsCurrent ? refListItemsCurrent.scrollHeight : 0;
-    const clientHeight = refListItemsCurrent ? refListItemsCurrent.clientHeight : 0;
+    const refListItemsCurrent = refListItems.current as HTMLDivElement;
+    const scrollHeight = refListItemsCurrent.scrollHeight;
+    const clientHeight = refListItemsCurrent.clientHeight;
 
     if (scrollHeight - clientHeight === y && y !== 0) {
       fetcher('post', '/generate/allNumbers', {
@@ -96,7 +96,7 @@ const SelectNumberList = ({ setOpenList, setNumber }: propsSelectList) => {
 
   const closeList = (e: MouseEvent<HTMLDivElement>) => {
     if (refWrapper.current === e.target) {
-      setOpenList(false);
+      onClose();
     }
   };
 
@@ -124,11 +124,19 @@ const SelectNumberList = ({ setOpenList, setNumber }: propsSelectList) => {
             {activeList === 'Recommended' ? (
               <NumbersList
                 numbers={recommendedNumbers}
-                setNumber={setNumber}
-                setOpenList={setOpenList}
+                onSelectNumber={(number) => {
+                  onSelectNumber(number);
+                  onClose();
+                }}
               />
             ) : (
-              <NumbersList numbers={allNumbers} setNumber={setNumber} setOpenList={setOpenList} />
+              <NumbersList
+                numbers={allNumbers}
+                onSelectNumber={(number) => {
+                  onSelectNumber(number);
+                  onClose();
+                }}
+              />
             )}
           </div>
         </div>

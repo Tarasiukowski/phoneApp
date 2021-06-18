@@ -1,14 +1,12 @@
-import { Dispatch, SetStateAction } from 'react';
-
 export type propsSelectNumberButton = {
   onClick: () => void;
   number: string | null;
-  mini?: boolean
+  mini?: boolean;
 };
 
 export type propsSelectList = {
-  setOpenList: Dispatch<SetStateAction<boolean>>;
-  setNumber: Dispatch<SetStateAction<string | null>>;
+  onSelectNumber: (number: string) => void;
+  onClose: () => void;
 };
 
 export type propsSelectNumberItem = {
@@ -23,6 +21,5 @@ export type propsSelectNumberInput = {
 
 export type propsSelectNumbersList = {
   numbers: string[];
-  setNumber: Dispatch<SetStateAction<string | null>>;
-  setOpenList: Dispatch<SetStateAction<boolean>>;
+  onSelectNumber: (number: string) => void;
 };
