@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { UserCard, Button, Alert } from '../../../atoms';
+import { Button, Alert } from '../../../atoms';
 import { Multitask, ElementFinder } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
+import ElementList from './elementList';
 
-import styles from './friends.module.scss';
 import { fetcher } from '../../../../utils';
-import { Error } from '../../../../interfaces';
+import { Error, User } from '../../../../interfaces';
 import { ERROR } from '../../../../common/errors';
 import { remove, selectFriends } from '../../../../reducers/friendsReducer';
 
@@ -19,9 +19,11 @@ const SettingsFriendsContent = () => {
 
   const dispatch = useDispatch();
 
-  const removeFriend = async (friendEmail: string) => {
+  const removeFriend = async (user: User) => {
+    const { email } = user;
+
     const { errorMsg } = await fetcher('POST', '/user/friends/remove', {
-      friendEmail,
+      friendEmail: email,
     });
 
     if (errorMsg) {
@@ -29,7 +31,7 @@ const SettingsFriendsContent = () => {
       return;
     }
 
-    dispatch(remove({ email: friendEmail }));
+    dispatch(remove({ email }));
   };
 
   const multitaskHandle = {
@@ -78,16 +80,7 @@ const SettingsFriendsContent = () => {
         placeholder="Search for a number"
         info="User not found"
         renderList={(data) =>
-          data.map((friend) => {
-            const { email } = friend;
-
-            return (
-              <div className={styles.elementList} key={email}>
-                <UserCard member={friend} big />
-                <Button onClick={() => removeFriend(email)}  width="auto">Remove</Button>
-              </div>
-            );
-          })
+          data.map((friend) => <ElementList user={friend} onClick={removeFriend} />)
         }
       />
       <Alert error={error} />
