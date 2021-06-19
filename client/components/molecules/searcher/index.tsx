@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import { useSelector } from 'react-redux';
 
-import ElementList from './elementList';
+import List from './list';
 
-import styles from './searcher.module.scss';
 import { SearchSvg } from '../../../public/svgs/index';
 import { getAllChildreenOfElement, getSearcherData } from '../../../utils';
 import { props, SearchData } from './types';
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { selectUser } from '../../../reducers/userReducer';
 import { DetailedConversation } from '../../../interfaces';
+import styles from './searcher.module.scss';
 
 const Searcher = ({ open, onClose }: props) => {
   const [searchData, setSearcherData] = useState<SearchData>({
@@ -38,7 +37,7 @@ const Searcher = ({ open, onClose }: props) => {
       const allowElements = templateRef.current ? getAllChildreenOfElement(templateRefCurrent) : [];
       const target = e.target as HTMLElement;
 
-      target.id === 'searcher' ? allowElements.push(target) : null;
+      target.id === 'searcher' && allowElements.push(target);
 
       if (!allowElements.includes(target)) {
         onClose();
@@ -88,14 +87,12 @@ const Searcher = ({ open, onClose }: props) => {
     }
   }, [inputValue]);
 
-  const handleClickElement = () => {
+  const handleOnSelect = () => {
     onClose();
     setValueInput('');
   };
 
   if (open) {
-    const { conversations, routes } = searchData;
-
     return (
       <div className={styles.template} ref={templateRef}>
         <div className={styles.box}>
@@ -114,81 +111,7 @@ const Searcher = ({ open, onClose }: props) => {
               />
             </div>
           </div>
-          <div className={styles.lists}>
-            {inputValue.length ? (
-              <>
-                {conversations.data.length || routes.data.length ? (
-                  <>
-                    {(() => {
-                      const elems: JSX.Element[] = [];
-
-                      let key: keyof SearchData;
-
-                      for (key in searchData) {
-                        const dataOfKey = searchData[key].data as any[];
-
-                        dataOfKey.map((elem) => {
-                          if (key === 'conversations') {
-                            const { user, id } = elem;
-
-                            const {
-                              fullname: { firstname, lastname },
-                            } = user;
-
-                            elems.push(
-                              <Link
-                                href={`/inbox/${id}`}
-                                key={id}
-                                children={
-                                  <ElementList
-                                    content={`${firstname} ${lastname}`}
-                                    onClick={handleClickElement}
-                                    user={user}
-                                  />
-                                }
-                              />,
-                            );
-                          } else {
-                            const { values, value } = elem;
-
-                            if (typeof value === 'string') {
-                              elems.push(
-                                <Link
-                                  href={`${value}`}
-                                  key={value}
-                                  children={
-                                    <ElementList content={value} onClick={handleClickElement} />
-                                  }
-                                />,
-                              );
-                            } else {
-                              values.map((value: string) => {
-                                elems.push(
-                                  <Link
-                                    href={`${value}`}
-                                    key={value}
-                                    children={
-                                      <ElementList content={value} onClick={handleClickElement} />
-                                    }
-                                  />,
-                                );
-                              });
-                            }
-                          }
-                        });
-                      }
-
-                      return elems;
-                    })()}
-                  </>
-                ) : (
-                  <p className={styles.info}>Not found</p>
-                )}
-              </>
-            ) : (
-              <p className={styles.info}>I will find what you need for you.</p>
-            )}
-          </div>
+          <List data={searchData} inputValue={inputValue} onSelect={handleOnSelect} />
         </div>
       </div>
     );

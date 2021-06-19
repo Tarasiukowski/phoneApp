@@ -1,0 +1,20 @@
+.lists {
+  width: 100%;
+  max-height: 148px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px 8px 20px;
+  overflow: scroll;
+  border-top: 1px solid rgba(80, 80, 97, 0.5);
+}
+
+.lists::-webkit-scrollbar {
+  display: none;
+}
+
+.info {
+  color: rgb(108, 108, 135);
+  font-weight: 600;
+  font-size: 1.2rem;
+  padding-top: 8px;
+}
