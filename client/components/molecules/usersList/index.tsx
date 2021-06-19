@@ -112,6 +112,7 @@ const UsersList = ({ name, data }: props) => {
                 onAcceptInvite={acceptInvite}
                 user={user}
                 name={name}
+                key={user.email}
               />
             ))}
           </div>

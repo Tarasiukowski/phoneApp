@@ -29,6 +29,8 @@ const SettingsProfileContent = () => {
   const { firstname: firstnameValue, lastname: lastnameValue } = inputsValues;
 
   const implementedChange = firstnameValue !== firstname || lastnameValue !== lastname;
+  const validFullname = Boolean(!firstnameValue?.length || !lastnameValue?.length);
+  const isDisabled = !implementedChange || validFullname;
 
   const handleOnChange = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
@@ -39,12 +41,12 @@ const SettingsProfileContent = () => {
   };
 
   const save = async () => {
-    const data = await fetcher('PUT', '/user/update', {
+    const { errorMsg } = await fetcher('PUT', '/user/update', {
       fullname: { firstname: firstnameValue, lastname: lastnameValue },
     });
 
-    if (data.errorMsg) {
-      setError({ msg: data.errorMsg, id: Math.random() });
+    if (errorMsg) {
+      setError({ msg: errorMsg, id: Math.random() });
     }
 
     window.location.reload();
@@ -60,14 +62,14 @@ const SettingsProfileContent = () => {
         return false;
       }
 
-      const data = await fetcher('PUT', '/user/update', {
+      const { errorMsg } = await fetcher('PUT', '/user/update', {
         newEmail,
       });
 
-      if (data.errorMsg) {
-        setError({ msg: data.errorMsg, id: Math.random() });
+      if (errorMsg) {
+        setError({ msg: errorMsg, id: Math.random() });
 
-        if (data.errorMsg === ERROR.NOT_ALLOWED) {
+        if (errorMsg === ERROR.NOT_ALLOWED) {
           window.location.reload();
         }
         return false;
@@ -85,12 +87,12 @@ const SettingsProfileContent = () => {
       verify && window.location.reload();
     },
     onEnd: async (code: string) => {
-      const data = await fetcher('POST', '/user/verify/email', {
+      const { errorMsg } = await fetcher('POST', '/user/verify/email', {
         code,
       });
 
-      if (data.errorMsg) {
-        setError({ msg: data.errorMsg, id: Math.random() });
+      if (errorMsg) {
+        setError({ msg: errorMsg, id: Math.random() });
         return false;
       }
 
@@ -136,12 +138,7 @@ const SettingsProfileContent = () => {
           Change
         </Button>
       </div>
-      <Button
-        onClick={save}
-        disabled={!implementedChange}
-        style={{ marginTop: '40px' }}
-        width="auto"
-      >
+      <Button onClick={save} disabled={isDisabled} style={{ marginTop: '40px' }} width="auto">
         save
       </Button>
       <Alert error={error} />
