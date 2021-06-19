@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useReducer } from 'react';
+import { useEffect, useState, useRef, useReducer, ChangeEvent, KeyboardEvent } from 'react';
 
 import { Button } from '../../atoms';
 
@@ -22,7 +22,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
 
     const stages = option.stages;
     const activeStage = stages[counterStage];
-    const end = counterStage === stages.length - 1 ? true : false;
+    const isEnd = counterStage === stages.length - 1 ? true : false;
 
     useEffect(() => {
       if (open) {
@@ -35,7 +35,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
           if (!allowElements.includes(target) && target.id !== name) {
             setInputValue('');
             setCounterStage(0);
-            setGroupData({ name: null, members: [] })
+            setGroupData({ name: null, members: [] });
             onClose();
           }
         };
@@ -44,15 +44,31 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
       }
     });
 
-    const { title, description, inputPlaceholder, inputName, unlimited } = activeStage;
+    const { title, description, inputPlaceholder, inputName, unlimited, textButton } = activeStage;
 
     const members = groupData.members as string[];
 
-    const disabled = !isCorrectValue(inputName, inputValue);
+    const isDisabled = !isCorrectValue(inputName, inputValue);
+
+    const inputHandle = {
+      onChange(e: ChangeEvent<HTMLInputElement>) {
+        const value = e.target.value;
+
+        setInputValue(value);
+      },
+      onKetUp(e: KeyboardEvent<HTMLInputElement>) {
+        if (e.key === 'Enter') {
+          if (!isDisabled) {
+            next();
+          }
+        }
+      },
+    };
 
     const next = async () => {
-      if (end && !unlimited) {
+      if (isEnd && !unlimited) {
         const allowResetData = await onEnd(inputValue);
+
         if (allowResetData) {
           onClose(allowResetData);
           setInputValue('');
@@ -77,6 +93,12 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
       allowNextStage && setInputValue('');
     };
 
+    const end = () => {
+      onEnd(groupData);
+      onClose();
+      setGroupData({ name: null, members: [] });
+    };
+
     if (open) {
       return (
         <div className={styles.template} ref={templateRef}>
@@ -88,36 +110,19 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
             <div className={styles.inputTemplate}>
               <input
                 value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyUp={(e) => {
-                  if (e.key === 'Enter') {
-                    if (!disabled) {
-                      next();
-                    }
-                  }
-                }}
                 placeholder={inputPlaceholder}
                 name={inputName}
                 autoComplete="off"
+                {...inputHandle}
               />
             </div>
             <div className={styles.footer}>
-              <Button onClick={next} disabled={disabled} width="auto">
-                {end
-                  ? name === 'InviteFriend'
-                    ? 'Send'
-                    : name === 'CreateGroup'
-                    ? 'Add'
-                    : 'Ok'
-                  : 'Next'}
+              <Button onClick={next} disabled={isDisabled} width="auto">
+                {isEnd ? textButton : 'Next'}
               </Button>
               {unlimited && (
                 <Button
-                  onClick={() => {
-                    onEnd(groupData);
-                    onClose();
-                    setGroupData({ name: null, members: [] });
-                  }}
+                  onClick={end}
                   disabled={members.length ? false : true}
                   width="auto"
                   style={{ marginLeft: '10px' }}

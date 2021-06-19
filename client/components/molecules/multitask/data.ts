@@ -4,6 +4,7 @@ type Stage = {
   inputName: 'email' | 'code' | 'text';
   inputPlaceholder: string;
   unlimited?: boolean;
+  textButton?: string;
 };
 
 type OptionComponent = {
@@ -26,6 +27,7 @@ export const optionsComponent: OptionComponent[] = [
         description: 'to which send to your e-mail',
         inputName: 'code',
         inputPlaceholder: 'Enter an verify code',
+        textButton: 'Ok',
       },
     ],
   },
@@ -37,6 +39,7 @@ export const optionsComponent: OptionComponent[] = [
         description: 'to send invite',
         inputName: 'email',
         inputPlaceholder: 'Enter an email adress',
+        textButton: 'Send',
       },
     ],
   },
@@ -54,6 +57,7 @@ export const optionsComponent: OptionComponent[] = [
         description: 'to join the group',
         inputName: 'email',
         inputPlaceholder: 'Enter an friend email',
+        textButton: 'Add',
         unlimited: true,
       },
     ],
