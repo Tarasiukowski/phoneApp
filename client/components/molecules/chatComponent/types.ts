@@ -1,14 +1,13 @@
-import { User } from "../../../interfaces"
+import { ChatData } from '../../organisms/groupContent/types';
 
 export type props = {
-  messages: Message[]
-  width?: string
-  id: string,
-  user: User | null
-}
+  width?: string;
+  id: string;
+  onFetchData: (chatData: ChatData) => void;
+};
 
 export type Message = {
-  content: string,
-  from: string,
-  id: string
-}
+  content: string;
+  from: string;
+  id: string;
+};
