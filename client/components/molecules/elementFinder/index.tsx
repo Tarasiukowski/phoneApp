@@ -6,7 +6,7 @@ import styles from './ElementFinder.module.scss';
 import { props } from './types';
 
 const ElementFinder = <T,>({ renderList, data, filterKey, info, placeholder }: props<T>) => {
-  const [getData, setGetData] = useState<T[]>([]);
+  const [receivedDate, setReceivedDate] = useState<T[]>([]);
   const [inputValue, setInputValue] = useState('');
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +15,7 @@ const ElementFinder = <T,>({ renderList, data, filterKey, info, placeholder }: p
   };
 
   useEffect(() => {
-    setGetData(data);
+    setReceivedDate(data);
   }, [data]);
 
   useEffect(() => {
@@ -32,9 +32,9 @@ const ElementFinder = <T,>({ renderList, data, filterKey, info, placeholder }: p
         }
       });
 
-      setGetData(filteredData);
+      setReceivedDate(filteredData);
     } else {
-      setGetData(data);
+      setReceivedDate(data);
     }
   }, [inputValue]);
 
@@ -49,7 +49,7 @@ const ElementFinder = <T,>({ renderList, data, filterKey, info, placeholder }: p
         />
       </div>
       <div className={styles.list}>
-        {getData.length ? renderList(getData) : <p className={styles.info}>{info}</p>}
+        {receivedDate.length ? renderList(receivedDate) : <p className={styles.info}>{info}</p>}
       </div>
     </div>
   );

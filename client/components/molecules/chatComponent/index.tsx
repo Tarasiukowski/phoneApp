@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 import Header from './header';
 import { Textarea } from './textarea';
@@ -25,7 +25,7 @@ const Chat = ({ messages, user, id, width }: props) => {
 
       setValueTextarea(target.value);
     },
-    onKeyUp: (e: any) => {
+    onKeyUp: (e: KeyboardEvent) => {
       if (e.key === 'Enter' && valueTextarea.length) {
         fetcher('PUT', '/conversation/send', {
           content: valueTextarea,

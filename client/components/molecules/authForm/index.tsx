@@ -18,7 +18,7 @@ const AuthForm = ({ auth, setError }: props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setDisabled(!watch('email') ? true : false);
+    setDisabled(watch('email') ? false : true);
   }, [watch('email')]);
 
   const submit = async (data: formData) => {

@@ -17,6 +17,5 @@ export const Textarea = styled.input`
   :focus {
     border-color: rgb(112,70,227);
     background: rgb(155 112 255 / 10%);
-
   }
 `

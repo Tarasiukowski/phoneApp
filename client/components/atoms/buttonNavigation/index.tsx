@@ -10,12 +10,10 @@ const Button = forwardRef<HTMLButtonElement, props>(
   ({ icon, active, href, content, ...restProps }, ref) => {
     const { asPath } = useRouter();
 
+    const isActive = asPath === href || asPath.startsWith(`/${content.toLocaleLowerCase()}`);
+
     return (
-      <StyledButton
-        ref={ref}
-        active={asPath === href || asPath.startsWith(`/${content.toLocaleLowerCase()}`)}
-        {...restProps}
-      >
+      <StyledButton ref={ref} active={isActive} {...restProps}>
         {icon()} <span>{content}</span>
       </StyledButton>
     );

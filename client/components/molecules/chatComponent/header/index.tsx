@@ -1,5 +1,5 @@
 import { ImageUser } from '../../../atoms';
-import ChatOptions from '../chatOptions';
+import ChatOptions from '../chatOptions/index';
 
 import { props } from './types';
 import styles from './header.module.scss';
@@ -7,7 +7,7 @@ import styles from './header.module.scss';
 const Header = ({ user }: props) => {
   return (
     <div className={styles.header}>
-      {user ? (
+      {user && (
         <>
           {(() => {
             const {
@@ -25,7 +25,7 @@ const Header = ({ user }: props) => {
             );
           })()}
         </>
-      ) : null}
+      )}
     </div>
   );
 };

@@ -17,6 +17,8 @@ const UserCard = forwardRef<HTMLDivElement, props>(
     const templateRef = useRef<HTMLDivElement>(null);
     const userDetailedRef = useRef<HTMLDivElement>(null);
 
+    const user = useSelector(selectUser);
+
     useEffect(() => {
       if (member) {
         const { fullname } = member;
@@ -24,8 +26,6 @@ const UserCard = forwardRef<HTMLDivElement, props>(
 
         setFullname(`${firstname} ${lastname}`);
       } else {
-        const user = useSelector(selectUser);
-
         if (user) {
           const {
             fullname: { firstname, lastname },
