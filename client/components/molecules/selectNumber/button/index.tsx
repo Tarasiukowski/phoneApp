@@ -1,8 +1,8 @@
-import styles from './button.module.scss';
 import PenSvg from '../../../../public/svgs/pen.svg';
-import { propsSelectNumberButton } from '../types';
+import { props } from './types';
+import styles from './button.module.scss';
 
-const SelectNumberButton = ({ onClick, number, mini }: propsSelectNumberButton) => (
+const SelectNumberButton = ({ onClick, number, mini }: props) => (
   <div
     onClick={onClick}
     className={styles.wrapper}

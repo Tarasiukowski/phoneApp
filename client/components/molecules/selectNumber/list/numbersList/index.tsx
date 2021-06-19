@@ -1,9 +1,9 @@
 import { Spinner } from '../../../../atoms';
 import Item from '../item';
 
-import { propsSelectNumbersList } from '../../types';
+import { props } from './/types';
 
-const NumbersList = ({ numbers, onSelectNumber }: propsSelectNumbersList) => (
+const NumbersList = ({ numbers, onSelectNumber }: props) => (
   <>
     {numbers.length ? (
       <>

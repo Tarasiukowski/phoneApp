@@ -1,8 +1,8 @@
 import Digits from '../../../../../public/svgs/digits.svg';
-import { propsSelectNumberInput } from '../../types';
+import { props } from './types';
 import styles from './input.module.scss';
 
-const Input = ({ value, onChange }: propsSelectNumberInput) => (
+const Input = ({ value, onChange }: props) => (
   <div className={styles.wrapper}>
     <Digits />
     <input
