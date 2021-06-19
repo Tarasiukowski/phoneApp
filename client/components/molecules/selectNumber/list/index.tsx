@@ -93,7 +93,7 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
       left: `${leftTarget - leftTab}px`,
     });
 
-    setActiveList(activeList === 'All' ? 'Recommended' : 'All');
+    setActiveList(isActiveAllNumbers ? 'Recommended' : 'All');
   };
 
   const handleValueDigits = async (e: ChangeEvent) => {

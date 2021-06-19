@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { UserCard, Alert } from '../../atoms';
+import { Alert } from '../../atoms';
+import ElementList from './elementList';
 import { UserDetailed } from '../index';
 
 import styles from './usersList.module.scss';
-import { SearchSvg, PlusSvg } from '../../../public/svgs';
+import { SearchSvg } from '../../../public/svgs';
 import { User, Error } from '../../../interfaces';
 import { props } from './types';
 import { fetcher } from '../../../utils';
@@ -57,7 +58,7 @@ const UsersList = ({ name, data }: props) => {
     setDetailedUser(userData);
   };
 
-  const addUser = async (user: User) => {
+  const acceptInvite = async (user: User) => {
     const { errorMsg } = await fetcher('POST', '/user/invite/accept', {
       from: user.email,
     });
@@ -105,22 +106,14 @@ const UsersList = ({ name, data }: props) => {
             </div>
           </div>
           <div>
-            {listData.map((user) => {
-              return (
-                <div
-                  onClick={() => updateUserDetailed(user)}
-                  key={user.number}
-                  className={styles.listElement}
-                >
-                  <UserCard member={user} />
-                  {name === 'invites' && (
-                    <div onClick={() => addUser(user)} className={styles.svgTemplate}>
-                      <PlusSvg />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+            {listData.map((user) => (
+              <ElementList
+                onClick={updateUserDetailed}
+                onAcceptInvite={acceptInvite}
+                user={user}
+                name={name}
+              />
+            ))}
           </div>
         </div>
       </div>

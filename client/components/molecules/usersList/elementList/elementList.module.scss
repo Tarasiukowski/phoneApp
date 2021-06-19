@@ -1,0 +1,44 @@
+.listElement {
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 40px;
+  background-color: #4b4b663b;
+  padding-left: 15px;
+  margin-top: 3px;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .svgTemplate {
+    position: absolute;
+    right: 20px;
+    z-index: 999;
+    background-color: #2f3043;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    border-radius: 5px;
+
+    svg {
+      fill: rgb(155, 112, 255);
+    }
+  }
+
+  div {
+    margin: 0;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  &:hover {
+    background-color: #2f3043;
+
+    .svgTemplate {
+      background-color: #242433;
+    }
+  }
+}
