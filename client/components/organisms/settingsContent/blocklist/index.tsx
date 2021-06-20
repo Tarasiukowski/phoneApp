@@ -1,18 +1,18 @@
-import { Button } from '../../../atoms';
-import { ElementFinder } from '../../../molecules';
+// import { Button } from '../../../atoms';
+// import { ElementFinder } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 
-import styles from './blocklist.module.scss';
+// import styles from './blocklist.module.scss';
 
 const SettingsBlocklistContent = () => (
   <SettingsTemplate>
     <h2 className="title">Blocklist</h2>
     <p className="description">Your list of blocked phone numbers.</p>
-    <ElementFinder
+    {/* <ElementFinder
       data={[]}
       filterKey=""
       placeholder="Search for a number"
-      info=""
+      notFound=""
       renderList={() => (
         <div className={styles.listElement}>
           <p>876-8768</p>
@@ -20,7 +20,7 @@ const SettingsBlocklistContent = () => (
         </div>
         // <p className={styles.info}>No one's blocked, woohoo 🌞</p>
       )}
-    />
+    /> */}
   </SettingsTemplate>
 );
 

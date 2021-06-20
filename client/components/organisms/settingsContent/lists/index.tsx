@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Alert, Button } from '../../../atoms';
-import { ElementFinder, Multitask } from '../../../molecules';
+import { Multitask } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 
 import { GroupData } from '../../../molecules/multitask/types';
@@ -70,13 +70,13 @@ const SettingsListsContent = () => {
       >
         Create a group
       </Button>
-      <ElementFinder
+      {/* <ElementFinder
         data={[]}
         filterKey=""
         placeholder="Search for a group name"
-        info="No groups to show"
+        notFound="No groups to show"
         renderList={() => null}
-      />
+      /> */}
       <div className={styles.dangerZone}>
         <h4>Danger Zone</h4>
         <p className={styles.info}>

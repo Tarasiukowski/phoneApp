@@ -78,10 +78,8 @@ const SettingsFriendsContent = () => {
         data={friends}
         filterKey="fullname"
         placeholder="Search for a number"
-        info="User not found"
-        renderList={(data) =>
-          data.map((friend) => <ElementList user={friend} onClick={removeFriend} />)
-        }
+        notFound="User not found"
+        renderItem={(data) => <ElementList user={data} onClick={removeFriend} />}
       />
       <Alert error={error} />
       <Multitask {...multitaskHandle} />
