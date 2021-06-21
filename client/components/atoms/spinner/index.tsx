@@ -1,12 +1,14 @@
-import SpinnerSvg from '../../../public/svgs/spinner.svg';
-import styles from './spinner.module.scss';
+import { Content } from './styles';
 
-const Spinner = () => (
-  <div className={styles.content}>
-    <div className={styles.spinner}>
+import { props } from './types'
+import SpinnerSvg from '../../../public/svgs/spinner.svg';
+
+const Spinner = ({ mini, extraStyle }: props) => (
+  <Content mini={mini} extraStyle={extraStyle}>
+    <div className="spinner">
       <SpinnerSvg />
     </div>
-  </div>
+  </Content>
 );
 
 export { Spinner };
