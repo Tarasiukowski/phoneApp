@@ -1,21 +1,22 @@
-import { useState, FormEvent, ChangeEvent } from 'react';
+import { useState, FormEvent, ChangeEvent, useContext } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Alert, Button, Input } from '../../../atoms';
+import { Button, Input } from '../../../atoms';
 import { RedirectTemplate } from '../../../../templates';
 
 import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher } from '../../../../utils';
-import { Error } from '../../../../interfaces';
 import { ERROR } from '../../../../common/errors';
+import { ErrorContext } from '../../../../contexts';
 import styles from './code.module.scss';
 
 const OnboardingCodeContent = () => {
   const [valueInput, setValueInput] = useState('');
-  const [error, setError] = useState<Error | null>(null);
   const [redirect, setRedirect] = useState(false);
 
   const user = useSelector(selectUser);
+
+  const { setError } = useContext(ErrorContext);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValueInput(e.target.value);
@@ -67,7 +68,6 @@ const OnboardingCodeContent = () => {
           Continue
         </Button>
       </form>
-      <Alert error={error} />
     </RedirectTemplate>
   );
 };

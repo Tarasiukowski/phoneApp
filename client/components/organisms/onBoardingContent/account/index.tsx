@@ -1,11 +1,11 @@
-import { ChangeEvent, FormEvent, useState, useReducer } from 'react';
+import { ChangeEvent, FormEvent, useState, useReducer, useContext } from 'react';
 
-import { Alert, Button, Input } from '../../../atoms';
+import { Button, Input } from '../../../atoms';
 import { RedirectTemplate } from '../../../../templates';
 
 import { fetcher } from '../../../../utils';
-import { Error } from '../../../../interfaces';
 import { FormValues } from './types';
+import { ErrorContext } from '../../../../contexts';
 import styles from './account.module.scss';
 
 const OnboardingAccountContent = () => {
@@ -14,8 +14,9 @@ const OnboardingAccountContent = () => {
     { firstname: '', lastname: '' },
   );
   const [disabledByRequest, setDisabledByRequest] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
   const [redirect, setRedirect] = useState(false);
+
+  const { setError } = useContext(ErrorContext);
 
   const { firstname, lastname } = formValues;
 
@@ -86,7 +87,6 @@ const OnboardingAccountContent = () => {
           Continue
         </Button>
       </form>
-      <Alert error={error} />
     </RedirectTemplate>
   );
 };

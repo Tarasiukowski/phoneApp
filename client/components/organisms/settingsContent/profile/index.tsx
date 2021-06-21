@@ -1,7 +1,7 @@
-import { ChangeEvent, useReducer, useState } from 'react';
+import { ChangeEvent, useReducer, useState, useContext } from 'react';
 import { useSelector } from 'react-redux';
 
-import { ImageUser, Input, Button, Alert } from '../../../atoms';
+import { ImageUser, Input, Button } from '../../../atoms';
 import { Multitask } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 
@@ -9,12 +9,13 @@ import styles from './profile.module.scss';
 import { InputsValues } from './types';
 import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher } from '../../../../utils';
-import { Error } from '../../../../interfaces';
 import { ERROR } from '../../../../common/errors';
+import { ErrorContext } from '../../../../contexts';
 
 const SettingsProfileContent = () => {
-  const [error, setError] = useState<Error | null>(null);
   const [openMultiTask, setOpenMultiTask] = useState(false);
+
+  const { setError } = useContext(ErrorContext);
 
   const {
     fullname: { firstname, lastname },
@@ -141,7 +142,6 @@ const SettingsProfileContent = () => {
       <Button onClick={save} disabled={isDisabled} style={{ marginTop: '40px' }} width="auto">
         save
       </Button>
-      <Alert error={error} />
       <Multitask {...multitaskHandle} />
     </SettingsTemplate>
   );

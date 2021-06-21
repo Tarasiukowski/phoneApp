@@ -1,14 +1,21 @@
-import { useRef, MouseEvent, useState, useEffect, ChangeEvent, useReducer } from 'react';
+import {
+  useRef,
+  MouseEvent,
+  useState,
+  useEffect,
+  ChangeEvent,
+  useReducer,
+  useContext,
+} from 'react';
 import gsap from 'gsap';
 import { useScroll } from 'react-use';
 
-import { Alert } from '../../../atoms';
 import Input from './input';
 import NumbersList from './numbersList';
 
 import { fetcher } from '../../../../utils';
 import { props, Numbers } from '../types';
-import { Error } from '../../../../interfaces';
+import { ErrorContext } from '../../../../contexts';
 import styles from './list.module.scss';
 
 const MAX_LENGHT_NUMBER = 8;
@@ -16,7 +23,6 @@ const MAX_LENGHT_NUMBER = 8;
 const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
   const [activeList, setActiveList] = useState<'Recommended' | 'All'>('Recommended');
   const [valueDigits, setValueDigits] = useState('');
-  const [error, setError] = useState<Error | null>(null);
   const [numbers, setNumbers] = useReducer(
     (prevState: Numbers, state: Numbers) => ({ ...prevState, ...state }),
     { all: [], recommended: [] },
@@ -26,6 +32,8 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
   const refTab = useRef<HTMLDivElement>(null);
   const refWrapper = useRef<HTMLDivElement>(null);
   const refListItems = useRef<HTMLDivElement>(null);
+
+  const { setError } = useContext(ErrorContext);
 
   const { y } = useScroll(refListItems);
 
@@ -119,32 +127,27 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
   };
 
   return (
-    <>
-      <div onClick={closeList} className={styles.wrapper} ref={refWrapper}>
-        <div
-          className={`${styles.content} ${isActiveAllNumbers ? styles.all : styles.recommended}`}
-        >
-          <div className={styles.tab} ref={refTab}>
-            <button onClick={setOverlap} disabled={!isActiveAllNumbers} className={styles.button}>
-              Recommended
-            </button>
-            <button onClick={setOverlap} disabled={isActiveAllNumbers} className={styles.button}>
-              All
-            </button>
-            <span className={styles.indicator} ref={refIndicator} />
-          </div>
-          {isActiveAllNumbers && <Input value={valueDigits} onChange={handleValueDigits} />}
-          <div className={styles.listItems} ref={refListItems}>
-            {isActiveAllNumbers ? (
-              <NumbersList numbers={allNumbers} onSelectNumber={hanldeOnSelectNumber} />
-            ) : (
-              <NumbersList numbers={recommendedNumbers} onSelectNumber={hanldeOnSelectNumber} />
-            )}
-          </div>
+    <div onClick={closeList} className={styles.wrapper} ref={refWrapper}>
+      <div className={`${styles.content} ${isActiveAllNumbers ? styles.all : styles.recommended}`}>
+        <div className={styles.tab} ref={refTab}>
+          <button onClick={setOverlap} disabled={!isActiveAllNumbers} className={styles.button}>
+            Recommended
+          </button>
+          <button onClick={setOverlap} disabled={isActiveAllNumbers} className={styles.button}>
+            All
+          </button>
+          <span className={styles.indicator} ref={refIndicator} />
+        </div>
+        {isActiveAllNumbers && <Input value={valueDigits} onChange={handleValueDigits} />}
+        <div className={styles.listItems} ref={refListItems}>
+          {isActiveAllNumbers ? (
+            <NumbersList numbers={allNumbers} onSelectNumber={hanldeOnSelectNumber} />
+          ) : (
+            <NumbersList numbers={recommendedNumbers} onSelectNumber={hanldeOnSelectNumber} />
+          )}
         </div>
       </div>
-      <Alert error={error} />
-    </>
+    </div>
   );
 };
 

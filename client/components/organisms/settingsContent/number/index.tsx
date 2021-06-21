@@ -1,19 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Alert, Button } from '../../../atoms';
+import { Button } from '../../../atoms';
 import { SelectNumberButton, SelectNumberList } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 
-import { Error } from '../../../../interfaces';
 import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher } from '../../../../utils';
+import { ErrorContext } from '../../../../contexts';
 
 const SettingsNumberContent = () => {
   const [openList, setOpenList] = useState(false);
   const [disabledByRequest, setDisabledByRequest] = useState(false);
   const [number, setNumber] = useState<string | null>(null);
-  const [error, setError] = useState<Error | null>(null);
+
+  const { setError } = useContext(ErrorContext);
 
   const user = useSelector(selectUser);
 
@@ -69,7 +70,6 @@ const SettingsNumberContent = () => {
       >
         save
       </Button>
-      <Alert error={error} />
     </SettingsTemplate>
   );
 };

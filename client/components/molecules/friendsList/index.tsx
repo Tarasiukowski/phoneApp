@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
-import { UserCard, Alert } from '../../atoms';
+import { UserCard } from '../../atoms';
 import { Multitask } from '../index';
 import AddButton from './addButton';
 
@@ -10,15 +10,16 @@ import { selectFriends } from '../../../reducers/friendsReducer';
 import { selectUser } from '../../../reducers/userReducer';
 import { ERROR } from '../../../common/errors';
 import { fetcher } from '../../../utils';
-import { Error } from '../../../interfaces';
+import { ErrorContext } from '../../../contexts';
 import styles from './friendsList.module.scss';
 
 const FriendsList = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
 
   const user = useSelector(selectUser);
   const friends = useSelector(selectFriends);
+
+  const { setError } = useContext(ErrorContext);
 
   const conversations = user ? user.conversations : [];
 
@@ -76,7 +77,6 @@ const FriendsList = () => {
         />
       </div>
       <Multitask {...multitaskHandle} />
-      <Alert error={error} />
     </div>
   );
 };

@@ -1,25 +1,26 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Alert, Button } from '../../../atoms';
+import { Button } from '../../../atoms';
 import { Multitask } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 
 import { GroupData } from '../../../molecules/multitask/types';
 import { selectFriends } from '../../../../reducers/friendsReducer';
-import { Error } from '../../../../interfaces';
 import { ERROR } from '../../../../common/errors';
 import { fetcher, getObjectsKeysFromArray } from '../../../../utils';
 import { update } from '../../../../reducers/userReducer';
+import { ErrorContext } from '../../../../contexts';
 import styles from './lists.module.scss';
 
 const SettingsListsContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
 
   const dispatch = useDispatch();
 
   const friends = useSelector(selectFriends);
+
+  const { setError } = useContext(ErrorContext);
 
   const multitaskHandle = {
     name: 'CreateGroup' as 'CreateGroup',
@@ -87,7 +88,6 @@ const SettingsListsContent = () => {
         </Button>
       </div>
       <Multitask {...multitaskHandle} />
-      <Alert error={error} />
     </SettingsTemplate>
   );
 };

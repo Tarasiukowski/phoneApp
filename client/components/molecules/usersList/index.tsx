@@ -1,25 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Alert } from '../../atoms';
 import ElementList from './elementList';
 import { UserDetailed } from '../index';
 
-import styles from './usersList.module.scss';
 import { SearchSvg } from '../../../public/svgs';
-import { User, Error } from '../../../interfaces';
+import { User } from '../../../interfaces';
 import { props } from './types';
 import { fetcher, filterByKey } from '../../../utils';
 import { add } from '../../../reducers/friendsReducer';
 import { remove } from '../../../reducers/invitesReducer';
+import { ErrorContext } from '../../../contexts';
+import styles from './usersList.module.scss';
 
 const UsersList = ({ name, data }: props) => {
   const [detailedUser, setDetailedUser] = useState<User | null>(null);
   const [inputValue, setInputValue] = useState('');
   const [listData, setListData] = useState<User[]>([]);
-  const [error, setError] = useState<Error | null>(null);
 
   const dispatch = useDispatch();
+
+  const { setError } = useContext(ErrorContext);
 
   useEffect(() => {
     if (data) {
@@ -105,7 +106,6 @@ const UsersList = ({ name, data }: props) => {
           </div>
         </div>
       </div>
-      <Alert error={error} />
       <UserDetailed loading={detailedUser ? false : true} {...detailedUser} />
     </>
   );

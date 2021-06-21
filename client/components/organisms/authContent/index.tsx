@@ -1,23 +1,24 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import GoogleLogin from 'react-google-login';
 
-import { ButtonGoogle, ToggleAuth, Alert } from '../../atoms';
+import { ButtonGoogle, ToggleAuth } from '../../atoms';
 import { AuthForm } from '../../molecules';
 import { RedirectTemplate } from '../../../templates';
 
 import { login as loginAuth } from '../../../reducers/userReducer';
 import { fetcher } from '../../../utils';
-import { Error } from '../../../interfaces';
+import { ErrorContext } from '../../../contexts';
 import styles from './authContent.module.scss';
 
 const AuthContent = () => {
-  const [error, setError] = useState<Error | null>(null);
   const [redirect, setRedirect] = useState(false);
 
   const dispatch = useDispatch();
   const { asPath } = useRouter();
+
+  const { setError } = useContext(ErrorContext);
 
   const activePath = asPath.slice(1) as 'login' | 'singup';
   const redirectTo = activePath === 'login' ? '/contacts' : '/onboarding/number';
@@ -62,7 +63,6 @@ const AuthContent = () => {
         <p>Or continue with email</p>
         <AuthForm auth={activePath} setError={setError} />
         <ToggleAuth auth={activePath} />
-        <Alert error={error} />
       </div>
     </RedirectTemplate>
   );

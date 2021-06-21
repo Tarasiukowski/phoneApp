@@ -1,23 +1,25 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, Alert } from '../../../atoms';
+import { Button } from '../../../atoms';
 import { Multitask, ElementFinder } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 import ElementList from './elementList';
 
 import { fetcher } from '../../../../utils';
-import { Error, User } from '../../../../interfaces';
+import { User } from '../../../../interfaces';
 import { ERROR } from '../../../../common/errors';
 import { remove, selectFriends } from '../../../../reducers/friendsReducer';
+import { ErrorContext } from '../../../../contexts';
 
 const SettingsFriendsContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
 
   const friends = useSelector(selectFriends);
 
   const dispatch = useDispatch();
+
+  const { setError } = useContext(ErrorContext);
 
   const removeFriend = async (user: User) => {
     const { email } = user;
@@ -81,7 +83,6 @@ const SettingsFriendsContent = () => {
         notFound="User not found"
         renderItem={(data) => <ElementList user={data} onClick={removeFriend} />}
       />
-      <Alert error={error} />
       <Multitask {...multitaskHandle} />
     </SettingsTemplate>
   );

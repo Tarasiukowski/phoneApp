@@ -1,22 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Alert, Button } from '../../../atoms';
+import { Button } from '../../../atoms';
 import { SelectNumberButton, SelectNumberList } from '../../../molecules';
 import { RedirectTemplate } from '../../../../templates';
 
 import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher } from '../../../../utils';
+import { ErrorContext } from '../../../../contexts';
 import styles from './number.module.scss';
-import { Error } from '../../../../interfaces';
 
 const OnboardingNumberContent = () => {
   const [openList, setOpenList] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const [number, setNumber] = useState<string | null>(null);
-  const [error, setError] = useState<Error | null>(null);
 
   const user = useSelector(selectUser);
+
+  const { setError } = useContext(ErrorContext);
 
   useEffect(() => {
     setNumber(user ? user.number : null);
@@ -70,7 +71,6 @@ const OnboardingNumberContent = () => {
           />
         )}
       </div>
-      <Alert error={error} />
     </RedirectTemplate>
   );
 };
