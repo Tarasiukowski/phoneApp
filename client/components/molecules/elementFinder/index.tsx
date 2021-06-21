@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
+import { filterByKey } from '../../../utils';
 
 import { Input } from '../../atoms';
 
@@ -15,15 +16,7 @@ const ElementFinder = <T,>({ renderItem, data, filterKey, notFound, placeholder 
 
   useEffect(() => {
     if (inputValue.length) {
-      const filteredData = data.filter((elem) => {
-        let filterValue: any = elem[filterKey];
-
-        typeof filterValue === 'object' && (filterValue = Object.values(filterValue).join(' '));
-
-        if (filterValue.toLowerCase().startsWith(inputValue.toLowerCase())) {
-          return elem;
-        }
-      });
+      const filteredData = filterByKey(data, inputValue, filterKey);
 
       setReceivedDate(filteredData);
     } else {

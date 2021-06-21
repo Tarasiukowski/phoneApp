@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import List from './list';
 
 import { SearchSvg } from '../../../public/svgs/index';
-import { getAllChildreenOfElement, getSearcherData } from '../../../utils';
+import { filterByKey, getAllChildreenOfElement, getSearcherData } from '../../../utils';
 import { props, SearchData } from './types';
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { selectUser } from '../../../reducers/userReducer';
@@ -58,20 +58,12 @@ const Searcher = ({ open, onClose }: props) => {
     if (inputValue.length) {
       const { routes, conversations } = getSearcherData(formatedConversations);
 
-      const filteredRoutes = routes.data.filter((route) => {
-        if (route.filterValue.toLowerCase().startsWith(inputValue.toLowerCase())) {
-          return route;
-        }
-      });
+      const filteredRoutes = filterByKey(routes.data, inputValue, 'filterValue');
 
       const filteredConversations = conversations.data.filter((conversation) => {
-        const {
-          user: {
-            fullname: { firstname, lastname },
-          },
-        } = conversation;
+        const fullname = user.fullname;
 
-        if (`${firstname} ${lastname}`.toLowerCase().startsWith(inputValue.toLowerCase())) {
+        if (Object.values(fullname).join(' ').toLowerCase().startsWith(inputValue.toLowerCase())) {
           return conversation;
         }
       });

@@ -8,3 +8,4 @@ export { getInitials } from './getInitials';
 export { getSearcherData } from './getSearcherData';
 export { formatToListData } from './formatToListData';
 export { getObjectsKeysFromArray } from './getObjectsKeysFromArray';
+export { filterByKey } from './filterByKey';

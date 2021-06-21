@@ -9,7 +9,7 @@ import styles from './usersList.module.scss';
 import { SearchSvg } from '../../../public/svgs';
 import { User, Error } from '../../../interfaces';
 import { props } from './types';
-import { fetcher } from '../../../utils';
+import { fetcher, filterByKey } from '../../../utils';
 import { add } from '../../../reducers/friendsReducer';
 import { remove } from '../../../reducers/invitesReducer';
 
@@ -33,20 +33,7 @@ const UsersList = ({ name, data }: props) => {
 
   useEffect(() => {
     if (inputValue.length) {
-      const filterData = (data: User[]) =>
-        data.filter((elem) => {
-          const {
-            fullname: { firstname, lastname },
-          } = elem;
-
-          const fullnane = `${firstname} ${lastname}`.toLowerCase();
-
-          if (fullnane.startsWith(inputValue.toLowerCase())) {
-            return elem;
-          }
-        });
-
-      const filteredData = filterData(listData);
+      const filteredData = filterByKey(listData, inputValue, 'fullname');
 
       setListData(filteredData);
     } else {
