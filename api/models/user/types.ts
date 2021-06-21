@@ -26,5 +26,6 @@ export interface UserDocument extends Document {
   invites: string[];
   friends: Friend[];
   conversations: Conversation[];
-  groups: Group[]
+  groups: Group[];
+  blocklist: string[]
 }

@@ -10,6 +10,7 @@ const OnboardingTemplate: React.FC = ({ children }) => (
     <Button
       onClick={logout}
       style={{ position: 'absolute', right: '25px', top: '25px' }}
+      width="auto"
       transparent
     >
       Sign out
