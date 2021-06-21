@@ -2,8 +2,7 @@ import { ERROR } from '../../../data';
 import Conversation from '../../../models/conversation/conversationModel';
 import UserModel from '../../../models/user/userModel';
 import { Class } from '../../../interfaces';
-import { getStagesOfAcceptInvite } from '../../../data/stages/getStagesOfAcceptInvite';
-import { getStagesOfCreateConversation } from '../../../data/stages/getStagesOfCreateConversation';
+import { getStagesOfAcceptInvite, getStagesOfCreateConversation } from '../../../data';
 import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
 
 export function InviteServiceMixin<Base extends Class>(base: Base) {
@@ -24,7 +23,7 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
         const invites = invitedUser.invites;
         const friends = invitingUser.friends;
 
-        const emailsOfFriends = getObjectsKeysFromArray(friends, "email")
+        const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
 
         if (invites.includes(from)) {
           return { status: 409, errorMsg: ERROR.DUPLICATE_INVITATION };
@@ -38,13 +37,21 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
       },
 
       async accept(email: string, from: string) {
-        getStagesOfAcceptInvite(email, from).map(({ data, option }) => {
+        const stagesOfAcceptInvite = getStagesOfAcceptInvite(email, from);
+
+        stagesOfAcceptInvite.map(({ data, option }) => {
           UserModel.update(data, option);
         });
 
         const { conversation } = await new Conversation([email, from]).create();
 
-        getStagesOfCreateConversation(email, from, conversation.id).map(({ data, option }) => {
+        const stagesOfCreateConversation = getStagesOfCreateConversation(
+          email,
+          from,
+          conversation.id,
+        );
+
+        stagesOfCreateConversation.map(({ data, option }) => {
           UserModel.update(data, option);
         });
 

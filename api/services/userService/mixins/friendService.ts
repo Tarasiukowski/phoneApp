@@ -3,7 +3,7 @@ import UserModel from '../../../models/user/userModel';
 import { ERROR } from '../../../data';
 import { Class } from '../../../interfaces';
 import ConversationModel from '../../../models/conversation/conversationModel';
-import { getStagesOfRemoveFriend } from '../../../data/stages/getStagesOfRemoveFriend';
+import { getStagesOfRemoveFriend } from '../../../data';
 import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
 
 export function FriendServiceMixin<Base extends Class>(base: Base) {
@@ -39,7 +39,9 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
         const { user: friend } = await UserModel.findOne('email', friendEmail);
 
         if (friend) {
-          getStagesOfRemoveFriend(email, friendEmail).map(({ data, option }) => {
+          const stagesOfRemoveFriend = getStagesOfRemoveFriend(email, friendEmail);
+
+          stagesOfRemoveFriend.map(({ data, option }) => {
             UserModel.update(data, option);
           });
 
