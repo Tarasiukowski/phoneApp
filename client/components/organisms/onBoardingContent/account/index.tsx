@@ -30,33 +30,33 @@ const OnboardingAccountContent = () => {
     });
   };
 
-  const next = (e: FormEvent<HTMLFormElement>) => {
+  const next = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setDisabledByRequest(true);
 
-    fetcher('PUT', '/user/update', {
+    const { errorMsg } = await fetcher('PUT', '/user/update', {
       fullname: formValues,
-    }).then(async (data) => {
-      if (data.errorMsg) {
-        setError({ msg: data.errorMsg, id: Math.random() });
-        window.location.reload();
-        return;
-      }
-
-      const { errorMsg } = await fetcher('PUT', '/user/update', {
-        redirectTo: '/contacts',
-        onBoarding: true,
-      });
-
-      if (errorMsg) {
-        setError({ msg: errorMsg, id: Math.random() });
-        window.location.reload();
-        return;
-      }
-
-      setRedirect(true);
     });
+
+    if (errorMsg) {
+      setError({ msg: errorMsg, id: Math.random() });
+      window.location.reload();
+      return;
+    }
+
+    const data = await fetcher('PUT', '/user/update', {
+      redirectTo: '/contacts',
+      onBoarding: true,
+    });
+
+    if (data.errorMsg) {
+      setError({ msg: errorMsg, id: Math.random() });
+      window.location.reload();
+      return;
+    }
+
+    setRedirect(true);
 
     setDisabledByRequest(false);
   };
