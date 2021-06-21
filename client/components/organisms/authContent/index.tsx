@@ -50,6 +50,15 @@ const AuthContent = () => {
     dispatch(loginAuth(user));
   };
 
+  const handleOnSubmit = (errorMsg?: string) => {
+    if (errorMsg) {
+      setError({ msg: errorMsg, id: Math.random() });
+      return;
+    }
+
+    setError(null);
+  };
+
   return (
     <RedirectTemplate isRedirect={redirect} redirectTo={redirectTo}>
       <div className={styles.card}>
@@ -61,7 +70,7 @@ const AuthContent = () => {
           render={({ onClick }) => <ButtonGoogle onClick={onClick} auth={activePath} />}
         />
         <p>Or continue with email</p>
-        <AuthForm auth={activePath} setError={setError} />
+        <AuthForm auth={activePath} onSubmit={handleOnSubmit} />
         <ToggleAuth auth={activePath} />
       </div>
     </RedirectTemplate>
