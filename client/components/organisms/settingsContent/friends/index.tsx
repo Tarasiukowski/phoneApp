@@ -24,11 +24,12 @@ const SettingsFriendsContent = () => {
   const removeFriend = async (user: User) => {
     const { email } = user;
 
-    const { errorMsg } = await fetcher('POST', '/user/friends/remove', {
-      friendEmail: email,
-    });
-
-    if (errorMsg) {
+    try {
+      await fetcher('POST', '/user/friends/remove', {
+        friendEmail: email,
+      });
+    } catch (err) {
+      const { errorMsg } = err.response.data;
       setError({ msg: errorMsg, id: Math.random() });
       return;
     }
@@ -43,11 +44,15 @@ const SettingsFriendsContent = () => {
       setOpenMultiTask(false);
     },
     onEnd: async (to: string) => {
-      const { errorMsg } = await fetcher('POST', '/user/invite', {
-        to,
-      });
+      try {
+        await fetcher('POST', '/user/invite', {
+          to,
+        });
 
-      if (errorMsg) {
+        return true;
+      } catch (err) {
+        const { errorMsg } = err.response.data;
+
         setError({ msg: errorMsg, id: Math.random() });
 
         if (errorMsg === ERROR.NOT_ALLOWED) {
@@ -56,8 +61,6 @@ const SettingsFriendsContent = () => {
 
         return false;
       }
-
-      return true;
     },
   };
 

@@ -25,31 +25,40 @@ const OnboardingCodeContent = () => {
   const verifyByCode = async (e: FormEvent) => {
     e.preventDefault();
 
-    const { valid, errorMsg } = await fetcher('post', '/user/verify/account', {
-      code: valueInput,
-    });
-
-    if (valid) {
-      const { errorMsg } = await fetcher('PUT', '/user/update', {
-        redirectTo: '/onboarding/number',
+    try {
+      const { valid } = await fetcher('post', '/user/verify/account', {
+        code: valueInput,
       });
 
-      if (errorMsg) {
-        setError({ msg: errorMsg, id: Math.random() });
-        window.location.reload();
-        return;
-      }
+      if (valid) {
+        try {
+          fetcher('PUT', '/user/update', {
+            redirectTo: '/onboarding/number',
+          });
+        } catch (err) {
+          const { errorMsg } = err.response.data;
 
-      setRedirect(true);
-      setError(null);
+          setError({ msg: errorMsg, id: Math.random() });
+
+          if (errorMsg === ERROR.NOT_ALLOWED) {
+            window.location.reload();
+          }
+          return;
+        }
+      }
+    } catch (err) {
+      const { errorMsg } = err.response.data;
+
+      setError({ msg: errorMsg, id: Math.random() });
+
+      if (errorMsg === ERROR.NOT_ALLOWED) {
+        window.location.reload();
+      }
       return;
     }
 
-    setError({ msg: errorMsg, id: Math.random() });
-
-    if (errorMsg === ERROR.NOT_ALLOWED) {
-      window.location.reload();
-    }
+    setRedirect(true);
+    setError(null);
   };
 
   return (

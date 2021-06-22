@@ -47,27 +47,29 @@ const UsersList = ({ name, data }: props) => {
   };
 
   const acceptInvite = async (user: User) => {
-    const { errorMsg } = await fetcher('POST', '/user/invite/accept', {
-      from: user.email,
-    });
+    try {
+      await fetcher('POST', '/user/invite/accept', {
+        from: user.email,
+      });
 
-    if (errorMsg) {
+      const filteredData = listData.filter((user) => {
+        const { email } = user;
+
+        if (email !== user.email) {
+          return user;
+        }
+      });
+
+      setListData(filteredData);
+
+      dispatch(remove({ email: user.email }));
+      dispatch(add({ user: user }));
+    } catch (err) {
+      const { errorMsg } = err.response.data;
+
       setError({ msg: errorMsg, id: Math.random() });
       return;
     }
-
-    const filteredData = listData.filter((user) => {
-      const { email } = user;
-
-      if (email !== user.email) {
-        return user;
-      }
-    });
-
-    setListData(filteredData);
-
-    dispatch(remove({ email: user.email }));
-    dispatch(add({ user: user }));
   };
 
   return (

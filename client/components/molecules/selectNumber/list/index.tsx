@@ -52,43 +52,44 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
         fetcher('post', '/generate/allNumbers', {
           filter: valueDigits,
           lastNumber: allNumbers[allNumbers.length - 1],
-        }).then(({ errorMsg, numbers }) => {
-          if (errorMsg) {
+        })
+          .then(({ numbers }) => {
+            setNumbers({ all: [...allNumbers, ...numbers] });
+          })
+          .catch((err) => {
+            const { errorMsg } = err.response.data;
+
             setError({ msg: errorMsg, id: Math.random() });
             window.location.reload();
-            return;
-          }
-
-          setNumbers({ all: [...allNumbers, ...numbers] });
-        });
+          });
       }
     }
   }, [y]);
 
   useEffect(() => {
-    fetcher('get', '/generate/randomNumbers').then(({ errorMsg, numbers }) => {
-      if (errorMsg) {
+    fetcher('get', '/generate/randomNumbers')
+      .then(({ numbers }) => {
+        setNumbers({ recommended: numbers });
+      })
+      .catch((err) => {
+        const { errorMsg } = err.response.data;
+
         setError({ msg: errorMsg, id: Math.random() });
         window.location.reload();
-        return;
-      }
-
-      setNumbers({ recommended: numbers });
-    });
+      });
   }, []);
 
   useEffect(() => {
-    fetcher('post', '/generate/allNumbers', { filter: valueDigits }).then(
-      ({ errorMsg, numbers }) => {
-        if (errorMsg) {
-          setError({ msg: errorMsg, id: Math.random() });
-          window.location.reload();
-          return;
-        }
-
+    fetcher('post', '/generate/allNumbers', { filter: valueDigits })
+      .then(({ numbers }) => {
         setNumbers({ all: numbers });
-      },
-    );
+      })
+      .catch((err) => {
+        const { errorMsg } = err.response.data;
+
+        setError({ msg: errorMsg, id: Math.random() });
+        window.location.reload();
+      });
   }, [valueDigits]);
 
   const setOverlap = (e: MouseEvent) => {

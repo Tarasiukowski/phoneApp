@@ -43,16 +43,18 @@ const SettingsListsContent = () => {
       setOpenMultiTask(false);
     },
     onEnd: async (groupData: GroupData) => {
-      const { errorMsg } = await fetcher('POST', '/group/create', { ...groupData });
+      try {
+        await fetcher('POST', '/group/create', { ...groupData });
 
-      if (errorMsg) {
+        dispatch(update({ key: 'groups', data: groupData }));
+
+        return true;
+      } catch (err) {
+        const { errorMsg } = err.response.data;
+
         setError({ msg: errorMsg, id: Math.random() });
         return false;
       }
-
-      dispatch(update({ key: 'groups', data: groupData }));
-
-      return true;
     },
   };
 

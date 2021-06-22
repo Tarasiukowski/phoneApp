@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -9,14 +9,17 @@ import { fetcher } from '../../../utils';
 import { login as authLogin } from '../../../reducers/userReducer';
 import { props, formData } from './types';
 import { User } from '../../../interfaces';
+import { ErrorContext } from '../../../contexts';
 import styles from './authForm.module.scss';
 
-const AuthForm = ({ auth, onSubmit }: props) => {
+const AuthForm = ({ auth }: props) => {
   const [disabled, setDisabled] = useState(true);
   const [redirect, setRedirect] = useState(false);
 
   const { register, handleSubmit, watch } = useForm();
   const dispatch = useDispatch();
+
+  const { setError } = useContext(ErrorContext);
 
   useEffect(() => {
     setDisabled(watch('email') ? false : true);
@@ -27,20 +30,18 @@ const AuthForm = ({ auth, onSubmit }: props) => {
 
     setDisabled(true);
 
-    const { errorMsg, user } = (await fetcher(
-      'post',
-      `/auth/${auth === 'login' ? 'login' : 'singup'}`,
-      {
+    try {
+      const { user } = (await fetcher('post', `/auth/${auth === 'login' ? 'login' : 'singup'}`, {
         email,
-      },
-    )) as { errorMsg?: string; user: User };
+      })) as { errorMsg?: string; user: User };
 
-    const allowNextStage = onSubmit(errorMsg);
-
-    if (allowNextStage) {
+      setError(null);
       setRedirect(true);
-
       dispatch(authLogin(user));
+    } catch (err) {
+      const { errorMsg } = err.response.data;
+
+      setError({ msg: errorMsg, id: Math.random() });
     }
 
     setDisabled(false);

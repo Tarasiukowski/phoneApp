@@ -8,7 +8,7 @@ class ConversationController {
 
     const { status, ...restData } = await new ConversationService(id, email).get();
 
-    res.send(restData);
+    res.status(status).send(restData);
   }
 
   async send({ body }: Request, res: Response) {

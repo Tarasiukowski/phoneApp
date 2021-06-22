@@ -39,10 +39,13 @@ const SettingsNumberContent = () => {
   const onSave = async () => {
     setDisabledByRequest(true);
 
-    const { errorMsg } = await fetcher('PUT', '/user/update', { number });
+    try {
+      await fetcher('PUT', '/user/update', { number });
+    } catch (err) {
+      const { errorMsg } = err.response.data;
 
-    if (errorMsg) {
       setError({ msg: errorMsg, id: Math.random() });
+
       return;
     }
   };

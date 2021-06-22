@@ -1,5 +1,6 @@
 import { model } from 'mongoose';
 
+import { ERROR } from '../../data/error';
 import { conversationSchema } from './conversationSchema';
 import { Conversation, ConversationDocument, Message } from './types';
 
@@ -50,7 +51,7 @@ class ConversationModel {
 
       return { succes: true, status: 200 };
     } catch (e) {
-      return { succes: false, status: 409 };
+      return { succes: false, status: 400, errorMsg: ERROR.CONVERSATION_CAN_NOT_SEND_MESSAGE };
     }
   }
 
@@ -68,7 +69,12 @@ class ConversationModel {
 
       return { succes: true, status: 200, conversation: { email: emailOfFriend, messages } };
     } catch (err) {
-      return { succes: true, status: 404, conversation: null };
+      return {
+        succes: true,
+        status: 404,
+        conversation: null,
+        errorMsg: ERROR.CONVERSATION_NOT_FOUND,
+      };
     }
   }
 

@@ -36,22 +36,26 @@ const OnboardingAccountContent = () => {
 
     setDisabledByRequest(true);
 
-    const { errorMsg } = await fetcher('PUT', '/user/update', {
-      fullname: formValues,
-    });
+    try {
+      await fetcher('PUT', '/user/update', {
+        fullname: formValues,
+      });
 
-    if (errorMsg) {
-      setError({ msg: errorMsg, id: Math.random() });
-      window.location.reload();
-      return;
-    }
+      try {
+        await fetcher('PUT', '/user/update', {
+          redirectTo: '/contacts',
+          onBoarding: true,
+        });
+      } catch (err) {
+        const { errorMsg } = err.response.data;
 
-    const data = await fetcher('PUT', '/user/update', {
-      redirectTo: '/contacts',
-      onBoarding: true,
-    });
+        setError({ msg: errorMsg, id: Math.random() });
+        window.location.reload();
+        return;
+      }
+    } catch (err) {
+      const { errorMsg } = err.response.data;
 
-    if (data.errorMsg) {
       setError({ msg: errorMsg, id: Math.random() });
       window.location.reload();
       return;

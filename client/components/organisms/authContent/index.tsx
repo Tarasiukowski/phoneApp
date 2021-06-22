@@ -28,36 +28,29 @@ const AuthContent = () => {
       profileObj: { email, imageUrl },
     } = res;
 
-    const { user, errorMsg } = await fetcher(
-      'post',
-      `/auth/${activePath === 'login' ? 'login' : 'singup'}`,
-      {
-        email,
-        image: imageUrl,
-        by: 'Google',
-      },
-    );
+    try {
+      const { user } = await fetcher(
+        'post',
+        `/auth/${activePath === 'login' ? 'login' : 'singup'}`,
+        {
+          email,
+          image: imageUrl,
+          by: 'Google',
+        },
+      );
 
-    if (errorMsg) {
-      setError({ msg: errorMsg, id: Math.random() });
-      return;
-    } else {
       setError(null);
-    }
 
-    setRedirect(true);
+      setRedirect(true);
 
-    dispatch(loginAuth(user));
-  };
+      dispatch(loginAuth(user));
+    } catch (err) {
+      const { errorMsg } = err.response.data;
 
-  const handleOnSubmit = (errorMsg?: string) => {
-    if (errorMsg) {
       setError({ msg: errorMsg, id: Math.random() });
-      return false;
-    }
 
-    setError(null);
-    return true;
+      return;
+    }
   };
 
   return (
@@ -71,7 +64,7 @@ const AuthContent = () => {
           render={({ onClick }) => <ButtonGoogle onClick={onClick} auth={activePath} />}
         />
         <p>Or continue with email</p>
-        <AuthForm auth={activePath} onSubmit={handleOnSubmit} />
+        <AuthForm auth={activePath} />
         <ToggleAuth auth={activePath} />
       </div>
     </RedirectTemplate>

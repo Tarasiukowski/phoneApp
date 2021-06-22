@@ -30,11 +30,15 @@ const FriendsList = () => {
       setOpenMultiTask(false);
     },
     onEnd: async (to: string) => {
-      const { errorMsg } = await fetcher('POST', '/user/invite', {
-        to,
-      });
+      try {
+        await fetcher('POST', '/user/invite', {
+          to,
+        });
 
-      if (errorMsg) {
+        return true;
+      } catch (err) {
+        const { errorMsg } = err.response.data;
+
         setError({ msg: errorMsg, id: Math.random() });
 
         if (errorMsg === ERROR.NOT_ALLOWED) {
@@ -43,8 +47,6 @@ const FriendsList = () => {
 
         return false;
       }
-
-      return true;
     },
   };
 

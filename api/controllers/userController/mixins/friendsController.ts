@@ -18,7 +18,7 @@ export function FriendsControllerMixin<Base extends Class>(base: Base) {
 
         const { status, ...restData } = await UserService.friend.remove(email, friendEmail);
 
-        res.send(restData);
+        res.status(status).send(restData);
       },
     };
   };

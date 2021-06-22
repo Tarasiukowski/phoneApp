@@ -14,7 +14,7 @@ class generateMiddleware {
       return;
     }
 
-    res.send({ status: 405, errorMsg: ERROR.FUNCTIONALITY_NOT_ALLOWED });
+    res.status(405).send({ errorMsg: ERROR.FUNCTIONALITY_NOT_ALLOWED });
   }
 }
 

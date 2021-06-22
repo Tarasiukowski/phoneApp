@@ -42,16 +42,18 @@ const SettingsProfileContent = () => {
   };
 
   const save = async () => {
-    const { errorMsg } = await fetcher('PUT', '/user/update', {
-      fullname: { firstname: firstnameValue, lastname: lastnameValue },
-    });
+    try {
+      await fetcher('PUT', '/user/update', {
+        fullname: { firstname: firstnameValue, lastname: lastnameValue },
+      });
+    } catch (err) {
+      const { errorMsg } = err.response.data;
 
-    if (errorMsg) {
       setError({ msg: errorMsg, id: Math.random() });
+      return;
     }
 
     window.location.reload();
-    return;
   };
 
   const multitaskHandle = {
@@ -63,11 +65,15 @@ const SettingsProfileContent = () => {
         return false;
       }
 
-      const { errorMsg } = await fetcher('PUT', '/user/update', {
-        newEmail,
-      });
+      try {
+        await fetcher('PUT', '/user/update', {
+          newEmail,
+        });
 
-      if (errorMsg) {
+        return true;
+      } catch (err) {
+        const { errorMsg } = err.response.data;
+
         setError({ msg: errorMsg, id: Math.random() });
 
         if (errorMsg === ERROR.NOT_ALLOWED) {
@@ -75,8 +81,6 @@ const SettingsProfileContent = () => {
         }
         return false;
       }
-
-      return true;
     },
     onClose: (verify?: boolean) => {
       fetcher('PUT', '/user/update', {
@@ -88,16 +92,18 @@ const SettingsProfileContent = () => {
       verify && window.location.reload();
     },
     onEnd: async (code: string) => {
-      const { errorMsg } = await fetcher('POST', '/user/verify/email', {
-        code,
-      });
+      try {
+        await fetcher('POST', '/user/verify/email', {
+          code,
+        });
 
-      if (errorMsg) {
+        return true;
+      } catch (err) {
+        const { errorMsg } = err.response.data;
+
         setError({ msg: errorMsg, id: Math.random() });
         return false;
       }
-
-      return true;
     },
   };
 

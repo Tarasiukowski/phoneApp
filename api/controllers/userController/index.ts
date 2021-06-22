@@ -10,7 +10,7 @@ class UserController extends FriendsControllerMixin(InviteControllerMixin(class 
 
     const { status, ...restData } = await UserService.update(body);
 
-    res.send(restData);
+    res.status(status).send(restData);
   }
 
   async verify(req: Request, res: Response) {
@@ -19,7 +19,7 @@ class UserController extends FriendsControllerMixin(InviteControllerMixin(class 
 
     const { status, ...restData } = await UserService.verify(body, name);
 
-    res.send(restData);
+    res.status(status).send(restData);
   }
 }
 

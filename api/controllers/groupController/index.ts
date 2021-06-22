@@ -7,7 +7,7 @@ class GroupController {
 
     const { status, ...restData } = await new GroupService(email, name, members).create();
 
-    res.send(restData);
+    res.status(status).send(restData);
   }
 }
 

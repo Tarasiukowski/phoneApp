@@ -28,22 +28,24 @@ const OnboardingNumberContent = () => {
   };
 
   const next = async () => {
-    let data;
+    try {
+      await fetcher('PUT', '/user/update', { number });
+    } catch (err) {
+      const { errorMsg } = err.response.data;
 
-    data = await fetcher('PUT', '/user/update', { number });
-
-    if (data.errorMsg) {
-      setError({ msg: data.errorMsg, id: Math.random() });
+      setError({ msg: errorMsg, id: Math.random() });
       window.location.reload();
       return;
     }
 
-    data = await fetcher('PUT', '/user/update', {
-      redirectTo: '/onboarding/account',
-    });
+    try {
+      await fetcher('PUT', '/user/update', {
+        redirectTo: '/onboarding/account',
+      });
+    } catch (err) {
+      const { errorMsg } = err.response.data;
 
-    if (data.errorMsg) {
-      setError({ msg: data.errorMsg, id: Math.random() });
+      setError({ msg: errorMsg, id: Math.random() });
       window.location.reload();
       return;
     }
