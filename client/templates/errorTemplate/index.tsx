@@ -2,21 +2,17 @@ import { useContext } from 'react';
 
 import { Alert } from '../../components/atoms';
 
-import { ErrorContext, ErrorProvider } from '../../contexts';
+import { ErrorContext } from '../../contexts';
 
-const ErrorTemplate: React.FC = ({ children }) => (
-  <ErrorProvider>
-    {(() => {
-      const { error } = useContext(ErrorContext);
+const ErrorTemplate: React.FC = ({ children }) => {
+  const { error } = useContext(ErrorContext);
 
-      return (
-        <>
-          <Alert error={error} />
-          {children}
-        </>
-      );
-    })()}
-  </ErrorProvider>
-);
+  return (
+    <>
+      <Alert error={error} />
+      {children}
+    </>
+  );
+};
 
 export { ErrorTemplate };
