@@ -48,7 +48,7 @@ const ImageUser = ({ member, ...restProps }: props) => {
 
   return (
     <Image image={image} colorImage={colorImage} {...restProps}>
-      {image || <p>{initials}</p>}
+      {!image && <p>{initials}</p>}
     </Image>
   );
 };

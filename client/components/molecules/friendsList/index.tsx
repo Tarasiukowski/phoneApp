@@ -8,8 +8,7 @@ import AddButton from './addButton';
 
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { selectUser } from '../../../reducers/userReducer';
-import { ERROR } from '../../../common/errors';
-import { fetcher } from '../../../utils';
+import { fetcher, handleNotAllowedError } from '../../../utils';
 import { ErrorContext } from '../../../contexts';
 import styles from './friendsList.module.scss';
 
@@ -37,13 +36,12 @@ const FriendsList = () => {
 
         return true;
       } catch (err) {
-        const { errorMsg } = err.response.data;
+        const { data, status } = err.response;
+        const { errorMsg } = data;
 
         setError({ msg: errorMsg, id: Math.random() });
 
-        if (errorMsg === ERROR.NOT_ALLOWED) {
-          window.location.reload();
-        }
+        handleNotAllowedError(status);
 
         return false;
       }

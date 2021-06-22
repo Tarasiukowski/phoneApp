@@ -6,7 +6,7 @@ import { SelectNumberButton, SelectNumberList } from '../../../molecules';
 import { RedirectTemplate } from '../../../../templates';
 
 import { selectUser } from '../../../../reducers/userReducer';
-import { fetcher } from '../../../../utils';
+import { fetcher, handleNotAllowedError } from '../../../../utils';
 import { ErrorContext } from '../../../../contexts';
 import styles from './number.module.scss';
 
@@ -31,10 +31,12 @@ const OnboardingNumberContent = () => {
     try {
       await fetcher('PUT', '/user/update', { number });
     } catch (err) {
-      const { errorMsg } = err.response.data;
+      const { data, status } = err.response;
+      const { errorMsg } = data;
 
       setError({ msg: errorMsg, id: Math.random() });
-      window.location.reload();
+
+      handleNotAllowedError(status);
       return;
     }
 
@@ -43,10 +45,12 @@ const OnboardingNumberContent = () => {
         redirectTo: '/onboarding/account',
       });
     } catch (err) {
-      const { errorMsg } = err.response.data;
+      const { data, status } = err.response;
+      const { errorMsg } = data;
 
       setError({ msg: errorMsg, id: Math.random() });
-      window.location.reload();
+
+      handleNotAllowedError(status);
       return;
     }
 

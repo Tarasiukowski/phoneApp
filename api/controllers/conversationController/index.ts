@@ -16,7 +16,7 @@ class ConversationController {
 
     const { status, ...restData } = await new ConversationService(id, email).send(content);
 
-    res.send(restData);
+    res.status(status).send(restData);
   }
 }
 

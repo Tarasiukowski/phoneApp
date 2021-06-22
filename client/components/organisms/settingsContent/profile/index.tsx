@@ -8,7 +8,7 @@ import { SettingsTemplate } from '../../../../templates';
 import styles from './profile.module.scss';
 import { InputsValues } from './types';
 import { selectUser } from '../../../../reducers/userReducer';
-import { fetcher } from '../../../../utils';
+import { fetcher, handleNotAllowedError } from '../../../../utils';
 import { ERROR } from '../../../../common/errors';
 import { ErrorContext } from '../../../../contexts';
 
@@ -47,9 +47,12 @@ const SettingsProfileContent = () => {
         fullname: { firstname: firstnameValue, lastname: lastnameValue },
       });
     } catch (err) {
-      const { errorMsg } = err.response.data;
+      const { data, status } = err.response;
+      const { errorMsg } = data;
 
       setError({ msg: errorMsg, id: Math.random() });
+
+      handleNotAllowedError(status);
       return;
     }
 
@@ -72,24 +75,33 @@ const SettingsProfileContent = () => {
 
         return true;
       } catch (err) {
-        const { errorMsg } = err.response.data;
+        const { data, status } = err.response;
+        const { errorMsg } = data;
 
         setError({ msg: errorMsg, id: Math.random() });
 
-        if (errorMsg === ERROR.NOT_ALLOWED) {
-          window.location.reload();
-        }
+        handleNotAllowedError(status);
+
         return false;
       }
     },
-    onClose: (verify?: boolean) => {
-      fetcher('PUT', '/user/update', {
-        field: 'newEmail',
-        option: 'removeField',
-      });
+    onClose: async (verify?: boolean) => {
+      try {
+        await fetcher('PUT', '/user/update', {
+          field: 'newEmail',
+          option: 'removeField',
+        });
 
-      setOpenMultiTask(false);
-      verify && window.location.reload();
+        setOpenMultiTask(false);
+        verify && window.location.reload();
+      } catch (err) {
+        const { data, status } = err.response;
+        const { errorMsg } = data;
+
+        setError({ msg: errorMsg, id: Math.random() });
+
+        handleNotAllowedError(status);
+      }
     },
     onEnd: async (code: string) => {
       try {
@@ -99,9 +111,12 @@ const SettingsProfileContent = () => {
 
         return true;
       } catch (err) {
-        const { errorMsg } = err.response.data;
+        const { data, status } = err.response;
+        const { errorMsg } = data;
 
         setError({ msg: errorMsg, id: Math.random() });
+
+        handleNotAllowedError(status);
         return false;
       }
     },

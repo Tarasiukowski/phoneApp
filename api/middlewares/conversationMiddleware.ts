@@ -10,12 +10,14 @@ class conversationMiddleware {
 
     const { user } = await AuthService.index(token);
 
-    if (user.value.email === email) {
-      next();
-      return;
+    if (user) {
+      if (user.value.email === email) {
+        next();
+        return;
+      }
     }
 
-    res.send({ status: 405, errorMsg: ERROR.FUNCTIONALITY_NOT_ALLOWED });
+    res.status(405).send({ errorMsg: ERROR.FUNCTIONALITY_NOT_ALLOWED });
   }
 }
 

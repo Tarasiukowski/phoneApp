@@ -5,8 +5,7 @@ import { Button, Input } from '../../../atoms';
 import { RedirectTemplate } from '../../../../templates';
 
 import { selectUser } from '../../../../reducers/userReducer';
-import { fetcher } from '../../../../utils';
-import { ERROR } from '../../../../common/errors';
+import { fetcher, handleNotAllowedError } from '../../../../utils';
 import { ErrorContext } from '../../../../contexts';
 import styles from './code.module.scss';
 
@@ -36,24 +35,23 @@ const OnboardingCodeContent = () => {
             redirectTo: '/onboarding/number',
           });
         } catch (err) {
-          const { errorMsg } = err.response.data;
+          const { data, status } = err.response;
+          const { errorMsg } = data;
 
           setError({ msg: errorMsg, id: Math.random() });
 
-          if (errorMsg === ERROR.NOT_ALLOWED) {
-            window.location.reload();
-          }
+          handleNotAllowedError(status);
+
           return;
         }
       }
     } catch (err) {
-      const { errorMsg } = err.response.data;
+      const { data, status } = err.response;
+      const { errorMsg } = data;
 
       setError({ msg: errorMsg, id: Math.random() });
 
-      if (errorMsg === ERROR.NOT_ALLOWED) {
-        window.location.reload();
-      }
+      handleNotAllowedError(status);
       return;
     }
 

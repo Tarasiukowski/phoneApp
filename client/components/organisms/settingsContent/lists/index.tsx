@@ -8,7 +8,7 @@ import { SettingsTemplate } from '../../../../templates';
 import { GroupData } from '../../../molecules/multitask/types';
 import { selectFriends } from '../../../../reducers/friendsReducer';
 import { ERROR } from '../../../../common/errors';
-import { fetcher, getObjectsKeysFromArray } from '../../../../utils';
+import { fetcher, getObjectsKeysFromArray, handleNotAllowedError } from '../../../../utils';
 import { update } from '../../../../reducers/userReducer';
 import { ErrorContext } from '../../../../contexts';
 import styles from './lists.module.scss';
@@ -50,9 +50,12 @@ const SettingsListsContent = () => {
 
         return true;
       } catch (err) {
-        const { errorMsg } = err.response.data;
+        const { data, status } = err.response;
+        const { errorMsg } = data;
 
         setError({ msg: errorMsg, id: Math.random() });
+
+        handleNotAllowedError(status);
         return false;
       }
     },

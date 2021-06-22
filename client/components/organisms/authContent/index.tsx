@@ -8,7 +8,7 @@ import { AuthForm } from '../../molecules';
 import { RedirectTemplate } from '../../../templates';
 
 import { login as loginAuth } from '../../../reducers/userReducer';
-import { fetcher } from '../../../utils';
+import { fetcher, handleNotAllowedError } from '../../../utils';
 import { ErrorContext } from '../../../contexts';
 import styles from './authContent.module.scss';
 
@@ -45,9 +45,12 @@ const AuthContent = () => {
 
       dispatch(loginAuth(user));
     } catch (err) {
-      const { errorMsg } = err.response.data;
+      const { data, status } = err.response;
+      const { errorMsg } = data;
 
       setError({ msg: errorMsg, id: Math.random() });
+
+      handleNotAllowedError(status);
 
       return;
     }

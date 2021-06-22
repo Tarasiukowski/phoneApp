@@ -13,7 +13,7 @@ import { useScroll } from 'react-use';
 import Input from './input';
 import NumbersList from './numbersList';
 
-import { fetcher } from '../../../../utils';
+import { fetcher, handleNotAllowedError } from '../../../../utils';
 import { props, Numbers } from '../types';
 import { ErrorContext } from '../../../../contexts';
 import styles from './list.module.scss';
@@ -57,10 +57,12 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
             setNumbers({ all: [...allNumbers, ...numbers] });
           })
           .catch((err) => {
-            const { errorMsg } = err.response.data;
+            const { data, status } = err.response;
+            const { errorMsg } = data;
 
             setError({ msg: errorMsg, id: Math.random() });
-            window.location.reload();
+
+            handleNotAllowedError(status);
           });
       }
     }
@@ -72,10 +74,12 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
         setNumbers({ recommended: numbers });
       })
       .catch((err) => {
-        const { errorMsg } = err.response.data;
+        const { data, status } = err.response;
+        const { errorMsg } = data;
 
         setError({ msg: errorMsg, id: Math.random() });
-        window.location.reload();
+
+        handleNotAllowedError(status);
       });
   }, []);
 
@@ -85,10 +89,12 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
         setNumbers({ all: numbers });
       })
       .catch((err) => {
-        const { errorMsg } = err.response.data;
+        const { data, status } = err.response;
+        const { errorMsg } = data;
 
         setError({ msg: errorMsg, id: Math.random() });
-        window.location.reload();
+
+        handleNotAllowedError(status);
       });
   }, [valueDigits]);
 

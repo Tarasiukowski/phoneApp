@@ -7,7 +7,7 @@ import { UserDetailed } from '../index';
 import { SearchSvg } from '../../../public/svgs';
 import { User } from '../../../interfaces';
 import { props } from './types';
-import { fetcher, filterByKey } from '../../../utils';
+import { fetcher, filterByKey, handleNotAllowedError } from '../../../utils';
 import { add } from '../../../reducers/friendsReducer';
 import { remove } from '../../../reducers/invitesReducer';
 import { ErrorContext } from '../../../contexts';
@@ -65,9 +65,12 @@ const UsersList = ({ name, data }: props) => {
       dispatch(remove({ email: user.email }));
       dispatch(add({ user: user }));
     } catch (err) {
-      const { errorMsg } = err.response.data;
+      const { data, status } = err.response;
+      const { errorMsg } = data;
 
       setError({ msg: errorMsg, id: Math.random() });
+
+      handleNotAllowedError(status);
       return;
     }
   };

@@ -24,7 +24,7 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
 
         const { data: findedUsers } = await UserModel.find(invites, 'email');
 
-        res.send(await findedUsers);
+        res.status(status).send(await findedUsers);
       },
 
       async accept(req: Request, res: Response) {

@@ -6,7 +6,7 @@ import { SelectNumberButton, SelectNumberList } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 
 import { selectUser } from '../../../../reducers/userReducer';
-import { fetcher } from '../../../../utils';
+import { fetcher, handleNotAllowedError } from '../../../../utils';
 import { ErrorContext } from '../../../../contexts';
 
 const SettingsNumberContent = () => {
@@ -42,9 +42,12 @@ const SettingsNumberContent = () => {
     try {
       await fetcher('PUT', '/user/update', { number });
     } catch (err) {
-      const { errorMsg } = err.response.data;
+      const { data, status } = err.response;
+      const { errorMsg } = data;
 
       setError({ msg: errorMsg, id: Math.random() });
+
+      handleNotAllowedError(status);
 
       return;
     }

@@ -9,7 +9,7 @@ import { ErrorContext } from '../../../contexts';
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { ChatData } from '../../organisms/groupContent/types';
 import { props } from './types';
-import { fetcher } from '../../../utils';
+import { fetcher, handleNotAllowedError } from '../../../utils';
 import { User } from '../../../interfaces';
 import styles from './chat.module.scss';
 
@@ -44,9 +44,12 @@ const Chat = ({ id, onFetchData, width }: props) => {
 
         onFetchData(dataChat);
       } catch (err) {
-        const { errorMsg } = err.response.data;
+        const { data, status } = err.response;
+        const { errorMsg } = data;
 
         setError({ msg: errorMsg, id: Math.random() });
+
+        handleNotAllowedError(status);
       }
     }
   };
@@ -73,9 +76,12 @@ const Chat = ({ id, onFetchData, width }: props) => {
 
           setValueTextarea('');
         } catch (err) {
-          const { errorMsg } = err.response.data;
+          const { data, code } = err.response;
+          const { errorMsg } = data;
 
           setError({ msg: errorMsg, id: Math.random() });
+
+          handleNotAllowedError(code);
         }
       }
     },

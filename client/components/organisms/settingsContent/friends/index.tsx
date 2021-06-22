@@ -6,9 +6,8 @@ import { Multitask, ElementFinder } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 import ElementList from './elementList';
 
-import { fetcher } from '../../../../utils';
+import { fetcher, handleNotAllowedError } from '../../../../utils';
 import { User } from '../../../../interfaces';
-import { ERROR } from '../../../../common/errors';
 import { remove, selectFriends } from '../../../../reducers/friendsReducer';
 import { ErrorContext } from '../../../../contexts';
 
@@ -29,8 +28,12 @@ const SettingsFriendsContent = () => {
         friendEmail: email,
       });
     } catch (err) {
-      const { errorMsg } = err.response.data;
+      const { data, status } = err.response;
+      const { errorMsg } = data;
+
       setError({ msg: errorMsg, id: Math.random() });
+
+      handleNotAllowedError(status);
       return;
     }
 
@@ -51,13 +54,12 @@ const SettingsFriendsContent = () => {
 
         return true;
       } catch (err) {
-        const { errorMsg } = err.response.data;
+        const { data, status } = err.response;
+        const { errorMsg } = data;
 
         setError({ msg: errorMsg, id: Math.random() });
 
-        if (errorMsg === ERROR.NOT_ALLOWED) {
-          window.location.reload();
-        }
+        handleNotAllowedError(status);
 
         return false;
       }
