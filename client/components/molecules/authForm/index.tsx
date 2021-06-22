@@ -35,12 +35,15 @@ const AuthForm = ({ auth, onSubmit }: props) => {
       },
     )) as { errorMsg?: string; user: User };
 
-    onSubmit(errorMsg);
+    const allowNextStage = onSubmit(errorMsg);
+
+    if (allowNextStage) {
+      setRedirect(true);
+
+      dispatch(authLogin(user));
+    }
 
     setDisabled(false);
-    setRedirect(true);
-
-    dispatch(authLogin(user));
   };
 
   return (

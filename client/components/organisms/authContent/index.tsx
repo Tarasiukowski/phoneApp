@@ -53,10 +53,11 @@ const AuthContent = () => {
   const handleOnSubmit = (errorMsg?: string) => {
     if (errorMsg) {
       setError({ msg: errorMsg, id: Math.random() });
-      return;
+      return false;
     }
 
     setError(null);
+    return true;
   };
 
   return (

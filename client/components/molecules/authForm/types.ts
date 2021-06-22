@@ -1,6 +1,6 @@
 export type props = {
   auth: 'login' | 'singup';
-  onSubmit: (msg?: string) => void;
+  onSubmit: (msg?: string) => boolean;
 };
 
 export type formData = {
