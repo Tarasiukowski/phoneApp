@@ -20,13 +20,21 @@ const MainTemplate: React.FC = ({ children }) => {
   const disptach = useDispatch();
   const router = useRouter();
 
-  const { data: fetchedFriends, error: errorF } = useSwr(['/user/friends', 'POST'], swrFetcher, {
-    refreshInterval: 1,
-  });
-  const { data: fetchedInvites, error: errorI } = useSwr(['/user/invite/get', 'POST'], swrFetcher, {
-    refreshInterval: 1,
-  });
-  const { data: fetchedUserData, error: errorU } = useSwr(['/auth', 'POST'], swrFetcher, {
+  const { data: fetchedFriends, error: errorFriends } = useSwr(
+    ['/user/friends', 'POST'],
+    swrFetcher,
+    {
+      refreshInterval: 1,
+    },
+  );
+  const { data: fetchedInvites, error: errorInvites } = useSwr(
+    ['/user/invite/get', 'POST'],
+    swrFetcher,
+    {
+      refreshInterval: 1,
+    },
+  );
+  const { data: fetchedUserData, error: errorUser } = useSwr(['/auth', 'POST'], swrFetcher, {
     refreshInterval: 1,
   });
 
@@ -37,26 +45,26 @@ const MainTemplate: React.FC = ({ children }) => {
   }, [router.asPath]);
 
   useEffect(() => {
-    if (!errorF && fetchedFriends && fetchedFriends.length !== friends.length) {
+    if (!errorFriends && fetchedFriends && fetchedFriends.length !== friends.length) {
       disptach(updateFriends(fetchedFriends.data));
     }
-  }, [fetchedFriends, errorF]);
+  }, [fetchedFriends, errorFriends]);
 
   useEffect(() => {
-    if (!errorI && fetchedInvites && fetchedInvites.length !== invites.length) {
+    if (!errorInvites && fetchedInvites && fetchedInvites.length !== invites.length) {
       disptach(updateInvites(fetchedInvites));
     }
-  }, [fetchedInvites, errorI]);
+  }, [fetchedInvites, errorInvites]);
 
   useEffect(() => {
-    if (!errorU && fetchedUserData && fetchedUserData.user) {
+    if (!errorUser && fetchedUserData && fetchedUserData.user) {
       const fetchedUser = fetchedUserData.user.value;
 
       if (!_.isEqual(fetchedUser, user)) {
         disptach(login(fetchedUser));
       }
     }
-  }, [fetchedUserData, errorU]);
+  }, [fetchedUserData, errorUser]);
 
   return (
     <Template>

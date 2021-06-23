@@ -35,7 +35,7 @@ class UserService {
       return { user: null, status: 404 };
     }
 
-    return { user: null, status: 400 };
+    return { user: null, status: 200 };
   }
 
   async login() {

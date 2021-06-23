@@ -11,7 +11,7 @@ export function FriendsControllerMixin<Base extends Class>(base: Base) {
 
         const { status, ...restData } = await UserService.friend.get(email);
 
-        res.send(restData);
+        res.status(status).send(restData);
       },
       async remove(req: Request, res: Response) {
         const { email, friendEmail } = req.body;

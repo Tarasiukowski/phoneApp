@@ -8,7 +8,7 @@ class AuthController {
 
     const { status, ...restData } = await AuthService.index(token);
 
-    res.send(restData);
+    res.status(status).send(restData);
   }
 
   async login(req: Request, res: Response) {

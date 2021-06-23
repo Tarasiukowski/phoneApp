@@ -40,7 +40,7 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
 
         const { status, ...restData } = await UserService.invite.reject(email, from);
 
-        res.send(restData);
+        res.status(status).send(restData);
       },
     };
   };

@@ -15,7 +15,7 @@ class authMiddleware {
         return;
       }
 
-      res.send({ user, status })
+      res.send({ user, status });
     }
 
     res.send({ status: 405, errorMsg: ERROR.FUNCTIONALITY_NOT_ALLOWED })
