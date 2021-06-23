@@ -56,7 +56,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
 
         setInputValue(value);
       },
-      onKetUp(e: KeyboardEvent<HTMLInputElement>) {
+      onKeyUp(e: KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'Enter') {
           if (!isDisabled) {
             next();
