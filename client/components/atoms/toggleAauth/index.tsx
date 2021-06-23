@@ -4,13 +4,13 @@ import { props } from './types';
 import styles from './ToggleAuth.module.scss';
 
 const ToggleAuth = ({ auth }: props) => {
-  const isLogin = auth === 'login' ? true : false;
+  const isRegister = auth === 'singup';
 
   return (
     <div className={styles.wrapper}>
       <p>
-        {isLogin ? 'Need an account?' : 'Already have an account?'}
-        <Link href={isLogin ? '/singup' : '/login'}>{isLogin ? 'Sing up.' : 'Login.'}</Link>
+        {isRegister ? 'Already have an account?' : 'Need an account?'}
+        <Link href={isRegister ? '/login' : '/singup'}>{isRegister ? 'Login.' : 'Sing up.'}</Link>
       </p>
     </div>
   );
