@@ -20,20 +20,11 @@ const UserCard = forwardRef<HTMLDivElement, props>(
     const user = useSelector(selectUser);
 
     useEffect(() => {
-      if (member) {
-        const { fullname } = member;
-        const { firstname, lastname } = fullname;
+      const { fullname } = member ? member : user;
 
-        setFullname(`${firstname} ${lastname}`);
-      } else {
-        if (user) {
-          const {
-            fullname: { firstname, lastname },
-          } = user;
+      const formatedFullname = Object.values(fullname).join(' ');
 
-          setFullname(`${firstname} ${lastname}`);
-        }
-      }
+      setFullname(formatedFullname);
     }, [member]);
 
     useEffect(() => {
