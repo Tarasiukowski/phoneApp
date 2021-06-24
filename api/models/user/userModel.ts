@@ -4,7 +4,7 @@ import { generateCode, sendMail, formatUser, getUpdateOption } from '../../utils
 import { userSchema } from './userSchema';
 import { By, UserDocument } from './types';
 import { ERROR, getDefaultDataUser } from '../../data';
-import { updateOption } from '../../interfaces';
+import { updateType } from '../../interfaces';
 
 export const userModel = model<UserDocument>('user', userSchema);
 
@@ -33,12 +33,12 @@ class UserModel {
     return formatedUser;
   }
 
-  static async update(data: any, option: updateOption = 'setField') {
+  static async update(data: any, type: updateType = 'set') {
     const { email, newEmail } = data;
 
     delete data.email;
 
-    if (newEmail) {
+    if (type === 'newEmail') {
       const { user } = await this.findOne('email', newEmail);
 
       if (user) {
@@ -47,7 +47,7 @@ class UserModel {
     }
 
     try {
-      await userModel.updateOne({ email }, getUpdateOption(data, option));
+      await userModel.updateOne({ email }, getUpdateOption(data, type));
 
       return { status: 200, errorMsg: null };
     } catch (err) {

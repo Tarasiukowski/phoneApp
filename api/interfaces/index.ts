@@ -1,3 +1,3 @@
-export type updateOption = 'removeField' | 'setField' | 'newEmail' | "pushToField" | "pull" | "setEmail"
+export type updateType = 'remove' | 'set' | 'newEmail' | "push" | "pull" | "setEmail"
 
 export type Class = new (...args: any[]) => any;

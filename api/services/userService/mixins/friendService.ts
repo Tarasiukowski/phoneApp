@@ -41,8 +41,8 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
         if (friend) {
           const stagesOfRemoveFriend = getStagesOfRemoveFriend(email, friendEmail);
 
-          stagesOfRemoveFriend.map(({ data, option }) => {
-            UserModel.update(data, option);
+          stagesOfRemoveFriend.map(({ data, type }) => {
+            UserModel.update(data, type);
           });
 
           ConversationModel.remove('users', [email, friendEmail]);

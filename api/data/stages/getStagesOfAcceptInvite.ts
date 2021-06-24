@@ -1,19 +1,19 @@
-import { updateOption } from '../../interfaces';
+import { updateType } from '../../interfaces';
 
 export const getStagesOfAcceptInvite = (
   email: string,
   from: string,
-): { data: object; option: updateOption }[] => [
+): { data: object; type: updateType }[] => [
   {
     data: { email, field: 'invites', value: from },
-    option: 'pull',
+    type: 'pull',
   },
   {
     data: { email, field: 'friends', value: { email: from, notes: [] } },
-    option: 'pushToField',
+    type: 'push',
   },
   {
     data: { email: from, field: 'friends', value: { email, notes: [] } },
-    option: 'pushToField',
+    type: 'push',
   },
 ];

@@ -1,14 +1,20 @@
 import { Response, Request } from 'express';
 
+import { updateType } from '../../interfaces';
 import UserService from '../../services/userService';
+import { getUpdateType } from '../../utils/getUpdateOption';
 import { FriendsControllerMixin } from './mixins/friendsController';
 import { InviteControllerMixin } from './mixins/inviteController';
 
 class UserController extends FriendsControllerMixin(InviteControllerMixin(class {})) {
   async update(req: Request, res: Response) {
-    const body = req.body;
+    const method = req.method as 'PUT' | 'DELETE';
+    const { name } = req.params as { name: updateType };
+    const body = method === 'PUT' ? req.body : { ...req.body, field: name };
 
-    const { status, ...restData } = await UserService.update(body);
+    const updateType = method === 'PUT' && name ? name : getUpdateType(method);
+
+    const { status, ...restData } = await UserService.update(body, updateType);
 
     res.status(status).send(restData);
   }

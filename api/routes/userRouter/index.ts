@@ -9,5 +9,7 @@ export const userRouter = Router();
 userRouter
   .post('/verify/:name', userController.verify)
   .put('/update', userController.update)
+  .put('/update/:name', userController.update)
+  .delete('/update/:name', userController.update)
   .use('/invite', inviteRouter)
   .use('/friends', friendsRouter);

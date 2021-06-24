@@ -15,11 +15,11 @@ class ConversationModel {
     this.messages = [];
   }
 
-  static async update(id: string, data: any, option: '$push' | '$pull') {
+  static async update(id: string, data: any, type: 'push' | 'pull') {
     try {
-      await conversationModel.updateOne({ _id: id }, { [option]: { ...data } });
+      await conversationModel.updateOne({ _id: id }, { [`$${type}`]: { ...data } });
 
-      if (data.users && option === '$push') {
+      if (data.users && type === 'push') {
         const conversation = await (await conversationModel.findOne({ _id: id })).toObject();
 
         // FIX ME

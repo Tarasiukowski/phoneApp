@@ -69,7 +69,7 @@ const SettingsProfileContent = () => {
       }
 
       try {
-        await fetcher('PUT', '/user/update', {
+        await fetcher('PUT', '/user/update/newEmail', {
           newEmail,
         });
 
@@ -87,10 +87,7 @@ const SettingsProfileContent = () => {
     },
     onClose: async (verify?: boolean) => {
       try {
-        await fetcher('PUT', '/user/update', {
-          field: 'newEmail',
-          option: 'removeField',
-        });
+        await fetcher('DELETE', '/user/update/newEmail');
 
         setOpenMultiTask(false);
         verify && window.location.reload();

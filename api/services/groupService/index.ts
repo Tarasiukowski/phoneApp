@@ -16,7 +16,7 @@ class GroupService {
 
     const data = await UserModel.update(
       { email: author, field: 'groups', value: { name, members: users } },
-      'pushToField',
+      'push',
     );
 
     return data;
