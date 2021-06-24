@@ -1,4 +1,4 @@
-import { ChangeEvent, useReducer, useState, useContext } from 'react';
+import { ChangeEvent, useReducer, useState, useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { ImageUser, Input, Button } from '../../../atoms';
@@ -59,6 +59,16 @@ const SettingsProfileContent = () => {
     window.location.reload();
   };
 
+  const resetData = async () => {
+    await fetcher('DELETE', '/user/update/newEmail');
+  };
+
+  useEffect(() => {
+    if (openMultiTask === false) {
+      resetData();
+    }
+  }, [openMultiTask]);
+
   const multitaskHandle = {
     name: 'ChangeEmail' as 'ChangeEmail',
     open: openMultiTask,
@@ -86,19 +96,8 @@ const SettingsProfileContent = () => {
       }
     },
     onClose: async (verify?: boolean) => {
-      try {
-        await fetcher('DELETE', '/user/update/newEmail');
-
-        setOpenMultiTask(false);
-        verify && window.location.reload();
-      } catch (err) {
-        const { data, status } = err.response;
-        const { errorMsg } = data;
-
-        setError({ msg: errorMsg, id: Math.random() });
-
-        handleNotAllowedError(status);
-      }
+      setOpenMultiTask(false);
+      verify && window.location.reload();
     },
     onEnd: async (code: string) => {
       try {
