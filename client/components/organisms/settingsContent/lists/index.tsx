@@ -19,10 +19,23 @@ const SettingsListsContent = () => {
 
   const dispatch = useDispatch();
 
-  const { groups } = useSelector(selectUser);
+  const { groups, email } = useSelector(selectUser);
   const friends = useSelector(selectFriends);
 
   const { setError } = useContext(ErrorContext);
+
+  const removeGroup = async (name: string) => {
+    try {
+      await fetcher('DELETE', '/group/remove', { email, name });
+    } catch (err) {
+      const { data, status } = err.response;
+      const { errorMsg } = data;
+
+      setError({ msg: errorMsg, id: Math.random() });
+
+      handleNotAllowedError(status);
+    }
+  };
 
   const multitaskHandle = {
     name: 'CreateGroup' as 'CreateGroup',
@@ -86,8 +99,9 @@ const SettingsListsContent = () => {
         renderItem={({ name }) => (
           <ElementList
             name={name}
+            key={name}
             onClick={() => {
-              alert('on click');
+              removeGroup(name);
             }}
           />
         )}

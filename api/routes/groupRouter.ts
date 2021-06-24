@@ -4,4 +4,4 @@ import { groupController } from '../controllers/groupController';
 
 export const groupRouter = Router();
 
-groupRouter.post('/create', groupController.create);
+groupRouter.post('/create', groupController.create).delete('/remove', groupController.remove);
