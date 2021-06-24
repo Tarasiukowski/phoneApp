@@ -2,14 +2,15 @@ import { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '../../../atoms';
-import { Multitask } from '../../../molecules';
+import { Multitask, ElementFinder } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
+import ElementList from './elementList';
 
 import { GroupData } from '../../../molecules/multitask/types';
 import { selectFriends } from '../../../../reducers/friendsReducer';
 import { ERROR } from '../../../../common/errors';
 import { fetcher, getObjectsKeysFromArray, handleNotAllowedError } from '../../../../utils';
-import { update } from '../../../../reducers/userReducer';
+import { selectUser, update } from '../../../../reducers/userReducer';
 import { ErrorContext } from '../../../../contexts';
 import styles from './lists.module.scss';
 
@@ -18,6 +19,7 @@ const SettingsListsContent = () => {
 
   const dispatch = useDispatch();
 
+  const { groups } = useSelector(selectUser);
   const friends = useSelector(selectFriends);
 
   const { setError } = useContext(ErrorContext);
@@ -76,13 +78,20 @@ const SettingsListsContent = () => {
       >
         Create a group
       </Button>
-      {/* <ElementFinder
-        data={[]}
-        filterKey=""
+      <ElementFinder
+        data={groups}
+        filterKey="name"
         placeholder="Search for a group name"
         notFound="No groups to show"
-        renderList={() => null}
-      /> */}
+        renderItem={({ name }) => (
+          <ElementList
+            name={name}
+            onClick={() => {
+              alert('on click');
+            }}
+          />
+        )}
+      />
       <div className={styles.dangerZone}>
         <h4>Danger Zone</h4>
         <p className={styles.info}>
