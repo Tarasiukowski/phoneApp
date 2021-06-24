@@ -18,7 +18,7 @@ const SettingsNumberContent = () => {
 
   const user = useSelector(selectUser);
 
-  const implementedChange = user.number === number;
+  const implementedChange = number ? user.number === number : true;
 
   useEffect(() => {
     setNumber(user ? user.number : null);
@@ -53,21 +53,21 @@ const SettingsNumberContent = () => {
     }
   };
 
+  const handleMultiTask = {
+    onSelectNumber: (number: string) => {
+      setNumber(number);
+    },
+    onClose: () => {
+      setOpenList(false);
+    },
+  };
+
   return (
     <SettingsTemplate>
       <h2 className="title">Phone number</h2>
       <p className="description">Manage your phone number</p>
       <SelectNumberButton number={number} onClick={toggleOpenList} mini />
-      {openList && (
-        <SelectNumberList
-          onSelectNumber={(number) => {
-            setNumber(number);
-          }}
-          onClose={() => {
-            setOpenList(false);
-          }}
-        />
-      )}
+      {openList && <SelectNumberList {...handleMultiTask} />}
       <Button
         onClick={onSave}
         disabled={disabledByRequest ? disabledByRequest : implementedChange}

@@ -64,6 +64,8 @@ const UsersList = ({ name, data }: props) => {
 
       dispatch(remove({ email: user.email }));
       dispatch(add({ user: user }));
+
+      setDetailedUser(null);
     } catch (err) {
       const { data, status } = err.response;
       const { errorMsg } = data;
