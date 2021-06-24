@@ -1,81 +1,79 @@
 import Link from 'next/link';
 
-import { props } from './types';
-import { SearchData } from '../types';
-import styles from './list.module.scss';
 import ElementList from './elementList';
 
+import { SearchData } from '../types';
+import { props } from './types';
+import styles from './list.module.scss';
+
 const List = ({ data, inputValue, onSelect }: props) => {
-  const { routes, conversations } = data;
+  const renderList = (data: SearchData) => {
+    const { conversations, routes } = data;
+
+    if (conversations.data.length || routes.data.length) {
+      type Key = keyof typeof data;
+      type Elem<T extends Key> = typeof data[T]['data'][number];
+
+      const elems: JSX.Element[] = [];
+      const keys = Object.keys(data) as Array<Key>;
+
+      keys.map((key) => {
+        const dataOfKey = data[key].data;
+
+        dataOfKey.forEach((elem: Elem<typeof key>) => {
+          if (key === 'conversations') {
+            const { user, id } = elem as Elem<typeof key>;
+
+            const { fullname } = user;
+
+            const formatedFullname = Object.values(fullname).join(' ');
+
+            elems.push(
+              <Link
+                href={`/inbox/${id}`}
+                key={id}
+                children={<ElementList content={formatedFullname} onClick={onSelect} user={user} />}
+              />,
+            );
+          } else if (key === 'routes') {
+            const { values, value } = elem as Elem<typeof key> & {
+              values: string[];
+              value: string;
+            };
+
+            if (typeof value === 'string') {
+              elems.push(
+                <Link
+                  href={value}
+                  key={value}
+                  children={<ElementList content={value} onClick={onSelect} />}
+                />,
+              );
+            } else {
+              values.map((value: string) => {
+                elems.push(
+                  <Link
+                    href={value}
+                    key={value}
+                    children={<ElementList content={value} onClick={onSelect} />}
+                  />,
+                );
+              });
+            }
+          }
+        });
+      });
+
+      return elems;
+    }
+
+    return <p className={styles.info}>Not found</p>;
+  };
 
   return (
-    <div className={styles.lists}>
+    <div className={styles.list}>
       {inputValue.length ? (
-        <>
-          {conversations.data.length || routes.data.length ? (
-            <>
-              {(() => {
-                const elems: JSX.Element[] = [];
-
-                let key: keyof SearchData;
-
-                for (key in data) {
-                  const dataOfKey = data[key].data as any[];
-
-                  dataOfKey.map((elem) => {
-                    if (key === 'conversations') {
-                      const { user, id } = elem;
-
-                      const {
-                        fullname: { firstname, lastname },
-                      } = user;
-
-                      elems.push(
-                        <Link
-                          href={`/inbox/${id}`}
-                          key={id}
-                          children={
-                            <ElementList
-                              content={`${firstname} ${lastname}`}
-                              onClick={onSelect}
-                              user={user}
-                            />
-                          }
-                        />,
-                      );
-                    } else {
-                      const { values, value } = elem;
-
-                      if (typeof value === 'string') {
-                        elems.push(
-                          <Link
-                            href={value}
-                            key={value}
-                            children={<ElementList content={value} onClick={onSelect} />}
-                          />,
-                        );
-                      } else {
-                        values.map((value: string) => {
-                          elems.push(
-                            <Link
-                              href={value}
-                              key={value}
-                              children={<ElementList content={value} onClick={onSelect} />}
-                            />,
-                          );
-                        });
-                      }
-                    }
-                  });
-                }
-
-                return elems;
-              })()}
-            </>
-          ) : (
-            <p className={styles.info}>Not found</p>
-          )}
-        </>
+        renderList(data)
       ) : (
         <p className={styles.info}>I will find what you need for you.</p>
       )}

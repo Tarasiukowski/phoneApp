@@ -61,7 +61,7 @@ const Searcher = ({ open, onClose }: props) => {
       const filteredRoutes = filterByKey(routes.data, inputValue, 'filterValue');
 
       const filteredConversations = conversations.data.filter((conversation) => {
-        const fullname = user.fullname;
+        const { fullname } = conversation.user;
 
         if (Object.values(fullname).join(' ').toLowerCase().startsWith(inputValue.toLowerCase())) {
           return conversation;
