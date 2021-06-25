@@ -14,7 +14,7 @@ export type Conversation = {
 export type Group = {
   name: string;
   members: string[];
-  _id: string;
+  _id?: string;
 };
 
 type Note = {

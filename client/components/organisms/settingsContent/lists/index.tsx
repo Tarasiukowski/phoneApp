@@ -12,6 +12,7 @@ import { ERROR } from '../../../../common/errors';
 import { fetcher, getObjectsKeysFromArray, handleNotAllowedError } from '../../../../utils';
 import { selectUser, update } from '../../../../reducers/userReducer';
 import { ErrorContext } from '../../../../contexts';
+import { Group } from '../../../../interfaces';
 import styles from './lists.module.scss';
 
 const SettingsListsContent = () => {
@@ -27,6 +28,14 @@ const SettingsListsContent = () => {
   const removeGroup = async (name: string) => {
     try {
       await fetcher('DELETE', '/group/remove', { email, name });
+
+      dispatch(
+        update({
+          key: 'groups',
+          data: { name },
+          option: { type: 'pull', by: 'name', value: name },
+        }),
+      );
     } catch (err) {
       const { data, status } = err.response;
       const { errorMsg } = data;
@@ -61,7 +70,9 @@ const SettingsListsContent = () => {
       try {
         await fetcher('POST', '/group/create', { ...groupData });
 
-        dispatch(update({ key: 'groups', data: groupData }));
+        const data = groupData as Group;
+
+        dispatch(update({ key: 'groups', data, option: { type: 'push' } }));
 
         return true;
       } catch (err) {
