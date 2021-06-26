@@ -4,13 +4,13 @@ import { User } from '../interfaces';
 import { RootState } from '../store';
 
 type Key = keyof User;
-type PayloadData<T extends Key> = {
+type PayloadData<K extends Key> = {
   key: Key;
-  data: User[T] extends Array<any> ? User[T][number] | any : User[T];
-  option: User[T] extends Array<any>
+  data?: User[K] extends Array<any> ? User[K][number] : User[K];
+  option: User[K] extends Array<any>
     ? {
         type: 'pull' | 'push';
-        by?: User[T] extends Array<any> ? keyof User[T][number] : keyof User[T];
+        by?: User[K] extends Array<any> ? keyof User[K][number] : keyof User[K];
         value?: string;
       }
     : undefined;
@@ -20,7 +20,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {} as User,
   reducers: {
-    update(state, { payload }: PayloadAction<PayloadData<'groups'>>) {
+    updateGroup(state, { payload }: PayloadAction<PayloadData<'groups'>>) {
       let updatedUser;
 
       const {
@@ -53,7 +53,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { login, update } = userSlice.actions;
+export const { login, updateGroup } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user;
 

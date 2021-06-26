@@ -10,7 +10,7 @@ import { GroupData } from '../../../molecules/multitask/types';
 import { selectFriends } from '../../../../reducers/friendsReducer';
 import { ERROR } from '../../../../common/errors';
 import { fetcher, getObjectsKeysFromArray, handleNotAllowedError } from '../../../../utils';
-import { selectUser, update } from '../../../../reducers/userReducer';
+import { selectUser, updateGroup } from '../../../../reducers/userReducer';
 import { ErrorContext } from '../../../../contexts';
 import { Group } from '../../../../interfaces';
 import styles from './lists.module.scss';
@@ -30,9 +30,8 @@ const SettingsListsContent = () => {
       await fetcher('DELETE', '/group/remove', { email, name });
 
       dispatch(
-        update({
+        updateGroup({
           key: 'groups',
-          data: { name },
           option: { type: 'pull', by: 'name', value: name },
         }),
       );
@@ -72,7 +71,7 @@ const SettingsListsContent = () => {
 
         const data = groupData as Group;
 
-        dispatch(update({ key: 'groups', data, option: { type: 'push' } }));
+        dispatch(updateGroup({ key: 'groups', data, option: { type: 'push' } }));
 
         return true;
       } catch (err) {
