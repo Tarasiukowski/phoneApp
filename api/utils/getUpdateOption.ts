@@ -15,10 +15,10 @@ const types: Types = {
 
 export const getUpdateType = <T extends KeyOfTypes>(key: T): UpdateType<T> => types[key];
 
-export const getUpdateOption = (data, type: updateType) => {
+export const getUpdateOption = (data, type: updateType): any  => {
   const { newEmail, field, value } = data;
 
-  const availableOptions: any = {
+  const availableOptions = {
     remove: { $unset: { [field]: '' } },
     setEmail: { $set: { email: newEmail } },
     set: { $set: { ...data } },

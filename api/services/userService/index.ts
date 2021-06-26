@@ -3,9 +3,9 @@ import { updateType } from '../../interfaces';
 import ConversationModel from '../../models/conversation/conversationModel';
 import UserModel from '../../models/user/userModel';
 import { By } from '../types';
-import { FriendServiceMixin, InviteServiceMixin } from './mixins';
+import { FriendServiceMixin, InviteServiceMixin, BlockServiceMixin } from './mixins';
 
-class UserService extends InviteServiceMixin(FriendServiceMixin(class {})) {
+class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixin(class {}))) {
   email: string;
   by: By;
 

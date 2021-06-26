@@ -2,11 +2,12 @@ import { Document } from 'mongoose';
 
 export type By = 'Google' | undefined;
 
-type Conversation = { with: string, id: string }
-type Group = { name: string, members: string[] }
-type Friend = { email: string, notes: { content: string }[] }
+type Conversation = { with: string; id: string };
+type Group = { name: string; members: string[] };
+type Friend = { email: string; notes: { content: string }[] };
+type BlockedUser = { fullname: { firstname: string; lastname: string }; email: string };
 
-export interface UserDocument extends Document {
+export interface User {
   email: string;
   number: string;
   code: string;
@@ -27,5 +28,7 @@ export interface UserDocument extends Document {
   friends: Friend[];
   conversations: Conversation[];
   groups: Group[];
-  blocklist: string[]
+  blocklist: BlockedUser[];
 }
+
+export type UserDocument = User & Document;

@@ -2,7 +2,7 @@ import { model } from 'mongoose';
 
 import { generateCode, sendMail, formatUser, getUpdateOption } from '../../utils';
 import { userSchema } from './userSchema';
-import { By, UserDocument } from './types';
+import { By, UserDocument, User } from './types';
 import { ERROR, getDefaultDataUser } from '../../data';
 import { updateType } from '../../interfaces';
 
@@ -55,7 +55,7 @@ class UserModel {
     }
   }
 
-  static async find(data: any[], key: string, ...extraData: string[]) {
+  static async find(data: any[], key: keyof User, ...extraData: string[]) {
     const formatedData = await data.map(async (elem) => {
       const { user } = await UserModel.findOne(key, elem);
 
@@ -71,7 +71,7 @@ class UserModel {
     };
   }
 
-  static async findOne(key: string, value: string) {
+  static async findOne(key: keyof UserDocument, value: string) {
     try {
       const user = await userModel.findOne({ [key]: value });
 
