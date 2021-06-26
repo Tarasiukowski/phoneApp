@@ -1,15 +1,15 @@
-import UserService from '../../../services/userService';
 import UserModel from '../../../models/user/userModel';
 import { ERROR } from '../../../data';
 import { Class } from '../../../interfaces';
 import ConversationModel from '../../../models/conversation/conversationModel';
 import { getStagesOfRemoveFriend } from '../../../data';
 import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
+import { User } from '../../../models/user/types';
 
 export function FriendServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
     static friend = {
-      async get(email: string, ...extraData: string[]) {
+      async get<K extends keyof User>(email: string, ...extraData: any) {
         const { user } = await UserModel.findOne('email', email);
 
         if (user) {
@@ -17,11 +17,8 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
 
           const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
 
-          const { data: findedUsers } = await UserModel.find(
-            emailsOfFriends,
-            'email',
-            ...extraData,
-          );
+          const { data: findedUsers } = await UserModel.find(emailsOfFriends, 'email', ...extraData);
+
           const formatedFriends = await (
             await findedUsers
           ).map((findedUser) => {

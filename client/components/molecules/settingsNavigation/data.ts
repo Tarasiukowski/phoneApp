@@ -25,7 +25,6 @@ export const buttonsNavigationData: ButtonsNavigationData = {
       icon: AccountProfileSvg,
       content: 'Account & Profile',
     },
-    ,
     {
       href: '/settings/members',
       icon: MembersSvg,

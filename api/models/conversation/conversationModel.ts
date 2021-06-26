@@ -15,11 +15,16 @@ class ConversationModel {
     this.messages = [];
   }
 
-  static async update(id: string, data: any, type: 'push' | 'pull') {
+  static async update<K extends keyof Conversation>(
+    id: string,
+    key: K,
+    data: Conversation[K][number],
+    type: 'push' | 'pull',
+  ) {
     try {
-      await conversationModel.updateOne({ _id: id }, { [`$${type}`]: { ...data } });
+      await conversationModel.updateOne({ _id: id }, { [`$${type}`]: data });
 
-      if (data.users && type === 'push') {
+      if (key === 'users' && type === 'push') {
         const conversation = await (await conversationModel.findOne({ _id: id })).toObject();
 
         // FIX ME

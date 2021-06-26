@@ -34,8 +34,8 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
           UserModel.update({ email: friend.email, field: 'friends', value: newEmail }, 'push');
 
           friend.conversations.map((conversation) => {
-            ConversationModel.update(conversation.id, { users: email }, 'pull');
-            ConversationModel.update(conversation.id, { users: newEmail }, 'push');
+            ConversationModel.update(conversation.id, 'users', email, 'pull');
+            ConversationModel.update(conversation.id, 'users', newEmail, 'push');
           });
         });
       }

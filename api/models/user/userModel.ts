@@ -27,7 +27,7 @@ class UserModel {
     }
   }
 
-  static format(user: UserDocument, ...extraData: string[]) {
+  static format<U extends UserDocument, K extends keyof User>(user: U, ...extraData: K[]) {
     const formatedUser = formatUser(user, extraData);
 
     return formatedUser;
@@ -55,7 +55,7 @@ class UserModel {
     }
   }
 
-  static async find(data: any[], key: keyof User, ...extraData: string[]) {
+  static async find<K extends keyof User>(data: any[], key: K, ...extraData: K[]) {
     const formatedData = await data.map(async (elem) => {
       const { user } = await UserModel.findOne(key, elem);
 

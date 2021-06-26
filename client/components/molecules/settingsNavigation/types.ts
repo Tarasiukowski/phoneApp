@@ -5,6 +5,6 @@ type ButtonNavigationData = {
 };
 
 export type ButtonsNavigationData = {
-  account: any[];
+  account: ButtonNavigationData[];
   workspace: ButtonNavigationData[];
 };

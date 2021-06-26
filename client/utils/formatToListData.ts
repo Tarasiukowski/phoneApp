@@ -1,4 +1,4 @@
-export const formatToListData = (obj: any) => {
+export const formatToListData = <T extends Object>(obj: T) => {
   const arr: any[] = [];
 
   for (const key in obj) {
