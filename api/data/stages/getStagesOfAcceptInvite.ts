@@ -7,17 +7,17 @@ export const getStagesOfAcceptInvite = (
 ): { key: keyof User, data: object; type: updateType }[] => [
   {
     key: 'invites',
-    data: { email, field: 'invites', value: from },
+    data: { email, value: from },
     type: 'pull',
   },
   {
-    key: 'invites',
-    data: { email, field: 'friends', value: { email: from, notes: [] } },
+    key: 'friends',
+    data: { email, value: { email: from, notes: [] } },
     type: 'push',
   },
   {
-    key: 'invites',
-    data: { email: from, field: 'friends', value: { email, notes: [] } },
+    key: 'friends',
+    data: { email: from, value: { email, notes: [] } },
     type: 'push',
   },
 ];

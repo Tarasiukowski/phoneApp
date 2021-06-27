@@ -10,7 +10,6 @@ export const getStagesOfCreateConversation = (
     key: 'conversations',
     data: {
       email,
-      field: 'conversations',
       value: { with: from, id },
     },
     type: 'push',
