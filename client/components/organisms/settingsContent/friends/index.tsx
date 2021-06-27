@@ -7,7 +7,7 @@ import { SettingsTemplate } from '../../../../templates';
 import ElementList from './elementList';
 
 import { fetcher, handleNotAllowedError } from '../../../../utils';
-import { User } from '../../../../interfaces';
+import { Member} from '../../../../interfaces';
 import { remove, selectFriends } from '../../../../reducers/friendsReducer';
 import { ErrorContext } from '../../../../contexts';
 
@@ -20,7 +20,7 @@ const SettingsFriendsContent = () => {
 
   const { setError } = useContext(ErrorContext);
 
-  const removeFriend = async (user: User) => {
+  const removeFriend = async (user: Member) => {
     const { email } = user;
 
     try {

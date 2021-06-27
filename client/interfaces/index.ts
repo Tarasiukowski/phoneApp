@@ -18,8 +18,8 @@ export type Group = {
 };
 
 type Note = {
-  content: string
-}
+  content: string;
+};
 
 export type DetailedConversation = { user: User } & Conversation;
 
@@ -34,7 +34,18 @@ export type User = {
   image: string;
   conversations: Conversation[];
   groups: Group[];
-  notes: Note[]
+  notes: Note[];
+};
+
+export type Member = {
+  email: string;
+  number: string;
+  fullname: {
+    firstname: string;
+    lastname: string;
+  };
+  colorImage: string;
+  image: string;
 };
 
 export type Error = {
