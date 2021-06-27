@@ -55,7 +55,7 @@ class UserModel {
     }
   }
 
-  static async find<K extends keyof User>(data: any[], key: K, ...extraData: K[]) {
+  static async find<K extends keyof User, V extends User[K]>(data: V[], key: K, ...extraData: K[]) {
     const formatedData = await data.map(async (elem) => {
       const { user } = await UserModel.findOne(key, elem);
 
@@ -71,7 +71,10 @@ class UserModel {
     };
   }
 
-  static async findOne(key: keyof UserDocument, value: string) {
+  static async findOne<K extends keyof UserDocument, V extends UserDocument[K]>(
+    key: keyof UserDocument,
+    value: V,
+  ) {
     try {
       const user = await userModel.findOne({ [key]: value });
 
