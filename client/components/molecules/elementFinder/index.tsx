@@ -29,7 +29,7 @@ const ElementFinder = <T,>({ renderItem, data, filterKey, notFound, placeholder 
     setInputValue(value);
   };
 
-  const renderList = () => receivedDate.map((friend) => renderItem(friend));
+  const renderList = () => receivedDate.map((elem) => renderItem(elem));
 
   return (
     <div className={styles.template}>

@@ -6,8 +6,9 @@ export const getDefaultDataUser = async () => {
   return {
     invites: [],
     friends: [],
-    tconversations: [],
+    conversations: [],
     groups: [],
+    blocklist: [],
     colorImage: randomColor(),
     number,
     onBoarding: false,
