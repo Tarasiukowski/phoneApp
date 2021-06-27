@@ -1,6 +1,6 @@
-import { User } from "../../../interfaces";
+import { Member } from "../../../interfaces";
 
 export type props = {
   name: 'contacts' | 'invites';
-  data: User[];
+  data: Member[];
 };

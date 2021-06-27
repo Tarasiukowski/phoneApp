@@ -5,7 +5,7 @@ import ElementList from './elementList';
 import { UserDetailed } from '../index';
 
 import { SearchSvg } from '../../../public/svgs';
-import { User } from '../../../interfaces';
+import { Member } from '../../../interfaces';
 import { props } from './types';
 import { fetcher, filterByKey, handleNotAllowedError } from '../../../utils';
 import { add } from '../../../reducers/friendsReducer';
@@ -14,9 +14,9 @@ import { ErrorContext } from '../../../contexts';
 import styles from './usersList.module.scss';
 
 const UsersList = ({ name, data }: props) => {
-  const [detailedUser, setDetailedUser] = useState<User | null>(null);
+  const [detailedUser, setDetailedUser] = useState<Member | null>(null);
   const [inputValue, setInputValue] = useState('');
-  const [listData, setListData] = useState<User[]>([]);
+  const [listData, setListData] = useState<Member[]>([]);
 
   const dispatch = useDispatch();
 
@@ -42,11 +42,11 @@ const UsersList = ({ name, data }: props) => {
     }
   }, [inputValue]);
 
-  const updateUserDetailed = (userData: User) => {
+  const updateUserDetailed = (userData: Member) => {
     setDetailedUser(userData);
   };
 
-  const acceptInvite = async (user: User) => {
+  const acceptInvite = async (user: Member) => {
     try {
       await fetcher('POST', '/user/invite/accept', {
         from: user.email,

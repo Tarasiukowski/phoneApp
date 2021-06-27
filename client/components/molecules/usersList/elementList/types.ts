@@ -1,8 +1,8 @@
-import { User } from '../../../../interfaces';
+import { Member } from '../../../../interfaces';
 
 export type props = {
-  user: User;
+  user: Member;
   name: 'invites' | 'contacts';
-  onClick: (user: User) => void;
-  onAcceptInvite: (user: User) => void;
+  onClick: (user: Member) => void;
+  onAcceptInvite: (user: Member) => void;
 };
