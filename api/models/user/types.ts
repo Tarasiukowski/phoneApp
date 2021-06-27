@@ -5,7 +5,6 @@ export type By = 'Google' | undefined;
 type Conversation = { with: string; id: string };
 type Group = { name: string; members: string[] };
 type Friend = { email: string; notes: { content: string }[] };
-type BlockedUser = { fullname: { firstname: string; lastname: string }; email: string };
 
 export interface User {
   email: string;
@@ -28,7 +27,7 @@ export interface User {
   friends: Friend[];
   conversations: Conversation[];
   groups: Group[];
-  blocklist: BlockedUser[];
+  blocklist: string[];
 }
 
 export type UserDocument = User & Document;
