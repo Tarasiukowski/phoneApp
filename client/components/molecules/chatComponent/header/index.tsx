@@ -10,16 +10,14 @@ const Header = ({ user }: props) => {
       {user && (
         <>
           {(() => {
-            const {
-              fullname: { firstname, lastname },
-            } = user;
+            const { fullname } = user;
+
+            const formatedFullname = Object.values(fullname).join(' ');
 
             return (
               <>
                 <ImageUser member={user} />
-                <p className={styles.name}>
-                  {firstname} {lastname}
-                </p>
+                <p className={styles.name}>{formatedFullname}</p>
                 <ChatOptions />
               </>
             );
