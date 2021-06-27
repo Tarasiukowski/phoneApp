@@ -3,10 +3,13 @@ import { Response, Request } from 'express';
 import { updateType } from '../../interfaces';
 import UserService from '../../services/userService';
 import { getUpdateType } from '../../utils/getUpdateOption';
+import { BlockControllerMixin } from './mixins/blockController';
 import { FriendsControllerMixin } from './mixins/friendsController';
 import { InviteControllerMixin } from './mixins/inviteController';
 
-class UserController extends FriendsControllerMixin(InviteControllerMixin(class {})) {
+class UserController extends FriendsControllerMixin(
+  InviteControllerMixin(BlockControllerMixin(class {})),
+) {
   async update(req: Request, res: Response) {
     const method = req.method as 'PUT' | 'DELETE';
     const { name } = req.params as { name: updateType };
