@@ -11,10 +11,11 @@ class UserController extends FriendsControllerMixin(InviteControllerMixin(class 
     const method = req.method as 'PUT' | 'DELETE';
     const { name } = req.params as { name: updateType };
     const body = method === 'PUT' ? req.body : { ...req.body, field: name };
-
     const updateType = method === 'PUT' && name ? name : getUpdateType(method);
 
-    const { status, ...restData } = await UserService.update(body, updateType);
+    const { field } = body;
+
+    const { status, ...restData } = await UserService.update(field, body, updateType);
 
     res.status(status).send(restData);
   }

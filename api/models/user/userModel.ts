@@ -33,7 +33,7 @@ class UserModel {
     return formatedUser;
   }
 
-  static async update(data: any, type: updateType = 'set') {
+  static async update(key: keyof User, data: any, type: updateType = 'set') {
     const { email, newEmail } = data;
 
     delete data.email;
@@ -47,7 +47,7 @@ class UserModel {
     }
 
     try {
-      await userModel.updateOne({ email }, getUpdateOption(data, type));
+      await userModel.updateOne({ email }, getUpdateOption(key, data, type));
 
       return { status: 200, errorMsg: null };
     } catch (err) {

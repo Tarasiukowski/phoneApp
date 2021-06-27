@@ -31,7 +31,7 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
           return { status: 409, errorMsg: ERROR.IS_YOUR_FRIEND };
         }
 
-        UserModel.update({ email: to, field: 'invites', value: from }, 'push');
+        UserModel.update('invites', { email: to, value: from }, 'push');
 
         return { status: 200, errorMsg: null };
       },
@@ -39,8 +39,8 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
       async accept(email: string, from: string) {
         const stagesOfAcceptInvite = getStagesOfAcceptInvite(email, from);
 
-        stagesOfAcceptInvite.map(({ data, type }) => {
-          UserModel.update(data, type);
+        stagesOfAcceptInvite.map(({ key, data, type }) => {
+          UserModel.update(key, data, type);
         });
 
         const { conversation } = await new Conversation([email, from]).create();
@@ -51,15 +51,15 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
           conversation.id,
         );
 
-        stagesOfCreateConversation.map(({ data, type }) => {
-          UserModel.update(data, type);
+        stagesOfCreateConversation.map(({ key, data, type }) => {
+          UserModel.update(key, data, type);
         });
 
         return { status: 200, errorMsg: null };
       },
 
       async reject(email: string, from: string) {
-        const data = await UserModel.update({ email, field: 'invites', value: from }, 'pull');
+        const data = await UserModel.update('invites', { email, value: from }, 'pull');
 
         return data;
       },

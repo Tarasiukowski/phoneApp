@@ -1,4 +1,5 @@
 import { updateType } from '../interfaces';
+import { User } from '../models/user/types';
 import { generateCode } from './generateCode';
 
 type Types = {
@@ -15,16 +16,16 @@ const types: Types = {
 
 export const getUpdateType = <T extends KeyOfTypes>(key: T): UpdateType<T> => types[key];
 
-export const getUpdateOption = (data, type: updateType): any  => {
-  const { newEmail, field, value } = data;
+export const getUpdateOption = (key: keyof User, data, type: updateType): any  => {
+  const { newEmail, value } = data;
 
   const availableOptions = {
-    remove: { $unset: { [field]: '' } },
-    setEmail: { $set: { email: newEmail } },
+    remove: { $unset: { [key]: '' } },
+    setEmail: { $set: { [key]: newEmail } },
     set: { $set: { ...data } },
     newEmail: { $set: { newEmail: { value: newEmail, code: generateCode() } } },
-    push: { $push: { [field]: value } },
-    pull: { $pull: { [field]: value } },
+    push: { $push: { [key]: value } },
+    pull: { $pull: { [key]: value } },
   };
 
   return availableOptions[type];

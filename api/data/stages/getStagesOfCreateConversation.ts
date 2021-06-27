@@ -1,11 +1,13 @@
 import { updateType } from '../../interfaces';
+import { User } from '../../models/user/types';
 
 export const getStagesOfCreateConversation = (
   email: string,
   from: string,
   id,
-): { data: object; type: updateType }[] => [
+): { key: keyof User; data: object; type: updateType }[] => [
   {
+    key: 'conversations',
     data: {
       email,
       field: 'conversations',
@@ -14,9 +16,9 @@ export const getStagesOfCreateConversation = (
     type: 'push',
   },
   {
+    key: 'conversations',
     data: {
       email: from,
-      field: 'conversations',
       value: { with: email, id },
     },
     type: 'push',

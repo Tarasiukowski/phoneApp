@@ -1,6 +1,7 @@
 import { ERROR } from '../../data';
 import { updateType } from '../../interfaces';
 import ConversationModel from '../../models/conversation/conversationModel';
+import { User } from '../../models/user/types';
 import UserModel from '../../models/user/userModel';
 import { By } from '../types';
 import { FriendServiceMixin, InviteServiceMixin, BlockServiceMixin } from './mixins';
@@ -9,8 +10,8 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
   email: string;
   by: By;
 
-  static async update(data: object, updateType: updateType) {
-    const returnedData = await UserModel.update(data, updateType);
+  static async update(key: keyof User, data: object, updateType: updateType) {
+    const returnedData = await UserModel.update(key, data, updateType);
 
     return returnedData;
   }
@@ -25,13 +26,13 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
       if (!isVerifyAccount) {
         const newEmail = user.newEmail.value;
 
-        UserModel.update({ email, newEmail }, 'setEmail');
+        UserModel.update('email', { email, newEmail }, 'setEmail');
 
         const friends = await this.friend.get(email, 'conversations');
 
         friends.data.map((friend) => {
-          UserModel.update({ email: friend.email, field: 'friends', value: email }, 'pull');
-          UserModel.update({ email: friend.email, field: 'friends', value: newEmail }, 'push');
+          UserModel.update('friends', { email: friend.email, value: email }, 'pull');
+          UserModel.update('friends', { email: friend.email, value: newEmail }, 'push');
 
           friend.conversations.map((conversation) => {
             ConversationModel.update(conversation.id, 'users', email, 'pull');

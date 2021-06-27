@@ -17,7 +17,11 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
 
           const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
 
-          const { data: findedUsers } = await UserModel.find(emailsOfFriends, 'email', ...extraData);
+          const { data: findedUsers } = await UserModel.find(
+            emailsOfFriends,
+            'email',
+            ...extraData,
+          );
 
           const formatedFriends = await (
             await findedUsers
@@ -38,8 +42,8 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
         if (friend) {
           const stagesOfRemoveFriend = getStagesOfRemoveFriend(email, friendEmail);
 
-          stagesOfRemoveFriend.map(({ data, type }) => {
-            UserModel.update(data, type);
+          stagesOfRemoveFriend.map(({ key, data, type }) => {
+            UserModel.update(key, data, type);
           });
 
           ConversationModel.remove('users', [email, friendEmail]);
