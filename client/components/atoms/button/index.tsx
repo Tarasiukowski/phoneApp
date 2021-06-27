@@ -14,6 +14,10 @@ export const Button = styled.button<props>`
   border-radius: 4px;
   cursor: pointer;
 
+  svg {
+    pointer-events: none;
+  }
+
   ${({ waring }) =>
     waring &&
     css`
