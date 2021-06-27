@@ -1,6 +1,6 @@
-import { User } from '../../../../../interfaces';
+import { Member } from '../../../../../interfaces';
 
 export type props = {
-  member: User | undefined;
+  member: Member | undefined;
   onClick?: () => void;
 };
