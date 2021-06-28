@@ -24,9 +24,15 @@ const List = ({ data, inputValue, onSelect }: props) => {
           if (key === 'conversations') {
             const { user, id } = elem as Elem<typeof key>;
 
-            const { fullname } = user;
+            let userFullname;
 
-            const formatedFullname = Object.values(fullname ? fullname : {}).join(' ');
+            if (user) {
+              const { fullname } = user;
+
+              userFullname = fullname;
+            }
+
+            const formatedFullname = Object.values(userFullname ? userFullname : {}).join(' ');
 
             elems.push(
               <Link
