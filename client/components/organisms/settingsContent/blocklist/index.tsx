@@ -1,13 +1,32 @@
-import { useSelector } from 'react-redux';
+import { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ElementFinder } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 import ElementList from './elementList';
 
+import { ErrorContext } from '../../../../contexts';
 import { selectBlocklist } from '../../../../reducers/blocklistReducer';
+import { remove as removeFromBlcokList } from '../../../../reducers/blocklistReducer';
+import { fetcher } from '../../../../utils';
 
 const SettingsBlocklistContent = () => {
   const blocklist = useSelector(selectBlocklist);
+
+  const disptach = useDispatch();
+  const { setError } = useContext(ErrorContext);
+
+  const removeFromBlockList = async (email: string) => {
+    try {
+      fetcher('POST', '/user/unblock', { userEmail: email });
+
+      disptach(removeFromBlcokList({ email }));
+    } catch (err) {
+      const { errorMsg } = err.response.data;
+
+      setError({ msg: errorMsg, id: Math.random() });
+    }
+  };
 
   return (
     <SettingsTemplate>
@@ -18,7 +37,9 @@ const SettingsBlocklistContent = () => {
         filterKey="fullname"
         placeholder="Search for a number"
         notFound="No one's blocked, woohoo 🌞"
-        renderItem={(user) => <ElementList user={user} onClick={async () => {}} />}
+        renderItem={(user) => (
+          <ElementList user={user} onClick={() => removeFromBlockList(user.email)} />
+        )}
       />
     </SettingsTemplate>
   );
