@@ -8,7 +8,7 @@ import ElementList from './elementList';
 import { ErrorContext } from '../../../../contexts';
 import { selectBlocklist } from '../../../../reducers/blocklistReducer';
 import { remove as removeFromBlcokList } from '../../../../reducers/blocklistReducer';
-import { fetcher } from '../../../../utils';
+import { fetcher, handleNotAllowedError } from '../../../../utils';
 
 const SettingsBlocklistContent = () => {
   const blocklist = useSelector(selectBlocklist);
@@ -22,9 +22,12 @@ const SettingsBlocklistContent = () => {
 
       disptach(removeFromBlcokList({ email }));
     } catch (err) {
-      const { errorMsg } = err.response.data;
+      const { data, status } = err.response;
+      const { errorMsg } = data;
 
       setError({ msg: errorMsg, id: Math.random() });
+
+      handleNotAllowedError(status);
     }
   };
 

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { remove as removeFriend } from '../../../../../reducers/friendsReducer';
 import { props } from './types';
 import { BlockSvg } from '../../../../../public/svgs';
-import { fetcher } from '../../../../../utils';
+import { fetcher, handleNotAllowedError } from '../../../../../utils';
 import { ErrorContext } from '../../../../../contexts';
 import styles from './listOptions.module.scss';
 
@@ -23,9 +23,12 @@ const ListOptions = ({ open, email, listOptionsRef }: props) => {
         userEmail,
       });
     } catch (err) {
-      const { errorMsg } = err.response.data;
+      const { data, status } = err.response;
+      const { errorMsg } = data;
 
       setError({ msg: errorMsg, id: Math.random() });
+
+      handleNotAllowedError(status);
     }
   };
 

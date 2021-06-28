@@ -18,6 +18,12 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
 
         if (!invitedUser) {
           return { status: 404, errorMsg: ERROR.USER_NOT_EXIST };
+        } else {
+          const { blocklist } = invitedUser;
+
+          if (blocklist.includes(from)) {
+            return { status: 404, errorMsg: ERROR.USER_NOT_EXIST };
+          }
         }
 
         const invites = invitedUser.invites;
