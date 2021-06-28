@@ -16,7 +16,7 @@ export function BlockControllerMixin<Base extends Class>(base: Base) {
       async get({ body }: Request, res: Response) {
         const { email } = body;
 
-        const data = await UserService.block.get(email);
+        const { data } = await UserService.block.get(email);
 
         res.send(data);
       },

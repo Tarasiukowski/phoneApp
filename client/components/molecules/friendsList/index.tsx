@@ -66,7 +66,7 @@ const FriendsList = () => {
               />
             );
           } else {
-            return <UserCard member={friend} elemList />;
+            return <UserCard member={friend} key={friend.email} elemList />;
           }
         })}
         <AddButton

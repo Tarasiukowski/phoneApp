@@ -1,24 +1,22 @@
 import { useEffect } from 'react';
 import useSwr from 'swr';
-import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 
 import { Navigation } from '../../components/molecules';
 
 import { swrFetcher } from '../../utils';
-import { login, selectUser } from '../../reducers/userReducer';
 import { selectInvites, update as updateInvites } from '../../reducers/invitesReducer';
 import { selectFriends, update as updateFriends } from '../../reducers/friendsReducer';
+import { selectBlocklist, update as updateBlocklist } from '../../reducers/blocklistReducer';
 import { Template } from './styles';
 
 const MainTemplate: React.FC = ({ children }) => {
-  const user = useSelector(selectUser);
   const friends = useSelector(selectFriends);
   const invites = useSelector(selectInvites);
+  const blocklist = useSelector(selectBlocklist);
 
   const disptach = useDispatch();
-  const router = useRouter();
 
   const { data: fetchedFriends, error: errorFriends } = useSwr(
     ['/user/friends', 'POST'],
@@ -27,6 +25,7 @@ const MainTemplate: React.FC = ({ children }) => {
       refreshInterval: 1,
     },
   );
+
   const { data: fetchedInvites, error: errorInvites } = useSwr(
     ['/user/invite/get', 'POST'],
     swrFetcher,
@@ -34,19 +33,25 @@ const MainTemplate: React.FC = ({ children }) => {
       refreshInterval: 1,
     },
   );
-  const { data: fetchedUserData, error: errorUser } = useSwr(['/auth', 'POST'], swrFetcher, {
-    refreshInterval: 1,
-  });
+
+  const { data: fetchedBlocklist, error: errorBlocklist } = useSwr(
+    ['/user/block/get', 'POST'],
+    swrFetcher,
+    {
+      refreshInterval: 1,
+    },
+  );
 
   useEffect(() => {
-    if (!user) {
-      router.push('/singup');
+    if (!errorBlocklist && fetchedBlocklist && fetchedBlocklist.length !== blocklist.length) {
+      console.log(fetchedBlocklist);
+      disptach(updateBlocklist(fetchedBlocklist));
     }
-  }, [router.asPath]);
+  }, [fetchedBlocklist, errorBlocklist]);
 
   useEffect(() => {
     if (!errorFriends && fetchedFriends && fetchedFriends.length !== friends.length) {
-      disptach(updateFriends(fetchedFriends.data));
+      disptach(updateFriends(fetchedFriends));
     }
   }, [fetchedFriends, errorFriends]);
 
@@ -55,16 +60,6 @@ const MainTemplate: React.FC = ({ children }) => {
       disptach(updateInvites(fetchedInvites));
     }
   }, [fetchedInvites, errorInvites]);
-
-  useEffect(() => {
-    if (!errorUser && fetchedUserData && fetchedUserData.user) {
-      const fetchedUser = fetchedUserData.user.value;
-
-      if (!_.isEqual(fetchedUser, user)) {
-        disptach(login(fetchedUser));
-      }
-    }
-  }, [fetchedUserData, errorUser]);
 
   return (
     <Template>

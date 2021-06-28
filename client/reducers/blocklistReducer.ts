@@ -7,15 +7,13 @@ const blocklistSlice = createSlice({
   name: 'blocklist',
   initialState: [] as Member[],
   reducers: {
-    update(_, { payload }: PayloadAction<{ data: Member[] }>) {
-      const { data } = payload;
-
-      return data;
+    update(_, { payload }: PayloadAction< Member[]>) {
+      return payload;
     },
   },
 });
 
-export const {} = blocklistSlice.actions;
+export const { update } = blocklistSlice.actions;
 
 export const selectBlocklist = (state: RootState) => state.blocklist;
 

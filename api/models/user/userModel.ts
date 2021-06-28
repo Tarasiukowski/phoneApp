@@ -67,7 +67,7 @@ class UserModel {
     });
 
     return {
-      data: Promise.all(formatedData),
+      data: await Promise.all(formatedData),
     };
   }
 
