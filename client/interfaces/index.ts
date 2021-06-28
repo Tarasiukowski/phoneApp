@@ -46,6 +46,7 @@ export type Member = {
   };
   colorImage: string;
   image: string;
+  notes: Note[]
 };
 
 export type Error = {

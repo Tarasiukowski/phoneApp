@@ -26,7 +26,7 @@ const List = ({ data, inputValue, onSelect }: props) => {
 
             const { fullname } = user;
 
-            const formatedFullname = Object.values(fullname).join(' ');
+            const formatedFullname = Object.values(fullname ? fullname : {}).join(' ');
 
             elems.push(
               <Link
