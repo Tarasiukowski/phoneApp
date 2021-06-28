@@ -33,6 +33,16 @@ const UsersList = ({ name, data }: props) => {
   }, [data]);
 
   useEffect(() => {
+    const userExist = data.find(({ email }) => email === detailedUser?.email);
+
+    if (!userExist && data.length) {
+      setDetailedUser(data[0]);
+    } else {
+      setDetailedUser(null);
+    }
+  }, [data.length]);
+
+  useEffect(() => {
     if (inputValue.length) {
       const filteredData = filterByKey(listData, inputValue, 'fullname');
 

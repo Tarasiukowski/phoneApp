@@ -20,7 +20,7 @@ const UserDetailed = ({ email, number, loading = false, ...restProps }: props) =
 
     return (
       <div className={styles.box}>
-        <Header {...restProps} />
+        <Header email={email} {...restProps} />
         <List list={formatToListData({ email, number })} />
         {dataOfNotes && <Notes data={dataOfNotes} email={userEmail} />}
       </div>

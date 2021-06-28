@@ -1,18 +1,46 @@
+import { useContext } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { remove as removeFriend } from '../../../../../reducers/friendsReducer';
 import { props } from './types';
 import { BlockSvg } from '../../../../../public/svgs';
+import { fetcher } from '../../../../../utils';
+import { ErrorContext } from '../../../../../contexts';
 import styles from './listOptions.module.scss';
 
-const ListOptions = ({ open, listOptionsRef }: props) => (
-  <div
-    className={styles.box}
-    ref={listOptionsRef}
-    style={{ visibility: open ? 'visible' : 'hidden' }}
-  >
-    <div className={styles.elem}>
-      <BlockSvg />
-      <p>Block</p>
+const ListOptions = ({ open, email, listOptionsRef }: props) => {
+  const dispatch = useDispatch();
+
+  const { setError } = useContext(ErrorContext);
+
+  const block = async () => {
+    try {
+      const userEmail = email as string;
+
+      dispatch(removeFriend({ email: userEmail }));
+
+      await fetcher('POST', '/user/block', {
+        userEmail,
+      });
+    } catch (err) {
+      const { errorMsg } = err.response.data;
+
+      setError({ msg: errorMsg, id: Math.random() });
+    }
+  };
+
+  return (
+    <div
+      className={styles.box}
+      ref={listOptionsRef}
+      style={{ visibility: open ? 'visible' : 'hidden' }}
+    >
+      <div onClick={block} className={styles.elem}>
+        <BlockSvg />
+        <p>Block</p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default ListOptions;

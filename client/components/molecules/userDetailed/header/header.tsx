@@ -13,12 +13,19 @@ import styles from './header.module.scss';
 const Header = (props: props) => {
   const [openListOptions, setOpenListOptions] = useState(false);
 
-  const { fullname } = useSelector(selectUser);
+  const { fullname: fullnameLoggedUser } = useSelector(selectUser);
 
   const moreOptionsButtonRef = useRef<HTMLButtonElement>(null);
   const listOptionsRef = useRef<HTMLDivElement>(null);
 
-  const { firstname, lastname } = props.fullname ? props.fullname : fullname;
+  const userData = {
+    ...props,
+    fullname: props.fullname ? props.fullname : fullnameLoggedUser,
+  };
+
+  const { fullname, email } = userData;
+
+  const formatedFullname = Object.values(fullname).join(' ');
 
   const setListOptions = () => {
     if (listOptionsRef.current) {
@@ -62,9 +69,7 @@ const Header = (props: props) => {
   return (
     <div className={styles.header}>
       <ImageUser member={props} extraStyle={{ size: '80px', fontSize: '2.5rem' }} />
-      <p className={styles.name}>
-        {firstname} {lastname}
-      </p>
+      <p className={styles.name}>{formatedFullname}</p>
       <div className={styles.options}>
         <Button width="auto">
           <MailSvg />
@@ -79,7 +84,7 @@ const Header = (props: props) => {
           <MoreSvg />
         </Button>
       </div>
-      <ListOptions open={openListOptions} listOptionsRef={listOptionsRef} />
+      <ListOptions open={openListOptions} email={email} listOptionsRef={listOptionsRef} />
     </div>
   );
 };

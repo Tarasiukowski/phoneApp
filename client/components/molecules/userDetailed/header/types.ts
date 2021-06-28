@@ -4,5 +4,6 @@ export type props = {
     firstname: string,
     lastname: string
   },
-  image?: string
+  image?: string,
+  email?: string
 }
