@@ -37,7 +37,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
 
           if (!friends.length && status.onBoarding) {
             if (redirectTo === '/contacts') {
-              fetcher('POST', '/user/friends').then(({ data }) => {
+              fetcher('POST', '/user/friends').then((data) => {
                 dispatch(update(data));
                 !loading ? setLoading(false) : router.push(redirectTo);
               });
