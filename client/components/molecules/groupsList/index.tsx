@@ -16,7 +16,7 @@ const GroupsList = () => {
         <p className={styles.heading}>Groups List</p>
         <div className={styles.template}>
           {groups.map(({ _id, name }) => (
-            <Link href={`/group/${_id}`} children={<GroupElementList name={name} />} />
+            <Link href={`/group/${_id}`} children={<GroupElementList name={name} />} key={_id} />
           ))}
         </div>
       </div>
