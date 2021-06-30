@@ -3,13 +3,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Member } from '../interfaces';
 import { RootState } from '../store';
 
+type Key = keyof Member
+
 const friendsSlice = createSlice({
   name: 'friends',
   initialState: [] as Member[],
   reducers: {
     updateOne(
       state,
-      { payload }: PayloadAction<{ email: string; key: keyof Member; data: object }>,
+      { payload }: PayloadAction<{ email: string; key: Key; data: object }>,
     ) {
       const { email, key, data } = payload;
 
@@ -27,8 +29,8 @@ const friendsSlice = createSlice({
 
       return updatedState;
     },
-    update(state, { payload }: PayloadAction<Member[]>) {
-      return (state = payload);
+    update(_, { payload }: PayloadAction<Member[]>) {
+      return payload;
     },
     remove(state, { payload }: PayloadAction<{ email: string }>) {
       const { email } = payload;

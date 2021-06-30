@@ -72,7 +72,7 @@ const UsersList = ({ name, data }: props) => {
 
       setListData(filteredData);
 
-      dispatch(remove({ email: user.email }));
+      dispatch(remove({ by: 'email', value: user.email }));
       dispatch(add({ user: { ...user, notes: [] } }));
 
       setDetailedUser(null);
