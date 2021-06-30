@@ -22,14 +22,13 @@ const Navigation = () => {
 
   const slugId = slug[1];
   const findedGroup = groups.find((group) => group._id === slugId);
-  const firstEmail = findedGroup?.members[0] as string;
+  const firstMemberOfGroup = findedGroup?.members[0] as string;
 
-  const getConversationId = (email: string) => {
-    return conversations.find((conversation) => conversation.with === email)?.id;
-  };
+  const getConversationId = (email: string) =>
+    conversations.find((conversation) => conversation.with === email)?.id;
 
   useEffect(() => {
-    router.push(`/group/${slugId}/${getConversationId(firstEmail)}`);
+    router.push(`/group/${slugId}/${getConversationId(firstMemberOfGroup)}`);
   }, []);
 
   return (
