@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { Loader } from '../../components/molecules';
 
 import { login } from '../../reducers/userReducer';
 import { getOnboardingStage, fetcher } from '../../utils';
 import { props } from './types';
-import { selectFriends, update } from '../../reducers/friendsReducer';
+import { update } from '../../reducers/friendsReducer';
 
 const settings = {
   logged: true,
@@ -18,8 +18,11 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
   const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
-  const friends = useSelector(selectFriends);
   const router = useRouter();
+
+  const path = router.asPath;
+
+  const fetchFriends = () => fetcher('POST', '/user/friends');
 
   useEffect(() => {
     fetcher('post', '/auth').then((data) => {
@@ -33,17 +36,15 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
         if (isLogged) {
           const status = data.user.status;
 
-          const { loading, redirectTo } = getOnboardingStage(status, router.asPath);
+          const { loading, redirectTo } = getOnboardingStage(status, path);
 
-          if (!friends.length && status.onBoarding) {
-            if (redirectTo === '/contacts') {
-              fetcher('POST', '/user/friends').then((data) => {
-                dispatch(update(data));
-                !loading ? setLoading(false) : router.push(redirectTo);
-              });
-            }
+          if (status.onBoarding) {
+            fetchFriends().then((data) => {
+              dispatch(update(data));
+              loading ? router.push(redirectTo) : setLoading(false);
+            });
           } else {
-            !loading ? setLoading(false) : router.push(redirectTo);
+            loading ? router.push(redirectTo) : setLoading(false);
           }
         } else {
           setLoading(false);
@@ -51,15 +52,15 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
       } else {
         if (isLogged) {
           const status = data.user.status;
-          const { loading, redirectTo } = getOnboardingStage(status, router.asPath);
+          const { loading, redirectTo } = getOnboardingStage(status, path);
 
-          !loading ? setLoading(false) : router.push(redirectTo);
+          loading ? router.push(redirectTo) : setLoading(false);
         } else {
           router.push('/singup');
         }
       }
     });
-  }, [router.asPath]);
+  }, [path]);
 
   return <>{loading ? <Loader /> : children}</>;
 };
