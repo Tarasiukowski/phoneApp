@@ -1,5 +1,5 @@
-import { User } from "../../../../interfaces";
+import { Member } from "../../../../interfaces";
 
 export type props = {
-  user: User | null
+  user: Member | null
 }

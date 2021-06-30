@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 
 import { UserDetailed, Chat } from '../../molecules';
 
-import { User } from '../../../interfaces';
+import { Member } from '../../../interfaces';
 import styles from './inboxContent.module.scss';
 
 const InboxContent = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Member | null>(null);
 
   const {
     query: { slug },
@@ -19,7 +19,7 @@ const InboxContent = () => {
     <div className={styles.template}>
       <Chat
         id={conversationId}
-        onFetchData={({ user }) => {
+        getScopedUser={(user) => {
           setUser(user);
         }}
       />

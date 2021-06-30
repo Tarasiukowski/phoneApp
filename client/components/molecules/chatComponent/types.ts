@@ -1,9 +1,9 @@
-import { ChatData } from '../../organisms/groupContent/types';
+import { Member } from "../../../interfaces";
 
 export type props = {
   width?: string;
   id: string;
-  onFetchData: (chatData: ChatData) => void;
+  getScopedUser: (user: Member) => void;
 };
 
 export type Message = {

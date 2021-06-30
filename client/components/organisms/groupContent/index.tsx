@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 import { Chat, UserDetailed } from '../../molecules';
 import Navigation from './navigation';
 
-import { User } from '../../../interfaces';
+import { Member } from '../../../interfaces';
 
 const GroupContent = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Member | null>(null);
 
   const router = useRouter();
 
@@ -23,7 +23,7 @@ const GroupContent = () => {
       <Chat
         id={conversationId}
         width="42.1vw"
-        onFetchData={({ user }) => {
+        getScopedUser={(user) => {
           setUser(user);
         }}
       />

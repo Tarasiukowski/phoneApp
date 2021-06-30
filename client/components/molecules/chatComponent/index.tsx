@@ -1,63 +1,81 @@
 import { ChangeEvent, KeyboardEvent, useContext, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useScroll } from 'react-use';
 
 import Header from './header';
 import { Textarea } from './textarea';
-import Message from './message';
+import Msg from './message';
 
 import { ErrorContext } from '../../../contexts';
 import { selectFriends } from '../../../reducers/friendsReducer';
-import { ChatData } from '../../organisms/groupContent/types';
-import { props } from './types';
+import { Message, props } from './types';
 import { fetcher, handleNotAllowedError } from '../../../utils';
-import { User } from '../../../interfaces';
+import { Conversation, Member } from '../../../interfaces';
+import { selectUser } from '../../../reducers/userReducer';
 import styles from './chat.module.scss';
 
-const Chat = ({ id, onFetchData, width }: props) => {
-  const [dataChat, setDataChat] = useState<ChatData>({ user: null, messages: [] });
+const Chat = ({ id, getScopedUser, width }: props) => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [scopedUser, setScopedUser] = useState<Member | null>(null);
   const [valueTextarea, setValueTextarea] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const refMessagesTemplate = useRef<HTMLDivElement>(null);
 
+  const activeUser = useSelector(selectUser);
   const friends = useSelector(selectFriends);
-
   const { setError } = useContext(ErrorContext);
 
-  const { user, messages } = dataChat;
+  const { y } = useScroll(refMessagesTemplate);
 
-  const fetchDataChat = async (url: string) => {
+  const fetchDataChat = async () => {
     if (id) {
       try {
-        const { conversation } = await fetcher('POST', url, {
+        const { conversation } = await fetcher('POST', '/conversation', {
           id,
         });
+        const { messages: fetchedMessages } = conversation;
 
-        const { email, messages } = conversation;
-
-        const friend = friends.find((friend) => {
-          if (friend.email === email) {
-            return friend;
-          }
-        }) as User;
-
-        setDataChat({ messages, user: friend });
-
-        onFetchData(dataChat);
+        setMessages(fetchedMessages);
       } catch (err) {
         const { data, status } = err.response;
         const { errorMsg } = data;
-
         setError({ msg: errorMsg, id: Math.random() });
-
         handleNotAllowedError(status);
       }
     }
   };
 
   useEffect(() => {
-    const messagesTemplate = refMessagesTemplate.current;
+    if (y === 0 && messages.length >= 20) {
+    }
+  }, [y]);
 
-    messagesTemplate?.scrollTo(0, messagesTemplate.scrollHeight);
+  useEffect(() => {
+    if (id) {
+      setLoading(true);
+
+      fetchDataChat().then(() => {
+        setLoading(false);
+      });
+
+      const scopedConversations = activeUser.conversations.find(
+        (conversations) => conversations.id === id,
+      ) as Conversation;
+
+      const scopedFriend = friends.find(
+        (friend) => friend.email === scopedConversations.with,
+      ) as Member;
+
+      setScopedUser(scopedFriend);
+      getScopedUser(scopedFriend);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    const messagesTemplate = refMessagesTemplate.current as HTMLDivElement;
+
+    messagesTemplate.scrollTo(0, messagesTemplate.scrollHeight);
   }, [messages.length]);
 
   const textareaHandle = {
@@ -87,15 +105,17 @@ const Chat = ({ id, onFetchData, width }: props) => {
     },
   };
 
-  fetchDataChat('/conversation');
+  if (!loading) {
+    fetchDataChat();
+  }
 
   return (
     <div className={styles.template} style={{ width: width ? width : '64.5vw' }}>
-      <Header user={user} />
+      <Header user={scopedUser} />
       <div className={styles.messagesTemplate} ref={refMessagesTemplate}>
         <div className={styles.messagesList}>
           {messages.map((message) => (
-            <Message {...message} data={messages} key={message.id} />
+            <Msg {...message} data={messages} key={message.id} />
           ))}
         </div>
       </div>
