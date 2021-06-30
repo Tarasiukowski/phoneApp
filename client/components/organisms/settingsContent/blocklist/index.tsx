@@ -6,8 +6,10 @@ import { SettingsTemplate } from '../../../../templates';
 import ElementList from './elementList';
 
 import { ErrorContext } from '../../../../contexts';
-import { selectBlocklist } from '../../../../reducers/blocklistReducer';
-import { remove as removeFromBlcokList } from '../../../../reducers/blocklistReducer';
+import {
+  selectBlocklist,
+  remove as removeFromBlcokList,
+} from '../../../../reducers/blocklistReducer';
 import { fetcher, handleNotAllowedError } from '../../../../utils';
 
 const SettingsBlocklistContent = () => {
@@ -20,7 +22,7 @@ const SettingsBlocklistContent = () => {
     try {
       fetcher('POST', '/user/unblock', { userEmail: email });
 
-      disptach(removeFromBlcokList({ email }));
+      disptach(removeFromBlcokList({ by: 'email', value: email }));
     } catch (err) {
       const { data, status } = err.response;
       const { errorMsg } = data;
