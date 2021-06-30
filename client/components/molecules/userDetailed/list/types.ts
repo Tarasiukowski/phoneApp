@@ -1,6 +1,6 @@
 export type props = {
-  list: ListElem[]
-}
+  data: ListElem[];
+};
 
 export type ListElem = {
   email: string;

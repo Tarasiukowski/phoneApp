@@ -13,7 +13,7 @@ const ListOptions = ({ open, email, listOptionsRef }: props) => {
 
   const { setError } = useContext(ErrorContext);
 
-  const block = async () => {
+  const blockUser = async () => {
     try {
       const userEmail = email as string;
 
@@ -38,7 +38,7 @@ const ListOptions = ({ open, email, listOptionsRef }: props) => {
       ref={listOptionsRef}
       style={{ visibility: open ? 'visible' : 'hidden' }}
     >
-      <div onClick={block} className={styles.elem}>
+      <div onClick={blockUser} className={styles.elem}>
         <BlockSvg />
         <p>Block</p>
       </div>

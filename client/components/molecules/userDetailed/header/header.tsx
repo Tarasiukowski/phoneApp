@@ -32,12 +32,17 @@ const Header = (props: props) => {
       const moreOptionsButtonCurrent = moreOptionsButtonRef.current as HTMLButtonElement;
       const listOptionsCurrent = listOptionsRef.current as HTMLDivElement;
 
-      const { height, top, x, width } = moreOptionsButtonCurrent.getBoundingClientRect();
+      const {
+        height: heightButton,
+        top: buttonTop,
+        x: buttonX,
+        width: buttonWidth,
+      } = moreOptionsButtonCurrent.getBoundingClientRect();
       const { width: wdithList } = listOptionsCurrent.getBoundingClientRect();
 
       gsap.set(listOptionsCurrent, {
-        top: height + top + 5,
-        left: x - wdithList + width,
+        top: heightButton + buttonTop + 5,
+        left: buttonX - wdithList + buttonWidth,
       });
     }
   };

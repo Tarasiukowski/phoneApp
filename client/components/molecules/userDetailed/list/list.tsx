@@ -2,9 +2,9 @@ import { props, ListElem } from './types'
 import { icons } from './data'
 import styles from './list.module.scss';
 
-const DetailedChatUserList = ({ list }: props) => (
+const DetailedChatUserList = ({ data }: props) => (
   <div className={styles.list}>
-    {list.map((listElem, index) => {
+    {data.map((listElem, index) => {
       const keys = Object.keys(listElem);
       const key = keys[0] as keyof ListElem
 
