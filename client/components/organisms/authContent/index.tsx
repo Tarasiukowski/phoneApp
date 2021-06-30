@@ -21,7 +21,8 @@ const AuthContent = () => {
   const { setError } = useContext(ErrorContext);
 
   const activePath = asPath.slice(1) as 'login' | 'singup';
-  const redirectTo = activePath === 'login' ? '/contacts' : '/onboarding/number';
+  const isRegister = activePath === 'singup';
+  const redirectTo = isRegister ? '/onboarding/number' : '/contacts';
 
   const hanldeGoogleLogin = async (res: any) => {
     const {
@@ -29,15 +30,11 @@ const AuthContent = () => {
     } = res;
 
     try {
-      const { user } = await fetcher(
-        'post',
-        `/auth/${activePath === 'login' ? 'login' : 'singup'}`,
-        {
-          email,
-          image: imageUrl,
-          by: 'Google',
-        },
-      );
+      const { user } = await fetcher('post', `/auth/${isRegister ? 'singup' : 'login'}`, {
+        email,
+        image: imageUrl,
+        by: 'Google',
+      });
 
       setError(null);
 
@@ -59,7 +56,7 @@ const AuthContent = () => {
   return (
     <RedirectTemplate isRedirect={redirect} redirectTo={redirectTo}>
       <div className={styles.card}>
-        <h4>{activePath === 'login' ? 'Log into OpenPhone' : 'Sign up on OpenPhone'}</h4>
+        <h4>{isRegister ? 'Sign up on OpenPhone' : 'Log into OpenPhone'}</h4>
         <h6>Use one of the methods below to continue</h6>
         <GoogleLogin
           clientId={`${process.env.NEXT_PUBLIC_CLIENT_ID}`}
