@@ -7,7 +7,7 @@ import { StyledButton } from './styles';
 import { props } from './types';
 
 const Button = forwardRef<HTMLButtonElement, props>(
-  ({ icon, active, href, content, ...restProps }, ref) => {
+  ({ icon, href, content, ...restProps }, ref) => {
     const { asPath } = useRouter();
 
     const isActive = asPath === href || asPath.startsWith(`/${content.toLocaleLowerCase()}`);

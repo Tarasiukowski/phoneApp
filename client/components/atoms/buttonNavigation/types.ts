@@ -9,7 +9,6 @@ export type props = {
     marginLeft: string;
   };
   href?: string;
-  active?: boolean;
   onClick?: (...args: any) => any;
   id?: string
 };
