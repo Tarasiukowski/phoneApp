@@ -1,5 +1,7 @@
 export const handleNotAllowedError = (statusCode: number) => {
-  if (statusCode === 405) {
+  const notAllowedStatusCode = 405;
+
+  if (statusCode === notAllowedStatusCode) {
     window.location.reload();
   }
 };
