@@ -91,6 +91,7 @@ const SettingsProfileContent = () => {
       try {
         await fetcher('PUT', '/user/update/newEmail', {
           newEmail,
+          type: 'newEmail',
         });
 
         return true;

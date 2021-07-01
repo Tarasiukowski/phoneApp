@@ -13,12 +13,15 @@ class UserController extends FriendsControllerMixin(
   async update(req: Request, res: Response) {
     const method = req.method as 'PUT' | 'DELETE';
     const { name } = req.params as { name: updateType };
-    const body = method === 'PUT' ? req.body : { ...req.body, field: name };
-    const updateType = method === 'PUT' && name ? name : getUpdateType(method);
+    const body = name ? { ...req.body, field: name } : req.body;
 
-    const { field } = body;
+    const { field, type } = body;
 
-    const { status, ...restData } = await UserService.update(field, body, updateType);
+    const { status, ...restData } = await UserService.update(
+      field,
+      body,
+      type ? type : getUpdateType(method),
+    );
 
     res.status(status).send(restData);
   }
