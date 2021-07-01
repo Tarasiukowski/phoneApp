@@ -33,7 +33,7 @@ class UserModel {
     return formatedUser;
   }
 
-  static async update(key: keyof User, data: any, type: updateType = 'set') {
+  static async update(key: keyof User, data, type: updateType = 'set') {
     const { email, newEmail } = data;
 
     delete data.email;
@@ -84,7 +84,7 @@ class UserModel {
     }
   }
 
-  async save(extraData) {
+  async save(extraData: Partial<User>) {
     delete this.by;
 
     const defaultData = await getDefaultDataUser();

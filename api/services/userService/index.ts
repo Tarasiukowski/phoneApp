@@ -10,7 +10,11 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
   email: string;
   by: By;
 
-  static async update(key: keyof User, data: object, updateType: updateType) {
+  static async update<Key extends keyof User>(
+    key: Key,
+    data: User[Key] extends Array<any> ? User[Key][number] : User[Key],
+    updateType: updateType,
+  ) {
     const returnedData = await UserModel.update(key, data, updateType);
 
     return returnedData;
@@ -18,12 +22,14 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
 
   static async verify(data, type: 'account' | 'email') {
     const { code, email } = data;
-    const isVerifyAccount = type === 'account';
+    const accountVerification = type === 'account';
 
     const { status, user } = await UserModel.findOne('email', email);
 
-    if (isVerifyAccount ? user.code === code : user.newEmail.code === code) {
-      if (!isVerifyAccount) {
+    const validCode = accountVerification ? user.code === code : user.newEmail.code === code;
+
+    if (validCode) {
+      if (!accountVerification) {
         const newEmail = user.newEmail.value;
 
         UserModel.update('email', { email, newEmail }, 'setEmail');
@@ -35,8 +41,10 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
           UserModel.update('friends', { email: friend.email, value: newEmail }, 'push');
 
           friend.conversations.map((conversation) => {
-            ConversationModel.update(conversation.id, 'users', email, 'pull');
-            ConversationModel.update(conversation.id, 'users', newEmail, 'push');
+            const conversationId = conversation.id;
+
+            ConversationModel.update(conversationId, 'users', email, 'pull');
+            ConversationModel.update(conversationId, 'users', newEmail, 'push');
           });
         });
       }
