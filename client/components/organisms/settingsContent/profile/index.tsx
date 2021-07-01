@@ -17,19 +17,19 @@ const SettingsProfileContent = () => {
 
   const { setError } = useContext(ErrorContext);
 
-  const {
-    fullname: { firstname, lastname },
-    email,
-  } = useSelector(selectUser);
+  const loggedUser = useSelector(selectUser);
+
+  const fullname = loggedUser?.fullname;
 
   const [inputsValues, setInputsValues] = useReducer(
     (prevState: InputsValues, state: InputsValues) => ({ ...prevState, ...state }),
-    { firstname, lastname },
+    { firstname: fullname?.firstname, lastname: fullname?.lastname },
   );
 
   const { firstname: firstnameValue, lastname: lastnameValue } = inputsValues;
 
-  const implementedChange = firstnameValue !== firstname || lastnameValue !== lastname;
+  const implementedChange =
+    firstnameValue !== fullname?.firstname || lastnameValue !== fullname?.lastname;
   const validFullname = Boolean(!firstnameValue?.length || !lastnameValue?.length);
   const isDisabled = !implementedChange || validFullname;
 
@@ -60,7 +60,17 @@ const SettingsProfileContent = () => {
   };
 
   const resetData = async () => {
-    await fetcher('DELETE', '/user/update/newEmail');
+    try {
+      await fetcher('DELETE', '/user/update/newEmail');
+    } catch (err) {
+      const { data, status } = err.response;
+      const { errorMsg } = data;
+
+      setError({ msg: errorMsg, id: Math.random() });
+
+      handleNotAllowedError(status);
+      return;
+    }
   };
 
   useEffect(() => {
@@ -73,7 +83,7 @@ const SettingsProfileContent = () => {
     name: 'ChangeEmail' as 'ChangeEmail',
     open: openMultiTask,
     onNext: async (newEmail: string) => {
-      if (newEmail === email) {
+      if (newEmail === loggedUser.email) {
         setError({ msg: ERROR.WITHOUT_CHANGE('email', 'singular'), id: Math.random() });
         return false;
       }
@@ -143,7 +153,7 @@ const SettingsProfileContent = () => {
       </div>
       <p className={styles.label}>Email</p>
       <div className={styles.emailSet}>
-        <p>{email}</p>
+        <p>{loggedUser?.email}</p>
         <Button
           id="ChangeEmail"
           onClick={() => {

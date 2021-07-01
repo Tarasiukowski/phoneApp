@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
@@ -7,6 +7,8 @@ import { Loader } from '../../components/molecules';
 import { login } from '../../reducers/userReducer';
 import { getOnboardingStage, fetcher } from '../../utils';
 import { props } from './types';
+import { ErrorContext } from '../../contexts';
+import { ERROR } from '../../common/errors';
 import { update } from '../../reducers/friendsReducer';
 
 const settings = {
@@ -19,6 +21,8 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
 
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const { setError } = useContext(ErrorContext);
 
   const path = router.asPath;
 
@@ -50,6 +54,8 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
           setLoading(false);
         }
       } else {
+        setError({ msg: ERROR.NOT_ALLOWED, id: Math.random() });
+
         if (isLogged) {
           const status = data.user.status;
           const { loading, redirectTo } = getOnboardingStage(status, path);
