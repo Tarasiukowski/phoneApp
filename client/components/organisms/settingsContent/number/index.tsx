@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Button } from '../../../atoms';
@@ -7,14 +7,14 @@ import { SettingsTemplate } from '../../../../templates';
 
 import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher, handleNotAllowedError } from '../../../../utils';
-import { ErrorContext } from '../../../../contexts';
+import { useError } from '../../../../contexts';
 
 const SettingsNumberContent = () => {
   const [openList, setOpenList] = useState(false);
   const [disabledByRequest, setDisabledByRequest] = useState(false);
   const [number, setNumber] = useState<string | null>(null);
 
-  const { setError } = useContext(ErrorContext);
+  const { setError } = useError();
 
   const user = useSelector(selectUser);
 

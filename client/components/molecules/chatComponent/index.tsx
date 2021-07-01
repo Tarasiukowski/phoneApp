@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useContext, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useScroll } from 'react-use';
 
@@ -6,7 +6,7 @@ import Header from './header';
 import { Textarea } from './textarea';
 import Msg from './message';
 
-import { ErrorContext } from '../../../contexts';
+import { useError } from '../../../contexts';
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { Message, props } from './types';
 import { fetcher, handleNotAllowedError } from '../../../utils';
@@ -24,7 +24,7 @@ const Chat = ({ id, getScopedUser, width }: props) => {
 
   const activeUser = useSelector(selectUser);
   const friends = useSelector(selectFriends);
-  const { setError } = useContext(ErrorContext);
+  const { setError } = useError();
 
   const { y } = useScroll(refMessagesTemplate);
 

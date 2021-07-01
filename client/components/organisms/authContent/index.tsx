@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import GoogleLogin from 'react-google-login';
@@ -9,7 +9,7 @@ import { RedirectTemplate } from '../../../templates';
 
 import { login as loginAuth } from '../../../reducers/userReducer';
 import { fetcher, handleNotAllowedError } from '../../../utils';
-import { ErrorContext } from '../../../contexts';
+import { useError } from '../../../contexts';
 import styles from './authContent.module.scss';
 
 const AuthContent = () => {
@@ -18,7 +18,7 @@ const AuthContent = () => {
   const dispatch = useDispatch();
   const { asPath } = useRouter();
 
-  const { setError } = useContext(ErrorContext);
+  const { setError } = useError();
 
   const activePath = asPath.slice(1) as 'login' | 'singup';
   const isRegister = activePath === 'singup';

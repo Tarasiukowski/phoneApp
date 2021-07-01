@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -9,7 +9,7 @@ import { fetcher, handleNotAllowedError } from '../../../utils';
 import { login as authLogin } from '../../../reducers/userReducer';
 import { props, formData } from './types';
 import { User } from '../../../interfaces';
-import { ErrorContext } from '../../../contexts';
+import { useError } from '../../../contexts';
 import styles from './authForm.module.scss';
 
 const AuthForm = ({ auth }: props) => {
@@ -19,7 +19,7 @@ const AuthForm = ({ auth }: props) => {
   const { register, handleSubmit, watch } = useForm();
   const dispatch = useDispatch();
 
-  const { setError } = useContext(ErrorContext);
+  const { setError } = useError();
 
   useEffect(() => {
     setDisabled(watch('email') ? false : true);

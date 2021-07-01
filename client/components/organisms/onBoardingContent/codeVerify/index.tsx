@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent, useContext } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Button, Input } from '../../../atoms';
@@ -6,7 +6,7 @@ import { RedirectTemplate } from '../../../../templates';
 
 import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher, handleNotAllowedError } from '../../../../utils';
-import { ErrorContext } from '../../../../contexts';
+import { useError } from '../../../../contexts';
 import styles from './code.module.scss';
 
 const OnboardingCodeContent = () => {
@@ -15,7 +15,7 @@ const OnboardingCodeContent = () => {
 
   const user = useSelector(selectUser);
 
-  const { setError } = useContext(ErrorContext);
+  const { setError } = useError();
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValueInput(e.target.value);

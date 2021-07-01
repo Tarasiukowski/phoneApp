@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '../../../atoms';
@@ -11,7 +11,7 @@ import { selectFriends } from '../../../../reducers/friendsReducer';
 import { ERROR } from '../../../../common/errors';
 import { fetcher, getObjectsKeysFromArray, handleNotAllowedError } from '../../../../utils';
 import { selectUser, updateGroup } from '../../../../reducers/userReducer';
-import { ErrorContext } from '../../../../contexts';
+import { useError } from '../../../../contexts';
 import { Group } from '../../../../interfaces';
 import styles from './lists.module.scss';
 
@@ -25,7 +25,7 @@ const SettingsListsContent = () => {
 
   const groups = loggedUser ? loggedUser.groups : [];
 
-  const { setError } = useContext(ErrorContext);
+  const { setError } = useError();
 
   const removeGroup = async (name: string) => {
     try {

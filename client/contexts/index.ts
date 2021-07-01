@@ -1,1 +1,1 @@
-export { ErrorProvider, ErrorContext } from './errorContext';
+export * from './errorContext';

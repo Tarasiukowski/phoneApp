@@ -1,11 +1,10 @@
-import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ElementFinder } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 import ElementList from './elementList';
 
-import { ErrorContext } from '../../../../contexts';
+import { useError } from '../../../../contexts';
 import {
   selectBlocklist,
   remove as removeFromBlcokList,
@@ -16,7 +15,7 @@ const SettingsBlocklistContent = () => {
   const blocklist = useSelector(selectBlocklist);
 
   const disptach = useDispatch();
-  const { setError } = useContext(ErrorContext);
+  const { setError } = useError();
 
   const removeFromBlockList = async (email: string) => {
     try {

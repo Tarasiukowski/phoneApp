@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
@@ -9,7 +9,7 @@ import AddButton from './addButton';
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { selectUser } from '../../../reducers/userReducer';
 import { fetcher, handleNotAllowedError } from '../../../utils';
-import { ErrorContext } from '../../../contexts';
+import { useError } from '../../../contexts';
 import styles from './friendsList.module.scss';
 
 const FriendsList = () => {
@@ -18,7 +18,7 @@ const FriendsList = () => {
   const user = useSelector(selectUser);
   const friends = useSelector(selectFriends);
 
-  const { setError } = useContext(ErrorContext);
+  const { setError } = useError();
 
   const conversations = user ? user.conversations : [];
 

@@ -1,12 +1,4 @@
-import {
-  useRef,
-  MouseEvent,
-  useState,
-  useEffect,
-  ChangeEvent,
-  useReducer,
-  useContext,
-} from 'react';
+import { useRef, MouseEvent, useState, useEffect, ChangeEvent, useReducer } from 'react';
 import gsap from 'gsap';
 import { useScroll } from 'react-use';
 
@@ -15,7 +7,7 @@ import NumbersList from './numbersList';
 
 import { fetcher, handleNotAllowedError } from '../../../../utils';
 import { props, Numbers } from '../types';
-import { ErrorContext } from '../../../../contexts';
+import { useError } from '../../../../contexts';
 import styles from './list.module.scss';
 
 const MAX_LENGTH_NUMBER = 8;
@@ -33,7 +25,7 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
   const refWrapper = useRef<HTMLDivElement>(null);
   const refListItems = useRef<HTMLDivElement>(null);
 
-  const { setError } = useContext(ErrorContext);
+  const { setError } = useError();
 
   const { y } = useScroll(refListItems);
 

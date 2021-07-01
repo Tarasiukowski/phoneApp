@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import ElementList from './elementList';
@@ -10,7 +10,7 @@ import { props } from './types';
 import { fetcher, filterByKey, handleNotAllowedError } from '../../../utils';
 import { add } from '../../../reducers/friendsReducer';
 import { remove } from '../../../reducers/invitesReducer';
-import { ErrorContext } from '../../../contexts';
+import { useError } from '../../../contexts';
 import styles from './usersList.module.scss';
 
 const UsersList = ({ name, data }: props) => {
@@ -20,7 +20,7 @@ const UsersList = ({ name, data }: props) => {
 
   const dispatch = useDispatch();
 
-  const { setError } = useContext(ErrorContext);
+  const { setError } = useError();
 
   useEffect(() => {
     if (data) {

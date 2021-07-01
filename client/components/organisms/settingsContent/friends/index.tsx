@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '../../../atoms';
@@ -9,7 +9,7 @@ import ElementList from './elementList';
 import { fetcher, handleNotAllowedError } from '../../../../utils';
 import { Member } from '../../../../interfaces';
 import { remove, selectFriends } from '../../../../reducers/friendsReducer';
-import { ErrorContext } from '../../../../contexts';
+import { useError } from '../../../../contexts';
 
 const SettingsFriendsContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
@@ -18,7 +18,7 @@ const SettingsFriendsContent = () => {
 
   const dispatch = useDispatch();
 
-  const { setError } = useContext(ErrorContext);
+  const { setError } = useError();
 
   const removeFriend = async (user: Member) => {
     const { email } = user;

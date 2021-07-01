@@ -1,17 +1,16 @@
-import { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { remove as removeFriend } from '../../../../../reducers/friendsReducer';
 import { props } from './types';
 import { BlockSvg } from '../../../../../public/svgs';
 import { fetcher, handleNotAllowedError } from '../../../../../utils';
-import { ErrorContext } from '../../../../../contexts';
+import { useError } from '../../../../../contexts';
 import styles from './listOptions.module.scss';
 
 const ListOptions = ({ open, email, listOptionsRef }: props) => {
   const dispatch = useDispatch();
 
-  const { setError } = useContext(ErrorContext);
+  const { setError } = useError();
 
   const blockUser = async () => {
     try {
