@@ -13,14 +13,14 @@ import styles from './header.module.scss';
 const Header = (props: props) => {
   const [openListOptions, setOpenListOptions] = useState(false);
 
-  const { fullname: fullnameLoggedUser } = useSelector(selectUser);
+  const loggedUser = useSelector(selectUser);
 
   const moreOptionsButtonRef = useRef<HTMLButtonElement>(null);
   const listOptionsRef = useRef<HTMLDivElement>(null);
 
   const userData = {
     ...props,
-    fullname: props.fullname ? props.fullname : fullnameLoggedUser,
+    fullname: props.fullname ? props.fullname : loggedUser.fullname,
   };
 
   const { fullname, email } = userData;

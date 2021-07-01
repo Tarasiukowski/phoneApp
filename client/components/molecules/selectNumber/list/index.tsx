@@ -18,7 +18,7 @@ import { props, Numbers } from '../types';
 import { ErrorContext } from '../../../../contexts';
 import styles from './list.module.scss';
 
-const MAX_LENGHT_NUMBER = 8;
+const MAX_LENGTH_NUMBER = 8;
 
 const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
   const [activeList, setActiveList] = useState<'Recommended' | 'All'>('Recommended');
@@ -115,7 +115,7 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
     const target = e.target as HTMLInputElement;
     let value = target.value;
 
-    if (value.length === MAX_LENGHT_NUMBER) {
+    if (value.length === MAX_LENGTH_NUMBER) {
       return;
     }
 
