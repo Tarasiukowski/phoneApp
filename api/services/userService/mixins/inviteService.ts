@@ -49,7 +49,7 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
           UserModel.update(key, data, type);
         });
 
-        const { conversation } = await new Conversation([email, from]).create();
+        const { conversation } = await new Conversation([email, from]).save();
 
         const stagesOfCreateConversation = getStagesOfCreateConversation(
           email,

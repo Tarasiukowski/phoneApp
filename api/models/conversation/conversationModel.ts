@@ -37,7 +37,7 @@ class ConversationModel {
     }
   }
 
-  static async remove(by: keyof Conversation, value) {
+  static async remove<K extends keyof Conversation>(by: K, value: Conversation[K]) {
     try {
       await conversationModel.remove({ [by]: value });
 
@@ -60,19 +60,11 @@ class ConversationModel {
     }
   }
 
-  static async get(id: string, email: string) {
+  static async get(id: string) {
     try {
       const conversation = await conversationModel.findOne({ _id: id });
 
-      const { users, messages } = conversation;
-
-      const emailOfFriend = users.find((emailOfMember) => {
-        if (emailOfMember !== email) {
-          return emailOfMember;
-        }
-      });
-
-      return { succes: true, status: 200, conversation: { email: emailOfFriend, messages } };
+      return { succes: true, status: 200, conversation };
     } catch (err) {
       return {
         succes: true,
@@ -83,7 +75,7 @@ class ConversationModel {
     }
   }
 
-  create() {
+  save() {
     const conversation = new conversationModel(this);
 
     try {
