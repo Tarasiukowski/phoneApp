@@ -4,6 +4,7 @@ import UserModel from '../../../models/user/userModel';
 import { Class } from '../../../interfaces';
 import { getStagesOfAcceptInvite, getStagesOfCreateConversation } from '../../../data';
 import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
+import { get } from 'mongoose';
 
 export function InviteServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
@@ -41,7 +42,15 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
 
         return { status: 200, errorMsg: null };
       },
+      async get(email: string) {
+        const { status, user } = await UserModel.findOne('email', email);
 
+        const invites = user.invites;
+
+        const { data: findedUsers } = await UserModel.find(invites, 'email');
+
+        return { status, data:  findedUsers };
+      },
       async accept(email: string, from: string) {
         const stagesOfAcceptInvite = getStagesOfAcceptInvite(email, from);
 
@@ -63,7 +72,6 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
 
         return { status: 200, errorMsg: null };
       },
-
       async reject(email: string, from: string) {
         const data = await UserModel.update('invites', { email, value: from }, 'pull');
 

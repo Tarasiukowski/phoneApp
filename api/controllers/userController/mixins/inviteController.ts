@@ -18,13 +18,9 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
       async get(req: Request, res: Response) {
         const { email } = req.body;
 
-        const { status, user } = await UserModel.findOne('email', email);
+        const { status, data } = await UserService.invite.get(email);
 
-        const invites = user.invites;
-
-        const { data: findedUsers } = await UserModel.find(invites, 'email');
-
-        res.status(status).send(await findedUsers);
+        res.status(status).send(data);
       },
 
       async accept(req: Request, res: Response) {
