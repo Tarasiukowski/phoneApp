@@ -20,14 +20,16 @@ const SettingsListsContent = () => {
 
   const dispatch = useDispatch();
 
-  const { groups, email } = useSelector(selectUser);
+  const loggedUser = useSelector(selectUser);
   const friends = useSelector(selectFriends);
+
+  const groups = loggedUser ? loggedUser.groups : [];
 
   const { setError } = useContext(ErrorContext);
 
   const removeGroup = async (name: string) => {
     try {
-      await fetcher('DELETE', '/group/remove', { email, name });
+      await fetcher('DELETE', '/group/remove', { name });
 
       dispatch(
         updateGroup({
