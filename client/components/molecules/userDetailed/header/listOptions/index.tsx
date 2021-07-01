@@ -17,7 +17,7 @@ const ListOptions = ({ open, email, listOptionsRef }: props) => {
     try {
       const userEmail = email as string;
 
-      dispatch(removeFriend({ email: userEmail }));
+      dispatch(removeFriend({ by: 'email', value: userEmail }));
 
       await fetcher('POST', '/user/block', {
         userEmail,

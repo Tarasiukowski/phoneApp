@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Member } from '../interfaces';
 import { RootState } from '../store';
 
-type Key = keyof Member
+type Key = keyof Member;
 
 const friendsSlice = createSlice({
   name: 'friends',
@@ -11,15 +11,26 @@ const friendsSlice = createSlice({
   reducers: {
     updateOne(
       state,
-      { payload }: PayloadAction<{ email: string; key: Key; data: object }>,
+      {
+        payload,
+      }: PayloadAction<{
+        email: string;
+        key: Key;
+        value: Member['notes'][number];
+      }>,
     ) {
-      const { email, key, data } = payload;
+      const { email, key, value } = payload;
 
       const updatedState = state.map((user) => {
         if (user.email === email) {
-          const prevDataOfKey: any = user[key];
+          let updatedUser;
+          const prevDataOfKey: Member[Key] = user[key];
 
-          const updatedUser = { ...user, [key]: [...prevDataOfKey, data] };
+          if (Array.isArray(prevDataOfKey)) {
+            updatedUser = { ...user, [key]: [...prevDataOfKey, value] };
+          } else {
+            updatedUser = { ...user, [key]: value };
+          }
 
           return updatedUser;
         }
@@ -32,11 +43,11 @@ const friendsSlice = createSlice({
     update(_, { payload }: PayloadAction<Member[]>) {
       return payload;
     },
-    remove(state, { payload }: PayloadAction<{ email: string }>) {
-      const { email } = payload;
+    remove(state, { payload }: PayloadAction<{ by: Key; value: Member[Key] }>) {
+      const { by, value } = payload;
 
       const updatedState = state.filter((user) => {
-        if (user.email !== email) {
+        if (user[by] !== value) {
           return user;
         }
       });

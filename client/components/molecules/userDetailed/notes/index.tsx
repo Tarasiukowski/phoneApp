@@ -21,7 +21,7 @@ const Notes = ({ data, email }: props) => {
 
   const createNote = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && valueTextArea.trim().length > 0) {
-      dispatch(updateOne({ email, key: 'notes', data: { content: valueTextArea } }));
+      dispatch(updateOne({ email, key: 'notes', value: { content: valueTextArea } }));
       setValueTextArea('');
     }
   };

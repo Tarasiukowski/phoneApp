@@ -7,7 +7,7 @@ import { SettingsTemplate } from '../../../../templates';
 import ElementList from './elementList';
 
 import { fetcher, handleNotAllowedError } from '../../../../utils';
-import { Member} from '../../../../interfaces';
+import { Member } from '../../../../interfaces';
 import { remove, selectFriends } from '../../../../reducers/friendsReducer';
 import { ErrorContext } from '../../../../contexts';
 
@@ -37,7 +37,7 @@ const SettingsFriendsContent = () => {
       return;
     }
 
-    dispatch(remove({ email }));
+    dispatch(remove({ by: 'email', value: email }));
   };
 
   const multitaskHandle = {
