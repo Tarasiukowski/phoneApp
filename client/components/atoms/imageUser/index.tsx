@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import { Image } from './styles';
 
 import { props, DefaultMember } from './types';
-import { selectUser } from '../../../reducers/userReducer';
+import { useUser } from '../../../hooks';
 import { getInitials } from '../../../utils';
 
 const ImageUser = ({ member, ...restProps }: props) => {
@@ -14,7 +13,7 @@ const ImageUser = ({ member, ...restProps }: props) => {
     initials: undefined,
   });
 
-  const user = useSelector(selectUser);
+  const user = useUser();
 
   useEffect(() => {
     if (member) {

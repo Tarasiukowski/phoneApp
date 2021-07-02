@@ -5,18 +5,19 @@ import _ from 'lodash';
 
 import { Navigation } from '../../components/molecules';
 
+import { useUser } from '../../hooks';
 import { swrFetcher } from '../../utils';
 import { selectInvites, update as updateInvites } from '../../reducers/invitesReducer';
 import { selectFriends, update as updateFriends } from '../../reducers/friendsReducer';
 import { selectBlocklist, update as updateBlocklist } from '../../reducers/blocklistReducer';
-import { login, selectUser } from '../../reducers/userReducer';
+import { login } from '../../reducers/userReducer';
 import { Template } from './styles';
 
 const MainTemplate: React.FC = ({ children }) => {
   const friends = useSelector(selectFriends);
   const invites = useSelector(selectInvites);
   const blocklist = useSelector(selectBlocklist);
-  const user = useSelector(selectUser);
+  const user = useUser();
 
   const disptach = useDispatch();
 

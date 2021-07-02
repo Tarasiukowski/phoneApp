@@ -7,9 +7,8 @@ import { SearchSvg } from '../../../public/svgs/index';
 import { filterByKey, getSearcherData } from '../../../utils';
 import { props, SearchData } from './types';
 import { selectFriends } from '../../../reducers/friendsReducer';
-import { selectUser } from '../../../reducers/userReducer';
 import { DetailedConversation } from '../../../interfaces';
-import { useOutsideClick } from '../../../hooks';
+import { useOutsideClick, useUser } from '../../../hooks';
 import styles from './searcher.module.scss';
 
 const Searcher = ({ open, onClose }: props) => {
@@ -21,7 +20,7 @@ const Searcher = ({ open, onClose }: props) => {
 
   const templateRef = useRef<HTMLDivElement>(null);
 
-  const user = useSelector(selectUser);
+  const user = useUser();
   const friends = useSelector(selectFriends);
 
   const conversations = user ? user.conversations : [];

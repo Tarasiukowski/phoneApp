@@ -7,15 +7,15 @@ import { Multitask } from '../index';
 import AddButton from './addButton';
 
 import { selectFriends } from '../../../reducers/friendsReducer';
-import { selectUser } from '../../../reducers/userReducer';
 import { fetcher, handleNotAllowedError } from '../../../utils';
 import { useError } from '../../../contexts';
+import { useUser } from '../../../hooks';
 import styles from './friendsList.module.scss';
 
 const FriendsList = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
 
-  const user = useSelector(selectUser);
+  const user = useUser();
   const friends = useSelector(selectFriends);
 
   const { setError } = useError();

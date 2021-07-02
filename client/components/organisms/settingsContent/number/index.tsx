@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 import { Button } from '../../../atoms';
 import { SelectNumberButton, SelectNumberList } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 
-import { selectUser } from '../../../../reducers/userReducer';
+import { useUser } from '../../../../hooks';
 import { fetcher, handleNotAllowedError } from '../../../../utils';
 import { useError } from '../../../../contexts';
 
@@ -16,7 +15,7 @@ const SettingsNumberContent = () => {
 
   const { setError } = useError();
 
-  const user = useSelector(selectUser);
+  const user = useUser();
 
   const implementedChange = number ? user?.number === number : true;
 

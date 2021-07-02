@@ -6,12 +6,12 @@ import { useSelector } from 'react-redux';
 import UserCard from './userCard';
 import { Button } from './button';
 
+import { useUser } from '../../../../hooks';
 import { selectFriends } from '../../../../reducers/friendsReducer';
-import { selectUser } from '../../../../reducers/userReducer';
 import styles from './navigation.module.scss';
 
 const Navigation = () => {
-  const { groups, conversations } = useSelector(selectUser);
+  const { groups, conversations } = useUser();
   const friends = useSelector(selectFriends);
 
   const router = useRouter();

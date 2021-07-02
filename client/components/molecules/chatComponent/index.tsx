@@ -11,7 +11,7 @@ import { selectFriends } from '../../../reducers/friendsReducer';
 import { Message, props } from './types';
 import { fetcher, handleNotAllowedError } from '../../../utils';
 import { Conversation, Member } from '../../../interfaces';
-import { selectUser } from '../../../reducers/userReducer';
+import { useUser } from '../../../hooks';
 import styles from './chat.module.scss';
 
 const Chat = ({ id, getScopedUser, width }: props) => {
@@ -22,7 +22,7 @@ const Chat = ({ id, getScopedUser, width }: props) => {
 
   const refMessagesTemplate = useRef<HTMLDivElement>(null);
 
-  const activeUser = useSelector(selectUser);
+  const activeUser = useUser();
   const friends = useSelector(selectFriends);
   const { setError } = useError();
 

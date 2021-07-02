@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState, forwardRef } from 'react';
-import { useSelector } from 'react-redux';
 
 import { ImageUser } from '../index';
 import { Template } from './styles';
 import UserDetailed from './userDetailed/userDetailed';
 
 import { props } from './types';
-import { useOutsideClick } from '../../../hooks';
-import { selectUser } from '../../../reducers/userReducer';
+import { useOutsideClick, useUser } from '../../../hooks';
 
 const UserCard = forwardRef<HTMLDivElement, props>(
   ({ elemList, member, big, withDetailed, onClick }, ref) => {
@@ -17,7 +15,7 @@ const UserCard = forwardRef<HTMLDivElement, props>(
     const templateRef = useRef<HTMLDivElement>(null);
     const userDetailedRef = useRef<HTMLDivElement>(null);
 
-    const user = useSelector(selectUser);
+    const user = useUser();
 
     const handleOnClick = () => {
       withDetailed && setOpenDetailed(true);

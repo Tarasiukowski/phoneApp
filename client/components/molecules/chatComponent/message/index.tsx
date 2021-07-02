@@ -1,13 +1,12 @@
-import { useSelector } from 'react-redux';
 import cl from 'classnames';
 
+import { useUser } from '../../../../hooks';
 import { props } from './types';
 import { Message } from '../types';
-import { selectUser } from '../../../../reducers/userReducer';
 import styles from './message.module.scss';
 
 const MessageComponent = ({ content, from, id, data }: props) => {
-  const { email } = useSelector(selectUser);
+  const { email } = useUser();
 
   const isLoggedUser = from === email;
 

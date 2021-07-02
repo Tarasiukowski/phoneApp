@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import gsap from 'gsap';
 
 import { Button, ImageUser } from '../../../atoms';
@@ -7,13 +6,13 @@ import ListOptions from './listOptions';
 
 import { MailSvg, MoreSvg } from '../../../../public/svgs';
 import { props } from './types';
-import { selectUser } from '../../../../reducers/userReducer';
+import { useUser } from '../../../../hooks';
 import styles from './header.module.scss';
 
 const Header = (props: props) => {
   const [openListOptions, setOpenListOptions] = useState(false);
 
-  const loggedUser = useSelector(selectUser);
+  const loggedUser = useUser();
 
   const moreOptionsButtonRef = useRef<HTMLButtonElement>(null);
   const listOptionsRef = useRef<HTMLDivElement>(null);

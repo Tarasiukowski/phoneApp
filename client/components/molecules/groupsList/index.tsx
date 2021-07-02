@@ -1,13 +1,12 @@
 import Link from 'next/link';
-import { useSelector } from 'react-redux';
 
 import GroupElementList from './elementList';
 
-import { selectUser } from '../../../reducers/userReducer';
+import { useUser } from '../../../hooks';
 import styles from './groupsList.module.scss';
 
 const GroupsList = () => {
-  const user = useSelector(selectUser);
+  const user = useUser();
   const groups = user ? user.groups : [];
 
   if (groups.length) {

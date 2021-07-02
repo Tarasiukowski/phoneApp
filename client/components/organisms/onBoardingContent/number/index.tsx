@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import { Button } from '../../../atoms';
 import { SelectNumberButton, SelectNumberList } from '../../../molecules';
 import { RedirectTemplate } from '../../../../templates';
 
-import { selectUser } from '../../../../reducers/userReducer';
 import { fetcher, handleNotAllowedError } from '../../../../utils';
 import { useError } from '../../../../contexts';
+import { useUser } from '../../../../hooks';
 import styles from './number.module.scss';
 
 const OnboardingNumberContent = () => {
@@ -15,7 +14,7 @@ const OnboardingNumberContent = () => {
   const [redirect, setRedirect] = useState(false);
   const [number, setNumber] = useState<string | null>(null);
 
-  const user = useSelector(selectUser);
+  const user = useUser();
 
   const { setError } = useError();
 

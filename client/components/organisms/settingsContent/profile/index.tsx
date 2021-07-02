@@ -1,5 +1,4 @@
 import { ChangeEvent, useReducer, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 import { ImageUser, Input, Button } from '../../../atoms';
 import { Multitask } from '../../../molecules';
@@ -7,7 +6,7 @@ import { SettingsTemplate } from '../../../../templates';
 
 import styles from './profile.module.scss';
 import { InputsValues } from './types';
-import { selectUser } from '../../../../reducers/userReducer';
+import { useUser } from '../../../../hooks';
 import { fetcher, handleNotAllowedError } from '../../../../utils';
 import { ERROR } from '../../../../common/errors';
 import { useError } from '../../../../contexts';
@@ -17,7 +16,7 @@ const SettingsProfileContent = () => {
 
   const { setError } = useError();
 
-  const loggedUser = useSelector(selectUser);
+  const loggedUser = useUser();
 
   const fullname = loggedUser?.fullname;
 

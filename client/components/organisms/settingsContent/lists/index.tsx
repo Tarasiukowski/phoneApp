@@ -10,8 +10,9 @@ import { GroupData } from '../../../molecules/multitask/types';
 import { selectFriends } from '../../../../reducers/friendsReducer';
 import { ERROR } from '../../../../common/errors';
 import { fetcher, getObjectsKeysFromArray, handleNotAllowedError } from '../../../../utils';
-import { selectUser, updateGroup } from '../../../../reducers/userReducer';
+import { updateGroup } from '../../../../reducers/userReducer';
 import { useError } from '../../../../contexts';
+import { useUser } from '../../../../hooks';
 import { Group } from '../../../../interfaces';
 import styles from './lists.module.scss';
 
@@ -20,7 +21,7 @@ const SettingsListsContent = () => {
 
   const dispatch = useDispatch();
 
-  const loggedUser = useSelector(selectUser);
+  const loggedUser = useUser();
   const friends = useSelector(selectFriends);
 
   const groups = loggedUser ? loggedUser.groups : [];

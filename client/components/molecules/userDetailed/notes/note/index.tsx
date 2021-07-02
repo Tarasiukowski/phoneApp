@@ -1,13 +1,11 @@
-import { useSelector } from 'react-redux';
-
 import { ImageUser } from '../../../../atoms';
 
+import { useUser } from '../../../../../hooks';
 import { props } from './types';
 import styles from './note.module.scss';
-import { selectUser } from '../../../../../reducers/userReducer';
 
 const Note = ({ content }: props) => {
-  const { fullname } = useSelector(selectUser);
+  const { fullname } = useUser();
 
   const formatedFullname = Object.values(fullname).join(' ');
 
