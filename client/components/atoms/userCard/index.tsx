@@ -6,7 +6,6 @@ import { Template } from './styles';
 import UserDetailed from './userDetailed/userDetailed';
 
 import { props } from './types';
-import { getAllChildreenOfElement } from '../../../utils';
 import { selectUser } from '../../../reducers/userReducer';
 
 const UserCard = forwardRef<HTMLDivElement, props>(
@@ -31,15 +30,14 @@ const UserCard = forwardRef<HTMLDivElement, props>(
       if (withDetailed) {
         const handleClickEvent = (e: Event) => {
           const target = e.target as HTMLElement;
-          const userDetailedRefCurrent = userDetailedRef.current;
-
-          const allowElements: HTMLElement[] = userDetailedRefCurrent
-            ? getAllChildreenOfElement(userDetailedRefCurrent)
-            : [];
+          const userDetailedElement = userDetailedRef.current as HTMLDivElement;
 
           if (templateRef.current === target) {
             setOpenDetailed(true);
-          } else if (!allowElements.includes(target)) {
+          } else if (
+            (userDetailedElement && !userDetailedElement.contains(target)) ||
+            target.tagName === 'BUTTON'
+          ) {
             setOpenDetailed(false);
           }
         };

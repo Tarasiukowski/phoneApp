@@ -1,7 +1,6 @@
 export { fetcher } from './fetcher';
 export { logout } from './logout';
 export { getOnboardingStage } from './getOnboardingStage';
-export { getAllChildreenOfElement } from './getAllChildreenOfElement';
 export { isCorrectValue } from './isCorrectValue';
 export { swrFetcher } from './swrFetcher';
 export { getInitials } from './getInitials';

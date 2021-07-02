@@ -3,7 +3,7 @@ import { useEffect, useState, useRef, useReducer, ChangeEvent, KeyboardEvent } f
 import { Button } from '../../atoms';
 
 import styles from './multitask.module.scss';
-import { isCorrectValue, getAllChildreenOfElement } from '../../../utils';
+import { isCorrectValue } from '../../../utils';
 import { optionsComponent } from './data';
 import { props, GroupData } from './types';
 
@@ -28,11 +28,9 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
       if (open) {
         const handleClickEvent = (e: Event) => {
           const target = e.target as HTMLElement;
-          const allowElements = templateRef.current
-            ? getAllChildreenOfElement(templateRef.current, true)
-            : [];
+          const templateElement = templateRef.current as HTMLDivElement;
 
-          if (!allowElements.includes(target) && target.id !== name) {
+          if (templateElement && !templateElement.contains(target) && target.id !== name) {
             setInputValue('');
             setCounterStage(0);
             setGroupData({ name: null, members: [] });
