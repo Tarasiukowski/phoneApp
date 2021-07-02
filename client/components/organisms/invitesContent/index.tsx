@@ -1,11 +1,9 @@
-import { useSelector } from 'react-redux';
-
 import { UsersList } from '../../molecules';
 
-import { selectInvites } from '../../../reducers/invitesReducer';
+import { useInvites } from '../../../hooks';
 
 const InvitesContent = () => {
-  const invites = useSelector(selectInvites);
+  const invites = useInvites();
 
   return <UsersList name="invites" data={invites} />;
 };
