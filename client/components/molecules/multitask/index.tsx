@@ -1,10 +1,11 @@
-import { useEffect, useState, useRef, useReducer, ChangeEvent, KeyboardEvent } from 'react';
+import { useState, useRef, useReducer, ChangeEvent, KeyboardEvent } from 'react';
 
 import { Button } from '../../atoms';
 
 import styles from './multitask.module.scss';
 import { isCorrectValue } from '../../../utils';
 import { optionsComponent } from './data';
+import { useOutsideClick } from '../../../hooks';
 import { props, GroupData } from './types';
 
 const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
@@ -24,23 +25,17 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
     const activeStage = stages[counterStage];
     const isEnd = counterStage === stages.length - 1 ? true : false;
 
-    useEffect(() => {
-      if (open) {
-        const handleClickEvent = (e: Event) => {
-          const target = e.target as HTMLElement;
-          const templateElement = templateRef.current as HTMLDivElement;
-
-          if (templateElement && !templateElement.contains(target) && target.id !== name) {
-            setInputValue('');
-            setCounterStage(0);
-            setGroupData({ name: null, members: [] });
-            onClose();
-          }
-        };
-
-        window.addEventListener('click', handleClickEvent);
-      }
-    });
+    useOutsideClick(
+      templateRef,
+      () => {
+        setInputValue('');
+        setCounterStage(0);
+        setGroupData({ name: null, members: [] });
+        onClose();
+      },
+      (target, defaultOption) => defaultOption && target.id !== name,
+      { isListeningForEvent: open },
+    );
 
     const { title, description, inputPlaceholder, inputName, unlimited, textButton } = activeStage;
 

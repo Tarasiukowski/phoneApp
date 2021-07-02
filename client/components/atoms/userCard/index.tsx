@@ -6,6 +6,7 @@ import { Template } from './styles';
 import UserDetailed from './userDetailed/userDetailed';
 
 import { props } from './types';
+import { useOutsideClick } from '../../../hooks';
 import { selectUser } from '../../../reducers/userReducer';
 
 const UserCard = forwardRef<HTMLDivElement, props>(
@@ -18,6 +19,20 @@ const UserCard = forwardRef<HTMLDivElement, props>(
 
     const user = useSelector(selectUser);
 
+    const handleOnClick = () => {
+      withDetailed && setOpenDetailed(true);
+      onClick && onClick();
+    };
+
+    useOutsideClick(
+      templateRef,
+      () => {
+        setOpenDetailed(false);
+      },
+      (target, defaultOption) => defaultOption || target.tagName === 'BUTTON',
+      { isListeningForEvent: openDetailed && withDetailed },
+    );
+
     useEffect(() => {
       const { fullname } = member ? member : user;
 
@@ -26,29 +41,9 @@ const UserCard = forwardRef<HTMLDivElement, props>(
       setFullname(formatedFullname);
     }, [member]);
 
-    useEffect(() => {
-      if (withDetailed) {
-        const handleClickEvent = (e: Event) => {
-          const target = e.target as HTMLElement;
-          const userDetailedElement = userDetailedRef.current as HTMLDivElement;
-
-          if (templateRef.current === target) {
-            setOpenDetailed(true);
-          } else if (
-            (userDetailedElement && !userDetailedElement.contains(target)) ||
-            target.tagName === 'BUTTON'
-          ) {
-            setOpenDetailed(false);
-          }
-        };
-
-        window.addEventListener('click', handleClickEvent);
-      }
-    });
-
     return (
       <Template
-        onClick={onClick}
+        onClick={handleOnClick}
         elemList={elemList}
         big={big}
         ref={withDetailed ? templateRef : ref}

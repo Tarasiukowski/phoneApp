@@ -9,6 +9,7 @@ import { props, SearchData } from './types';
 import { selectFriends } from '../../../reducers/friendsReducer';
 import { selectUser } from '../../../reducers/userReducer';
 import { DetailedConversation } from '../../../interfaces';
+import { useOutsideClick } from '../../../hooks';
 import styles from './searcher.module.scss';
 
 const Searcher = ({ open, onClose }: props) => {
@@ -31,19 +32,15 @@ const Searcher = ({ open, onClose }: props) => {
     return { user: friend, ...conversation };
   }) as DetailedConversation[];
 
-  useEffect(() => {
-    const handleClickEvent = (e: Event) => {
-      const templateElement = templateRef.current as HTMLElement;
-      const target = e.target as HTMLElement;
-
-      if (templateElement && !templateElement.contains(target) && target.id !== 'searcher') {
-        onClose();
-        setValueInput('');
-      }
-    };
-
-    window.addEventListener('click', handleClickEvent);
-  });
+  useOutsideClick(
+    templateRef,
+    () => {
+      onClose();
+      setValueInput('');
+    },
+    (target, defaultOption) => defaultOption && target.id !== 'searcher',
+    { isListeningForEvent: open },
+  );
 
   useEffect(() => {
     const fetchedSearchData = getSearcherData(formatedConversations);
