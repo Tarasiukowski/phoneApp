@@ -1,11 +1,9 @@
-import { useSelector } from 'react-redux';
-
 import { UsersList } from '../../molecules';
 
-import { selectFriends } from '../../../reducers/friendsReducer';
+import { useFriends } from '../../../hooks';
 
 const ContactsContent = () => {
-  const friends = useSelector(selectFriends);
+  const friends = useFriends();
 
   return <UsersList name="contacts" data={friends} />;
 };

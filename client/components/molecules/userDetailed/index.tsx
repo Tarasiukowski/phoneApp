@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-
 import List from './list/list';
 import Header from './header/header';
 import Notes from './notes';
@@ -7,7 +5,7 @@ import Notes from './notes';
 import { props } from './types';
 import { formatToListData } from '../../../utils';
 import { User } from '../../../interfaces';
-import { selectFriends } from '../../../reducers/friendsReducer';
+import { useFriends } from '../../../hooks';
 import styles from './userDetailed.module.scss';
 
 const UserDetailed = ({ email, number, loading = false, ...restProps }: props) => {
@@ -15,7 +13,7 @@ const UserDetailed = ({ email, number, loading = false, ...restProps }: props) =
     return <div className={styles.box}></div>;
   }
 
-  const friends = useSelector(selectFriends);
+  const friends = useFriends();
 
   const friend = friends.find((friend) => friend.email === email) as User;
   const dataOfNotes = friend?.notes;

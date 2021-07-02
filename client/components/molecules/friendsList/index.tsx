@@ -1,22 +1,20 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
 import { UserCard } from '../../atoms';
 import { Multitask } from '../index';
 import AddButton from './addButton';
 
-import { selectFriends } from '../../../reducers/friendsReducer';
 import { fetcher, handleNotAllowedError } from '../../../utils';
 import { useError } from '../../../contexts';
-import { useUser } from '../../../hooks';
+import { useFriends, useUser } from '../../../hooks';
 import styles from './friendsList.module.scss';
 
 const FriendsList = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
 
   const user = useUser();
-  const friends = useSelector(selectFriends);
+  const friends = useFriends();
 
   const { setError } = useError();
 

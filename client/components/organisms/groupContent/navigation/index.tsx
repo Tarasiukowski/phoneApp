@@ -1,19 +1,16 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
 
 import UserCard from './userCard';
 import { Button } from './button';
 
-import { useUser } from '../../../../hooks';
-import { selectFriends } from '../../../../reducers/friendsReducer';
+import { useFriends, useUser } from '../../../../hooks';
 import styles from './navigation.module.scss';
 
 const Navigation = () => {
   const { groups, conversations } = useUser();
-  const friends = useSelector(selectFriends);
-
+  const friends = useFriends();
   const router = useRouter();
 
   const {

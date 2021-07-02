@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { Button } from '../../../atoms';
 import { Multitask, ElementFinder } from '../../../molecules';
@@ -8,16 +8,15 @@ import ElementList from './elementList';
 
 import { fetcher, handleNotAllowedError } from '../../../../utils';
 import { Member } from '../../../../interfaces';
-import { remove, selectFriends } from '../../../../reducers/friendsReducer';
+import { useFriends } from '../../../../hooks';
+import { remove } from '../../../../reducers/friendsReducer';
 import { useError } from '../../../../contexts';
 
 const SettingsFriendsContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
 
-  const friends = useSelector(selectFriends);
-
+  const friends = useFriends();
   const dispatch = useDispatch();
-
   const { setError } = useError();
 
   const removeFriend = async (user: Member) => {

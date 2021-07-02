@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { Button } from '../../../atoms';
 import { Multitask, ElementFinder } from '../../../molecules';
@@ -7,12 +7,11 @@ import { SettingsTemplate } from '../../../../templates';
 import ElementList from './elementList';
 
 import { GroupData } from '../../../molecules/multitask/types';
-import { selectFriends } from '../../../../reducers/friendsReducer';
 import { ERROR } from '../../../../common/errors';
 import { fetcher, getObjectsKeysFromArray, handleNotAllowedError } from '../../../../utils';
 import { updateGroup } from '../../../../reducers/userReducer';
 import { useError } from '../../../../contexts';
-import { useUser } from '../../../../hooks';
+import { useFriends, useUser } from '../../../../hooks';
 import { Group } from '../../../../interfaces';
 import styles from './lists.module.scss';
 
@@ -22,7 +21,7 @@ const SettingsListsContent = () => {
   const dispatch = useDispatch();
 
   const loggedUser = useUser();
-  const friends = useSelector(selectFriends);
+  const friends = useFriends();
 
   const groups = loggedUser ? loggedUser.groups : [];
 

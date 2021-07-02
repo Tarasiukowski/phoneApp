@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 
 import List from './list';
 
 import { SearchSvg } from '../../../public/svgs/index';
 import { filterByKey, getSearcherData } from '../../../utils';
 import { props, SearchData } from './types';
-import { selectFriends } from '../../../reducers/friendsReducer';
 import { DetailedConversation } from '../../../interfaces';
-import { useOutsideClick, useUser } from '../../../hooks';
+import { useFriends, useOutsideClick, useUser } from '../../../hooks';
 import styles from './searcher.module.scss';
 
 const Searcher = ({ open, onClose }: props) => {
@@ -21,7 +19,7 @@ const Searcher = ({ open, onClose }: props) => {
   const templateRef = useRef<HTMLDivElement>(null);
 
   const user = useUser();
-  const friends = useSelector(selectFriends);
+  const friends = useFriends();
 
   const conversations = user ? user.conversations : [];
 

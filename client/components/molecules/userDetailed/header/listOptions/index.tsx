@@ -1,18 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { remove as removeFriend, selectFriends } from '../../../../../reducers/friendsReducer';
+import { remove as removeFriend } from '../../../../../reducers/friendsReducer';
 import { remove as removeInvite } from '../../../../../reducers/invitesReducer';
 import { props } from './types';
 import { BlockSvg } from '../../../../../public/svgs';
 import { fetcher, handleNotAllowedError } from '../../../../../utils';
+import { useFriends } from '../../../../../hooks';
 import { useError } from '../../../../../contexts';
 import styles from './listOptions.module.scss';
 
 const ListOptions = ({ open, email, listOptionsRef }: props) => {
   const dispatch = useDispatch();
-
-  const friends = useSelector(selectFriends);
-
+  const friends = useFriends();
   const { setError } = useError();
 
   const blockUser = async () => {
