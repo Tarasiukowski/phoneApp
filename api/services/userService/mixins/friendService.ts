@@ -4,12 +4,11 @@ import { Class } from '../../../interfaces';
 import ConversationModel from '../../../models/conversation/conversationModel';
 import { getStagesOfRemoveFriend } from '../../../data';
 import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
-import { User } from '../../../models/user/types';
 
 export function FriendServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
     static friend = {
-      async get<K extends keyof User>(email: string, ...extraData: any) {
+      async get(email: string, ...extraData: any[]) {
         const { user } = await UserModel.findOne('email', email);
 
         if (user) {

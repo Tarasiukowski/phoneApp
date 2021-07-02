@@ -1,7 +1,6 @@
 import { Response, Request } from 'express';
 
 import UserService from '../../../services/userService';
-import UserModel from '../../../models/user/userModel';
 import { Class } from '../../../interfaces';
 
 export function InviteControllerMixin<Base extends Class>(base: Base) {

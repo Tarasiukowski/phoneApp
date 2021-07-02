@@ -4,7 +4,6 @@ import UserModel from '../../../models/user/userModel';
 import { Class } from '../../../interfaces';
 import { getStagesOfAcceptInvite, getStagesOfCreateConversation } from '../../../data';
 import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
-import { get } from 'mongoose';
 
 export function InviteServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
