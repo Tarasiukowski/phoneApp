@@ -5,21 +5,21 @@ import _ from 'lodash';
 
 import { Navigation } from '../../components/molecules';
 
-import { useInvites, useUser } from '../../hooks';
+import { useBlocklist, useInvites, useUser } from '../../hooks';
 import { swrFetcher } from '../../utils';
 import { update as updateInvites } from '../../reducers/invitesReducer';
 import { selectFriends, update as updateFriends } from '../../reducers/friendsReducer';
-import { selectBlocklist, update as updateBlocklist } from '../../reducers/blocklistReducer';
+import { update as updateBlocklist } from '../../reducers/blocklistReducer';
 import { login } from '../../reducers/userReducer';
 import { Template } from './styles';
 
 const MainTemplate: React.FC = ({ children }) => {
+  const disptach = useDispatch();
+
   const friends = useSelector(selectFriends);
   const invites = useInvites();
-  const blocklist = useSelector(selectBlocklist);
+  const blocklist = useBlocklist();
   const user = useUser();
-
-  const disptach = useDispatch();
 
   const { data: fetchedFriends, error: errorFriends } = useSwr(
     ['/user/friends', 'POST'],

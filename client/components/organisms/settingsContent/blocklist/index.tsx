@@ -1,20 +1,18 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { ElementFinder } from '../../../molecules';
 import { SettingsTemplate } from '../../../../templates';
 import ElementList from './elementList';
 
 import { useError } from '../../../../contexts';
-import {
-  selectBlocklist,
-  remove as removeFromBlcokList,
-} from '../../../../reducers/blocklistReducer';
+import { remove as removeFromBlcokList } from '../../../../reducers/blocklistReducer';
 import { fetcher, handleNotAllowedError } from '../../../../utils';
+import { useBlocklist } from '../../../../hooks';
 
 const SettingsBlocklistContent = () => {
-  const blocklist = useSelector(selectBlocklist);
-
   const disptach = useDispatch();
+
+  const blocklist = useBlocklist();
   const { setError } = useError();
 
   const removeFromBlockList = async (email: string) => {
