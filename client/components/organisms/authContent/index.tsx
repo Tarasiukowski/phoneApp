@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import GoogleLogin from 'react-google-login';
 
-import { ButtonGoogle, ToggleAuth } from '../../atoms';
-import { AuthForm } from '../../molecules';
-import { RedirectTemplate } from '../../../templates';
+import { ButtonGoogle, ToggleAuth } from 'components/atoms';
+import { AuthForm } from 'components/molecules';
+import { RedirectTemplate } from 'templates';
 
-import { login as loginAuth } from '../../../reducers/userReducer';
-import { fetcher, handleNotAllowedError } from '../../../utils';
-import { useError } from '../../../contexts';
+import { login as loginAuth } from 'reducers/userReducer';
+import { fetcher, handleNotAllowedError } from 'utils';
+import { useError } from 'contexts';
 import styles from './authContent.module.scss';
 
 const AuthContent = () => {

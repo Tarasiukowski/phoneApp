@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Button } from '../../../atoms';
-import { Multitask, ElementFinder } from '../../../molecules';
-import { SettingsTemplate } from '../../../../templates';
+import { Button } from 'components/atoms';
+import { Multitask, ElementFinder } from 'components/molecules';
+import { SettingsTemplate } from 'templates';
 import ElementList from './elementList';
 
-import { GroupData } from '../../../molecules/multitask/types';
-import { ERROR } from '../../../../common/errors';
-import { fetcher, getObjectsKeysFromArray, handleNotAllowedError } from '../../../../utils';
-import { updateGroup } from '../../../../reducers/userReducer';
-import { useError } from '../../../../contexts';
-import { useFriends, useUser } from '../../../../hooks';
-import { Group } from '../../../../interfaces';
+import { GroupData } from 'components/molecules/multitask/types';
+import { ERROR } from 'common/errors';
+import { fetcher, getObjectsKeysFromArray, handleNotAllowedError } from 'utils';
+import { updateGroup } from 'reducers/userReducer';
+import { useError } from 'contexts';
+import { useFriends, useUser } from 'hooks';
+import { Group } from 'interfaces';
 import styles from './lists.module.scss';
 
 const SettingsListsContent = () => {

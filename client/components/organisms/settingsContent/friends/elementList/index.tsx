@@ -1,12 +1,14 @@
-import { Button, UserCard } from '../../../../atoms';
+import { Button, UserCard } from 'components/atoms';
 
-import { props } from './types'
+import { props } from './types';
 import styles from './elementList.module.scss';
 
 const ElementList = ({ user, onClick }: props) => (
   <div className={styles.elementList}>
     <UserCard member={user} big />
-    <Button onClick={() => onClick(user)} width="auto">Remove</Button>
+    <Button onClick={() => onClick(user)} width="auto">
+      Remove
+    </Button>
   </div>
 );
 

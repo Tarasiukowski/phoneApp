@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Button } from '../../../atoms';
-import { Multitask, ElementFinder } from '../../../molecules';
-import { SettingsTemplate } from '../../../../templates';
+import { Button } from 'components/atoms';
+import { Multitask, ElementFinder } from 'components/molecules';
+import { SettingsTemplate } from 'templates';
 import ElementList from './elementList';
 
-import { fetcher, handleNotAllowedError } from '../../../../utils';
-import { Member } from '../../../../interfaces';
-import { useFriends } from '../../../../hooks';
-import { remove } from '../../../../reducers/friendsReducer';
-import { useError } from '../../../../contexts';
+import { fetcher, handleNotAllowedError } from 'utils';
+import { Member } from 'interfaces';
+import { useFriends } from 'hooks';
+import { remove } from 'reducers/friendsReducer';
+import { useError } from 'contexts';
 
 const SettingsFriendsContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);

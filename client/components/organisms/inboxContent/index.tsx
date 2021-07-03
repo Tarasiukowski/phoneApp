@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { UserDetailed, Chat } from '../../molecules';
+import { UserDetailed, Chat } from 'components/molecules';
 
-import { Member } from '../../../interfaces';
+import { Member } from 'interfaces';
 import styles from './inboxContent.module.scss';
 
 const InboxContent = () => {

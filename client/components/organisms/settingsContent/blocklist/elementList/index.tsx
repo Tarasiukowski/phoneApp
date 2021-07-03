@@ -1,4 +1,4 @@
-import { Button, UserCard } from '../../../../atoms';
+import { Button, UserCard } from 'components/atoms';
 
 import { props } from './types'
 import styles from './elementList.module.scss';

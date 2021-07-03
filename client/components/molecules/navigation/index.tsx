@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { UserCard, ButtonNavigation } from '../../atoms';
+import { UserCard, ButtonNavigation } from 'components/atoms';
+import { SearcherTemplate } from 'templates';
 import { GroupsList, FriendsList } from '../index';
-import { SearcherTemplate } from '../../../templates';
 
 import { SearchSvg, ContactsSvg, SettingsSvg, MembersSvg } from '../../../public/svgs';
 // import ContactsSvg from "../../../public/svgs/contacts.svg"

@@ -1,11 +1,11 @@
 import { useState, FormEvent, ChangeEvent } from 'react';
 
-import { Button, Input } from '../../../atoms';
-import { RedirectTemplate } from '../../../../templates';
+import { Button, Input } from 'components/atoms';
+import { RedirectTemplate } from 'templates';
 
-import { fetcher, handleNotAllowedError } from '../../../../utils';
-import { useError } from '../../../../contexts';
-import { useUser } from '../../../../hooks';
+import { fetcher, handleNotAllowedError } from 'utils';
+import { useError } from 'contexts';
+import { useUser } from 'hooks';
 import styles from './code.module.scss';
 
 const OnboardingCodeContent = () => {

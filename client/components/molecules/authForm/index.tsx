@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { Input, Button } from '../../atoms';
-import { RedirectTemplate } from '../../../templates';
+import { Input, Button } from 'components/atoms';
+import { RedirectTemplate } from 'templates';
 
-import { fetcher, handleNotAllowedError } from '../../../utils';
-import { login as authLogin } from '../../../reducers/userReducer';
+import { fetcher, handleNotAllowedError } from 'utils';
+import { login as authLogin } from 'reducers/userReducer';
 import { props, formData } from './types';
-import { User } from '../../../interfaces';
-import { useError } from '../../../contexts';
+import { User } from 'interfaces';
+import { useError } from 'contexts';
 import styles from './authForm.module.scss';
 
 const AuthForm = ({ auth }: props) => {

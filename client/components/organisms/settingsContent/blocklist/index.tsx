@@ -1,13 +1,13 @@
 import { useDispatch } from 'react-redux';
 
-import { ElementFinder } from '../../../molecules';
-import { SettingsTemplate } from '../../../../templates';
+import { ElementFinder } from 'components/molecules';
+import { SettingsTemplate } from 'templates';
 import ElementList from './elementList';
 
-import { useError } from '../../../../contexts';
-import { remove as removeFromBlcokList } from '../../../../reducers/blocklistReducer';
-import { fetcher, handleNotAllowedError } from '../../../../utils';
-import { useBlocklist } from '../../../../hooks';
+import { useError } from 'contexts';
+import { remove as removeFromBlcokList } from 'reducers/blocklistReducer';
+import { fetcher, handleNotAllowedError } from 'utils';
+import { useBlocklist } from 'hooks';
 
 const SettingsBlocklistContent = () => {
   const disptach = useDispatch();

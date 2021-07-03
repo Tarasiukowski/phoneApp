@@ -5,9 +5,9 @@ import { useScroll } from 'react-use';
 import Input from './input';
 import NumbersList from './numbersList';
 
-import { fetcher, handleNotAllowedError } from '../../../../utils';
+import { fetcher, handleNotAllowedError } from 'utils';
 import { props, Numbers } from '../types';
-import { useError } from '../../../../contexts';
+import { useError } from 'contexts';
 import styles from './list.module.scss';
 
 const MAX_LENGTH_NUMBER = 8;

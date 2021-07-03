@@ -1,4 +1,4 @@
-import { DetailedConversation } from '../../../interfaces';
+import { DetailedConversation } from 'interfaces';
 
 export type props = {
   open: boolean;

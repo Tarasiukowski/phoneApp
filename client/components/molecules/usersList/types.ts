@@ -1,4 +1,4 @@
-import { Member } from "../../../interfaces";
+import { Member } from "interfaces";
 
 export type props = {
   name: 'contacts' | 'invites';

@@ -1,4 +1,4 @@
-import { UserCard } from '../../../atoms';
+import { UserCard } from 'components/atoms';
 
 import { PlusSvg } from '../../../../public/svgs';
 import { props } from './types';

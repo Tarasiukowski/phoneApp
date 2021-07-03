@@ -1,15 +1,15 @@
 import { ChangeEvent, useReducer, useState, useEffect } from 'react';
 
-import { ImageUser, Input, Button } from '../../../atoms';
-import { Multitask } from '../../../molecules';
-import { SettingsTemplate } from '../../../../templates';
+import { ImageUser, Input, Button } from 'components/atoms';
+import { Multitask } from 'components/molecules';
+import { SettingsTemplate } from 'templates';
 
 import styles from './profile.module.scss';
 import { InputsValues } from './types';
-import { useUser } from '../../../../hooks';
-import { fetcher, handleNotAllowedError } from '../../../../utils';
-import { ERROR } from '../../../../common/errors';
-import { useError } from '../../../../contexts';
+import { useUser } from 'hooks';
+import { fetcher, handleNotAllowedError } from 'utils';
+import { ERROR } from 'common';
+import { useError } from 'contexts';
 
 const SettingsProfileContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);

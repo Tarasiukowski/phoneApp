@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-import { UserCard } from '../../atoms';
+import { UserCard } from 'components/atoms';
 import { Multitask } from '../index';
 import AddButton from './addButton';
 
-import { fetcher, handleNotAllowedError } from '../../../utils';
-import { useError } from '../../../contexts';
-import { useFriends, useUser } from '../../../hooks';
+import { fetcher, handleNotAllowedError } from 'utils';
+import { useError } from 'contexts';
+import { useFriends, useUser } from 'hooks';
 import styles from './friendsList.module.scss';
 
 const FriendsList = () => {

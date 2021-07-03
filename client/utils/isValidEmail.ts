@@ -1,5 +1,4 @@
-import { EMAIL_REGEX } from '../common/regex';
-import { ERROR } from '../common/errors';
+import { EMAIL_REGEX, ERROR } from 'common';
 
 type returnValueValidEmail = {
   valid: boolean;

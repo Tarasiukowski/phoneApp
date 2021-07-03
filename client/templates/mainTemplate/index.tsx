@@ -3,14 +3,14 @@ import useSwr from 'swr';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 
-import { Navigation } from '../../components/molecules';
+import { Navigation } from 'components/molecules';
 
-import { useBlocklist, useInvites, useUser } from '../../hooks';
-import { swrFetcher } from '../../utils';
-import { update as updateInvites } from '../../reducers/invitesReducer';
-import { selectFriends, update as updateFriends } from '../../reducers/friendsReducer';
-import { update as updateBlocklist } from '../../reducers/blocklistReducer';
-import { login } from '../../reducers/userReducer';
+import { useBlocklist, useInvites, useUser } from 'hooks';
+import { swrFetcher } from 'utils';
+import { update as updateInvites } from 'reducers/invitesReducer';
+import { selectFriends, update as updateFriends } from 'reducers/friendsReducer';
+import { update as updateBlocklist } from 'reducers/blocklistReducer';
+import { login } from 'reducers/userReducer';
 import { Template } from './styles';
 
 const MainTemplate: React.FC = ({ children }) => {

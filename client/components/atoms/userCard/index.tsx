@@ -5,7 +5,7 @@ import { Template } from './styles';
 import UserDetailed from './userDetailed/userDetailed';
 
 import { props } from './types';
-import { useOutsideClick, useUser } from '../../../hooks';
+import { useOutsideClick, useUser } from 'hooks';
 
 const UserCard = forwardRef<HTMLDivElement, props>(
   ({ elemList, member, big, withDetailed, onClick }, ref) => {

@@ -1,11 +1,11 @@
 import { ChangeEvent, useState, KeyboardEvent } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { TextArea } from '../../../atoms';
+import { TextArea } from 'components/atoms';
 import Note from './note';
 
 import { props } from '../notes/types';
-import { updateOne } from '../../../../reducers/friendsReducer';
+import { updateOne } from 'reducers/friendsReducer';
 import styles from './notes.module.scss';
 
 const Notes = ({ data, email }: props) => {

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import UserCard from './userCard';
 import { Button } from './button';
 
-import { useFriends, useUser } from '../../../../hooks';
+import { useFriends, useUser } from 'hooks';
 import styles from './navigation.module.scss';
 
 const Navigation = () => {

@@ -1,5 +1,5 @@
-import { ImageUser, Input, Button } from '../../../atoms';
-import { SettingsTemplate } from '../../../../templates';
+import { ImageUser, Input, Button } from 'components/atoms';
+import { SettingsTemplate } from 'templates';
 
 import styles from './general.module.scss';
 

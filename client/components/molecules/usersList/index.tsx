@@ -5,12 +5,12 @@ import ElementList from './elementList';
 import { UserDetailed } from '../index';
 
 import { SearchSvg } from '../../../public/svgs';
-import { Member } from '../../../interfaces';
+import { Member } from 'interfaces';
 import { props } from './types';
-import { fetcher, filterByKey, handleNotAllowedError } from '../../../utils';
-import { add } from '../../../reducers/friendsReducer';
-import { remove } from '../../../reducers/invitesReducer';
-import { useError } from '../../../contexts';
+import { fetcher, filterByKey, handleNotAllowedError } from 'utils';
+import { add } from 'reducers/friendsReducer';
+import { remove } from 'reducers/invitesReducer';
+import { useError } from 'contexts';
 import styles from './usersList.module.scss';
 
 const UsersList = ({ name, data }: props) => {

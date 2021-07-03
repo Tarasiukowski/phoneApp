@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
-import { Button, ImageUser } from '../../../atoms';
+import { Button, ImageUser } from 'components/atoms';
 import ListOptions from './listOptions';
 
 import { MailSvg, MoreSvg } from '../../../../public/svgs';
 import { props } from './types';
-import { useUser } from '../../../../hooks';
+import { useUser } from 'hooks';
 import styles from './header.module.scss';
 
 const Header = (props: props) => {
@@ -60,9 +60,7 @@ const Header = (props: props) => {
 
   useEffect(() => {
     window.addEventListener('resize', handleOnResize);
-
-    return window.removeEventListener('resize', handleOnResize);
-  });
+  }, []);
 
   useEffect(() => {
     window.addEventListener('click', handleOnClick);

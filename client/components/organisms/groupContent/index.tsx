@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { Chat, UserDetailed } from '../../molecules';
+import { Chat, UserDetailed } from 'components/molecules';
 import Navigation from './navigation';
 
-import { Member } from '../../../interfaces';
+import { Member } from 'interfaces';
 
 const GroupContent = () => {
   const [user, setUser] = useState<Member | null>(null);

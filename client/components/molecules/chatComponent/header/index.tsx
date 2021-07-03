@@ -1,4 +1,4 @@
-import { ImageUser } from '../../../atoms';
+import { ImageUser } from 'components/atoms';
 import ChatOptions from '../chatOptions/index';
 
 import { props } from './types';

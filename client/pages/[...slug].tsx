@@ -1,12 +1,12 @@
-import { Subpage } from '../components/molecules';
+import { Subpage } from 'components/molecules';
 import {
   InboxContent,
   GroupContent,
   ContactsContent,
   InvitesContent,
   SettingsContent,
-} from '../components/organisms/index';
-import { MainTemplate, IsLoggedTemplate } from '../templates';
+} from 'components/organisms/index';
+import { MainTemplate, IsLoggedTemplate } from 'templates';
 
 const MainPage = () => (
   <IsLoggedTemplate allow="logged">

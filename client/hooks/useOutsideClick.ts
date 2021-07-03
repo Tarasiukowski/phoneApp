@@ -12,7 +12,7 @@ export const useOutsideClick = (
 ) => {
   const { isListeningForEvent } = settings
     ? settings
-    : ({ isListeningForEvent: false, withButtons: false } as const);
+    : ({ isListeningForEvent: false } as const);
 
   useEffect(() => {
     if (isListeningForEvent) {

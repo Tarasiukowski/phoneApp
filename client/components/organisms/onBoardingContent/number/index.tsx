@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import { Button } from '../../../atoms';
-import { SelectNumberButton, SelectNumberList } from '../../../molecules';
-import { RedirectTemplate } from '../../../../templates';
+import { Button } from 'components/atoms';
+import { SelectNumberButton, SelectNumberList } from 'components/molecules';
+import { RedirectTemplate } from 'templates';
 
-import { fetcher, handleNotAllowedError } from '../../../../utils';
-import { useError } from '../../../../contexts';
-import { useUser } from '../../../../hooks';
+import { fetcher, handleNotAllowedError } from 'utils';
+import { useError } from 'contexts';
+import { useUser } from 'hooks';
 import styles from './number.module.scss';
 
 const OnboardingNumberContent = () => {

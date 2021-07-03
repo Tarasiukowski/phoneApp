@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 
-import { Button } from '../../../atoms';
-import { SelectNumberButton, SelectNumberList } from '../../../molecules';
-import { SettingsTemplate } from '../../../../templates';
+import { Button } from 'components/atoms';
+import { SelectNumberButton, SelectNumberList } from 'components/molecules';
+import { SettingsTemplate } from 'templates';
 
-import { useUser } from '../../../../hooks';
-import { fetcher, handleNotAllowedError } from '../../../../utils';
-import { useError } from '../../../../contexts';
+import { useUser } from 'hooks';
+import { fetcher, handleNotAllowedError } from 'utils';
+import { useError } from 'contexts';
 
 const SettingsNumberContent = () => {
   const [openList, setOpenList] = useState(false);

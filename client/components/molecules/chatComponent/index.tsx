@@ -5,11 +5,11 @@ import Header from './header';
 import { Textarea } from './textarea';
 import Msg from './message';
 
-import { useError } from '../../../contexts';
+import { useError } from 'contexts';
 import { Message, props } from './types';
-import { fetcher, handleNotAllowedError } from '../../../utils';
-import { Conversation, Member } from '../../../interfaces';
-import { useFriends, useUser } from '../../../hooks';
+import { fetcher, handleNotAllowedError } from 'utils';
+import { Conversation, Member } from 'interfaces';
+import { useFriends, useUser } from 'hooks';
 import styles from './chat.module.scss';
 
 const Chat = ({ id, getScopedUser, width }: props) => {

@@ -1,4 +1,4 @@
-import { logout } from '../../../../utils';
+import { logout } from 'utils';
 import { SingOutSvg, SettingsSvg, PlusSvg } from '../../../../public/svgs';
 
 export const buttonNavigationSettings = {

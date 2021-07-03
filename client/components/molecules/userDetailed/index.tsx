@@ -3,9 +3,9 @@ import Header from './header/header';
 import Notes from './notes';
 
 import { props } from './types';
-import { formatToListData } from '../../../utils';
-import { User } from '../../../interfaces';
-import { useFriends } from '../../../hooks';
+import { formatToListData } from 'utils';
+import { User } from 'interfaces';
+import { useFriends } from 'hooks';
 import styles from './userDetailed.module.scss';
 
 const UserDetailed = ({ email, number, loading = false, ...restProps }: props) => {

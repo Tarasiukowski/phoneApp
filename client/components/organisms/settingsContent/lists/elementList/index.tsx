@@ -1,4 +1,4 @@
-import { Button } from '../../../../atoms';
+import { Button } from 'components/atoms';
 
 import { props } from './types';
 import styles from './elementList.module.scss';

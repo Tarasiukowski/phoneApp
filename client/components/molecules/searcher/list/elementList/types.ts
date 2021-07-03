@@ -1,7 +1,7 @@
-import { User } from "../../../../../interfaces";
+import { User } from 'interfaces';
 
 export type props = {
   content: string;
   onClick: () => void;
-  user?: User
-}
+  user?: User;
+};

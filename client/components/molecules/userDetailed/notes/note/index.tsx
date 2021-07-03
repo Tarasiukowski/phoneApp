@@ -1,6 +1,6 @@
-import { ImageUser } from '../../../../atoms';
+import { ImageUser } from 'components/atoms';
 
-import { useUser } from '../../../../../hooks';
+import { useUser } from 'hooks';
 import { props } from './types';
 import styles from './note.module.scss';
 

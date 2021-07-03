@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { filterByKey } from '../../../utils';
+import { filterByKey } from 'utils';
 
-import { Input } from '../../atoms';
+import { Input } from 'components/atoms';
 
 import styles from './ElementFinder.module.scss';
 import { props } from './types';

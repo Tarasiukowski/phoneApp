@@ -1,6 +1,6 @@
-import { Alert } from '../../components/atoms';
+import { Alert } from 'components/atoms';
 
-import { useError } from '../../contexts';
+import { useError } from 'contexts';
 
 const ErrorTemplate: React.FC = ({ children }) => {
   const { error } = useError();

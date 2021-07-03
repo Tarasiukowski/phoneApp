@@ -1,7 +1,7 @@
-import { Button } from '../../components/atoms';
+import { Button } from 'components/atoms';
 
 import Logo from '../../public/svgs/logo.svg';
-import { logout } from '../../utils';
+import { logout } from 'utils';
 import styles from './onboardingTemplate.module.scss';
 
 const OnboardingTemplate: React.FC = ({ children }) => (

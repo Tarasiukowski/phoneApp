@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import { ImageUser } from '../../../../atoms';
+import { ImageUser } from 'components/atoms';
 
 import { props } from './types';
 import styles from './elementList.module.scss';

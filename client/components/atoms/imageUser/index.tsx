@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { Image } from './styles';
 
 import { props, DefaultMember } from './types';
-import { useUser } from '../../../hooks';
-import { getInitials } from '../../../utils';
+import { useUser } from 'hooks';
+import { getInitials } from 'utils';
 
 const ImageUser = ({ member, ...restProps }: props) => {
   const [defaultMember, setDefaultMember] = useState<DefaultMember>({

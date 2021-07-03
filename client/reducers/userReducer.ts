@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { User } from '../interfaces';
-import { RootState } from '../store';
+import { User } from 'interfaces';
+import { RootState } from 'store';
 
 type Key = keyof User;
 type PayloadData<K extends Key> = {

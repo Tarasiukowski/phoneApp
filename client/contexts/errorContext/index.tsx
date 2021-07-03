@@ -1,7 +1,7 @@
 import { createContext, useState, useContext } from 'react';
 
 import { errorContext } from './types';
-import { Error } from '../../interfaces';
+import { Error } from 'interfaces';
 
 const ErrorContext = createContext<errorContext>({ error: null, setError: () => {} });
 

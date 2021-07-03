@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 import List from './list';
 
 import { SearchSvg } from '../../../public/svgs/index';
-import { filterByKey, getSearcherData } from '../../../utils';
+import { filterByKey, getSearcherData } from 'utils';
 import { props, SearchData } from './types';
-import { DetailedConversation } from '../../../interfaces';
-import { useFriends, useOutsideClick, useUser } from '../../../hooks';
+import { DetailedConversation } from 'interfaces';
+import { useFriends, useOutsideClick, useUser } from 'hooks';
 import styles from './searcher.module.scss';
 
 const Searcher = ({ open, onClose }: props) => {

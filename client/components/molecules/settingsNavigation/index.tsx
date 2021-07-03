@@ -1,4 +1,4 @@
-import { ButtonNavigation } from '../../atoms';
+import { ButtonNavigation } from 'components/atoms';
 
 import { buttonsNavigationData, buttonNavigationSettings } from './data';
 import styles from './settingsNavigation.module.scss';

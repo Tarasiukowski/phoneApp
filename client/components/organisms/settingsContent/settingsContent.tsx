@@ -1,11 +1,11 @@
-import { Subpage, SettingsNavigation } from '../../molecules';
+import { Subpage, SettingsNavigation } from 'components/molecules';
 import {
   SettingsFriendsContent,
   SettingsBlocklistContent,
   SettingsListsContent,
   SettingsProfileContent,
   SettingsGeneralContent,
-  SettingsNumberContent
+  SettingsNumberContent,
 } from './index';
 
 const SettingsContent = () => (
@@ -37,9 +37,9 @@ const routes = [
     component: <SettingsFriendsContent />,
   },
   {
-    slug: "number",
-    component: <SettingsNumberContent />
-  }
+    slug: 'number',
+    component: <SettingsNumberContent />,
+  },
 ];
 
 export { SettingsContent };

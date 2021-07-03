@@ -1,6 +1,6 @@
-import { UsersList } from '../../molecules';
+import { UsersList } from 'components/molecules';
 
-import { useFriends } from '../../../hooks';
+import { useFriends } from 'hooks';
 
 const ContactsContent = () => {
   const friends = useFriends();

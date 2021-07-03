@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
-import { Loader } from '../../components/molecules';
+import { Loader } from 'components/molecules';
 
-import { login } from '../../reducers/userReducer';
-import { getOnboardingStage, fetcher } from '../../utils';
+import { login } from 'reducers/userReducer';
+import { update } from 'reducers/friendsReducer';
+import { getOnboardingStage, fetcher } from 'utils';
 import { props } from './types';
-import { useError } from '../../contexts';
-import { ERROR } from '../../common/errors';
-import { update } from '../../reducers/friendsReducer';
+import { useError } from 'contexts';
+import { ERROR } from 'common';
 
 const settings = {
   logged: true,

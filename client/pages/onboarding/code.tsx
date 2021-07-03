@@ -1,5 +1,5 @@
-import { OnboardingCodeContent } from '../../components/organisms';
-import { IsLoggedTemplate, OnboardingTemplate } from '../../templates';
+import { OnboardingCodeContent } from 'components/organisms';
+import { IsLoggedTemplate, OnboardingTemplate } from 'templates';
 
 const OnboardingCodePage = () => (
   <IsLoggedTemplate allow="logged">

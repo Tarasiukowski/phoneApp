@@ -1,4 +1,4 @@
-import { Searcher } from '../../components/molecules';
+import { Searcher } from 'components/molecules';
 
 import { props } from './types';
 

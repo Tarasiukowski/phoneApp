@@ -1,6 +1,6 @@
 import cl from 'classnames';
 
-import { useUser } from '../../../../hooks';
+import { useUser } from 'hooks';
 import { props } from './types';
 import { Message } from '../types';
 import styles from './message.module.scss';

@@ -1,11 +1,11 @@
 import { useState, useRef, useReducer, ChangeEvent, KeyboardEvent } from 'react';
 
-import { Button } from '../../atoms';
+import { Button } from 'components/atoms';
 
 import styles from './multitask.module.scss';
-import { isCorrectValue } from '../../../utils';
+import { isCorrectValue } from 'utils';
 import { optionsComponent } from './data';
-import { useOutsideClick } from '../../../hooks';
+import { useOutsideClick } from 'hooks';
 import { props, GroupData } from './types';
 
 const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
