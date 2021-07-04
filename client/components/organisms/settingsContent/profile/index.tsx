@@ -1,7 +1,6 @@
-import { ChangeEvent, useReducer, useState, useEffect } from 'react';
+import { ChangeEvent, useReducer, useEffect } from 'react';
 
 import { ImageUser, Input, Button } from 'components/atoms';
-import { Multitask } from 'components/molecules';
 import { SettingsTemplate } from 'templates';
 
 import styles from './profile.module.scss';
@@ -9,14 +8,12 @@ import { InputsValues } from './types';
 import { useUser } from 'hooks';
 import { fetcher, handleNotAllowedError } from 'utils';
 import { ERROR } from 'common';
-import { useError } from 'contexts';
+import { useError, useMultiTask } from 'contexts';
 
 const SettingsProfileContent = () => {
-  const [openMultiTask, setOpenMultiTask] = useState(false);
-
   const { setError } = useError();
-
   const loggedUser = useUser();
+  const multiTask = useMultiTask();
 
   const fullname = loggedUser?.fullname;
 
@@ -73,14 +70,13 @@ const SettingsProfileContent = () => {
   };
 
   useEffect(() => {
-    if (openMultiTask === false) {
+    if (multiTask.open === false) {
       resetData();
     }
-  }, [openMultiTask]);
+  }, [multiTask.open]);
 
   const multitaskHandle = {
     name: 'ChangeEmail' as 'ChangeEmail',
-    open: openMultiTask,
     onNext: async (newEmail: string) => {
       if (newEmail === loggedUser.email) {
         setError({ msg: ERROR.WITHOUT_CHANGE('email', 'singular'), id: Math.random() });
@@ -106,7 +102,7 @@ const SettingsProfileContent = () => {
       }
     },
     onClose: async (verify?: boolean) => {
-      setOpenMultiTask(false);
+      multiTask.toggleOpen(false);
       verify && window.location.reload();
     },
     onEnd: async (code: string) => {
@@ -157,9 +153,9 @@ const SettingsProfileContent = () => {
         <Button
           id="ChangeEmail"
           onClick={() => {
-            setOpenMultiTask(true);
+            multiTask.toggleOpen(true, multitaskHandle);
           }}
-          disabled={openMultiTask}
+          disabled={multiTask.open}
           width="auto"
           transparent
         >
@@ -169,7 +165,6 @@ const SettingsProfileContent = () => {
       <Button onClick={save} disabled={isDisabled} style={{ marginTop: '40px' }} width="auto">
         save
       </Button>
-      <Multitask {...multitaskHandle} />
     </SettingsTemplate>
   );
 };

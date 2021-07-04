@@ -52,7 +52,7 @@ const SettingsNumberContent = () => {
     }
   };
 
-  const handleMultiTask = {
+  const handleSelectNumberList = {
     onSelectNumber: (number: string) => {
       setNumber(number);
     },
@@ -66,7 +66,7 @@ const SettingsNumberContent = () => {
       <h2 className="title">Phone number</h2>
       <p className="description">Manage your phone number</p>
       <SelectNumberButton number={number} onClick={toggleOpenList} mini />
-      {openList && <SelectNumberList {...handleMultiTask} />}
+      {openList && <SelectNumberList {...handleSelectNumberList} />}
       <Button
         onClick={onSave}
         disabled={disabledByRequest ? disabledByRequest : implementedChange}

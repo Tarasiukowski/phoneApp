@@ -6,3 +6,4 @@ export { MainTemplate } from './mainTemplate';
 export { IsLoggedTemplate } from './isLoggedTemplate';
 export { AuthTemplate } from './authTemplate';
 export { ErrorTemplate } from './errorTemplate';
+export { MultiTaskTemplate } from './multiTaskTemplate';

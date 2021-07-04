@@ -1,30 +1,25 @@
-import { useState } from 'react';
 import Link from 'next/link';
 
 import { UserCard } from 'components/atoms';
-import { Multitask } from '../index';
 import AddButton from './addButton';
 
 import { fetcher, handleNotAllowedError } from 'utils';
-import { useError } from 'contexts';
+import { useError, useMultiTask } from 'contexts';
 import { useFriends, useUser } from 'hooks';
 import styles from './friendsList.module.scss';
 
 const FriendsList = () => {
-  const [openMultiTask, setOpenMultiTask] = useState(false);
-
   const user = useUser();
   const friends = useFriends();
-
+  const multiTask = useMultiTask();
   const { setError } = useError();
 
   const conversations = user ? user.conversations : [];
 
   const multitaskHandle = {
     name: 'InviteFriend' as 'InviteFriend',
-    open: openMultiTask,
     onClose: () => {
-      setOpenMultiTask(false);
+      multiTask.toggleOpen(false);
     },
     onEnd: async (to: string) => {
       try {
@@ -69,12 +64,11 @@ const FriendsList = () => {
         })}
         <AddButton
           onClick={() => {
-            setOpenMultiTask(true);
+            multiTask.toggleOpen(true, multitaskHandle);
           }}
           id="InviteFriend"
         />
       </div>
-      <Multitask {...multitaskHandle} />
     </div>
   );
 };

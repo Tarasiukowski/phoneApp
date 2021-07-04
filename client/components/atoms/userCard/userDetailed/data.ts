@@ -16,6 +16,7 @@ export const buttonsData = [
   {
     icon: PlusSvg,
     content: 'Invite your friends',
+    handleInvite: true
   },
   {
     icon: SingOutSvg,

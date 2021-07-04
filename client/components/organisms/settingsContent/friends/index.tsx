@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from 'components/atoms';
-import { Multitask, ElementFinder } from 'components/molecules';
+import { ElementFinder } from 'components/molecules';
 import { SettingsTemplate } from 'templates';
 import ElementList from './elementList';
 
@@ -10,14 +9,14 @@ import { fetcher, handleNotAllowedError } from 'utils';
 import { Member } from 'interfaces';
 import { useFriends } from 'hooks';
 import { remove } from 'reducers/friendsReducer';
-import { useError } from 'contexts';
+import { useError, useMultiTask } from 'contexts';
 
 const SettingsFriendsContent = () => {
-  const [openMultiTask, setOpenMultiTask] = useState(false);
+  const dispatch = useDispatch();
 
   const friends = useFriends();
-  const dispatch = useDispatch();
   const { setError } = useError();
+  const multiTask = useMultiTask();
 
   const removeFriend = async (user: Member) => {
     const { email } = user;
@@ -41,9 +40,8 @@ const SettingsFriendsContent = () => {
 
   const multitaskHandle = {
     name: 'InviteFriend' as 'InviteFriend',
-    open: openMultiTask,
     onClose: () => {
-      setOpenMultiTask(false);
+      multiTask.toggleOpen(false);
     },
     onEnd: async (to: string) => {
       try {
@@ -71,9 +69,9 @@ const SettingsFriendsContent = () => {
       <p className="description">Manage all the members in your friend list.</p>
       <Button
         onClick={() => {
-          setOpenMultiTask(true);
+          multiTask.toggleOpen(true, multitaskHandle);
         }}
-        disabled={openMultiTask}
+        disabled={multiTask.open}
         id="InviteFriend"
         style={{ margin: '37px 0 17px 0' }}
         width="auto"
@@ -87,7 +85,6 @@ const SettingsFriendsContent = () => {
         notFound="User not found"
         renderItem={(data) => <ElementList user={data} onClick={removeFriend} />}
       />
-      <Multitask {...multitaskHandle} />
     </SettingsTemplate>
   );
 };

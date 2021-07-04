@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from 'components/atoms';
-import { Multitask, ElementFinder } from 'components/molecules';
+import { ElementFinder } from 'components/molecules';
 import { SettingsTemplate } from 'templates';
 import ElementList from './elementList';
 
@@ -10,17 +9,16 @@ import { GroupData } from 'components/molecules/multitask/types';
 import { ERROR } from 'common/errors';
 import { fetcher, getObjectsKeysFromArray, handleNotAllowedError } from 'utils';
 import { updateGroup } from 'reducers/userReducer';
-import { useError } from 'contexts';
+import { useError, useMultiTask } from 'contexts';
 import { useFriends, useUser } from 'hooks';
 import { Group } from 'interfaces';
 
 const SettingsListsContent = () => {
-  const [openMultiTask, setOpenMultiTask] = useState(false);
-
   const dispatch = useDispatch();
 
   const loggedUser = useUser();
   const friends = useFriends();
+  const multiTask = useMultiTask();
 
   const groups = loggedUser ? loggedUser.groups : [];
 
@@ -48,7 +46,6 @@ const SettingsListsContent = () => {
 
   const multitaskHandle = {
     name: 'CreateGroup' as 'CreateGroup',
-    open: openMultiTask,
     onNext: (email: string, stage: number) => {
       if (stage > 0) {
         const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
@@ -64,7 +61,7 @@ const SettingsListsContent = () => {
       return true;
     },
     onClose: () => {
-      setOpenMultiTask(false);
+      multiTask.toggleOpen(false);
     },
     onEnd: async (groupData: GroupData) => {
       try {
@@ -93,9 +90,9 @@ const SettingsListsContent = () => {
       <p className="description">Manage the settings.</p>
       <Button
         onClick={() => {
-          setOpenMultiTask(true);
+          multiTask.toggleOpen(true, multitaskHandle);
         }}
-        disabled={openMultiTask}
+        disabled={multiTask.open}
         id="CreateGroup"
         style={{ margin: '37px 0 17px 0' }}
         width="auto"
@@ -117,7 +114,6 @@ const SettingsListsContent = () => {
           />
         )}
       />
-      <Multitask {...multitaskHandle} />
     </SettingsTemplate>
   );
 };
