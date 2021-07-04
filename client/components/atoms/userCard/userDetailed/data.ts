@@ -14,11 +14,6 @@ export const buttonsData = [
     content: 'Edit account',
   },
   {
-    href: '/settings/general',
-    icon: SettingsSvg,
-    content: 'Workspace settings',
-  },
-  {
     icon: PlusSvg,
     content: 'Invite your friends',
   },
