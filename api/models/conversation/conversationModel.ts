@@ -25,10 +25,14 @@ class ConversationModel {
       await conversationModel.updateOne({ _id: id }, { [`$${type}`]: data });
 
       if (key === 'users' && type === 'push') {
-        const conversation = await (await conversationModel.findOne({ _id: id })).toObject();
+        const conversation = await conversationModel.findOne({ _id: id });
 
-        // FIX ME
-        conversation.messages.map((message) => {});
+        if (conversation) {
+          const fromatedConversation = await conversation.toObject();
+
+          // FIX ME
+          fromatedConversation.messages.map((message) => {});
+        }
       }
 
       return { succes: true, status: 200 };

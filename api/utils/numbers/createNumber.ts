@@ -1,6 +1,6 @@
 import { availabilityNumber } from './availabilityNumber';
 
-export const createNumber = async (): Promise<string> => {
+export const createNumber = async (): Promise<string | undefined> => {
   const number = () => {
     let number = '';
 

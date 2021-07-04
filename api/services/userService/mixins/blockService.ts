@@ -1,5 +1,5 @@
 import UserService from '..';
-import { Class } from '../../../interfaces';
+import { Class, User } from '../../../interfaces';
 import UserModel from '../../../models/user/userModel';
 
 export function BlockServiceMixin<Base extends Class>(base: Base) {
@@ -7,8 +7,9 @@ export function BlockServiceMixin<Base extends Class>(base: Base) {
     static block = {
       async index(loggedEmail: string, memberEmail: string) {
         const { user: loggedUser } = await UserModel.findOne('email', loggedEmail);
+        const adtiveUser = loggedUser as User;
 
-        const isFriend = loggedUser.friends.find((friend) => friend.email === memberEmail);
+        const isFriend = adtiveUser.friends.find((friend) => friend.email === memberEmail);
 
         if (isFriend) {
           UserService.friend.remove(loggedEmail, memberEmail);
@@ -24,10 +25,11 @@ export function BlockServiceMixin<Base extends Class>(base: Base) {
 
         return data;
       },
-      async get(email) {
+      async get(email: string) {
         const { user } = await UserModel.findOne('email', email);
+        const findedUser = user as User;
 
-        const emailsOfBlocklist = user.blocklist;
+        const emailsOfBlocklist = findedUser.blocklist;
 
         const formatedUsersOfBlocklist = await UserModel.find(emailsOfBlocklist, 'email');
 

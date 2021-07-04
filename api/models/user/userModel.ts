@@ -2,23 +2,23 @@ import { model } from 'mongoose';
 
 import { generateCode, sendMail, formatUser, getUpdateOption } from '../../utils';
 import { userSchema } from './userSchema';
-import { By, UserDocument, User } from './types';
+import { UserDocument } from './types';
 import { ERROR, getDefaultDataUser } from '../../data';
-import { updateType } from '../../interfaces';
+import { updateType, AuthType, User } from '../../interfaces';
 
 export const userModel = model<UserDocument>('user', userSchema);
 
 class UserModel {
   email: string;
-  code: string;
-  by: By;
+  code?: string;
   redirectTo: string;
+  authType: AuthType;
 
-  constructor(email: string, by: By) {
+  constructor(email: string, authType: AuthType) {
     this.email = email;
-    this.by = by;
+    this.authType = authType;
 
-    if (by !== 'Google') {
+    if (authType !== 'Google') {
       this.code = generateCode();
       this.redirectTo = '/onboarding/code';
       sendMail(this.email, this.code);
@@ -27,13 +27,20 @@ class UserModel {
     }
   }
 
-  static format<U extends UserDocument, K extends keyof User>(user: U, ...extraData: K[]) {
+  static format<U extends UserDocument, K extends keyof User>(
+    user: U,
+    ...extraData: K[]
+  ): Partial<User> {
     const formatedUser = formatUser(user, extraData);
 
     return formatedUser;
   }
 
-  static async update(key: keyof User, data, type: updateType = 'set') {
+  static async update(
+    key: keyof User,
+    data: any,
+    type: updateType = 'set',
+  ) {
     const { email, newEmail } = data;
 
     delete data.email;
@@ -56,7 +63,7 @@ class UserModel {
   }
 
   static async find<K extends keyof User, V extends User[K]>(data: V[], key: K, ...extraData: K[]) {
-    const formatedData = await data.map(async (elem) => {
+    const formatedData = (await data.map(async (elem) => {
       const { user } = await UserModel.findOne(key, elem);
 
       if (user) {
@@ -64,7 +71,7 @@ class UserModel {
 
         return formatedUser;
       }
-    });
+    })) as Partial<User>[];
 
     return {
       data: await Promise.all(formatedData),
@@ -85,7 +92,7 @@ class UserModel {
   }
 
   async save(extraData: Partial<User>) {
-    delete this.by;
+    delete this.authType;
 
     const defaultData = await getDefaultDataUser();
 

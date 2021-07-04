@@ -1,5 +1,4 @@
-import { updateType } from '../interfaces';
-import { User } from '../models/user/types';
+import { updateType, User } from '../interfaces';
 import { generateCode } from './generateCode';
 
 type Types = {
@@ -16,7 +15,11 @@ const types: Types = {
 
 export const getUpdateType = <T extends KeyOfTypes>(key: T): UpdateType<T> => types[key];
 
-export const getUpdateOption = (key: keyof User, data, type: updateType): any  => {
+export const getUpdateOption = <K extends keyof User>(
+  key: K,
+  data: Partial<User> & { value?: string },
+  type: updateType,
+): any => {
   const { newEmail, value } = data;
 
   const availableOptions = {

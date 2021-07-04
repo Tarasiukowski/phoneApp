@@ -1,15 +1,10 @@
 import { ERROR } from '../../data';
-import { updateType } from '../../interfaces';
+import { updateType, User } from '../../interfaces';
 import ConversationModel from '../../models/conversation/conversationModel';
-import { User } from '../../models/user/types';
 import UserModel from '../../models/user/userModel';
-import { By } from '../types';
 import { FriendServiceMixin, InviteServiceMixin, BlockServiceMixin } from './mixins';
 
 class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixin(class {}))) {
-  email: string;
-  by: By;
-
   static async update<Key extends keyof User>(
     key: Key,
     data: User[Key] extends Array<any> ? User[Key][number] : User[Key],
@@ -20,39 +15,47 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
     return returnedData;
   }
 
-  static async verify(data, type: 'account' | 'email') {
+  static async verify(data: { code: string; email: string }, type: 'account' | 'email') {
     const { code, email } = data;
     const accountVerification = type === 'account';
 
     const { status, user } = await UserModel.findOne('email', email);
 
-    const validCode = accountVerification ? user.code === code : user.newEmail.code === code;
+    if (user) {
+      const validCode = accountVerification ? user.code === code : user.newEmail.code === code;
 
-    if (validCode) {
-      if (!accountVerification) {
-        const newEmail = user.newEmail.value;
+      if (validCode) {
+        if (!accountVerification) {
+          const newEmail = user.newEmail.value;
 
-        UserModel.update('email', { email, newEmail }, 'setEmail');
+          UserModel.update('email', { email, newEmail }, 'setEmail');
 
-        const friends = await this.friend.get(email, 'conversations');
+          const friends = await this.friend.get(email, 'conversations');
 
-        friends.data.map((friend) => {
-          UserModel.update('friends', { email: friend.email, value: email }, 'pull');
-          UserModel.update('friends', { email: friend.email, value: newEmail }, 'push');
+          friends.data.map(async (friend) => {
+            UserModel.update('friends', { email: friend.email, value: email }, 'pull');
+            UserModel.update('friends', { email: friend.email, value: newEmail }, 'push');
 
-          friend.conversations.map((conversation) => {
-            const conversationId = conversation.id;
+            const { user: formatedFriend } = await UserModel.findOne('email', friend.email);
 
-            ConversationModel.update(conversationId, 'users', email, 'pull');
-            ConversationModel.update(conversationId, 'users', newEmail, 'push');
+            if (formatedFriend) {
+              formatedFriend.conversations.map((conversation) => {
+                const conversationId = conversation.id;
+
+                ConversationModel.update(conversationId, 'users', email, 'pull');
+                ConversationModel.update(conversationId, 'users', newEmail, 'push');
+              });
+            }
           });
-        });
+        }
+
+        return { valid: true, status, errorMsg: null };
       }
 
-      return { valid: true, status, errorMsg: null };
+      return { valid: false, status: 401, errorMsg: ERROR.WRONG_VERIFICATION_CODE };
     }
 
-    return { valid: false, status: 401, errorMsg: ERROR.WRONG_VERIFICATION_CODE };
+    return { status: 404, errorMsg: ERROR.USER_NOT_EXIST };
   }
 }
 

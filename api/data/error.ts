@@ -7,7 +7,7 @@ export const ERROR = {
   FUNCTIONALITY_NOT_ALLOWED: 'error - functionality not allowed',
   DUPLICATE_INVITATION: 'error - invitation has already been sent',
   IS_YOUR_FRIEND: 'errir - this user is already your friend',
-  EMAIL_NOT_VALID: (email) => `error in email - email format validation failed: ${email}`,
+  EMAIL_NOT_VALID: (email: string) => `error in email - email format validation failed: ${email}`,
   CONVERSATION_NOT_FOUND: `error - conversation not found`,
   CONVERSATION_CAN_NOT_SEND_MESSAGE: `error - can not send message`,
 };

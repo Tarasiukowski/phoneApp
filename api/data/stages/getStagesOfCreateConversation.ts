@@ -1,10 +1,9 @@
-import { updateType } from '../../interfaces';
-import { User } from '../../models/user/types';
+import { updateType, User } from '../../interfaces';
 
 export const getStagesOfCreateConversation = (
   email: string,
   from: string,
-  id,
+  id: number,
 ): { key: keyof User; data: object; type: updateType }[] => [
   {
     key: 'conversations',

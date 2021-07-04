@@ -4,6 +4,8 @@ import UserModel from '../../models/user/userModel';
 import { isValidEmail } from '../../utils';
 import { ERROR } from '../../data';
 import { By } from '../types';
+import { User } from '../../interfaces';
+import { JWT_PRIVATE_KEY } from '../../constants';
 
 class UserService {
   email: string;
@@ -16,7 +18,7 @@ class UserService {
 
   static async index(token: string) {
     if (token) {
-      const { id }: any = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
+      const { id }: any = jwt.verify(token, JWT_PRIVATE_KEY);
 
       const { user, status } = await UserModel.findOne('_id', id);
 
@@ -47,7 +49,7 @@ class UserService {
       const { status, user } = await UserModel.findOne('email', email);
 
       if (user) {
-        const token = jwt.sign({ id: user._id }, process.env.JWT_PRIVATE_KEY, {
+        const token = jwt.sign({ id: user._id }, JWT_PRIVATE_KEY, {
           expiresIn: 9999999,
         });
 
@@ -62,7 +64,7 @@ class UserService {
     return { user: null, token: null, status: 400, errorMsg };
   }
 
-  async singup(data) {
+  async singup(data: Partial<User>) {
     const { email, by } = this;
 
     const { valid, errorMsg } = isValidEmail(email);
@@ -76,11 +78,13 @@ class UserService {
 
       const { status, user } = await new UserModel(email, by).save(data);
 
-      const token = jwt.sign({ id: user.id }, process.env.JWT_PRIVATE_KEY, {
-        expiresIn: 9999999,
-      });
+      if (user) {
+        const token = jwt.sign({ id: user.id }, JWT_PRIVATE_KEY, {
+          expiresIn: 9999999,
+        });
 
-      return { user: user.value, token, status, errorMsg: null };
+        return { user: user.value, token, status, errorMsg: null };
+      }
     }
 
     return { user: null, token: null, status: 400, errorMsg };

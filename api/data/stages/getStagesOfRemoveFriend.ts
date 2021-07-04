@@ -1,5 +1,4 @@
-import { updateType } from "../../interfaces";
-import { User } from "../../models/user/types";
+import { updateType, User } from "../../interfaces";
 
 export const getStagesOfRemoveFriend = (
   email: string,

@@ -1,3 +1,2 @@
-export const getObjectsKeysFromArray = <T>(data: T[], key: keyof T) => {
-  return data.map((elemOfData) => elemOfData[key]);
-};
+export const getObjectsKeysFromArray = <T>(data: T[], key: keyof T) =>
+  data.map((elemOfData) => elemOfData[key]);

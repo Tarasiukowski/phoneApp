@@ -9,10 +9,12 @@ class mainMiddleware {
     if (token) {
       const { user } = await AuthService.index(token);
 
-      if (user.value) {
-        const { email } = user.value
+      if (user) {
+        if (user.value) {
+          const { email } = user.value;
 
-        req.body = { ...req.body, email }
+          req.body = { ...req.body, email };
+        }
       }
     }
 

@@ -13,7 +13,6 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
 
         res.status(status).send(restData);
       },
-
       async get(req: Request, res: Response) {
         const { email } = req.body;
 
@@ -21,7 +20,6 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
 
         res.status(status).send(data);
       },
-
       async accept(req: Request, res: Response) {
         const { email, from } = req.body;
 
@@ -29,7 +27,6 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
 
         res.status(status).send(restData);
       },
-
       async reject(req: Request, res: Response) {
         const { email, from } = req.body;
 

@@ -6,7 +6,9 @@ export const randomNumbers = async (): Promise<string[]> => {
   for (let i = 0; i <= 20; i++) {
     const number = await createNumber();
 
-    numbers.push(number);
+    if (number) {
+      numbers.push(number);
+    }
   }
 
   return numbers;

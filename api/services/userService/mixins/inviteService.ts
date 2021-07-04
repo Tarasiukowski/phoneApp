@@ -1,7 +1,7 @@
 import { ERROR } from '../../../data';
 import Conversation from '../../../models/conversation/conversationModel';
 import UserModel from '../../../models/user/userModel';
-import { Class } from '../../../interfaces';
+import { Class, User } from '../../../interfaces';
 import { getStagesOfAcceptInvite, getStagesOfCreateConversation } from '../../../data';
 import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
 
@@ -14,7 +14,7 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
         }
 
         const { user: invitedUser } = await UserModel.findOne('email', to);
-        const { user: invitingUser } = await UserModel.findOne('email', from);
+        const { user: invitingUser } = (await UserModel.findOne('email', from)) as { user: User };
 
         if (!invitedUser) {
           return { status: 404, errorMsg: ERROR.USER_NOT_EXIST };
@@ -44,11 +44,15 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
       async get(email: string) {
         const { status, user } = await UserModel.findOne('email', email);
 
-        const invites = user.invites;
+        if (user) {
+          const invites = user.invites;
 
-        const { data: findedUsers } = await UserModel.find(invites, 'email');
+          const { data: findedUsers } = await UserModel.find(invites, 'email');
 
-        return { status, data:  findedUsers };
+          return { status, data: findedUsers };
+        }
+
+        return { status, data: ERROR.USER_NOT_EXIST };
       },
       async accept(email: string, from: string) {
         const stagesOfAcceptInvite = getStagesOfAcceptInvite(email, from);
@@ -59,17 +63,21 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
 
         const { conversation } = await new Conversation([email, from]).save();
 
-        const stagesOfCreateConversation = getStagesOfCreateConversation(
-          email,
-          from,
-          conversation.id,
-        );
+        if (conversation) {
+          const stagesOfCreateConversation = getStagesOfCreateConversation(
+            email,
+            from,
+            conversation.id,
+          );
 
-        stagesOfCreateConversation.map(({ key, data, type }) => {
-          UserModel.update(key, data, type);
-        });
+          stagesOfCreateConversation.map(({ key, data, type }) => {
+            UserModel.update(key, data, type);
+          });
 
-        return { status: 200, errorMsg: null };
+          return { status: 200, errorMsg: null };
+        }
+
+        return { status: 404, errorMsg: ERROR.CONVERSATION_NOT_FOUND };
       },
       async reject(email: string, from: string) {
         const data = await UserModel.update('invites', { email, value: from }, 'pull');

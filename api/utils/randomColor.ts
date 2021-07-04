@@ -9,14 +9,14 @@ const collorsPallete = [
   '#f46036',
 ];
 
-function getRandomInt(min, max) {
+function getRandomInt(min: number, max: number) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
 export const randomColor = () => {
-  const color = collorsPallete[getRandomInt(0, 7)]
+  const color = collorsPallete[getRandomInt(0, 7)];
 
-  return color
+  return color;
 };
