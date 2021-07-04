@@ -10,15 +10,14 @@ export const useOutsideClick = (
   getExtraOption: GetExtraOption,
   settings?: Settings,
 ) => {
-  const { isListeningForEvent } = settings
-    ? settings
-    : ({ isListeningForEvent: false } as const);
+  const { isListeningForEvent } = settings ? settings : ({ isListeningForEvent: false } as const);
 
   useEffect(() => {
     if (isListeningForEvent) {
       const handleClickEvent = (e: Event) => {
         const target = e.target as HTMLElement;
-        const allow = getExtraOption(target, Boolean(ref.current && !ref.current.contains(target)));
+        const defaultOption = Boolean(ref.current && !ref.current.contains(target));
+        const allow = getExtraOption(target, defaultOption);
 
         if (allow) {
           cb();
