@@ -6,7 +6,7 @@ import { userRouter } from './userRouter';
 import { conversationRouter } from './conversationRouter';
 import { groupRouter } from './groupRouter';
 
-export const withRouter = (app: Application) => {
+export const useRouter = (app: Application) => {
   app
     .use('/auth', authRouter)
     .use('/user', userRouter)
