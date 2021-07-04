@@ -9,7 +9,7 @@ export type props = {
     marginLeft: string;
   };
   href?: string;
-  onClick?: (...args: any) => any;
+  onClick?: (...args: any) => void;
   id?: string
 };
 
