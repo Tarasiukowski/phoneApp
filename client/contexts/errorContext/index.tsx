@@ -22,6 +22,7 @@ const useError = () => {
   if (context === undefined) {
     throw new Error('useError must be used within a ErrorProvider');
   }
+  
   return context;
 };
 
