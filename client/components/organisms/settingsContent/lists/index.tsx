@@ -13,7 +13,6 @@ import { updateGroup } from 'reducers/userReducer';
 import { useError } from 'contexts';
 import { useFriends, useUser } from 'hooks';
 import { Group } from 'interfaces';
-import styles from './lists.module.scss';
 
 const SettingsListsContent = () => {
   const [openMultiTask, setOpenMultiTask] = useState(false);
@@ -118,15 +117,6 @@ const SettingsListsContent = () => {
           />
         )}
       />
-      <div className={styles.dangerZone}>
-        <h4>Danger Zone</h4>
-        <p className={styles.info}>
-          This will permanently delete all your contacts from OpenPhone.
-        </p>
-        <Button waring width="auto">
-          Delete All Contacts
-        </Button>
-      </div>
       <Multitask {...multitaskHandle} />
     </SettingsTemplate>
   );

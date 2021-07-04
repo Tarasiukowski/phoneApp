@@ -41,7 +41,7 @@ const UserCard = forwardRef<HTMLDivElement, props>(
 
     return (
       <Template
-        onClick={handleOnClick}
+        onClick={withDetailed ? handleOnClick : onClick}
         elemList={elemList}
         big={big}
         ref={withDetailed ? templateRef : ref}
