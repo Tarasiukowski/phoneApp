@@ -1,12 +1,16 @@
+import { useRouter } from 'next/router';
+
 import { UserCard, ButtonNavigation } from '../../index';
 
 import { useError, useMultiTask } from 'contexts';
 import { buttonsData, buttonNavigationSettings } from './data';
 import { props } from './types';
 import styles from './UserDetailed.module.scss';
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleNotAllowedError, logout } from 'utils';
 
 const UserDetailed = ({ userDetailedRef }: props) => {
+  const router = useRouter();
+
   const multiTask = useMultiTask();
   const { setError } = useError();
 
@@ -35,6 +39,10 @@ const UserDetailed = ({ userDetailedRef }: props) => {
     },
   };
 
+  const logoutCb = () => {
+    router.push('/singup');
+  };
+
   return (
     <div className={styles.box} ref={userDetailedRef}>
       <div>
@@ -42,20 +50,19 @@ const UserDetailed = ({ userDetailedRef }: props) => {
       </div>
       <div className={styles.template}>
         {buttonsData.map((data) => {
-          if (data.handleInvite) {
-            return (
-              <ButtonNavigation
-                onClick={() => {
-                  multiTask.toggleOpen(true, multitaskHandle);
-                }}
-                key={data.content}
-                {...data}
-                {...buttonNavigationSettings}
-              />
-            );
-          }
+          const handleClick = () => {
+            data.handleInvite && multiTask.toggleOpen(true, multitaskHandle);
+            data.logout && logout(logoutCb);
+          };
 
-          return <ButtonNavigation key={data.content} {...data} {...buttonNavigationSettings} />;
+          return (
+            <ButtonNavigation
+              onClick={handleClick}
+              key={data.content}
+              {...data}
+              {...buttonNavigationSettings}
+            />
+          );
         })}
       </div>
     </div>

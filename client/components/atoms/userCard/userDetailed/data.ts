@@ -1,4 +1,3 @@
-import { logout } from 'utils';
 import { SingOutSvg, SettingsSvg, PlusSvg } from '../../../../public/svgs';
 
 export const buttonNavigationSettings = {
@@ -16,11 +15,11 @@ export const buttonsData = [
   {
     icon: PlusSvg,
     content: 'Invite your friends',
-    handleInvite: true
+    handleInvite: true,
   },
   {
     icon: SingOutSvg,
     content: 'Sing out',
-    onClick: logout,
+    logout: true
   },
 ];

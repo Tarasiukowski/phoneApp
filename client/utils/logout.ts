@@ -1,7 +1,7 @@
 import { fetcher } from './fetcher';
 
-export const logout = () => {
+export const logout = (cb: () => void) => {
   fetcher('get', '/auth/logout').then(() => {
-    window.location.reload();
+    cb();
   });
 };
