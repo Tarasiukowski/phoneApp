@@ -3,7 +3,6 @@ import {
   AccountProfileSvg,
   ContactSettingsSvg,
   BlockListSvg,
-  GeneralSvg,
   MembersSvg,
   PhoneNumberSvg,
 } from '../../../public/svgs';
@@ -42,11 +41,6 @@ export const buttonsNavigationData: ButtonsNavigationData = {
     },
   ],
   workspace: [
-    {
-      href: '/settings/general',
-      icon: GeneralSvg,
-      content: 'General',
-    },
     {
       href: '/settings/number',
       icon: PhoneNumberSvg,

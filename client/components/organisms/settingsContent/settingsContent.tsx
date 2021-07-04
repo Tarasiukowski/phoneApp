@@ -4,7 +4,6 @@ import {
   SettingsBlocklistContent,
   SettingsListsContent,
   SettingsProfileContent,
-  SettingsGeneralContent,
   SettingsNumberContent,
 } from './index';
 
@@ -19,10 +18,6 @@ const routes = [
   {
     slug: 'profile',
     component: <SettingsProfileContent />,
-  },
-  {
-    slug: 'general',
-    component: <SettingsGeneralContent />,
   },
   {
     slug: 'blocklist',
