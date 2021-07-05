@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
 import useSwr from 'swr';
 import { useDispatch, useSelector } from 'react-redux';
-import _ from 'lodash';
 
 import { Navigation } from 'components/molecules';
 
-import { useBlocklist, useInvites, useListUpdate, useUser } from 'hooks';
+import { useBlocklist, useInvites, useListUpdate, useUpdateUser, useUser } from 'hooks';
 import { swrFetcher } from 'utils';
 import { update as updateInvites } from 'reducers/invitesReducer';
 import { selectFriends, update as updateFriends } from 'reducers/friendsReducer';
@@ -61,15 +59,9 @@ const MainTemplate: React.FC = ({ children }) => {
     disptach(updateInvites(fetchedInvites));
   });
 
-  useEffect(() => {
-    if (!errorUser && fetchedUserData && fetchedUserData.user) {
-      const fetchedUser = fetchedUserData.user.value;
-
-      if (!_.isEqual(fetchedUser, user)) {
-        disptach(login(fetchedUser));
-      }
-    }
-  }, [fetchedUserData, errorUser]);
+  useUpdateUser(errorUser, fetchedUserData, user, (fetchedUser) => {
+    disptach(login(fetchedUser));
+  });
 
   return (
     <Template>
