@@ -16,7 +16,7 @@ const UserDetailed = ({ email, number, loading = false, ...restProps }: props) =
   const friends = useFriends();
 
   const friend = friends.find((friend) => friend.email === email) as User;
-  const dataOfNotes = friend?.notes;
+  const dataOfNotes = friend.notes;
   const userEmail = email as string;
 
   return (

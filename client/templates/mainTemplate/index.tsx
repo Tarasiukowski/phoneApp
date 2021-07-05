@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import { Navigation } from 'components/molecules';
 
-import { useBlocklist, useInvites, useUser } from 'hooks';
+import { useBlocklist, useInvites, useListUpdate, useUser } from 'hooks';
 import { swrFetcher } from 'utils';
 import { update as updateInvites } from 'reducers/invitesReducer';
 import { selectFriends, update as updateFriends } from 'reducers/friendsReducer';
@@ -49,23 +49,17 @@ const MainTemplate: React.FC = ({ children }) => {
     refreshInterval: 1,
   });
 
-  useEffect(() => {
-    if (!errorBlocklist && fetchedBlocklist && fetchedBlocklist.length !== blocklist.length) {
-      disptach(updateBlocklist(fetchedBlocklist));
-    }
-  }, [fetchedBlocklist, errorBlocklist]);
+  useListUpdate(errorBlocklist, fetchedBlocklist, blocklist, () => {
+    disptach(updateBlocklist(fetchedBlocklist));
+  });
 
-  useEffect(() => {
-    if (!errorFriends && fetchedFriends && fetchedFriends.length !== friends.length) {
-      disptach(updateFriends(fetchedFriends));
-    }
-  }, [fetchedFriends, errorFriends]);
+  useListUpdate(errorFriends, fetchedFriends, friends, () => {
+    disptach(updateFriends(fetchedFriends));
+  });
 
-  useEffect(() => {
-    if (!errorInvites && fetchedInvites && fetchedInvites.length !== invites.length) {
-      disptach(updateInvites(fetchedInvites));
-    }
-  }, [fetchedInvites, errorInvites]);
+  useListUpdate(errorInvites, fetchedInvites, invites, () => {
+    disptach(updateInvites(fetchedInvites));
+  });
 
   useEffect(() => {
     if (!errorUser && fetchedUserData && fetchedUserData.user) {

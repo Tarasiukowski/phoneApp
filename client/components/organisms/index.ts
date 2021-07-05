@@ -4,8 +4,4 @@ export { GroupContent } from './groupContent';
 export { InboxContent } from './inboxContent';
 export { InvitesContent } from './invitesContent';
 export { SettingsContent } from './settingsContent/settingsContent';
-export {
-  OnboardingAccountContent,
-  OnboardingCodeContent,
-  OnboardingNumberContent,
-} from './onBoardingContent';
+export * from './onBoardingContent';
