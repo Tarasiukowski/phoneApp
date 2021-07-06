@@ -36,10 +36,8 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
             UserModel.update('friends', { email: friend.email, value: email }, 'pull');
             UserModel.update('friends', { email: friend.email, value: newEmail }, 'push');
 
-            const { user: formatedFriend } = await UserModel.findOne('email', friend.email);
-
-            if (formatedFriend) {
-              formatedFriend.conversations.map((conversation) => {
+            if (friend) {
+              friend.conversations.map((conversation) => {
                 const conversationId = conversation.id;
 
                 ConversationModel.update(conversationId, 'users', email, 'pull');

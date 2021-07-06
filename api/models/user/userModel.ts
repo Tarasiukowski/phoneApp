@@ -36,11 +36,7 @@ class UserModel {
     return formatedUser;
   }
 
-  static async update(
-    key: keyof User,
-    data: any,
-    type: updateType = 'set',
-  ) {
+  static async update(key: keyof User, data: any, type: updateType = 'set') {
     const { email, newEmail } = data;
 
     delete data.email;

@@ -67,8 +67,9 @@ class ConversationModel {
   static async get(id: string) {
     try {
       const conversation = await conversationModel.findOne({ _id: id });
+      const formatedConversation = conversation?.toObject();
 
-      return { succes: true, status: 200, conversation };
+      return { succes: true, status: 200, conversation: formatedConversation };
     } catch (err) {
       return {
         succes: true,
@@ -79,13 +80,13 @@ class ConversationModel {
     }
   }
 
-  save() {
+  async save() {
     const conversation = new conversationModel(this);
 
     try {
-      conversation.save();
+      const formatedConversation = await (await conversation.save()).toObject();
 
-      return { succes: true, status: 200, conversation };
+      return { succes: true, status: 200, conversation: formatedConversation };
     } catch (err) {
       return { succes: false, status: 409, conversation: null };
     }
