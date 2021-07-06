@@ -1,3 +1,3 @@
-export { randomNumbers } from './randomNumbers';
-export { allNumbers } from './allNumbers';
+export { getRandomNumbers } from './getRandomNumbers';
+export { getAllNumbers } from './getAllNumbers';
 export { createNumber } from './createNumber';

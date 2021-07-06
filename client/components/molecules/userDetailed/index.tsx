@@ -9,9 +9,7 @@ import { useFriends } from 'hooks';
 import styles from './userDetailed.module.scss';
 
 const UserDetailed = ({ email, number, loading = false, ...restProps }: props) => {
-  if (loading) {
-    return <div className={styles.box}></div>;
-  }
+  if (loading) return <div className={styles.box}></div>
 
   const friends = useFriends();
 

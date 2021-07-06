@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 
-import { randomNumbers } from '../utils';
-import { allNumbers } from '../utils/numbers';
+import { getAllNumbers, getRandomNumbers } from '../utils';
 
 class GenerateController {
   async randomNumbers(_: Request, res: Response) {
-    const numbers = await randomNumbers();
+    const numbers = await getRandomNumbers();
 
     res.send({ numbers });
   }
@@ -13,7 +12,7 @@ class GenerateController {
   async allNumbers(req: Request, res: Response) {
     const { filter, lastNumber } = req.body;
 
-    const numbers = await allNumbers(filter, lastNumber);
+    const numbers = await getAllNumbers(filter, lastNumber);
 
     res.send({ numbers });
   }

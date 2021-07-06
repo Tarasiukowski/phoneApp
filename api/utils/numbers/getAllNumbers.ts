@@ -2,7 +2,7 @@ import { formatNumber } from './formatNumber';
 import { unformat } from './unformat';
 import { availabilityNumber } from './availabilityNumber';
 
-export const allNumbers = async (filter?: string, lastNumber?: string): Promise<string[]> => {
+export const getAllNumbers = async (filter?: string, lastNumber?: string): Promise<string[]> => {
   const numbers: string[] = [];
   let number = lastNumber ? unformat(lastNumber) : '0000000';
   let parseNumber = parseInt(number);
