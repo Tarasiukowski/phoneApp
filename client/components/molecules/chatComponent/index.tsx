@@ -1,6 +1,7 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useScroll } from 'react-use';
 
+import { Spinner } from 'components/atoms';
 import Header from './header';
 import { Textarea } from './textarea';
 import Msg from './message';
@@ -27,20 +28,18 @@ const Chat = ({ id, getScopedUser, width }: props) => {
   const { y } = useScroll(refMessagesTemplate);
 
   const fetchDataChat = async () => {
-    if (id) {
-      try {
-        const { conversation } = await fetcher('POST', '/conversation', {
-          id,
-        });
-        const { messages: fetchedMessages } = conversation;
+    try {
+      const { conversation } = await fetcher('POST', '/conversation', {
+        id,
+      });
+      const { messages: fetchedMessages } = conversation;
 
-        setMessages(fetchedMessages);
-      } catch (err) {
-        const { data, status } = err.response;
-        const { errorMsg } = data;
-        setError({ msg: errorMsg, id: Math.random() });
-        handleNotAllowedError(status);
-      }
+      setMessages(fetchedMessages);
+    } catch (err) {
+      const { data, status } = err.response;
+      const { errorMsg } = data;
+      setError({ msg: errorMsg, id: Math.random() });
+      handleNotAllowedError(status);
     }
   };
 
@@ -50,24 +49,23 @@ const Chat = ({ id, getScopedUser, width }: props) => {
   }, [y]);
 
   useEffect(() => {
-    if (id) {
-      setLoading(true);
+    setLoading(true);
+    setMessages([]);
 
-      fetchDataChat().then(() => {
-        setLoading(false);
-      });
+    fetchDataChat().then(() => {
+      setLoading(false);
+    });
 
-      const scopedConversations = activeUser.conversations.find(
-        (conversations) => conversations.id === id,
-      ) as Conversation;
+    const scopedConversations = activeUser.conversations.find(
+      (conversations) => conversations.id === id,
+    ) as Conversation;
 
-      const scopedFriend = friends.find(
-        (friend) => friend.email === scopedConversations.with,
-      ) as Member;
+    const scopedFriend = friends.find(
+      (friend) => friend.email === scopedConversations.with,
+    ) as Member;
 
-      setScopedUser(scopedFriend);
-      getScopedUser(scopedFriend);
-    }
+    setScopedUser(scopedFriend);
+    getScopedUser(scopedFriend);
   }, [id]);
 
   useEffect(() => {
@@ -75,6 +73,12 @@ const Chat = ({ id, getScopedUser, width }: props) => {
 
     messagesTemplate.scrollTo(0, messagesTemplate.scrollHeight);
   }, [messages.length]);
+
+  //   useEffect(() => {
+  //     if (!loading) {
+  //       fetchDataChat();
+  //     }
+  //   });
 
   const textareaHandle = {
     onChange: (e: ChangeEvent) => {
@@ -103,15 +107,12 @@ const Chat = ({ id, getScopedUser, width }: props) => {
     },
   };
 
-  if (!loading) {
-    fetchDataChat();
-  }
-
   return (
     <div className={styles.template} style={{ width: width ? width : '64.5vw' }}>
       <Header user={scopedUser} />
       <div className={styles.messagesTemplate} ref={refMessagesTemplate}>
         <div className={styles.messagesList}>
+          {loading && <Spinner mini />}
           {messages.map((message) => (
             <Msg {...message} data={messages} key={message.id} />
           ))}

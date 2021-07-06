@@ -34,7 +34,7 @@ const UserCard = forwardRef<HTMLDivElement, props>(
     useEffect(() => {
       const { fullname } = member ? member : user;
 
-      const formatedFullname = Object.values(fullname).join(' ');
+      const formatedFullname = Object.values(fullname).join(' ')
 
       setFullname(formatedFullname);
     }, [member]);
