@@ -3,7 +3,7 @@ import { updateType, User } from '../../interfaces';
 export const getStagesOfCreateConversation = (
   email: string,
   from: string,
-  id: number,
+  id: string,
 ): { key: keyof User; data: object; type: updateType }[] => [
   {
     key: 'conversations',

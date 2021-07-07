@@ -1,6 +1,6 @@
 import { model } from 'mongoose';
-import { formatModel } from 'utils';
 
+import { formatModel } from '../../utils';
 import { ERROR } from '../../data/error';
 import { conversationSchema } from './conversationSchema';
 import { Conversation, ConversationDocument, Message } from './types';
@@ -29,10 +29,7 @@ class ConversationModel {
         const conversation = await conversationModel.findOne({ _id: id });
 
         if (conversation) {
-          const fromatedConversation = await conversation.toObject();
-
           // FIX ME
-          fromatedConversation.messages.map((message) => {});
         }
       }
 
@@ -68,10 +65,10 @@ class ConversationModel {
   static async get(id: string) {
     try {
       const conversation = await conversationModel.findOne({ _id: id });
-      let formatedConversation;
+      let formatedConversation: Conversation | undefined;
 
       if (conversation) {
-        formatedConversation = formatModel(conversation);
+        formatedConversation = formatModel(conversation) as Conversation;
       }
 
       return { succes: true, status: 200, conversation: formatedConversation };
@@ -89,7 +86,8 @@ class ConversationModel {
     const conversation = new conversationModel(this);
 
     try {
-      const formatedConversation = await (await conversation.save()).toObject();
+      conversation.save();
+      const formatedConversation = formatModel(conversation) as Conversation;
 
       return { succes: true, status: 200, conversation: formatedConversation };
     } catch (err) {
