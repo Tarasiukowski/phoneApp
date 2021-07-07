@@ -1,4 +1,5 @@
 import { model } from 'mongoose';
+import { formatModel } from 'utils';
 
 import { ERROR } from '../../data/error';
 import { conversationSchema } from './conversationSchema';
@@ -67,7 +68,11 @@ class ConversationModel {
   static async get(id: string) {
     try {
       const conversation = await conversationModel.findOne({ _id: id });
-      const formatedConversation = conversation?.toObject();
+      let formatedConversation;
+
+      if (conversation) {
+        formatedConversation = formatModel(conversation);
+      }
 
       return { succes: true, status: 200, conversation: formatedConversation };
     } catch (err) {
