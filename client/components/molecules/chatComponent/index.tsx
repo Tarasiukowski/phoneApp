@@ -61,7 +61,7 @@ const Chat = ({ id, getScopedUser, width }: props) => {
     ) as Conversation;
 
     const scopedFriend = friends.find(
-      (friend) => friend.email === scopedConversations.with,
+      (friend) => friend.email === scopedConversations?.with,
     ) as Member;
 
     setScopedUser(scopedFriend);

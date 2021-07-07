@@ -63,21 +63,17 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
 
         const { conversation } = await new Conversation([email, from]).save();
 
-        if (conversation) {
-          const stagesOfCreateConversation = getStagesOfCreateConversation(
-            email,
-            from,
-            conversation.id,
-          );
+        const stagesOfCreateConversation = getStagesOfCreateConversation(
+          email,
+          from,
+          conversation?._id,
+        );
 
-          stagesOfCreateConversation.map(({ key, data, type }) => {
-            UserModel.update(key, data, type);
-          });
+        stagesOfCreateConversation.map(({ key, data, type }) => {
+          UserModel.update(key, data, type);
+        });
 
-          return { status: 200, errorMsg: null };
-        }
-
-        return { status: 404, errorMsg: ERROR.CONVERSATION_NOT_FOUND };
+        return { status: 200, errorMsg: null };
       },
       async reject(email: string, from: string) {
         const data = await UserModel.update('invites', { email, value: from }, 'pull');
