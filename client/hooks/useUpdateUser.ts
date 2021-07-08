@@ -12,7 +12,7 @@ type FetchedUserData = {
 export const useUpdateUser = (
   error: Error,
   fetchedUserData: FetchedUserData,
-  user: User,
+  user: User | null,
   cb: (fetchedUser: User) => void,
 ) => {
   useEffect(() => {

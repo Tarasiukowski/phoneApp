@@ -6,9 +6,9 @@ import { Message } from '../types';
 import styles from './message.module.scss';
 
 const MessageComponent = ({ content, from, id, data }: props) => {
-  const { email } = useUser();
+  const user = useUser();
 
-  const isLoggedUser = from === email;
+  const isLoggedUser = from === user?.email;
 
   const messageIndex = data.findIndex((message) => message.id === id);
 

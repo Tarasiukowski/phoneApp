@@ -18,34 +18,38 @@ type PayloadData<K extends Key> = {
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: {} as User,
+  initialState: null as User | null,
   reducers: {
     updateGroup(state, { payload }: PayloadAction<PayloadData<'groups'>>) {
-      let updatedUser;
+      if (state) {
+        let updatedUser;
 
-      const {
-        key,
-        data,
-        option: { type, by, value },
-      } = payload;
+        const {
+          key,
+          data,
+          option: { type, by, value },
+        } = payload;
 
-      const dataOfKey: User[typeof key] = state['groups'];
+        const dataOfKey: User[typeof key] = state['groups'];
 
-      if (Array.isArray(dataOfKey)) {
-        if (type === 'push') {
-          updatedUser = { ...state, [key]: [...dataOfKey, data] };
-        } else if (type === 'pull') {
-          const filterDataOfKey = dataOfKey.filter((elem) => {
-            if (value && by && value !== elem[by]) {
-              return elem;
-            }
-          });
+        if (Array.isArray(dataOfKey)) {
+          if (type === 'push') {
+            updatedUser = { ...state, [key]: [...dataOfKey, data] };
+          } else if (type === 'pull') {
+            const filterDataOfKey = dataOfKey.filter((elem) => {
+              if (value && by && value !== elem[by]) {
+                return elem;
+              }
+            });
 
-          updatedUser = { ...state, ['groups']: filterDataOfKey };
+            updatedUser = { ...state, ['groups']: filterDataOfKey };
+          }
         }
+
+        return updatedUser;
       }
 
-      return updatedUser;
+      return null;
     },
     login(_, { payload }: PayloadAction<User>) {
       return payload;

@@ -9,7 +9,7 @@ import { useFriends, useUser } from 'hooks';
 import styles from './navigation.module.scss';
 
 const Navigation = () => {
-  const { groups, conversations } = useUser();
+  const user = useUser();
   const friends = useFriends();
   const router = useRouter();
 
@@ -18,11 +18,11 @@ const Navigation = () => {
   } = router;
 
   const slugId = slug[1];
-  const findedGroup = groups.find((group) => group._id === slugId);
+  const findedGroup = user?.groups.find((group) => group._id === slugId);
   const firstMemberOfGroup = findedGroup?.members[0] as string;
 
   const getConversationId = (email: string) =>
-    conversations.find((conversation) => conversation.with === email)?.id;
+    user?.conversations.find((conversation) => conversation.with === email)?.id;
 
   useEffect(() => {
     router.push(`/group/${slugId}/${getConversationId(firstMemberOfGroup)}`);

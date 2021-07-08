@@ -25,7 +25,7 @@ const SettingsNumberContent = () => {
 
   useEffect(() => {
     if (disabledByRequest) {
-      if (user.number === number) {
+      if (user?.number === number) {
         setDisabledByRequest(false);
       }
     }

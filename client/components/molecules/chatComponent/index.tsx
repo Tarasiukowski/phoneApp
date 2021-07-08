@@ -56,16 +56,18 @@ const Chat = ({ id, getScopedUser, width }: props) => {
       setLoading(false);
     });
 
-    const scopedConversations = activeUser.conversations.find(
-      (conversations) => conversations.id === id,
-    ) as Conversation;
+    if (activeUser) {
+      const scopedConversations = activeUser.conversations.find(
+        (conversations) => conversations.id === id,
+      ) as Conversation;
 
-    const scopedFriend = friends.find(
-      (friend) => friend.email === scopedConversations?.with,
-    ) as Member;
+      const scopedFriend = friends.find(
+        (friend) => friend.email === scopedConversations?.with,
+      ) as Member;
 
-    setScopedUser(scopedFriend);
-    getScopedUser(scopedFriend);
+      setScopedUser(scopedFriend);
+      getScopedUser(scopedFriend);
+    }
   }, [id]);
 
   useEffect(() => {

@@ -78,7 +78,7 @@ const SettingsProfileContent = () => {
   const multitaskHandle = {
     name: 'ChangeEmail' as 'ChangeEmail',
     onNext: async (newEmail: string) => {
-      if (newEmail === loggedUser.email) {
+      if (newEmail === loggedUser?.email) {
         setError({ msg: ERROR.WITHOUT_CHANGE('email', 'singular'), id: Math.random() });
         return false;
       }

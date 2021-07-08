@@ -63,7 +63,7 @@ const OnboardingCodeContent = () => {
       <form onSubmit={verifyByCode} className={styles.template}>
         <img src="/pngs/verifyMail.png" width="200px" alt="verify mail" />
         <h2>Check your email</h2>
-        <p>We just sent you a 6-digit code to {user.email}. Enter the code below to continue</p>
+        <p>We just sent you a 6-digit code to {user?.email}. Enter the code below to continue</p>
         <Input
           value={valueInput}
           onChange={handleOnChange}
