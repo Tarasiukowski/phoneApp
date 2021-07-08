@@ -70,9 +70,9 @@ class UserService {
     const { valid, errorMsg } = isValidEmail(email);
 
     if (valid) {
-      const { user: duplicateUser } = await UserModel.findOne('email', email);
+      const { user: duplicatedUser } = await UserModel.findOne('email', email);
 
-      if (duplicateUser) {
+      if (duplicatedUser) {
         return { user: null, token: null, status: 403, errorMsg: ERROR.USER_EXIST };
       }
 

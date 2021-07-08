@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 
 import { UserCard, ButtonNavigation } from '../../index';
 
@@ -7,9 +8,13 @@ import { buttonsData, buttonNavigationSettings } from './data';
 import { props } from './types';
 import styles from './UserDetailed.module.scss';
 import { fetcher, handleNotAllowedError, logout } from 'utils';
+import { update as updateBlocklist } from '../../../../reducers/blocklistReducer';
+import { update as updateFriends } from '../../../../reducers/friendsReducer';
+import { update as updateInvites } from '../../../../reducers/invitesReducer';
 
 const UserDetailed = ({ userDetailedRef }: props) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const multiTask = useMultiTask();
   const { setError } = useError();
@@ -39,8 +44,16 @@ const UserDetailed = ({ userDetailedRef }: props) => {
     },
   };
 
+  const resetData = () => {
+    dispatch(updateInvites([]));
+    dispatch(updateBlocklist([]));
+    dispatch(updateFriends([]));
+  };
+
   const logoutCb = () => {
     router.push('/singup');
+
+    resetData();
   };
 
   return (
