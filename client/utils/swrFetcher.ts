@@ -2,12 +2,13 @@ import { Method } from 'axios';
 
 import { fetcher } from './fetcher';
 
-export const swrFetcher = async (url: string, method: Method) => {
+export const swrFetcher = async (url: string, method: Method, body?: Object) => {
   try {
-    const data = await fetcher(method, url);
+    const data = await fetcher(method, url, body ? body : {});
 
-    return data
+    return data;
   } catch {
-    return null
+    return null;
   }
 };
+

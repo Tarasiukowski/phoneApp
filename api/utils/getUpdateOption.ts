@@ -25,7 +25,7 @@ export const getUpdateOption = <K extends keyof User>(
   const availableOptions = {
     remove: { $unset: { [key]: '' } },
     setEmail: { $set: { [key]: newEmail } },
-    set: { $set: { ...data } },
+    set: { $set: { [key]: value } },
     newEmail: { $set: { newEmail: { value: newEmail, code: generateCode() } } },
     push: { $push: { [key]: value } },
     pull: { $pull: { [key]: value } },

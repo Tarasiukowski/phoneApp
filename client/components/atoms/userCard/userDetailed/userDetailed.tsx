@@ -48,9 +48,9 @@ const UserDetailed = ({ userDetailedRef }: props) => {
   };
 
   const logoutCb = () => {
-    router.push('/singup');
-
-    resetData();
+    router.push('/singup').then(() => {
+      resetData();
+    });
   };
 
   return (

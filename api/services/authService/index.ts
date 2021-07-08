@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 
 import UserModel from '../../models/user/userModel';
-import { isValidEmail } from '../../utils';
+import { generateCode, isValidEmail, sendMail } from '../../utils';
 import { ERROR } from '../../data';
 import { By } from '../types';
 import { User } from '../../interfaces';
@@ -16,7 +16,7 @@ class AuthService {
     this.by = by;
   }
 
-  static async index(token: string) {
+  static async index(token: string, fullUser?: boolean) {
     if (token) {
       const { id }: any = jwt.verify(token, JWT_PRIVATE_KEY);
 
@@ -25,7 +25,7 @@ class AuthService {
       if (user) {
         let formatedUser;
 
-        if (user.onBoarding) {
+        if (fullUser) {
           formatedUser = UserModel.format(user, 'conversations', 'groups');
         } else {
           formatedUser = UserModel.format(user);
@@ -47,7 +47,7 @@ class AuthService {
   }
 
   async login() {
-    const { email } = this;
+    const { email, by } = this;
 
     const { valid, errorMsg } = isValidEmail(email);
 
@@ -59,7 +59,18 @@ class AuthService {
           expiresIn: 9999999,
         });
 
-        const formatedUser = UserModel.format(user, 'conversations', 'groups');
+        let formatedUser;
+
+        if (by === 'Google') {
+          formatedUser = UserModel.format(user, 'conversations', 'groups');
+        } else {
+          const code = generateCode();
+          sendMail(email, code);
+
+          UserModel.update('code', { email, value: code });
+
+          formatedUser = UserModel.format(user);
+        }
 
         return { user: formatedUser, token, status, errorMsg: null };
       }

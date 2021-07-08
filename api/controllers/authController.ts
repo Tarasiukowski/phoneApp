@@ -4,9 +4,10 @@ import AuthService from '../services/authService';
 
 class AuthController {
   async index(req: Request, res: Response) {
+    const { fullUser } = req.body
     const token = req.cookies['SESSID'];
 
-    const { status, ...restData } = await AuthService.index(token);
+    const { status, ...restData } = await AuthService.index(token, fullUser);
 
     res.status(status).send(restData);
   }

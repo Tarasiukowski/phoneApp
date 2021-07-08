@@ -43,7 +43,7 @@ const FriendsList = () => {
       <h2 className={styles.heading}>Friensd List</h2>
       <div className={styles.template}>
         {(friends ? friends : []).map((friend) => {
-          const conversation = conversations.find(
+          const conversation = conversations?.find(
             (conversation) => friend.email === conversation.with,
           );
 

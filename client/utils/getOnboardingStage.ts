@@ -1,24 +1,24 @@
-const alllowRoutes = ['/settings', '/inbox', '/contacts', "/invites", "/group"];
+import { mainPaths } from 'data';
 
 export const getOnboardingStage = (
   status: { onBoarding: boolean; redirectTo: string },
-  path: string,
+  activePath: string,
 ) => {
   let redirectTo = '';
   let loading = true;
 
   if (status) {
     if (status.onBoarding) {
-      alllowRoutes.map((route) => {
-        const allow = path.startsWith(route)
+      mainPaths.map((path: string) => {
+        const allow = activePath.startsWith(path);
 
-        if(allow) {
-          loading = false
+        if (allow) {
+          loading = false;
         } else {
-          redirectTo = "/contacts"
+          redirectTo = '/contacts';
         }
       });
-    } else if (status.redirectTo === path) {
+    } else if (status.redirectTo === activePath) {
       loading = false;
     } else {
       redirectTo = status.redirectTo;

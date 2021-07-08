@@ -21,9 +21,9 @@ const OnboardingTemplate: React.FC = ({ children }) => {
   };
 
   const logoutCb = () => {
-    router.push('/singup');
-
-    resetData();
+    router.push('/singup').then(() => {
+      resetData();
+    });
   };
 
   return (

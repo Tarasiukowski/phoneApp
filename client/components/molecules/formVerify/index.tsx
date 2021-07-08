@@ -12,8 +12,9 @@ const FormVerify = ({ type, onSuccess }: props) => {
   const [valueInput, setValueInput] = useState('');
 
   const user = useUser();
-
   const { setError } = useError();
+
+  const isVerifyAccount = type === 'account';
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValueInput(e.target.value);
@@ -25,13 +26,13 @@ const FormVerify = ({ type, onSuccess }: props) => {
     try {
       const { valid } = await fetcher(
         'post',
-        `/user/verify/${type === 'account' ? 'account' : 'login'}`,
+        `/user/verify/${isVerifyAccount ? 'account' : 'login'}`,
         {
           code: valueInput,
         },
       );
 
-      if (valid && type === 'account') {
+      if (valid && isVerifyAccount) {
         try {
           fetcher('PUT', '/user/update', {
             redirectTo: '/onboarding/number',

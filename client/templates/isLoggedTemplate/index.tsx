@@ -10,6 +10,7 @@ import { getOnboardingStage, fetcher } from 'utils';
 import { props } from './types';
 import { useError } from 'contexts';
 import { ERROR } from 'common';
+import { mainPaths } from 'data';
 
 const settings = {
   logged: true,
@@ -24,12 +25,13 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
 
   const { setError } = useError();
 
-  const path = router.asPath;
+  const activePath = router.asPath;
+  const fetchFullUser = mainPaths.some((path) => path.startsWith(activePath))
 
   const fetchFriends = () => fetcher('POST', '/user/friends');
 
   useEffect(() => {
-    fetcher('post', '/auth').then((data) => {
+    fetcher('post', '/auth', { fullUser: fetchFullUser }).then((data) => {
       const user = data.user ? data.user.value : null;
 
       dispatch(login(user));
@@ -40,7 +42,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
         if (isLogged) {
           const status = data.user.status;
 
-          const { loading, redirectTo } = getOnboardingStage(status, path);
+          const { loading, redirectTo } = getOnboardingStage(status, activePath);
 
           if (status.onBoarding) {
             fetchFriends().then((data) => {
@@ -58,7 +60,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
 
         if (isLogged) {
           const status = data.user.status;
-          const { loading, redirectTo } = getOnboardingStage(status, path);
+          const { loading, redirectTo } = getOnboardingStage(status, activePath);
 
           loading ? router.push(redirectTo) : setLoading(false);
         } else {
@@ -66,7 +68,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
         }
       }
     });
-  }, [path]);
+  }, [activePath]);
 
   return <>{loading ? <Loader /> : children}</>;
 };
