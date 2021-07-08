@@ -9,7 +9,7 @@ const GroupsList = () => {
   const user = useUser();
   const groups = user ? user.groups : [];
 
-  if (groups.length) {
+  if (groups?.length) {
     return (
       <div>
         <p className={styles.heading}>Groups List</p>

@@ -23,7 +23,13 @@ class AuthService {
       const { user, status } = await UserModel.findOne('_id', id);
 
       if (user) {
-        const formatedUser = UserModel.format(user, 'conversations', 'groups');
+        let formatedUser;
+
+        if (user.onBoarding) {
+          formatedUser = UserModel.format(user, 'conversations', 'groups');
+        } else {
+          formatedUser = UserModel.format(user);
+        }
 
         return {
           user: {

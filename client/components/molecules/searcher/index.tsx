@@ -23,7 +23,7 @@ const Searcher = ({ open, onClose }: props) => {
 
   const conversations = user ? user.conversations : [];
 
-  const formatedConversations = conversations.map((conversation) => {
+  const formatedConversations = conversations?.map((conversation) => {
     const friend = friends.find((friend) => friend.email === conversation.with);
 
     return { user: friend, ...conversation };
