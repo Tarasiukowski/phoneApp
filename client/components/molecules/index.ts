@@ -12,3 +12,4 @@ export { ElementFinder } from './elementFinder';
 export { Chat } from './chatComponent';
 export { AuthForm } from './authForm';
 export { SelectNumberButton, SelectNumberList } from './selectNumber';
+export { FormVerify } from './formVerify'

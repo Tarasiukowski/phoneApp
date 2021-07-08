@@ -7,7 +7,7 @@ import { By } from '../types';
 import { User } from '../../interfaces';
 import { JWT_PRIVATE_KEY } from '../../constants';
 
-class UserService {
+class AuthService {
   email: string;
   by: By;
 
@@ -91,4 +91,4 @@ class UserService {
   }
 }
 
-export default UserService;
+export default AuthService;
