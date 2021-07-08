@@ -7,7 +7,7 @@ import { useError, useMultiTask } from 'contexts';
 import { buttonsData, buttonNavigationSettings } from './data';
 import { props } from './types';
 import styles from './UserDetailed.module.scss';
-import { fetcher, handleNotAllowedError, logout } from 'utils';
+import { fetcher, handleRequestError, logout } from 'utils';
 import { update as updateBlocklist } from '../../../../reducers/blocklistReducer';
 import { update as updateFriends } from '../../../../reducers/friendsReducer';
 import { update as updateInvites } from '../../../../reducers/invitesReducer';
@@ -32,12 +32,9 @@ const UserDetailed = ({ userDetailedRef }: props) => {
 
         return true;
       } catch (err) {
-        const { data, status } = err.response;
-        const { errorMsg } = data;
-
-        setError({ msg: errorMsg, id: Math.random() });
-
-        handleNotAllowedError(status);
+        handleRequestError(err, (errorMsg) => {
+          setError({ msg: errorMsg, id: Math.random() });
+        });
 
         return false;
       }

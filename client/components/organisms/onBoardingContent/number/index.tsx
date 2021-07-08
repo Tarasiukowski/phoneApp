@@ -4,7 +4,7 @@ import { Button } from 'components/atoms';
 import { SelectNumberButton, SelectNumberList } from 'components/molecules';
 import { RedirectTemplate } from 'templates';
 
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleNotAllowedError, handleRequestError } from 'utils';
 import { useError } from 'contexts';
 import { useUser } from 'hooks';
 import styles from './number.module.scss';
@@ -44,12 +44,9 @@ const OnboardingNumberContent = () => {
         redirectTo: '/onboarding/account',
       });
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
       return;
     }
 

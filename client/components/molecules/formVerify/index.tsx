@@ -2,7 +2,7 @@ import { useState, FormEvent, ChangeEvent } from 'react';
 
 import { Button, Input } from 'components/atoms';
 
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleRequestError } from 'utils';
 import { useError } from 'contexts';
 import { useUser } from 'hooks';
 import { props } from './types';
@@ -37,23 +37,17 @@ const FormVerify = ({ type, onSuccess }: props) => {
             redirectTo: '/onboarding/number',
           });
         } catch (err) {
-          const { data, status } = err.response;
-          const { errorMsg } = data;
-
-          setError({ msg: errorMsg, id: Math.random() });
-
-          handleNotAllowedError(status);
+          handleRequestError(err, (errorMsg) => {
+            setError({ msg: errorMsg, id: Math.random() });
+          });
 
           return;
         }
       }
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
       return;
     }
 

@@ -7,7 +7,7 @@ import { UserDetailed } from '../index';
 import { SearchSvg } from '../../../public/svgs';
 import { Member } from 'interfaces';
 import { props } from './types';
-import { fetcher, filterByKey, handleNotAllowedError } from 'utils';
+import { fetcher, filterByKey, handleRequestError } from 'utils';
 import { add } from 'reducers/friendsReducer';
 import { remove } from 'reducers/invitesReducer';
 import { useError } from 'contexts';
@@ -77,12 +77,9 @@ const UsersList = ({ name, data }: props) => {
 
       setDetailedUser(null);
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
       return;
     }
   };

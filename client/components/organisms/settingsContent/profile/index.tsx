@@ -6,7 +6,7 @@ import { SettingsTemplate } from 'templates';
 import styles from './profile.module.scss';
 import { InputsValues } from './types';
 import { useUser } from 'hooks';
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleRequestError } from 'utils';
 import { ERROR } from 'common';
 import { useError, useMultiTask } from 'contexts';
 
@@ -43,12 +43,9 @@ const SettingsProfileContent = () => {
         fullname: { firstname: firstnameValue, lastname: lastnameValue },
       });
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
       return;
     }
 
@@ -59,12 +56,9 @@ const SettingsProfileContent = () => {
     try {
       await fetcher('DELETE', '/user/update/newEmail');
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
       return;
     }
   };
@@ -91,12 +85,9 @@ const SettingsProfileContent = () => {
 
         return true;
       } catch (err) {
-        const { data, status } = err.response;
-        const { errorMsg } = data;
-
-        setError({ msg: errorMsg, id: Math.random() });
-
-        handleNotAllowedError(status);
+        handleRequestError(err, (errorMsg) => {
+          setError({ msg: errorMsg, id: Math.random() });
+        });
 
         return false;
       }
@@ -113,12 +104,9 @@ const SettingsProfileContent = () => {
 
         return true;
       } catch (err) {
-        const { data, status } = err.response;
-        const { errorMsg } = data;
-
-        setError({ msg: errorMsg, id: Math.random() });
-
-        handleNotAllowedError(status);
+        handleRequestError(err, (errorMsg) => {
+          setError({ msg: errorMsg, id: Math.random() });
+        });
         return false;
       }
     },

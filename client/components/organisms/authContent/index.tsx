@@ -8,7 +8,7 @@ import { AuthForm } from 'components/molecules';
 import { RedirectTemplate } from 'templates';
 
 import { login as loginAuth } from 'reducers/userReducer';
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleRequestError } from 'utils';
 import { useError } from 'contexts';
 import styles from './authContent.module.scss';
 
@@ -42,12 +42,9 @@ const AuthContent = () => {
 
       dispatch(loginAuth(user));
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
 
       return;
     }

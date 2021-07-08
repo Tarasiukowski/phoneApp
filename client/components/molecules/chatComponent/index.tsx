@@ -8,7 +8,7 @@ import Msg from './message';
 
 import { useError } from 'contexts';
 import { Message, props } from './types';
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleRequestError } from 'utils';
 import { Conversation, Member } from 'interfaces';
 import { useFriends, useUser } from 'hooks';
 import styles from './chat.module.scss';
@@ -36,10 +36,9 @@ const Chat = ({ id, getScopedUser, width }: props) => {
 
       setMessages(fetchedMessages);
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-      setError({ msg: errorMsg, id: Math.random() });
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
     }
   };
 
@@ -98,12 +97,9 @@ const Chat = ({ id, getScopedUser, width }: props) => {
 
           setValueTextarea('');
         } catch (err) {
-          const { data, code } = err.response;
-          const { errorMsg } = data;
-
-          setError({ msg: errorMsg, id: Math.random() });
-
-          handleNotAllowedError(code);
+          handleRequestError(err, (errorMsg) => {
+            setError({ msg: errorMsg, id: Math.random() });
+          });
         }
       }
     },

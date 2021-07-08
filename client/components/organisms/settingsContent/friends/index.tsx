@@ -5,7 +5,7 @@ import { ElementFinder } from 'components/molecules';
 import { SettingsTemplate } from 'templates';
 import ElementList from './elementList';
 
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleRequestError } from 'utils';
 import { Member } from 'interfaces';
 import { useFriends } from 'hooks';
 import { remove } from 'reducers/friendsReducer';
@@ -26,12 +26,9 @@ const SettingsFriendsContent = () => {
         friendEmail: email,
       });
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
       return;
     }
 
@@ -51,13 +48,9 @@ const SettingsFriendsContent = () => {
 
         return true;
       } catch (err) {
-        const { data, status } = err.response;
-        const { errorMsg } = data;
-
-        setError({ msg: errorMsg, id: Math.random() });
-
-        handleNotAllowedError(status);
-
+        handleRequestError(err, (errorMsg) => {
+          setError({ msg: errorMsg, id: Math.random() });
+        });
         return false;
       }
     },

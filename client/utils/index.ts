@@ -9,3 +9,4 @@ export { formatToListData } from './formatToListData';
 export { getObjectsKeysFromArray } from './getObjectsKeysFromArray';
 export { filterByKey } from './filterByKey';
 export { handleNotAllowedError } from './hanldeNotAllowedError';
+export { handleRequestError } from './handleRequestError';

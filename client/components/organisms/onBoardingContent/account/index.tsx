@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useState, useReducer } from 'react';
 import { Button, Input } from 'components/atoms';
 import { RedirectTemplate } from 'templates';
 
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleRequestError } from 'utils';
 import { FormValues } from './types';
 import { useError } from 'contexts';
 import styles from './account.module.scss';
@@ -47,21 +47,15 @@ const OnboardingAccountContent = () => {
           onBoarding: true,
         });
       } catch (err) {
-        const { data, status } = err.response;
-        const { errorMsg } = data;
-
-        setError({ msg: errorMsg, id: Math.random() });
-
-        handleNotAllowedError(status);
+        handleRequestError(err, (errorMsg) => {
+          setError({ msg: errorMsg, id: Math.random() });
+        });
         return;
       }
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
       return;
     }
 

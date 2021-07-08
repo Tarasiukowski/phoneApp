@@ -4,7 +4,7 @@ import { remove as removeFriend } from 'reducers/friendsReducer';
 import { remove as removeInvite } from 'reducers/invitesReducer';
 import { props } from './types';
 import { BlockSvg } from '../../../../../public/svgs';
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleRequestError } from 'utils';
 import { useFriends } from 'hooks';
 import { useError } from 'contexts';
 import styles from './listOptions.module.scss';
@@ -27,12 +27,9 @@ const ListOptions = ({ open, email, listOptionsRef }: props) => {
         userEmail,
       });
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
     }
   };
 

@@ -7,7 +7,7 @@ import ElementList from './elementList';
 
 import { GroupData } from 'components/molecules/multitask/types';
 import { ERROR } from 'common/errors';
-import { fetcher, getObjectsKeysFromArray, handleNotAllowedError } from 'utils';
+import { fetcher, getObjectsKeysFromArray, handleRequestError } from 'utils';
 import { updateGroup } from 'reducers/userReducer';
 import { useError, useMultiTask } from 'contexts';
 import { useFriends, useUser } from 'hooks';
@@ -35,12 +35,9 @@ const SettingsListsContent = () => {
         }),
       );
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
     }
   };
 
@@ -73,12 +70,9 @@ const SettingsListsContent = () => {
 
         return true;
       } catch (err) {
-        const { data, status } = err.response;
-        const { errorMsg } = data;
-
-        setError({ msg: errorMsg, id: Math.random() });
-
-        handleNotAllowedError(status);
+        handleRequestError(err, (errorMsg) => {
+          setError({ msg: errorMsg, id: Math.random() });
+        });
         return false;
       }
     },

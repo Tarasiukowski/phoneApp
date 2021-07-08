@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Input, Button } from 'components/atoms';
 import { RedirectTemplate } from 'templates';
 
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleRequestError } from 'utils';
 import { login as authLogin } from 'reducers/userReducer';
 import { props, formData } from './types';
 import { User } from 'interfaces';
@@ -42,12 +42,9 @@ const AuthForm = ({ auth }: props) => {
       setRedirect(true);
       dispatch(authLogin(user));
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
     }
 
     setDisabled(false);

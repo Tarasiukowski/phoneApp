@@ -5,7 +5,7 @@ import { SelectNumberButton, SelectNumberList } from 'components/molecules';
 import { SettingsTemplate } from 'templates';
 
 import { useUser } from 'hooks';
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleRequestError } from 'utils';
 import { useError } from 'contexts';
 
 const SettingsNumberContent = () => {
@@ -41,13 +41,9 @@ const SettingsNumberContent = () => {
     try {
       await fetcher('PUT', '/user/update', { number });
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
-
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
       return;
     }
   };

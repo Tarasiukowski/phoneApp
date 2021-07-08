@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { UserCard } from 'components/atoms';
 import AddButton from './addButton';
 
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleRequestError } from 'utils';
 import { useError, useMultiTask } from 'contexts';
 import { useFriends, useUser } from 'hooks';
 import styles from './friendsList.module.scss';
@@ -29,12 +29,9 @@ const FriendsList = () => {
 
         return true;
       } catch (err) {
-        const { data, status } = err.response;
-        const { errorMsg } = data;
-
-        setError({ msg: errorMsg, id: Math.random() });
-
-        handleNotAllowedError(status);
+        handleRequestError(err, (errorMsg) => {
+          setError({ msg: errorMsg, id: Math.random() });
+        });
 
         return false;
       }

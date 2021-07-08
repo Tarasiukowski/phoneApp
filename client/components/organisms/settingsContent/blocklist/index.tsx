@@ -6,7 +6,7 @@ import ElementList from './elementList';
 
 import { useError } from 'contexts';
 import { remove as removeFromBlcokList } from 'reducers/blocklistReducer';
-import { fetcher, handleNotAllowedError } from 'utils';
+import { fetcher, handleRequestError } from 'utils';
 import { useBlocklist } from 'hooks';
 
 const SettingsBlocklistContent = () => {
@@ -21,12 +21,9 @@ const SettingsBlocklistContent = () => {
 
       disptach(removeFromBlcokList({ by: 'email', value: email }));
     } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
-
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
     }
   };
 
