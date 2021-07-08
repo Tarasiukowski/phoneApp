@@ -27,7 +27,7 @@ class UserController extends FriendsControllerMixin(
   }
 
   async verify(req: Request, res: Response) {
-    const { name } = req.params as { name: 'account' | 'email' };
+    const { name } = req.params as { name: 'account' | 'email' | 'login' };
     const body = req.body;
 
     const { status, ...restData } = await UserService.verify(body, name);

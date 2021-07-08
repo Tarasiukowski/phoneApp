@@ -21,6 +21,9 @@ const AuthForm = ({ auth }: props) => {
 
   const { setError } = useError();
 
+  const isRegister = auth === 'singup';
+  const redirectTo = isRegister ? '/onboarding/code' : '/login/verify';
+
   useEffect(() => {
     setDisabled(watch('email') ? false : true);
   }, [watch('email')]);
@@ -31,7 +34,7 @@ const AuthForm = ({ auth }: props) => {
     setDisabled(true);
 
     try {
-      const { user } = (await fetcher('post', `/auth/${auth === 'login' ? 'login' : 'singup'}`, {
+      const { user } = (await fetcher('post', `/auth/${isRegister ? 'singup' : 'login'}`, {
         email,
       })) as { errorMsg?: string; user: User };
 
@@ -51,7 +54,7 @@ const AuthForm = ({ auth }: props) => {
   };
 
   return (
-    <RedirectTemplate isRedirect={redirect} redirectTo="/onboarding/code">
+    <RedirectTemplate isRedirect={redirect} redirectTo={redirectTo}>
       <form onSubmit={handleSubmit(submit)} className={styles.form}>
         <Input name="email" placeholder="Enter your email" autoComplete="off" ref={register()} />
         <Button type="submit" disabled={disabled}>

@@ -15,7 +15,7 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
     return returnedData;
   }
 
-  static async verify(data: { code: string; email: string }, type: 'account' | 'email') {
+  static async verify(data: { code: string; email: string }, type: 'account' | 'email' | 'login') {
     const { code, email } = data;
     const accountVerification = type === 'account';
 
