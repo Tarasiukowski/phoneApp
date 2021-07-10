@@ -5,21 +5,27 @@ import { props } from './types';
 import styles from './note.module.scss';
 
 const Note = ({ content }: props) => {
-  const { fullname } = useUser();
+  const user = useUser();
 
-  const formatedFullname = Object.values(fullname).join(' ');
+  if (user) {
+    const { fullname } = user;
 
-  return (
-    <div className={styles.note}>
-      <div>
-        <ImageUser extraStyle={{ size: '45px', fontSize: '12px' }} />
+    const formatedFullname = Object.values(fullname).join(' ');
+
+    return (
+      <div className={styles.note}>
+        <div>
+          <ImageUser extraStyle={{ size: '45px', fontSize: '12px' }} />
+        </div>
+        <div>
+          <p className={styles.author}>{formatedFullname}</p>
+          <p className={styles.content}>{content}</p>
+        </div>
       </div>
-      <div>
-        <p className={styles.author}>{formatedFullname}</p>
-        <p className={styles.content}>{content}</p>
-      </div>
-    </div>
-  );
+    );
+  }
+
+  return null;
 };
 
 export default Note;

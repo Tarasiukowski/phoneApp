@@ -7,7 +7,7 @@ export type props = {
     margin?: string;
   };
   member?: {
-    fullname?: {
+    fullname: {
       firstname: string;
       lastname: string;
     };

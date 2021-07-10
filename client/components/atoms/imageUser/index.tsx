@@ -7,49 +7,45 @@ import { useUser } from 'hooks';
 import { getInitials } from 'utils';
 
 const ImageUser = ({ member, ...restProps }: props) => {
-  const [defaultMember, setDefaultMember] = useState<DefaultMember>({
-    colorImage: undefined,
-    image: undefined,
-    initials: undefined,
-  });
-
   const user = useUser();
 
-  useEffect(() => {
-    if (member) {
-      const { fullname, image: profileImage, colorImage } = member;
+  if (user) {
+    const {
+      fullname: { firstname, lastname },
+      colorImage: colorProfile,
+      image: imageProfile,
+    } = user;
 
-      const { firstname, lastname } = fullname as { firstname: string; lastname: string };
+    const [defaultMember, setDefaultMember] = useState<DefaultMember>({
+      colorImage: colorProfile,
+      image: imageProfile,
+      initials: getInitials(firstname, lastname),
+    });
 
-      setDefaultMember({
-        image: profileImage,
-        initials: getInitials(firstname, lastname),
-        colorImage,
-      });
-    } else {
-      if (user) {
-        const {
-          fullname: { firstname, lastname },
-          colorImage,
-          image: imageProfile,
-        } = user;
+    useEffect(() => {
+      if (member) {
+        const { fullname, image: imageProfile, colorImage: colorProfile } = member;
+
+        const { firstname, lastname } = fullname;
 
         setDefaultMember({
           image: imageProfile,
           initials: getInitials(firstname, lastname),
-          colorImage,
+          colorImage: colorProfile,
         });
       }
-    }
-  }, [member]);
+    }, [member]);
 
-  const { colorImage, initials, image } = defaultMember;
+    const { colorImage, initials, image } = defaultMember;
 
-  return (
-    <Image image={image} colorImage={colorImage} {...restProps}>
-      {!image && <p>{initials}</p>}
-    </Image>
-  );
+    return (
+      <Image image={image} colorImage={colorImage} {...restProps}>
+        {!image && <p>{initials}</p>}
+      </Image>
+    );
+  }
+
+  return null;
 };
 
 export { ImageUser };
