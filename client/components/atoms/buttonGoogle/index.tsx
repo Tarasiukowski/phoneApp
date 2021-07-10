@@ -1,14 +1,16 @@
 import LogoGoole from '../../../public/svgs/googleLogo.svg';
 import { props } from './types';
+import { AuthType } from 'interfaces';
 import styles from './buttonGoogle.module.scss';
 
 const ButtonGoogle = ({ auth, onClick }: props) => {
-  const isRegister = auth === 'singup';
+  const isRegister = auth === AuthType.Singup;
+  const content = isRegister ? 'Sing up' : 'Log in';
 
   return (
     <button onClick={onClick} className={styles.button}>
       <LogoGoole />
-      {isRegister ? 'Sing up' : 'Log in'} with <span>Google</span>
+      {content} with <span>Google</span>
     </button>
   );
 };

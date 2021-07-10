@@ -1,4 +1,6 @@
+import { AuthType } from 'interfaces';
+
 export type props = {
-  auth: 'login' | 'singup';
+  auth: AuthType;
   onClick: (res: any) => void;
 };

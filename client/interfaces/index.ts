@@ -46,10 +46,15 @@ export type Member = {
   };
   colorImage: string;
   image: string;
-  notes: Note[]
+  notes: Note[];
 };
 
 export type Error = {
   msg: string;
   id: number;
 };
+
+export enum AuthType {
+  Login = 'login',
+  Singup = 'singup',
+}

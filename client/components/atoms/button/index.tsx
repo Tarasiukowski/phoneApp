@@ -2,8 +2,10 @@ import styled, { css } from 'styled-components';
 
 import { props } from './types';
 
+const defaultWidth = '315px';
+
 export const Button = styled.button<props>`
-  width: ${({ width }) => (width ? width : '315px')};
+  width: ${({ width }) => (width ? width : `${defaultWidth}`)};
   color: white;
   background: rgb(112, 70, 227);
   padding: 9px 16px;

@@ -15,7 +15,7 @@ class GroupService {
     // const data = await UserModel.update('groups', { email: author, value: { name } }, 'pull');
     const data = await UserModel.update(
       { by: 'email', valueFilter: author },
-      { key: 'groups', value: {} },
+      { key: 'groups', value: [] },
       'pull',
     );
 
