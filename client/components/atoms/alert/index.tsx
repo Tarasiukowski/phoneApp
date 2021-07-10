@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { Button } from '../button';
 
@@ -16,7 +16,7 @@ const Alert = ({ error }: props) => {
       const { msg } = error;
 
       if (msg.length > allowLengthOfErrorMsg) {
-        const sliceMsg = msg.substring(0, allowLengthOfErrorMsg) + '...';
+        const sliceMsg = `${msg.substring(0, allowLengthOfErrorMsg)}...`;
 
         setMsg(sliceMsg);
       } else {
@@ -26,21 +26,20 @@ const Alert = ({ error }: props) => {
     setIsOpen(true);
   }, [error]);
 
-  const close = () => {
+  const close = useCallback(() => {
     setIsOpen(false);
-  };
+  }, []);
 
   return (
-    <>
-      {error && isOpen && (
-        <div className={styles.wrapper}>
-          <p>{msg}</p>
-          <Button onClick={close} transparent alert>
-            Close
-          </Button>
-        </div>
-      )}
-    </>
+    error &&
+    isOpen && (
+      <div className={styles.wrapper}>
+        <p>{msg}</p>
+        <Button onClick={close} transparent alert>
+          Close
+        </Button>
+      </div>
+    )
   );
 };
 
