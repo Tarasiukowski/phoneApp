@@ -6,6 +6,7 @@ import UserDetailed from './userDetailed/userDetailed';
 
 import { props } from './types';
 import { useOutsideClick, useUser } from 'hooks';
+import { formatValuesObject } from 'utils';
 
 const UserCard = forwardRef<HTMLDivElement, props>(
   ({ elemList, member, big, withDetailed, onClick }, ref) => {
@@ -35,7 +36,7 @@ const UserCard = forwardRef<HTMLDivElement, props>(
       if (user) {
         const { fullname } = member ? member : user;
 
-        const formatedFullname = Object.values(fullname).join(' ');
+        const formatedFullname = formatValuesObject(fullname);
 
         setFullname(formatedFullname);
       }

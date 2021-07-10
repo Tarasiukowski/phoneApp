@@ -11,6 +11,7 @@ import { fetcher, handleRequestError, logout } from 'utils';
 import { update as updateBlocklist } from '../../../../reducers/blocklistReducer';
 import { update as updateFriends } from '../../../../reducers/friendsReducer';
 import { update as updateInvites } from '../../../../reducers/invitesReducer';
+import { paths } from '../../../../constants';
 
 const UserDetailed = ({ userDetailedRef }: props) => {
   const router = useRouter();
@@ -48,7 +49,7 @@ const UserDetailed = ({ userDetailedRef }: props) => {
   };
 
   const logoutCb = () => {
-    router.push('/singup').then(() => {
+    router.push(paths.SingUp).then(() => {
       resetData();
     });
   };
