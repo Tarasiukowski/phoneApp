@@ -7,5 +7,6 @@ export const paths = {
   Contacts: '/contacts',
   OnBoarding: {
     Code: '/onboarding/code',
+    Number: '/onboarding/number',
   },
 };

@@ -42,7 +42,7 @@ const ElementFinder = <T,>({ renderItem, data, filterKey, notFound, placeholder 
         />
       </div>
       <div className={styles.list}>
-        {receivedDate.length ? renderList() : <p className={styles.info}>{notFound}</p>}
+        {receivedDate?.length ? renderList() : <p className={styles.info}>{notFound}</p>}
       </div>
     </div>
   );

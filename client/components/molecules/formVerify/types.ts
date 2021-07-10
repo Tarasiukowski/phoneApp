@@ -1,4 +1,9 @@
+export enum TypeVerify {
+  login = 'login',
+  account = 'account',
+}
+
 export type props = {
-  type: "login" | "account"
+  type: TypeVerify;
   onSuccess: () => void;
 };
