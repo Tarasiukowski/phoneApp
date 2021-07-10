@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
-import _ from 'lodash';
+import isEqual from 'lodash/isEqual';
 
 import { User } from 'interfaces';
 
 type FetchedUserData = {
   user: {
-    value: User
-  }
-}
+    value: User;
+  };
+};
 
 export const useUpdateUser = (
   error: Error,
@@ -16,10 +16,10 @@ export const useUpdateUser = (
   cb: (fetchedUser: User) => void,
 ) => {
   useEffect(() => {
-    if (!error && fetchedUserData && fetchedUserData.user) {
+    if (!error && fetchedUserData?.user) {
       const fetchedUser = fetchedUserData.user.value;
 
-      const isSame = _.isEqual(fetchedUser, user);
+      const isSame = isEqual(fetchedUser, user);
 
       if (!isSame) {
         cb(fetchedUser);

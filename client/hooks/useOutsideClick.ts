@@ -12,18 +12,18 @@ export const useOutsideClick = (
 ) => {
   const { isListeningForEvent } = settings ? settings : ({ isListeningForEvent: false } as const);
 
+  const handleClickEvent = (e: Event) => {
+    const target = e.target as HTMLElement;
+    const defaultOption = Boolean(ref.current && !ref.current.contains(target));
+    const allow = getExtraOption(target, defaultOption);
+
+    if (allow) {
+      cb();
+    }
+  };
+
   useEffect(() => {
     if (isListeningForEvent) {
-      const handleClickEvent = (e: Event) => {
-        const target = e.target as HTMLElement;
-        const defaultOption = Boolean(ref.current && !ref.current.contains(target));
-        const allow = getExtraOption(target, defaultOption);
-
-        if (allow) {
-          cb();
-        }
-      };
-
       window.addEventListener('click', handleClickEvent);
 
       return () => {
