@@ -6,7 +6,7 @@ const LoginVerifyPage = () => (
     <VerifyTemplate>
       <FormVerify type="login" onSuccess={() => {}} />
     </VerifyTemplate>
-   </IsLoggedTemplate>
+  </IsLoggedTemplate>
 );
 
 export default LoginVerifyPage;

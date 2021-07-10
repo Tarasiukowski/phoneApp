@@ -8,7 +8,6 @@ import { RedirectTemplate } from 'templates';
 import { fetcher, handleRequestError } from 'utils';
 import { login as authLogin } from 'reducers/userReducer';
 import { props, formData } from './types';
-import { User } from 'interfaces';
 import { useError } from 'contexts';
 import styles from './authForm.module.scss';
 
@@ -34,9 +33,9 @@ const AuthForm = ({ auth }: props) => {
     setDisabled(true);
 
     try {
-      const { user } = (await fetcher('post', `/auth/${isRegister ? 'singup' : 'login'}`, {
+      const { user } = await fetcher('post', `/auth/${isRegister ? 'singup' : 'login'}`, {
         email,
-      })) as { errorMsg?: string; user: User };
+      });
 
       setError(null);
       setRedirect(true);
@@ -45,9 +44,9 @@ const AuthForm = ({ auth }: props) => {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
       });
+    } finally {
+      setDisabled(false);
     }
-
-    setDisabled(false);
   };
 
   return (

@@ -48,7 +48,7 @@ const MainTemplate: React.FC = ({ children }) => {
   );
 
   const { data: fetchedUserData, error: errorUser } = useSwr(
-    ['/auth', 'POST', { fetchFullUser }],
+    ['/auth', 'POST', { fullUser: fetchFullUser }],
     swrFetcher,
     swrSettings,
   );

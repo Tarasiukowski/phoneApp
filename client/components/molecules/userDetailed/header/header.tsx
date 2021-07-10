@@ -19,12 +19,12 @@ const Header = (props: props) => {
 
   const userData = {
     ...props,
-    fullname: props.fullname ? props.fullname : loggedUser.fullname,
+    fullname: props.fullname ? props.fullname : loggedUser?.fullname,
   };
 
   const { fullname, email } = userData;
 
-  const formatedFullname = Object.values(fullname).join(' ');
+  const formatedFullname = fullname ? Object.values(fullname).join(' ') : null;
 
   const setListOptions = () => {
     if (listOptionsRef.current) {
