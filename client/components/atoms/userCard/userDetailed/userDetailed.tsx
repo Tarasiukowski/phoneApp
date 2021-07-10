@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
@@ -61,10 +62,10 @@ const UserDetailed = ({ userDetailedRef }: props) => {
       </div>
       <div className={styles.template}>
         {buttonsData.map((data) => {
-          const handleClick = () => {
+          const handleClick = useCallback(() => {
             data.handleInvite && multiTask.toggleOpen(true, multitaskHandle);
             data.logout && logout(logoutCb);
-          };
+          }, []);
 
           return (
             <ButtonNavigation

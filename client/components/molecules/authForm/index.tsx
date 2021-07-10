@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -9,7 +9,9 @@ import { fetcher, handleRequestError } from 'utils';
 import { login as authLogin } from 'reducers/userReducer';
 import { props, formData } from './types';
 import { useError } from 'contexts';
+import { AuthType } from 'interfaces';
 import styles from './authForm.module.scss';
+import { paths } from '../../../constants';
 
 const AuthForm = ({ auth }: props) => {
   const [disabled, setDisabled] = useState(true);
@@ -20,22 +22,27 @@ const AuthForm = ({ auth }: props) => {
 
   const { setError } = useError();
 
-  const isRegister = auth === 'singup';
-  const redirectTo = isRegister ? '/onboarding/code' : '/login/verify';
+  const isRegister = auth === AuthType.Singup;
+  const redirectTo = isRegister ? paths.OnBoarding.Code : paths.Login.Verify;
+  const valueEmailInput = watch('email');
 
   useEffect(() => {
-    setDisabled(watch('email') ? false : true);
-  }, [watch('email')]);
+    setDisabled(valueEmailInput ? false : true);
+  }, [valueEmailInput]);
 
-  const submit = async (data: formData) => {
+  const submit = useCallback(async (data: formData) => {
     const { email } = data;
 
     setDisabled(true);
 
     try {
-      const { user } = await fetcher('post', `/auth/${isRegister ? 'singup' : 'login'}`, {
-        email,
-      });
+      const { user } = await fetcher(
+        'post',
+        `/auth${isRegister ? paths.SingUp : paths.Login.Index}`,
+        {
+          email,
+        },
+      );
 
       setError(null);
       setRedirect(true);
@@ -47,7 +54,7 @@ const AuthForm = ({ auth }: props) => {
     } finally {
       setDisabled(false);
     }
-  };
+  }, []);
 
   return (
     <RedirectTemplate isRedirect={redirect} redirectTo={redirectTo}>

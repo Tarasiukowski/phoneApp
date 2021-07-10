@@ -1,4 +1,10 @@
 export const paths = {
-  Login: '/login',
+  Login: {
+    Index: '/login',
+    Verify: '/login/verify'
+  },
   SingUp: '/singup',
+  OnBoarding: {
+    Code: '/onboarding/code',
+  }
 };

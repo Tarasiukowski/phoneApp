@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, forwardRef } from 'react';
+import { useEffect, useRef, useState, forwardRef, useCallback } from 'react';
 
 import { ImageUser } from '../index';
 import { Template } from './styles';
@@ -18,10 +18,10 @@ const UserCard = forwardRef<HTMLDivElement, props>(
 
     const user = useUser();
 
-    const handleOnClick = () => {
+    const handleOnClick = useCallback(() => {
       withDetailed && setOpenDetailed(true);
       onClick && onClick();
-    };
+    }, []);
 
     useOutsideClick(
       templateRef,
