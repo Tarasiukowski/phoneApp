@@ -1,5 +1,7 @@
+import { FunctionComponent } from "react";
+
 export type props = {
-  icon: () => JSX.Element;
+  icon: FunctionComponent;
   content: string;
   size?: {
     width?: string;

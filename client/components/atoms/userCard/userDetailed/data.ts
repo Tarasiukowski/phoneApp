@@ -20,6 +20,6 @@ export const buttonsData = [
   {
     icon: SingOutSvg,
     content: 'Sing out',
-    logout: true
+    logout: true,
   },
 ];

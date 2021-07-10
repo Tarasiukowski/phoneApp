@@ -7,14 +7,14 @@ import { StyledButton } from './styles';
 import { props } from './types';
 
 const Button = forwardRef<HTMLButtonElement, props>(
-  ({ icon, href, content, ...restProps }, ref) => {
+  ({ icon: Icon, href, content, ...restProps }, ref) => {
     const { asPath } = useRouter();
 
     const isActive = asPath === href || asPath.startsWith(`/${content.toLocaleLowerCase()}`);
 
     return (
       <StyledButton ref={ref} active={isActive} {...restProps}>
-        {icon()} <span>{content}</span>
+        <Icon /> <span>{content}</span>
       </StyledButton>
     );
   },

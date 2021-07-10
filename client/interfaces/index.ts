@@ -37,6 +37,11 @@ export type User = {
   notes: Note[];
 };
 
+export type Error = {
+  msg: string;
+  id: number;
+};
+
 export type Member = {
   email: string;
   number: string;
@@ -47,11 +52,6 @@ export type Member = {
   colorImage: string;
   image: string;
   notes: Note[];
-};
-
-export type Error = {
-  msg: string;
-  id: number;
 };
 
 export enum AuthType {
