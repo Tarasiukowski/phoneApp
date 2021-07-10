@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import Link from 'next/link';
 
 import { UserCard } from 'components/atoms';
@@ -15,35 +16,43 @@ const FriendsList = () => {
   const multiTask = useMultiTask();
   const { setError } = useError();
 
-  const conversations = user ? user.conversations : [];
+  const { conversations = [] } = user || {};
 
-  const multitaskHandle = {
-    name: 'InviteFriend' as 'InviteFriend',
-    onClose: () => {
-      multiTask.toggleOpen(false);
-    },
-    onEnd: async (to: string) => {
-      try {
-        await fetcher('POST', '/user/invite', {
-          to,
-        });
+  const multitaskHandle = useMemo(
+    () =>
+      ({
+        name: 'InviteFriend',
+        onClose: () => {
+          multiTask.toggleOpen(false);
+        },
+        onEnd: async (to: string) => {
+          try {
+            await fetcher('POST', '/user/invite', {
+              to,
+            });
 
-        return true;
-      } catch (err) {
-        handleRequestError(err, (errorMsg) => {
-          setError({ msg: errorMsg, id: Math.random() });
-        });
+            return true;
+          } catch (err) {
+            handleRequestError(err, (errorMsg) => {
+              setError({ msg: errorMsg, id: Math.random() });
+            });
 
-        return false;
-      }
-    },
+            return false;
+          }
+        },
+      } as const),
+    [],
+  );
+
+  const hanldeAddButton = () => {
+    multiTask.toggleOpen(true, multitaskHandle);
   };
 
   return (
     <div>
       <h2 className={styles.heading}>Friensd List</h2>
       <div className={styles.template}>
-        {(friends ? friends : []).map((friend) => {
+        {friends.map((friend) => {
           const conversation = conversations?.find(
             (conversation) => friend.email === conversation.with,
           );
@@ -60,12 +69,7 @@ const FriendsList = () => {
             return <UserCard member={friend} key={friend.email} elemList />;
           }
         })}
-        <AddButton
-          onClick={() => {
-            multiTask.toggleOpen(true, multitaskHandle);
-          }}
-          id="InviteFriend"
-        />
+        <AddButton onClick={hanldeAddButton} id="InviteFriend" />
       </div>
     </div>
   );

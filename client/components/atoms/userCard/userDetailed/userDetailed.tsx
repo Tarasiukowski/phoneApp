@@ -22,7 +22,7 @@ const UserDetailed = ({ userDetailedRef }: props) => {
   const { setError } = useError();
 
   const multitaskHandle = {
-    name: 'InviteFriend' as 'InviteFriend',
+    name: 'InviteFriend',
     onClose: () => {
       multiTask.toggleOpen(false);
     },
@@ -41,7 +41,7 @@ const UserDetailed = ({ userDetailedRef }: props) => {
         return false;
       }
     },
-  };
+  } as const;
 
   const resetData = () => {
     dispatch(updateInvites([]));

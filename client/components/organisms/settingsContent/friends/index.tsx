@@ -35,7 +35,7 @@ const SettingsFriendsContent = () => {
   };
 
   const multitaskHandle = {
-    name: 'InviteFriend' as 'InviteFriend',
+    name: 'InviteFriend',
     onClose: () => {
       multiTask.toggleOpen(false);
     },
@@ -53,7 +53,7 @@ const SettingsFriendsContent = () => {
         return false;
       }
     },
-  };
+  } as const;
 
   return (
     <SettingsTemplate>

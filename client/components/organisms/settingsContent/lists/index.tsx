@@ -42,7 +42,7 @@ const SettingsListsContent = () => {
   };
 
   const multitaskHandle = {
-    name: 'CreateGroup' as 'CreateGroup',
+    name: 'CreateGroup',
     onNext: (email: string, stage: number) => {
       if (stage > 0) {
         const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
@@ -76,7 +76,7 @@ const SettingsListsContent = () => {
         return false;
       }
     },
-  };
+  } as const;
 
   return (
     <SettingsTemplate>
