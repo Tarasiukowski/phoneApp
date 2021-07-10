@@ -1,5 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useScroll } from 'react-use';
+import { useRouter } from 'next/router';
 
 import { Spinner } from 'components/atoms';
 import Header from './header';
@@ -9,10 +10,11 @@ import Msg from './message';
 import { useError } from 'contexts';
 import { Message, props } from './types';
 import { fetcher, handleRequestError } from 'utils';
-import { Conversation, Member } from 'interfaces';
+import { Member } from 'interfaces';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { useUser } from 'setup/reducers/userReducer';
 import styles from './chat.module.scss';
+import { paths } from '../../../constants';
 
 const Chat = ({ id, getScopedUser, width }: props) => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -21,6 +23,8 @@ const Chat = ({ id, getScopedUser, width }: props) => {
   const [loading, setLoading] = useState(true);
 
   const refMessagesTemplate = useRef<HTMLDivElement>(null);
+
+  const router = useRouter();
 
   const activeUser = useUser();
   const friends = useFriends();
@@ -52,21 +56,27 @@ const Chat = ({ id, getScopedUser, width }: props) => {
     setLoading(true);
     setMessages([]);
 
-    fetchDataChat().then(() => {
-      setLoading(false);
-    });
+    fetchDataChat()
+      .then(() => {
+        setLoading(false);
+      })
+      .catch(() => {
+        router.push(paths.Contacts);
+      });
 
     if (activeUser) {
       const scopedConversations = activeUser.conversations.find(
         (conversations) => conversations.id === id,
-      ) as Conversation;
+      );
 
-      const scopedFriend = friends.find(
-        (friend) => friend.email === scopedConversations?.with,
-      ) as Member;
+      if (scopedConversations) {
+        const scopedFriend = friends.find((friend) => friend.email === scopedConversations?.with);
 
-      setScopedUser(scopedFriend);
-      getScopedUser(scopedFriend);
+        if (scopedFriend) {
+          setScopedUser(scopedFriend);
+          getScopedUser(scopedFriend);
+        }
+      }
     }
   }, [id]);
 
@@ -75,12 +85,6 @@ const Chat = ({ id, getScopedUser, width }: props) => {
 
     messagesTemplate.scrollTo(0, messagesTemplate.scrollHeight);
   }, [messages.length]);
-
-  //   useEffect(() => {
-  //     if (!loading) {
-  //       fetchDataChat();
-  //     }
-  //   });
 
   const textareaHandle = {
     onChange: (e: ChangeEvent) => {

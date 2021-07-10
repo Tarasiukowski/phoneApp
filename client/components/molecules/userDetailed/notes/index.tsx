@@ -5,7 +5,7 @@ import { TextArea } from 'components/atoms';
 import Note from './note';
 
 import { props } from '../notes/types';
-import { updateOne } from 'reducers/friendsReducer';
+import { updateOne } from 'setup/reducers/friendsReducer';
 import styles from './notes.module.scss';
 
 const Notes = ({ data, email }: props) => {

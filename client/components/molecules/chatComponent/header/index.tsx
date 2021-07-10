@@ -2,30 +2,25 @@ import { ImageUser } from 'components/atoms';
 import ChatOptions from '../chatOptions/index';
 
 import { props } from './types';
+import { formatValuesObject } from 'utils';
 import styles from './header.module.scss';
 
 const Header = ({ user }: props) => {
-  return (
-    <div className={styles.header}>
-      {user && (
-        <>
-          {(() => {
-            const { fullname } = user;
+  if (user) {
+    const { fullname } = user;
 
-            const formatedFullname = Object.values(fullname).join(' ');
+    const formatedFullname = formatValuesObject(fullname);
 
-            return (
-              <>
-                <ImageUser member={user} />
-                <p className={styles.name}>{formatedFullname}</p>
-                <ChatOptions />
-              </>
-            );
-          })()}
-        </>
-      )}
-    </div>
-  );
+    return (
+      <div className={styles.template}>
+        <ImageUser member={user} />
+        <p className={styles.name}>{formatedFullname}</p>
+        <ChatOptions />
+      </div>
+    );
+  }
+
+  return <div className={styles.template}></div>;
 };
 
 export default Header;

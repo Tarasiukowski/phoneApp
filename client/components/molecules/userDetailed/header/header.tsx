@@ -6,7 +6,7 @@ import ListOptions from './listOptions';
 
 import { MailSvg, MoreSvg } from '../../../../public/svgs';
 import { props } from './types';
-import { useUser } from 'hooks';
+import { useUser } from 'setup/reducers/userReducer';
 import styles from './header.module.scss';
 
 const Header = (props: props) => {

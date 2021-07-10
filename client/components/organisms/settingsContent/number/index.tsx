@@ -4,7 +4,7 @@ import { Button } from 'components/atoms';
 import { SelectNumberButton, SelectNumberList } from 'components/molecules';
 import { SettingsTemplate } from 'templates';
 
-import { useUser } from 'hooks';
+import { useUser } from 'setup/reducers/userReducer';
 import { fetcher, handleRequestError } from 'utils';
 import { useError } from 'contexts';
 

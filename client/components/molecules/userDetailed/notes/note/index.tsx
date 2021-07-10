@@ -1,6 +1,6 @@
 import { ImageUser } from 'components/atoms';
 
-import { useUser } from 'hooks';
+import { useUser } from 'setup/reducers/userReducer';
 import { props } from './types';
 import styles from './note.module.scss';
 

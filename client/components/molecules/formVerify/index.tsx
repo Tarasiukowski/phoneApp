@@ -4,7 +4,7 @@ import { Button, Input } from 'components/atoms';
 
 import { fetcher, handleRequestError } from 'utils';
 import { useError } from 'contexts';
-import { useUser } from 'hooks';
+import { useUser } from 'setup/reducers/userReducer';
 import { props } from './types';
 import styles from './formVerify.module.scss';
 

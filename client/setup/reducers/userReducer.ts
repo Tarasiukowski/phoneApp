@@ -41,15 +41,15 @@ const userSlice = createSlice({
               }
             });
 
-            state = { ...state, ['groups']: filterDataOfKey };
+            return { ...state, ['groups']: filterDataOfKey };
           }
         }
       }
 
-      state = null;
+      return null;
     },
-    login(state, { payload }: PayloadAction<User>) {
-      state = payload;
+    login(_, { payload }: PayloadAction<User>) {
+      return payload;
     },
   },
 });

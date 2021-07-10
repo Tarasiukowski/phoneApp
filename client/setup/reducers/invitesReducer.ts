@@ -10,8 +10,8 @@ const invitesSlice = createSlice({
   name: 'invites',
   initialState: [] as Member[],
   reducers: {
-    update(state, { payload }: PayloadAction<Member[]>) {
-      state = payload;
+    update(_, { payload }: PayloadAction<Member[]>) {
+      return payload;
     },
     remove(state, { payload }: PayloadAction<{ by: Key; value: Member[Key] }>) {
       const { by, value } = payload;
@@ -22,7 +22,7 @@ const invitesSlice = createSlice({
         }
       });
 
-      state = updatedState;
+      return updatedState;
     },
   },
 });

@@ -39,8 +39,8 @@ const friendsSlice = createSlice({
         return user;
       });
     },
-    update(state, { payload }: PayloadAction<Member[]>) {
-      state = payload;
+    update(_, { payload }: PayloadAction<Member[]>) {
+      return payload;
     },
     remove(state, { payload }: PayloadAction<{ by: Key; value: Member[Key] }>) {
       const { by, value } = payload;
@@ -51,12 +51,12 @@ const friendsSlice = createSlice({
         }
       });
 
-      state = [...updatedState];
+      return [...updatedState];
     },
     add(state, { payload }: PayloadAction<{ user: Member }>) {
       const { user } = payload;
 
-      state = [...state, user];
+      return [...state, user];
     },
   },
 });

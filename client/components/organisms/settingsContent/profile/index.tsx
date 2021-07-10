@@ -5,7 +5,7 @@ import { SettingsTemplate } from 'templates';
 
 import styles from './profile.module.scss';
 import { InputsValues } from './types';
-import { useUser } from 'hooks';
+import { useUser } from 'setup/reducers/userReducer';
 import { fetcher, handleRequestError } from 'utils';
 import { ERROR } from 'common';
 import { useError, useMultiTask } from 'contexts';

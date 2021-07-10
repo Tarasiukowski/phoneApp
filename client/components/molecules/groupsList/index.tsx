@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import GroupElementList from './elementList';
 
-import { useUser } from 'hooks';
+import { useUser } from 'setup/reducers/userReducer';
 import styles from './groupsList.module.scss';
 
 const GroupsList = () => {
