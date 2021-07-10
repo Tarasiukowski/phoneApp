@@ -7,10 +7,10 @@ import styles from './groupsList.module.scss';
 
 const GroupsList = () => {
   const user = useUser();
-  
-  const groups = user ? user.groups : [];
 
-  if (groups?.length) {
+  const { groups = [] } = user || {};
+
+  if (groups.length) {
     return (
       <div>
         <p className={styles.heading}>Groups List</p>
