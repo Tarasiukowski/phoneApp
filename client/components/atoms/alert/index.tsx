@@ -30,17 +30,18 @@ const Alert = ({ error }: props) => {
     setIsOpen(false);
   }, []);
 
-  return (
-    error &&
-    isOpen && (
+  if (error && isOpen) {
+    return (
       <div className={styles.wrapper}>
         <p>{msg}</p>
         <Button onClick={close} transparent alert>
           Close
         </Button>
       </div>
-    )
-  );
+    );
+  }
+
+  return null;
 };
 
 export { Alert };

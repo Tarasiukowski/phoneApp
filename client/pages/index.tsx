@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { Loader } from 'components/molecules';
 
-import { selectUser } from 'reducers/userReducer';
+import { selectUser } from 'setup/reducers/userReducer';
 
 const IndexPage = () => {
   const router = useRouter();

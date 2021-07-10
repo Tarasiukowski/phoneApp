@@ -6,10 +6,10 @@ import { Navigation } from 'components/molecules';
 
 import { useBlocklist, useInvites, useListUpdate, useUpdateUser, useUser } from 'hooks';
 import { swrFetcher } from 'utils';
-import { update as updateInvites } from 'reducers/invitesReducer';
-import { selectFriends, update as updateFriends } from 'reducers/friendsReducer';
-import { update as updateBlocklist } from 'reducers/blocklistReducer';
-import { login } from 'reducers/userReducer';
+import { update as updateInvites } from 'setup/reducers/invitesReducer';
+import { selectFriends, update as updateFriends } from 'setup/reducers/friendsReducer';
+import { update as updateBlocklist } from 'setup/reducers/blocklistReducer';
+import { login } from 'setup/reducers/userReducer';
 import { Template } from './styles';
 import { mainPaths } from 'data';
 

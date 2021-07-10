@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Member } from 'interfaces';
-import { RootState } from 'store';
+import { RootState } from 'setup/store';
 
 type Key = keyof Member;
 

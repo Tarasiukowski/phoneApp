@@ -5,7 +5,7 @@ import { SettingsTemplate } from 'templates';
 import ElementList from './elementList';
 
 import { useError } from 'contexts';
-import { remove as removeFromBlcokList } from 'reducers/blocklistReducer';
+import { remove as removeFromBlcokList } from 'setup/reducers/blocklistReducer';
 import { fetcher, handleRequestError } from 'utils';
 import { useBlocklist } from 'hooks';
 

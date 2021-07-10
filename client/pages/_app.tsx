@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { ErrorTemplate, MultiTaskTemplate } from 'templates';
 import { ErrorProvider, MultiTaskProvider } from 'contexts';
 
-import store from 'store/index';
+import store from 'setup/store';
 import 'style/globalStyle.scss';
 
 const MyApp = ({ Component, pageProps }: AppProps) => (

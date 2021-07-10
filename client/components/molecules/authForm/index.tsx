@@ -6,7 +6,7 @@ import { Input, Button } from 'components/atoms';
 import { RedirectTemplate } from 'templates';
 
 import { fetcher, handleRequestError } from 'utils';
-import { login as authLogin } from 'reducers/userReducer';
+import { login as authLogin } from 'setup/reducers/userReducer';
 import { props, formData } from './types';
 import { useError } from 'contexts';
 import { AuthType } from 'interfaces';

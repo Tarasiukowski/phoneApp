@@ -8,7 +8,7 @@ import ElementList from './elementList';
 import { GroupData } from 'components/molecules/multitask/types';
 import { ERROR } from 'common/errors';
 import { fetcher, getObjectsKeysFromArray, handleRequestError } from 'utils';
-import { updateGroup } from 'reducers/userReducer';
+import { updateGroup } from 'setup/reducers/userReducer';
 import { useError, useMultiTask } from 'contexts';
 import { useFriends, useUser } from 'hooks';
 import { Group } from 'interfaces';

@@ -8,8 +8,8 @@ import { SearchSvg } from '../../../public/svgs';
 import { Member } from 'interfaces';
 import { props } from './types';
 import { fetcher, filterByKey, handleRequestError } from 'utils';
-import { add } from 'reducers/friendsReducer';
-import { remove } from 'reducers/invitesReducer';
+import { add } from 'setup/reducers/friendsReducer';
+import { remove } from 'setup/reducers/invitesReducer';
 import { useError } from 'contexts';
 import styles from './usersList.module.scss';
 

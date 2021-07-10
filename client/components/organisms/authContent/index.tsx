@@ -7,7 +7,8 @@ import { ButtonGoogle, ToggleAuth } from 'components/atoms';
 import { AuthForm } from 'components/molecules';
 import { RedirectTemplate } from 'templates';
 
-import { login as loginAuth } from 'reducers/userReducer';
+import { AuthType } from 'interfaces';
+import { login as loginAuth } from 'setup/reducers/userReducer';
 import { fetcher, handleRequestError } from 'utils';
 import { useError } from 'contexts';
 import styles from './authContent.module.scss';
@@ -20,7 +21,7 @@ const AuthContent = () => {
 
   const { setError } = useError();
 
-  const activePath = asPath.slice(1) as 'login' | 'singup';
+  const activePath = asPath.slice(1) as AuthType;
   const isRegister = activePath === 'singup';
   const redirectTo = isRegister ? '/onboarding/number' : '/contacts';
 

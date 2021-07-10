@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 
 import { Button } from 'components/atoms';
 
-import { update as updateBlocklist } from '../../reducers/blocklistReducer';
-import { update as updateFriends } from '../../reducers/friendsReducer';
-import { update as updateInvites } from '../../reducers/invitesReducer';
+import { update as updateBlocklist } from 'setup/reducers/blocklistReducer';
+import { update as updateFriends } from 'setup/reducers/friendsReducer';
+import { update as updateInvites } from 'setup/reducers/invitesReducer';
 import Logo from '../../public/svgs/logo.svg';
 import { logout } from 'utils';
 import styles from './onboardingTemplate.module.scss';

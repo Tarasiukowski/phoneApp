@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 
 import { Loader } from 'components/molecules';
 
-import { login } from 'reducers/userReducer';
-import { update } from 'reducers/friendsReducer';
+import { login } from 'setup/reducers/userReducer';
+import { update } from 'setup/reducers/friendsReducer';
 import { getOnboardingStage, fetcher } from 'utils';
 import { props } from './types';
 import { useError } from 'contexts';
