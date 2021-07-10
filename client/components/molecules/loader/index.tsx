@@ -1,9 +1,15 @@
+import Image from 'next/image';
+
 import styles from './loader.module.scss';
 
-const Loader = () => (
-  <div className={styles.wrapper}>
-    <img src="/pngs/stamp.png" alt="stamp" />
-  </div>
-);
+const Loader = () => {
+  const imageStyle = { width: '70px', height: '70px' };
+
+  return (
+    <div className={styles.wrapper}>
+      <Image src="/pngs/stamp.png" alt="stamp" {...imageStyle} />
+    </div>
+  );
+};
 
 export { Loader };
