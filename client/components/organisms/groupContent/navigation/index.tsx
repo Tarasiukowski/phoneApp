@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import UserCard from './userCard';
 import { Button } from './button';
 
-import { useFriends, useUser } from 'hooks';
+import { useFriends } from 'setup/reducers/friendsReducer';
+import { useUser } from 'setup/reducers/userReducer';
 import styles from './navigation.module.scss';
 
 const Navigation = () => {

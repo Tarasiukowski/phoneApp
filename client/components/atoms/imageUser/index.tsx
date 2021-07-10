@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Image } from './styles';
 
 import { props, DefaultMember } from './types';
-import { useUser } from 'hooks';
+import { useUser } from 'setup/reducers/userReducer';
 import { getInitials } from 'utils';
 
 const ImageUser = ({ member, ...restProps }: props) => {

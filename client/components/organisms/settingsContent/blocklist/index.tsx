@@ -7,7 +7,7 @@ import ElementList from './elementList';
 import { useError } from 'contexts';
 import { remove as removeFromBlcokList } from 'setup/reducers/blocklistReducer';
 import { fetcher, handleRequestError } from 'utils';
-import { useBlocklist } from 'hooks';
+import { useBlocklist } from 'setup/reducers/blocklistReducer';
 
 const SettingsBlocklistContent = () => {
   const disptach = useDispatch();

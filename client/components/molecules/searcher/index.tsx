@@ -6,7 +6,9 @@ import { SearchSvg } from '../../../public/svgs/index';
 import { filterByKey, getSearcherData } from 'utils';
 import { props, SearchData } from './types';
 import { DetailedConversation } from 'interfaces';
-import { useFriends, useOutsideClick, useUser } from 'hooks';
+import { useFriends } from 'setup/reducers/friendsReducer';
+import { useUser } from 'setup/reducers/userReducer';
+import { useOutsideClick } from 'hooks';
 import styles from './searcher.module.scss';
 
 const Searcher = ({ open, onClose }: props) => {

@@ -1,11 +1,12 @@
 import { UsersList } from 'components/molecules';
 
-import { useInvites } from 'hooks';
+import { ListType } from 'components/molecules/usersList/types';
+import { useInvites } from 'setup/reducers/invitesReducer';
 
 const InvitesContent = () => {
   const invites = useInvites();
 
-  return <UsersList name="invites" data={invites} />;
+  return <UsersList name={ListType.invites} data={invites} />;
 };
 
 export { InvitesContent };

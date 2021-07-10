@@ -1,15 +1,15 @@
 import useSwr from 'swr';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import { Navigation } from 'components/molecules';
 
-import { useBlocklist, useInvites, useListUpdate, useUpdateUser, useUser } from 'hooks';
+import { useListUpdate, useUpdateUser } from 'hooks';
 import { swrFetcher } from 'utils';
-import { update as updateInvites } from 'setup/reducers/invitesReducer';
-import { selectFriends, update as updateFriends } from 'setup/reducers/friendsReducer';
-import { update as updateBlocklist } from 'setup/reducers/blocklistReducer';
-import { login } from 'setup/reducers/userReducer';
+import { update as updateInvites, useInvites } from 'setup/reducers/invitesReducer';
+import { update as updateFriends, useFriends } from 'setup/reducers/friendsReducer';
+import { update as updateBlocklist, useBlocklist } from 'setup/reducers/blocklistReducer';
+import { login, useUser } from 'setup/reducers/userReducer';
 import { Template } from './styles';
 import { mainPaths } from 'data';
 
@@ -21,7 +21,7 @@ const MainTemplate: React.FC = ({ children }) => {
   const disptach = useDispatch();
   const router = useRouter();
 
-  const friends = useSelector(selectFriends);
+  const friends = useFriends();
   const invites = useInvites();
   const blocklist = useBlocklist();
   const user = useUser();

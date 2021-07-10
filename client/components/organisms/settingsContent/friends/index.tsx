@@ -7,8 +7,7 @@ import ElementList from './elementList';
 
 import { fetcher, handleRequestError } from 'utils';
 import { Member } from 'interfaces';
-import { useFriends } from 'hooks';
-import { remove } from 'setup/reducers/friendsReducer';
+import { remove, useFriends } from 'setup/reducers/friendsReducer';
 import { useError, useMultiTask } from 'contexts';
 
 const SettingsFriendsContent = () => {

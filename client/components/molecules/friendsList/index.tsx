@@ -5,7 +5,8 @@ import AddButton from './addButton';
 
 import { fetcher, handleRequestError } from 'utils';
 import { useError, useMultiTask } from 'contexts';
-import { useFriends, useUser } from 'hooks';
+import { useFriends } from 'setup/reducers/friendsReducer';
+import { useUser } from 'setup/reducers/userReducer';
 import styles from './friendsList.module.scss';
 
 const FriendsList = () => {

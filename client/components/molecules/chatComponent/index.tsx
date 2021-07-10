@@ -10,7 +10,8 @@ import { useError } from 'contexts';
 import { Message, props } from './types';
 import { fetcher, handleRequestError } from 'utils';
 import { Conversation, Member } from 'interfaces';
-import { useFriends, useUser } from 'hooks';
+import { useFriends } from 'setup/reducers/friendsReducer';
+import { useUser } from 'setup/reducers/userReducer';
 import styles from './chat.module.scss';
 
 const Chat = ({ id, getScopedUser, width }: props) => {

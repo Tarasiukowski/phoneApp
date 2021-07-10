@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { Member } from 'interfaces';
+import { useSelector } from 'react-redux';
 import { RootState } from 'setup/store';
 
 type Key = keyof Member;
@@ -21,7 +22,7 @@ const friendsSlice = createSlice({
     ) {
       const { email, key, value } = payload;
 
-      const updatedState = state.map((user) => {
+      state = state.map((user) => {
         if (user.email === email) {
           let updatedUser;
           const prevDataOfKey: Member[Key] = user[key];
@@ -37,11 +38,9 @@ const friendsSlice = createSlice({
 
         return user;
       });
-
-      return updatedState;
     },
-    update(_, { payload }: PayloadAction<Member[]>) {
-      return payload;
+    update(state, { payload }: PayloadAction<Member[]>) {
+      state = payload;
     },
     remove(state, { payload }: PayloadAction<{ by: Key; value: Member[Key] }>) {
       const { by, value } = payload;
@@ -52,18 +51,24 @@ const friendsSlice = createSlice({
         }
       });
 
-      return [...updatedState];
+      state = [...updatedState];
     },
     add(state, { payload }: PayloadAction<{ user: Member }>) {
       const { user } = payload;
 
-      return [...state, user];
+      state = [...state, user];
     },
   },
 });
 
+const selectFriends = (state: RootState) => state.friends;
+
 export const { update, remove, add, updateOne } = friendsSlice.actions;
 
-export const selectFriends = (state: RootState) => state.friends;
-
 export const friendsReducer = friendsSlice.reducer;
+
+export const useFriends = () => {
+  const friends = useSelector(selectFriends);
+
+  return friends;
+}

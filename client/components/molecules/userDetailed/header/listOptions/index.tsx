@@ -1,11 +1,11 @@
 import { useDispatch } from 'react-redux';
 
-import { remove as removeFriend } from 'reducers/friendsReducer';
-import { remove as removeInvite } from 'reducers/invitesReducer';
+import { remove as removeFriend } from 'setup/reducers/friendsReducer';
+import { remove as removeInvite } from 'setup/reducers/invitesReducer';
 import { props } from './types';
 import { BlockSvg } from '../../../../../public/svgs';
 import { fetcher, handleRequestError } from 'utils';
-import { useFriends } from 'hooks';
+import { useFriends } from 'setup/reducers/friendsReducer';
 import { useError } from 'contexts';
 import styles from './listOptions.module.scss';
 

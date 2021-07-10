@@ -8,9 +8,9 @@ import ElementList from './elementList';
 import { GroupData } from 'components/molecules/multitask/types';
 import { ERROR } from 'common/errors';
 import { fetcher, getObjectsKeysFromArray, handleRequestError } from 'utils';
-import { updateGroup } from 'setup/reducers/userReducer';
+import { updateGroup, useUser } from 'setup/reducers/userReducer';
 import { useError, useMultiTask } from 'contexts';
-import { useFriends, useUser } from 'hooks';
+import { useFriends } from 'setup/reducers/friendsReducer';
 import { Group } from 'interfaces';
 
 const SettingsListsContent = () => {

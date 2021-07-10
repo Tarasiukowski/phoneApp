@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { User } from 'interfaces';
@@ -22,8 +23,6 @@ const userSlice = createSlice({
   reducers: {
     updateGroup(state, { payload }: PayloadAction<PayloadData<'groups'>>) {
       if (state) {
-        let updatedUser;
-
         const {
           key,
           data,
@@ -34,7 +33,7 @@ const userSlice = createSlice({
 
         if (Array.isArray(dataOfKey)) {
           if (type === 'push') {
-            updatedUser = { ...state, [key]: [...dataOfKey, data] };
+            state = { ...state, [key]: [...dataOfKey, data] };
           } else if (type === 'pull') {
             const filterDataOfKey = dataOfKey.filter((elem) => {
               if (value && by && value !== elem[by]) {
@@ -42,23 +41,27 @@ const userSlice = createSlice({
               }
             });
 
-            updatedUser = { ...state, ['groups']: filterDataOfKey };
+            state = { ...state, ['groups']: filterDataOfKey };
           }
         }
-
-        return updatedUser;
       }
 
-      return null;
+      state = null;
     },
-    login(_, { payload }: PayloadAction<User>) {
-      return payload;
+    login(state, { payload }: PayloadAction<User>) {
+      state = payload;
     },
   },
 });
 
+const selectUser = (state: RootState) => state.user;
+
 export const { login, updateGroup } = userSlice.actions;
 
-export const selectUser = (state: RootState) => state.user;
-
 export const userReducer = userSlice.reducer;
+
+export const useUser = () => {
+  const user = useSelector(selectUser);
+
+  return user;
+};
