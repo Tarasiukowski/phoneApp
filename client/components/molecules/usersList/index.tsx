@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import ElementList from './elementList';
@@ -52,11 +52,11 @@ const UsersList = ({ name, data }: props) => {
     }
   }, [inputValue]);
 
-  const updateUserDetailed = (userData: Member) => {
+  const updateUserDetailed = useCallback((userData: Member) => {
     setDetailedUser(userData);
-  };
+  }, []);
 
-  const acceptInvite = async (user: Member) => {
+  const acceptInvite = useCallback(async (user: Member) => {
     try {
       await fetcher('POST', '/user/invite/accept', {
         from: user.email,
@@ -80,9 +80,8 @@ const UsersList = ({ name, data }: props) => {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
       });
-      return;
     }
-  };
+  }, []);
 
   return (
     <>

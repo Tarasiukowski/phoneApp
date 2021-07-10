@@ -1,6 +1,11 @@
-import { Member } from "interfaces";
+import { Member } from 'interfaces';
+
+export enum ListType {
+  contacts = 'contacts',
+  invites = 'invites',
+}
 
 export type props = {
-  name: 'contacts' | 'invites';
+  name: ListType;
   data: Member[];
 };
