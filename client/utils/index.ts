@@ -5,7 +5,7 @@ export { isCorrectValue } from './isCorrectValue';
 export { swrFetcher } from './swrFetcher';
 export { getInitials } from './getInitials';
 export { getSearcherData } from './getSearcherData';
-export { formatToListData } from './formatToListData';
+export { separateObject } from './separateObject';
 export { getObjectsKeysFromArray } from './getObjectsKeysFromArray';
 export { filterByKey } from './filterByKey';
 export { handleNotAllowedError } from './hanldeNotAllowedError';

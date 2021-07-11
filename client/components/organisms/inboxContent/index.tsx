@@ -23,7 +23,7 @@ const InboxContent = () => {
           setUser(user);
         }}
       />
-      <UserDetailed loading={!user} {...user} />
+      <UserDetailed loading={!user} email={user?.email} />
     </div>
   );
 };

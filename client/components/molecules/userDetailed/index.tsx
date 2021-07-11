@@ -3,27 +3,27 @@ import Header from './header/header';
 import Notes from './notes';
 
 import { props } from './types';
-import { formatToListData } from 'utils';
-import { User } from 'interfaces';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import styles from './userDetailed.module.scss';
 
-const UserDetailed = ({ email, number, loading = false, ...restProps }: props) => {
-  if (loading) return <div className={styles.box}></div>
-
+const UserDetailed = ({ email, loading = false }: props) => {
   const friends = useFriends();
 
-  const friend = friends.find((friend) => friend.email === email) as User;
-  const dataOfNotes = friend?.notes;
-  const userEmail = email as string;
+  const friend = friends.find((friend) => friend.email === email);
 
-  return (
-    <div className={styles.box}>
-      <Header email={email} {...restProps} />
-      <List data={formatToListData({ email, number })} />
-      {dataOfNotes && <Notes data={dataOfNotes} email={userEmail} />}
-    </div>
-  );
+  if (friend && !loading) {
+    const { notes, email, number } = friend;
+
+    return (
+      <div className={styles.box}>
+        <Header {...friend} />
+        <List data={{ email, number }} />
+        {notes && <Notes data={notes} email={email} />}
+      </div>
+    );
+  }
+
+  return <div className={styles.box}></div>;
 };
 
 export { UserDetailed };

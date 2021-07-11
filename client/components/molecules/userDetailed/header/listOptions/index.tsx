@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { remove as removeFriend } from 'setup/reducers/friendsReducer';
@@ -14,7 +15,7 @@ const ListOptions = ({ open, email, listOptionsRef }: props) => {
   const friends = useFriends();
   const { setError } = useError();
 
-  const blockUser = async () => {
+  const blockUser = useCallback(async () => {
     try {
       const userEmail = email as string;
       const isFriend = friends.find((friend) => friend.email === email);
@@ -31,7 +32,7 @@ const ListOptions = ({ open, email, listOptionsRef }: props) => {
         setError({ msg: errorMsg, id: Math.random() });
       });
     }
-  };
+  }, []);
 
   return (
     <div

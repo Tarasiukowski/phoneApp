@@ -2,6 +2,7 @@ import { ImageUser } from 'components/atoms';
 
 import { useUser } from 'setup/reducers/userReducer';
 import { props } from './types';
+import { formatValuesObject } from 'utils';
 import styles from './note.module.scss';
 
 const Note = ({ content }: props) => {
@@ -10,7 +11,7 @@ const Note = ({ content }: props) => {
   if (user) {
     const { fullname } = user;
 
-    const formatedFullname = Object.values(fullname).join(' ');
+    const formatedFullname = formatValuesObject(fullname);
 
     return (
       <div className={styles.note}>

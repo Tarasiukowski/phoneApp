@@ -119,7 +119,7 @@ const UsersList = ({ name, data }: props) => {
           </div>
         </div>
       </div>
-      <UserDetailed loading={detailedUser ? false : true} {...detailedUser} />
+      <UserDetailed loading={detailedUser ? false : true} email={detailedUser?.email} />
     </>
   );
 };

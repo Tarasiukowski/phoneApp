@@ -1,26 +1,31 @@
-import { props, ListElem } from './types'
-import { icons } from './data'
+import { props } from './types';
+import { icons } from './data';
 import styles from './list.module.scss';
 
-const DetailedChatUserList = ({ data }: props) => (
-  <div className={styles.list}>
-    {data.map((listElem, index) => {
-      const keys = Object.keys(listElem);
-      const key = keys[0] as keyof ListElem
+const DetailedChatUserList = ({ data }: props) => {
+  const formatedData = Object.entries(data);
 
-      return (
-        <div className={styles.listElement} key={index}>
-          <div>
-            {icons[key]()}
-            <p>{key}</p>
+  return (
+    <div className={styles.list}>
+      {formatedData.map((elem) => {
+        const key = elem[0] as keyof props['data'];
+        const value = elem[1];
+        const Icon = icons[key];
+
+        return (
+          <div className={styles.listElement} key={key}>
+            <div>
+              <Icon />
+              <p>{key}</p>
+            </div>
+            <div>
+              <p>{value}</p>
+            </div>
           </div>
-          <div>
-            <p>{listElem[key]}</p>
-          </div>
-        </div>
-      );
-    })}
-  </div>
-);
+        );
+      })}
+    </div>
+  );
+};
 
 export default DetailedChatUserList;

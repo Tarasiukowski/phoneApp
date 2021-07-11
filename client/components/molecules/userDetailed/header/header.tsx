@@ -8,6 +8,7 @@ import { MailSvg, MoreSvg } from '../../../../public/svgs';
 import { props } from './types';
 import { useUser } from 'setup/reducers/userReducer';
 import styles from './header.module.scss';
+import { formatValuesObject } from 'utils';
 
 const Header = (props: props) => {
   const [openListOptions, setOpenListOptions] = useState(false);
@@ -17,14 +18,14 @@ const Header = (props: props) => {
   const moreOptionsButtonRef = useRef<HTMLButtonElement>(null);
   const listOptionsRef = useRef<HTMLDivElement>(null);
 
-  const userData = {
+  const defaultData = {
     ...props,
     fullname: props.fullname ? props.fullname : loggedUser?.fullname,
   };
 
-  const { fullname, email } = userData;
+  const { fullname, email } = defaultData;
 
-  const formatedFullname = fullname ? Object.values(fullname).join(' ') : null;
+  const formatedFullname = formatValuesObject(fullname ? fullname : {});
 
   const setListOptions = () => {
     if (listOptionsRef.current) {

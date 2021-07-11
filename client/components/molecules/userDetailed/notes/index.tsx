@@ -13,17 +13,18 @@ const Notes = ({ data, email }: props) => {
 
   const dispatch = useDispatch();
 
-  const handleOnchange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const target = e.target;
+  const textAreaHandle = {
+    onChange: (e: ChangeEvent<HTMLTextAreaElement>) => {
+      const target = e.target;
 
-    setValueTextArea(target.value);
-  };
-
-  const createNote = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && valueTextArea.trim().length > 0) {
-      dispatch(updateOne({ email, key: 'notes', value: { content: valueTextArea } }));
-      setValueTextArea('');
-    }
+      setValueTextArea(target.value);
+    },
+    onKeyDown: (e: KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === 'Enter' && valueTextArea.trim().length > 0) {
+        dispatch(updateOne({ email, key: 'notes', value: { content: valueTextArea } }));
+        setValueTextArea('');
+      }
+    },
   };
 
   return (
@@ -34,12 +35,7 @@ const Notes = ({ data, email }: props) => {
           <Note content={content} key={content} />
         ))}
       </div>
-      <TextArea
-        value={valueTextArea}
-        placeholder="Write a note..."
-        onChange={handleOnchange}
-        onKeyDown={createNote}
-      />
+      <TextArea value={valueTextArea} placeholder="Write a note..." {...textAreaHandle} />
     </div>
   );
 };
