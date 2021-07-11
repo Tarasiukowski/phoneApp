@@ -11,6 +11,7 @@ import { props } from './types';
 import { useError } from 'contexts';
 import { ERROR } from 'common';
 import { mainPaths } from 'data';
+import { paths } from '../../constants';
 
 const settings = {
   logged: true,
@@ -64,7 +65,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
 
           loading ? router.push(redirectTo) : setLoading(false);
         } else {
-          router.push('/singup');
+          router.push(paths.SingUp);
         }
       }
     });

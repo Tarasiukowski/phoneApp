@@ -58,3 +58,8 @@ export enum AuthType {
   Login = 'login',
   Singup = 'singup',
 }
+
+export enum Allow {
+  logged = 'logged',
+  notLogged = 'notLogged',
+}

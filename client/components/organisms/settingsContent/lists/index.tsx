@@ -17,11 +17,11 @@ import { useCallback, useMemo } from 'react';
 const SettingsListsContent = () => {
   const dispatch = useDispatch();
 
-  const loggedUser = useUser();
+  const user = useUser();
   const friends = useFriends();
   const multiTask = useMultiTask();
 
-  const groups = loggedUser ? loggedUser.groups : [];
+  const { groups = [] } = user || {};
 
   const { setError } = useError();
 
