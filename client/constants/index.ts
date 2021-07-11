@@ -9,9 +9,9 @@ export const paths = {
   OnBoarding: {
     Code: '/onboarding/code',
     Number: '/onboarding/number',
+    Account: '/onboarding/account',
   },
   Settings: {
     Profile: '/settings/profile',
-    Number: '/onboarding/number'
   },
 };

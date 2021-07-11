@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState, useReducer } from 'react';
+import { ChangeEvent, FormEvent, useState, useReducer, useCallback } from 'react';
 
 import { Button, Input } from 'components/atoms';
 import { RedirectTemplate } from 'templates';
@@ -31,7 +31,7 @@ const OnboardingAccountContent = () => {
     });
   };
 
-  const next = async (e: FormEvent<HTMLFormElement>) => {
+  const next = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setDisabledByRequest(true);
@@ -62,7 +62,7 @@ const OnboardingAccountContent = () => {
     setRedirect(true);
 
     setDisabledByRequest(false);
-  };
+  }, []);
 
   return (
     <RedirectTemplate isRedirect={redirect} redirectTo="/contacts">

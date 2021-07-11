@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Button } from 'components/atoms';
 import { SelectNumberButton, SelectNumberList } from 'components/molecules';
@@ -8,6 +8,7 @@ import { fetcher, handleNotAllowedError, handleRequestError } from 'utils';
 import { useError } from 'contexts';
 import { useUser } from 'setup/reducers/userReducer';
 import styles from './number.module.scss';
+import { paths } from '../../../../constants';
 
 const OnboardingNumberContent = () => {
   const [openList, setOpenList] = useState(false);
@@ -22,11 +23,11 @@ const OnboardingNumberContent = () => {
     setNumber(user ? user.number : null);
   }, []);
 
-  const toggleOpenList = () => {
+  const toggleOpenList = useCallback(() => {
     setOpenList(!openList);
-  };
+  }, []);
 
-  const next = async () => {
+  const next = useCallback(async () => {
     try {
       await fetcher('PUT', '/user/update', { number });
     } catch (err) {
@@ -41,7 +42,7 @@ const OnboardingNumberContent = () => {
 
     try {
       await fetcher('PUT', '/user/update', {
-        redirectTo: '/onboarding/account',
+        redirectTo: paths.OnBoarding.Account,
       });
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
@@ -51,7 +52,19 @@ const OnboardingNumberContent = () => {
     }
 
     setRedirect(true);
-  };
+  }, []);
+
+  const handleSelectNumberList = useMemo(
+    () => ({
+      onSelectNumber: (number: string) => {
+        setNumber(number);
+      },
+      onClose: () => {
+        setOpenList(false);
+      },
+    }),
+    [],
+  );
 
   return (
     <RedirectTemplate redirectTo="/onboarding/account" isRedirect={redirect}>
@@ -62,16 +75,7 @@ const OnboardingNumberContent = () => {
         <Button onClick={next} disabled={!number} style={{ margin: '32px 0 0 0' }} width="100%">
           Continue
         </Button>
-        {openList && (
-          <SelectNumberList
-            onSelectNumber={(number) => {
-              setNumber(number);
-            }}
-            onClose={() => {
-              setOpenList(false);
-            }}
-          />
-        )}
+        {openList && <SelectNumberList {...handleSelectNumberList} />}
       </div>
     </RedirectTemplate>
   );
