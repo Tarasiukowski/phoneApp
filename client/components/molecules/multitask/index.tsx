@@ -1,4 +1,4 @@
-import { useState, useRef, useReducer, ChangeEvent, KeyboardEvent } from 'react';
+import { useState, useRef, useReducer, ChangeEvent, KeyboardEvent, useCallback } from 'react';
 
 import { Button } from 'components/atoms';
 
@@ -23,14 +23,18 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
 
     const stages = option.stages;
     const activeStage = stages[counterStage];
-    const isEnd = counterStage === stages.length - 1 ? true : false;
+    const isEnd = counterStage === stages.length - 1;
+
+    const resetData = () => {
+      setInputValue('');
+      setCounterStage(0);
+      setGroupData({ name: null, members: [] });
+    };
 
     useOutsideClick(
       templateRef,
       () => {
-        setInputValue('');
-        setCounterStage(0);
-        setGroupData({ name: null, members: [] });
+        resetData();
         onClose();
       },
       (target, defaultOption) => defaultOption && target.id !== name,
@@ -39,9 +43,12 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
 
     const { title, description, inputPlaceholder, inputName, unlimited, textButton } = activeStage;
 
-    const members = groupData.members as string[];
+    const { members = [] } = groupData;
 
-    const isDisabled = !isCorrectValue(inputName, inputValue);
+    const disabeld = {
+      constantButton: !isCorrectValue(inputName, inputValue),
+      optionalButton: members.length ? false : true,
+    };
 
     const inputHandle = {
       onChange(e: ChangeEvent<HTMLInputElement>) {
@@ -51,14 +58,14 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
       },
       onKeyUp(e: KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'Enter') {
-          if (!isDisabled) {
+          if (!disabeld.constantButton) {
             next();
           }
         }
       },
     };
 
-    const next = async () => {
+    const next = useCallback(async () => {
       if (isEnd && !unlimited) {
         const allowResetData = await onEnd(inputValue);
 
@@ -67,6 +74,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
           setInputValue('');
           setCounterStage(0);
         }
+
         return;
       }
 
@@ -84,13 +92,13 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
       }
 
       allowNextStage && setInputValue('');
-    };
+    }, []);
 
-    const end = () => {
+    const end = useCallback(() => {
       onEnd(groupData);
       onClose();
       setGroupData({ name: null, members: [] });
-    };
+    }, []);
 
     if (open) {
       return (
@@ -110,13 +118,13 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
               />
             </div>
             <div className={styles.footer}>
-              <Button onClick={next} disabled={isDisabled} width="auto">
+              <Button onClick={next} disabled={disabeld.constantButton} width="auto">
                 {isEnd ? textButton : 'Next'}
               </Button>
               {unlimited && (
                 <Button
                   onClick={end}
-                  disabled={members.length ? false : true}
+                  disabled={disabeld.optionalButton}
                   width="auto"
                   style={{ marginLeft: '10px' }}
                 >
