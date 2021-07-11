@@ -12,5 +12,6 @@ export const paths = {
   },
   Settings: {
     Profile: '/settings/profile',
+    Number: '/onboarding/number'
   },
 };
