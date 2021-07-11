@@ -6,11 +6,9 @@ import { props } from './/types';
 const NumbersList = ({ numbers, onSelectNumber }: props) => (
   <>
     {numbers.length ? (
-      <>
-        {numbers.map((number) => (
-          <Item onClick={() => onSelectNumber(number)} key={number} number={number} />
-        ))}
-      </>
+      numbers.map((number) => (
+        <Item onClick={() => onSelectNumber(number)} key={number} number={number} />
+      ))
     ) : (
       <Spinner />
     )}

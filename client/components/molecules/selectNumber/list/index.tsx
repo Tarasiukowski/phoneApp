@@ -1,4 +1,12 @@
-import { useRef, MouseEvent, useState, useEffect, ChangeEvent, useReducer } from 'react';
+import {
+  useRef,
+  MouseEvent,
+  useState,
+  useEffect,
+  ChangeEvent,
+  useReducer,
+  useCallback,
+} from 'react';
 import gsap from 'gsap';
 import { useScroll } from 'react-use';
 
@@ -9,11 +17,12 @@ import { fetcher, handleRequestError } from 'utils';
 import { props, Numbers } from '../types';
 import { useError } from 'contexts';
 import styles from './list.module.scss';
+import { ActiveList } from './types';
 
 const MAX_LENGTH_NUMBER = 8;
 
 const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
-  const [activeList, setActiveList] = useState<'Recommended' | 'All'>('Recommended');
+  const [activeList, setActiveList] = useState<ActiveList>(ActiveList.Recommended);
   const [valueDigits, setValueDigits] = useState('');
   const [numbers, setNumbers] = useReducer(
     (prevState: Numbers, state: Numbers) => ({ ...prevState, ...state }),
@@ -29,12 +38,12 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
 
   const { y } = useScroll(refListItems);
 
-  const { all, recommended } = numbers;
+  const { all = [], recommended = [] } = numbers;
 
-  const allNumbers = all as string[];
-  const recommendedNumbers = recommended as string[];
+  const allNumbers = all;
+  const recommendedNumbers = recommended;
 
-  const isActiveAllNumbers = activeList === 'All';
+  const isActiveAllNumbers = activeList === ActiveList.All;
 
   useEffect(() => {
     if (isActiveAllNumbers) {
@@ -81,6 +90,17 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
       });
   }, [valueDigits]);
 
+  useEffect(() => {
+    const listItems = refListItems.current as HTMLDivElement;
+
+    listItems.scrollTo(0, 0);
+  }, [activeList]);
+
+  const disabledButton = {
+    recommended: !isActiveAllNumbers,
+    all: !isActiveAllNumbers,
+  };
+
   const setOverlap = (e: MouseEvent) => {
     const target = e.target as HTMLButtonElement;
     const tab = refTab.current as HTMLDivElement;
@@ -91,39 +111,43 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
       left: `${leftTarget - leftTab}px`,
     });
 
-    setActiveList(isActiveAllNumbers ? 'Recommended' : 'All');
+    const oppositeValue = isActiveAllNumbers ? ActiveList.Recommended : ActiveList.All;
+
+    setActiveList(oppositeValue);
   };
 
-  const handleValueDigits = async (e: ChangeEvent) => {
+  const handleValueDigits = (e: ChangeEvent<Element>) => {
     const target = e.target as HTMLInputElement;
-    let value = target.value;
+    const value = target.value;
 
-    if (value.length === MAX_LENGTH_NUMBER) {
-      return;
-    }
+    if (value.length === MAX_LENGTH_NUMBER) return;
 
     setValueDigits(value);
   };
 
-  const hanldeOnSelectNumber = (number: string) => {
+  const hanldeOnSelectNumber = useCallback((number: string) => {
     onSelectNumber(number);
     onClose();
-  };
+  }, []);
 
-  const closeList = (e: MouseEvent<HTMLDivElement>) => {
+  const closeList = useCallback((e: MouseEvent<HTMLDivElement>) => {
     if (refWrapper.current === e.target) {
       onClose();
     }
-  };
+  }, []);
 
   return (
     <div onClick={closeList} className={styles.wrapper} ref={refWrapper}>
       <div className={`${styles.content} ${isActiveAllNumbers ? styles.all : styles.recommended}`}>
         <div className={styles.tab} ref={refTab}>
-          <button onClick={setOverlap} disabled={!isActiveAllNumbers} className={styles.button}>
+          <button
+            onClick={setOverlap}
+            disabled={disabledButton.recommended}
+            className={styles.button}
+          >
             Recommended
           </button>
-          <button onClick={setOverlap} disabled={isActiveAllNumbers} className={styles.button}>
+          <button onClick={setOverlap} disabled={disabledButton.all} className={styles.button}>
             All
           </button>
           <span className={styles.indicator} ref={refIndicator} />
