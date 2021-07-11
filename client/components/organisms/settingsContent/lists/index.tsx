@@ -12,6 +12,7 @@ import { updateGroup, useUser } from 'setup/reducers/userReducer';
 import { useError, useMultiTask } from 'contexts';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { Group } from 'interfaces';
+import { useCallback, useMemo } from 'react';
 
 const SettingsListsContent = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const SettingsListsContent = () => {
 
   const { setError } = useError();
 
-  const removeGroup = async (name: string) => {
+  const removeGroup = useCallback(async (name: string) => {
     try {
       await fetcher('DELETE', '/group/remove', { name });
 
@@ -39,44 +40,48 @@ const SettingsListsContent = () => {
         setError({ msg: errorMsg, id: Math.random() });
       });
     }
-  };
+  }, []);
 
-  const multitaskHandle = {
-    name: 'CreateGroup',
-    onNext: (email: string, stage: number) => {
-      if (stage > 0) {
-        const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
+  const multitaskHandle = useMemo(
+    () =>
+      ({
+        name: 'CreateGroup',
+        onNext: (email: string, stage: number) => {
+          if (stage > 0) {
+            const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
 
-        if (emailsOfFriends.includes(email)) {
+            if (emailsOfFriends.includes(email)) {
+              return true;
+            }
+
+            setError({ msg: ERROR.IS_NOT_FRIEND(email), id: Math.random() });
+            return false;
+          }
+
           return true;
-        }
+        },
+        onClose: () => {
+          multiTask.toggleOpen(false);
+        },
+        onEnd: async (groupData: GroupData) => {
+          try {
+            await fetcher('POST', '/group/create', { ...groupData });
 
-        setError({ msg: ERROR.IS_NOT_FRIEND(email), id: Math.random() });
-        return false;
-      }
+            const data = groupData as Group;
 
-      return true;
-    },
-    onClose: () => {
-      multiTask.toggleOpen(false);
-    },
-    onEnd: async (groupData: GroupData) => {
-      try {
-        await fetcher('POST', '/group/create', { ...groupData });
+            dispatch(updateGroup({ key: 'groups', data, option: { type: 'push' } }));
 
-        const data = groupData as Group;
-
-        dispatch(updateGroup({ key: 'groups', data, option: { type: 'push' } }));
-
-        return true;
-      } catch (err) {
-        handleRequestError(err, (errorMsg) => {
-          setError({ msg: errorMsg, id: Math.random() });
-        });
-        return false;
-      }
-    },
-  } as const;
+            return true;
+          } catch (err) {
+            handleRequestError(err, (errorMsg) => {
+              setError({ msg: errorMsg, id: Math.random() });
+            });
+            return false;
+          }
+        },
+      } as const),
+    [],
+  );
 
   return (
     <SettingsTemplate>

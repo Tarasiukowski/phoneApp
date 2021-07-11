@@ -1,4 +1,4 @@
-import { ChangeEvent, useReducer, useEffect } from 'react';
+import { ChangeEvent, useReducer, useEffect, useMemo, useCallback } from 'react';
 
 import { ImageUser, Input, Button } from 'components/atoms';
 import { SettingsTemplate } from 'templates';
@@ -37,7 +37,7 @@ const SettingsProfileContent = () => {
     });
   };
 
-  const save = async () => {
+  const save = useCallback(async () => {
     try {
       await fetcher('PUT', '/user/update', {
         fullname: { firstname: firstnameValue, lastname: lastnameValue },
@@ -50,7 +50,7 @@ const SettingsProfileContent = () => {
     }
 
     window.location.reload();
-  };
+  }, []);
 
   const resetData = async () => {
     try {
@@ -69,48 +69,52 @@ const SettingsProfileContent = () => {
     }
   }, [multiTask.open]);
 
-  const multitaskHandle = {
-    name: 'ChangeEmail',
-    onNext: async (newEmail: string) => {
-      if (newEmail === loggedUser?.email) {
-        setError({ msg: ERROR.WITHOUT_CHANGE('email', 'singular'), id: Math.random() });
-        return false;
-      }
+  const multitaskHandle = useMemo(
+    () =>
+      ({
+        name: 'ChangeEmail',
+        onNext: async (newEmail: string) => {
+          if (newEmail === loggedUser?.email) {
+            setError({ msg: ERROR.WITHOUT_CHANGE('email', 'singular'), id: Math.random() });
+            return false;
+          }
 
-      try {
-        await fetcher('PUT', '/user/update/newEmail', {
-          newEmail,
-          type: 'newEmail',
-        });
+          try {
+            await fetcher('PUT', '/user/update/newEmail', {
+              newEmail,
+              type: 'newEmail',
+            });
 
-        return true;
-      } catch (err) {
-        handleRequestError(err, (errorMsg) => {
-          setError({ msg: errorMsg, id: Math.random() });
-        });
+            return true;
+          } catch (err) {
+            handleRequestError(err, (errorMsg) => {
+              setError({ msg: errorMsg, id: Math.random() });
+            });
 
-        return false;
-      }
-    },
-    onClose: async (verify?: boolean) => {
-      multiTask.toggleOpen(false);
-      verify && window.location.reload();
-    },
-    onEnd: async (code: string) => {
-      try {
-        await fetcher('POST', '/user/verify/email', {
-          code,
-        });
+            return false;
+          }
+        },
+        onClose: async (verify?: boolean) => {
+          multiTask.toggleOpen(false);
+          verify && window.location.reload();
+        },
+        onEnd: async (code: string) => {
+          try {
+            await fetcher('POST', '/user/verify/email', {
+              code,
+            });
 
-        return true;
-      } catch (err) {
-        handleRequestError(err, (errorMsg) => {
-          setError({ msg: errorMsg, id: Math.random() });
-        });
-        return false;
-      }
-    },
-  } as const;
+            return true;
+          } catch (err) {
+            handleRequestError(err, (errorMsg) => {
+              setError({ msg: errorMsg, id: Math.random() });
+            });
+            return false;
+          }
+        },
+      } as const),
+    [],
+  );
 
   return (
     <SettingsTemplate>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 
 import { Button } from 'components/atoms';
 import { SelectNumberButton, SelectNumberList } from 'components/molecules';
@@ -31,11 +31,11 @@ const SettingsNumberContent = () => {
     }
   }, [user]);
 
-  const toggleOpenList = () => {
+  const toggleOpenList = useCallback(() => {
     setOpenList(!openList);
-  };
+  }, []);
 
-  const onSave = async () => {
+  const onSave = useCallback(async () => {
     setDisabledByRequest(true);
 
     try {
@@ -46,16 +46,19 @@ const SettingsNumberContent = () => {
       });
       return;
     }
-  };
+  }, []);
 
-  const handleSelectNumberList = {
-    onSelectNumber: (number: string) => {
-      setNumber(number);
-    },
-    onClose: () => {
-      setOpenList(false);
-    },
-  };
+  const handleSelectNumberList = useMemo(
+    () => ({
+      onSelectNumber: (number: string) => {
+        setNumber(number);
+      },
+      onClose: () => {
+        setOpenList(false);
+      },
+    }),
+    [],
+  );
 
   return (
     <SettingsTemplate>

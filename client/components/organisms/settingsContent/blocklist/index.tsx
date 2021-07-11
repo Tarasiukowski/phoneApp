@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { ElementFinder } from 'components/molecules';
@@ -15,7 +16,7 @@ const SettingsBlocklistContent = () => {
   const blocklist = useBlocklist();
   const { setError } = useError();
 
-  const removeFromBlockList = async (email: string) => {
+  const removeFromBlockList = useCallback(async (email: string) => {
     try {
       fetcher('POST', '/user/unblock', { userEmail: email });
 
@@ -25,7 +26,7 @@ const SettingsBlocklistContent = () => {
         setError({ msg: errorMsg, id: Math.random() });
       });
     }
-  };
+  }, []);
 
   return (
     <SettingsTemplate>

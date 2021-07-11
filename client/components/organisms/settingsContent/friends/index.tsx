@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from 'components/atoms';
@@ -17,7 +18,7 @@ const SettingsFriendsContent = () => {
   const { setError } = useError();
   const multiTask = useMultiTask();
 
-  const removeFriend = async (user: Member) => {
+  const removeFriend = useCallback(async (user: Member) => {
     const { email } = user;
 
     try {
@@ -32,28 +33,32 @@ const SettingsFriendsContent = () => {
     }
 
     dispatch(remove({ by: 'email', value: email }));
-  };
+  }, []);
 
-  const multitaskHandle = {
-    name: 'InviteFriend',
-    onClose: () => {
-      multiTask.toggleOpen(false);
-    },
-    onEnd: async (to: string) => {
-      try {
-        await fetcher('POST', '/user/invite', {
-          to,
-        });
+  const multitaskHandle = useMemo(
+    () =>
+      ({
+        name: 'InviteFriend',
+        onClose: () => {
+          multiTask.toggleOpen(false);
+        },
+        onEnd: async (to: string) => {
+          try {
+            await fetcher('POST', '/user/invite', {
+              to,
+            });
 
-        return true;
-      } catch (err) {
-        handleRequestError(err, (errorMsg) => {
-          setError({ msg: errorMsg, id: Math.random() });
-        });
-        return false;
-      }
-    },
-  } as const;
+            return true;
+          } catch (err) {
+            handleRequestError(err, (errorMsg) => {
+              setError({ msg: errorMsg, id: Math.random() });
+            });
+            return false;
+          }
+        },
+      } as const),
+    [],
+  );
 
   return (
     <SettingsTemplate>
