@@ -1,11 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import List from './list';
 
 import { SearchSvg } from '../../../public/svgs/index';
-import { filterByKey, getSearcherData } from 'utils';
+import { filterByKey, formatValuesObject, getSearcherData } from 'utils';
 import { props, SearchData } from './types';
-import { DetailedConversation } from 'interfaces';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { useUser } from 'setup/reducers/userReducer';
 import { useOutsideClick } from 'hooks';
@@ -23,13 +22,15 @@ const Searcher = ({ open, onClose }: props) => {
   const user = useUser();
   const friends = useFriends();
 
-  const conversations = user ? user.conversations : [];
+  const { conversations = [] } = user || {};
 
-  const formatedConversations = conversations?.map((conversation) => {
+  const formatedConversations = conversations.map((conversation) => {
     const friend = friends.find((friend) => friend.email === conversation.with);
 
-    return { user: friend, ...conversation };
-  }) as DetailedConversation[];
+    if (friend) {
+      return { user: friend, ...conversation };
+    }
+  });
 
   useOutsideClick(
     templateRef,
@@ -55,7 +56,7 @@ const Searcher = ({ open, onClose }: props) => {
 
       const filteredConversations = conversations.data.filter((conversation) => {
         const { fullname } = conversation.user;
-        const formatedConversations = Object.values(fullname).join(' ');
+        const formatedConversations = formatValuesObject(fullname);
 
         if (formatedConversations.toLowerCase().startsWith(inputValue.toLowerCase())) {
           return conversation;
@@ -73,10 +74,10 @@ const Searcher = ({ open, onClose }: props) => {
     }
   }, [inputValue]);
 
-  const handleOnSelect = () => {
+  const handleOnSelect = useCallback(() => {
     onClose();
     setValueInput('');
-  };
+  }, []);
 
   if (open) {
     return (

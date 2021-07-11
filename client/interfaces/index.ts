@@ -21,7 +21,7 @@ type Note = {
   content: string;
 };
 
-export type DetailedConversation = { user: User } & Conversation;
+export type DetailedConversation = { user: Member } & Conversation;
 
 export type User = {
   email: string;
