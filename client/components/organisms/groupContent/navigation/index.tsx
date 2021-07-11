@@ -18,15 +18,20 @@ const Navigation = () => {
     query: { slug },
   } = router;
 
+  const { groups = [], conversations = [] } = user || {};
+
   const slugId = slug[1];
-  const findedGroup = user?.groups.find((group) => group._id === slugId);
-  const firstMemberOfGroup = findedGroup?.members[0] as string;
+  const findedGroup = groups.find((group) => group._id === slugId);
 
   const getConversationId = (email: string) =>
-    user?.conversations.find((conversation) => conversation.with === email)?.id;
+    conversations.find((conversation) => conversation.with === email)?.id;
 
   useEffect(() => {
-    router.push(`/group/${slugId}/${getConversationId(firstMemberOfGroup)}`);
+    if (findedGroup) {
+      const firstMemberOfGroup = findedGroup.members[0];
+
+      router.push(`/group/${slugId}/${getConversationId(firstMemberOfGroup)}`);
+    }
   }, []);
 
   return (

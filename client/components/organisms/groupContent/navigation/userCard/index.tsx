@@ -3,13 +3,14 @@ import { forwardRef } from 'react';
 import { ImageUser } from 'components/atoms';
 
 import { props } from './types';
+import { formatValuesObject } from 'utils';
 import styles from './userCard.module.scss';
 
 const UserCard = forwardRef<HTMLDivElement, props>(({ member, onClick }, ref) => {
   if (member) {
     const { fullname } = member;
 
-    const formatedFullname = Object.values(fullname).join(' ');
+    const formatedFullname = formatValuesObject(fullname);
 
     return (
       <div onClick={onClick} className={styles.box} ref={ref}>
