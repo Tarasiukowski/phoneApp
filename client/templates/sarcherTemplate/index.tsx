@@ -1,12 +1,22 @@
+import { useCallback } from 'react';
+
 import { Searcher } from 'components/molecules';
 
-import { props } from './types';
+import { useSearcher } from 'contexts';
 
-const SearcherTemplate: React.FC<props> = ({ children, ...restProps }) => (
-  <>
-    <Searcher {...restProps} />
-    {children}
-  </>
-);
+const SearcherTemplate: React.FC = ({ children }) => {
+  const { open, handleVisible } = useSearcher();
+
+  const handleOnClose = useCallback(() => {
+    handleVisible(false);
+  }, []);
+
+  return (
+    <>
+      <Searcher open={open} onClose={handleOnClose} />
+      {children}
+    </>
+  );
+};
 
 export { SearcherTemplate };

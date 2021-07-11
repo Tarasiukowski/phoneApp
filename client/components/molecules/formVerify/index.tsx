@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent } from 'react';
+import { useState, FormEvent, ChangeEvent, useCallback } from 'react';
 import Image from 'next/image';
 
 import { Button, Input } from 'components/atoms';
@@ -10,6 +10,11 @@ import { props, TypeVerify } from './types';
 import styles from './formVerify.module.scss';
 import { paths } from '../../../constants';
 
+const imageStyle = {
+  width: '200px',
+  height: '200px',
+};
+
 const FormVerify = ({ type, onSuccess }: props) => {
   const [valueInput, setValueInput] = useState('');
 
@@ -18,16 +23,12 @@ const FormVerify = ({ type, onSuccess }: props) => {
 
   const isVerifyAccount = type === TypeVerify.account;
   const buttonDisabled = valueInput.length < 1;
-  const imageStyle = {
-    width: '200px',
-    height: '200px',
-  };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValueInput(e.target.value);
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault();
 
     try {
@@ -60,7 +61,7 @@ const FormVerify = ({ type, onSuccess }: props) => {
     }
 
     onSuccess();
-  };
+  }, []);
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>

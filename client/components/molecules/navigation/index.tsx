@@ -1,46 +1,42 @@
-import { useState } from 'react';
+import { useCallback } from 'react';
 
 import { UserCard, ButtonNavigation } from 'components/atoms';
-import { SearcherTemplate } from 'templates';
 import { GroupsList, FriendsList } from '../index';
 
 import { SearchSvg, ContactsSvg, SettingsSvg, MembersSvg } from '../../../public/svgs';
+import { paths } from '../../../constants';
 // import ContactsSvg from "../../../public/svgs/contacts.svg"
 // import SearchSvg from "../../../public/svgs/search.svg"
 // import Settings from "../../../public/svgs/settings.svg"
+import { useSearcher } from 'contexts';
 import styles from './navigation.module.scss';
 
 const Navigation = () => {
-  const [searcherOpen, setSearcherOpen] = useState(false);
+  const { handleVisible } = useSearcher();
+
+  const handleVisibleSearcher = useCallback(() => {
+    handleVisible(true);
+  }, []);
 
   return (
-    <SearcherTemplate
-      open={searcherOpen}
-      onClose={() => {
-        setSearcherOpen(false);
-      }}
-    >
-      <div className={styles.box}>
-        <div className={styles.header}>
-          <UserCard withDetailed />
-          <ButtonNavigation
-            onClick={() => {
-              setSearcherOpen(true);
-            }}
-            icon={SearchSvg}
-            content="Search"
-            id="searcher"
-          />
-          <ButtonNavigation icon={ContactsSvg} href="/contacts" content="Contacts" />
-          <ButtonNavigation icon={MembersSvg} href="/invites" content="Invites" />
-          <ButtonNavigation icon={SettingsSvg} href="/settings/profile" content="Settings" />
-        </div>
-        <div>
-          <GroupsList />
-          <FriendsList />
-        </div>
+    <div className={styles.box}>
+      <div className={styles.header}>
+        <UserCard withDetailed />
+        <ButtonNavigation
+          onClick={handleVisibleSearcher}
+          icon={SearchSvg}
+          content="Search"
+          id="searcher"
+        />
+        <ButtonNavigation icon={ContactsSvg} href={paths.Contacts} content="Contacts" />
+        <ButtonNavigation icon={MembersSvg} href={paths.Invites} content="Invites" />
+        <ButtonNavigation icon={SettingsSvg} href={paths.Settings.Profile} content="Settings" />
       </div>
-    </SearcherTemplate>
+      <div>
+        <GroupsList />
+        <FriendsList />
+      </div>
+    </div>
   );
 };
 
