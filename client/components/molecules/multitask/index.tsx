@@ -84,10 +84,10 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
       if (allowNextStage) {
         unlimited || setCounterStage(counterStage + 1);
 
-        const { members } = groupData;
+        const { members = [] } = groupData;
 
         name === 'CreateGroup' && counterStage > 0
-          ? setGroupData({ members: members ? [...members, inputValue] : [inputValue] })
+          ? setGroupData({ members: [...members, inputValue] })
           : setGroupData({ name: inputValue });
       }
 

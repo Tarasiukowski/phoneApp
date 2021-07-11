@@ -17,23 +17,23 @@ const SettingsContent = () => (
 const routes = [
   {
     slug: 'profile',
-    component: <SettingsProfileContent />,
+    component: SettingsProfileContent,
   },
   {
     slug: 'blocklist',
-    component: <SettingsBlocklistContent />,
+    component: SettingsBlocklistContent,
   },
   {
     slug: 'manageLists',
-    component: <SettingsListsContent />,
+    component: SettingsListsContent,
   },
   {
     slug: 'members',
-    component: <SettingsFriendsContent />,
+    component: SettingsFriendsContent,
   },
   {
     slug: 'number',
-    component: <SettingsNumberContent />,
+    component: SettingsNumberContent,
   },
 ];
 

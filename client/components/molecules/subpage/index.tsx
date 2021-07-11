@@ -1,27 +1,21 @@
-import { ReactNode } from 'react';
 import { useRouter } from 'next/router';
 
 import { Loader } from '../index';
 
-import { route } from './types';
+import { props } from './types';
 
-const Component = ({ component }: { component: ReactNode }) => <>{component}</>;
-
-const Subpage = ({ routes, slugNumber }: { routes: route[]; slugNumber: number }) => {
+const Subpage = ({ routes, slugNumber }: props) => {
   const {
-    query: { slug },
+    query: { slug: activeSlug },
   } = useRouter();
 
   return (
     <>
-      {slug === undefined ? (
+      {activeSlug === undefined ? (
         <Loader />
       ) : (
         routes.map(
-          (route) =>
-            route.slug === slug[slugNumber] && (
-              <Component key={route.slug} component={route.component} />
-            ),
+          ({ slug, component: Component }) => slug === activeSlug[slugNumber] && <Component />,
         )
       )}
     </>

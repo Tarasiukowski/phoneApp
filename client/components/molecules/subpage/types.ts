@@ -1,6 +1,8 @@
-import { ReactNode } from "react";
+import { FunctionComponent } from 'react';
+
+export type props = { routes: route[]; slugNumber: number };
 
 export type route = {
-  slug: string,
-  component: ReactNode
-}
+  slug: string;
+  component: FunctionComponent;
+};

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import Link from 'next/link';
 
 import { UserCard } from 'components/atoms';
@@ -44,16 +44,16 @@ const FriendsList = () => {
     [],
   );
 
-  const hanldeAddButton = () => {
+  const hanldeAddButton = useCallback(() => {
     multiTask.toggleOpen(true, multitaskHandle);
-  };
+  }, []);
 
   return (
     <div>
       <h2 className={styles.heading}>Friensd List</h2>
       <div className={styles.template}>
         {friends.map((friend) => {
-          const conversation = conversations?.find(
+          const conversation = conversations.find(
             (conversation) => friend.email === conversation.with,
           );
 

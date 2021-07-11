@@ -19,23 +19,23 @@ const MainPage = () => (
 const routes = [
   {
     slug: 'settings',
-    component: <SettingsContent />,
+    component: SettingsContent,
   },
   {
     slug: 'inbox',
-    component: <InboxContent />,
+    component: InboxContent,
   },
   {
     slug: 'group',
-    component: <GroupContent />,
+    component: GroupContent,
   },
   {
     slug: 'contacts',
-    component: <ContactsContent />,
+    component: ContactsContent,
   },
   {
     slug: 'invites',
-    component: <InvitesContent />,
+    component: InvitesContent,
   },
 ];
 

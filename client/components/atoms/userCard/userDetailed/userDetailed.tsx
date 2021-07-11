@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
@@ -21,27 +21,31 @@ const UserDetailed = ({ userDetailedRef }: props) => {
   const multiTask = useMultiTask();
   const { setError } = useError();
 
-  const multitaskHandle = {
-    name: 'InviteFriend',
-    onClose: () => {
-      multiTask.toggleOpen(false);
-    },
-    onEnd: async (to: string) => {
-      try {
-        await fetcher('POST', '/user/invite', {
-          to,
-        });
+  const multitaskHandle = useMemo(
+    () =>
+      ({
+        name: 'InviteFriend',
+        onClose: () => {
+          multiTask.toggleOpen(false);
+        },
+        onEnd: async (to: string) => {
+          try {
+            await fetcher('POST', '/user/invite', {
+              to,
+            });
 
-        return true;
-      } catch (err) {
-        handleRequestError(err, (errorMsg) => {
-          setError({ msg: errorMsg, id: Math.random() });
-        });
+            return true;
+          } catch (err) {
+            handleRequestError(err, (errorMsg) => {
+              setError({ msg: errorMsg, id: Math.random() });
+            });
 
-        return false;
-      }
-    },
-  } as const;
+            return false;
+          }
+        },
+      } as const),
+    [],
+  );
 
   const resetData = () => {
     dispatch(updateInvites([]));
