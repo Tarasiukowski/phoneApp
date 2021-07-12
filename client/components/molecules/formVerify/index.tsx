@@ -43,7 +43,7 @@ const FormVerify = ({ type, onSuccess }: props) => {
       if (valid && isVerifyAccount) {
         try {
           fetcher('PUT', '/user/update', {
-            redirectTo: paths.OnBoarding.Number,
+            redirectTo: paths.onBoarding.number,
           });
         } catch (err) {
           handleRequestError(err, (errorMsg) => {

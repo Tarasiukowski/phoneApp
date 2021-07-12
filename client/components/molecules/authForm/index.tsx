@@ -23,7 +23,7 @@ const AuthForm = ({ auth }: props) => {
   const { setError } = useError();
 
   const isRegister = auth === AuthType.Singup;
-  const redirectTo = isRegister ? paths.OnBoarding.Code : paths.Login.Verify;
+  const redirectTo = isRegister ? paths.onBoarding.code : paths.login.verify;
   const valueEmailInput = watch('email');
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const AuthForm = ({ auth }: props) => {
     try {
       const { user } = await fetcher(
         'post',
-        `/auth${isRegister ? paths.SingUp : paths.Login.Index}`,
+        `/auth${isRegister ? paths.singUp : paths.login.index}`,
         {
           email,
         },

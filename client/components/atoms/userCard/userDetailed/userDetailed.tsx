@@ -54,7 +54,7 @@ const UserDetailed = ({ userDetailedRef }: props) => {
   };
 
   const logoutCb = () => {
-    router.push(paths.SingUp).then(() => {
+    router.push(paths.singUp).then(() => {
       resetData();
     });
   };

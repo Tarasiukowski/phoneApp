@@ -61,7 +61,7 @@ const Chat = ({ id, getScopedUser, width }: props) => {
         setLoading(false);
       })
       .catch(() => {
-        router.push(paths.Contacts);
+        router.push(paths.contacts);
       });
 
     if (activeUser) {

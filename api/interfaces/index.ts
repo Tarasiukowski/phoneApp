@@ -4,7 +4,13 @@ export type Class = new (...args: any[]) => any;
 
 export type AuthType = 'Google' | undefined;
 
-type Conversation = { with: string; id: string };
+export type Message = { from: string; content: string; id: number };
+
+export type Conversation = {
+  users: string[];
+  messages: Message[];
+  id: string;
+};
 
 type Group = { name: string; members: string[] };
 

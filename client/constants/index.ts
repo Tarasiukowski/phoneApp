@@ -1,17 +1,17 @@
 export const paths = {
-  Login: {
-    Index: '/login',
-    Verify: '/login/verify',
+  login: {
+    index: '/login',
+    verify: '/login/verify',
   },
-  Invites: '/invites',
-  SingUp: '/singup',
-  Contacts: '/contacts',
-  OnBoarding: {
-    Code: '/onboarding/code',
-    Number: '/onboarding/number',
-    Account: '/onboarding/account',
+  invites: '/invites',
+  singUp: '/singup',
+  contacts: '/contacts',
+  onBoarding: {
+    code: '/onboarding/code',
+    number: '/onboarding/number',
+    account: '/onboarding/account',
   },
-  Settings: {
-    Profile: '/settings/profile',
+  settings: {
+    profile: '/settings/profile',
   },
 };

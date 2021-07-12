@@ -18,7 +18,7 @@ const OnboardingCodeContent = () => {
   }, []);
 
   return (
-    <RedirectTemplate isRedirect={redirect} redirectTo={paths.OnBoarding.Number}>
+    <RedirectTemplate isRedirect={redirect} redirectTo={paths.onBoarding.number}>
       <FormVerify type={TypeVerify.account} onSuccess={handleOnSuccess} />
     </RedirectTemplate>
   );

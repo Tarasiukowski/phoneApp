@@ -65,7 +65,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
 
           loading ? router.push(redirectTo) : setLoading(false);
         } else {
-          router.push(paths.SingUp);
+          router.push(paths.singUp);
         }
       }
     });

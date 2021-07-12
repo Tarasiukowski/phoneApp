@@ -28,9 +28,9 @@ const Navigation = () => {
           content="Search"
           id="searcher"
         />
-        <ButtonNavigation icon={ContactsSvg} href={paths.Contacts} content="Contacts" />
-        <ButtonNavigation icon={MembersSvg} href={paths.Invites} content="Invites" />
-        <ButtonNavigation icon={SettingsSvg} href={paths.Settings.Profile} content="Settings" />
+        <ButtonNavigation icon={ContactsSvg} href={paths.contacts} content="Contacts" />
+        <ButtonNavigation icon={MembersSvg} href={paths.invites} content="Invites" />
+        <ButtonNavigation icon={SettingsSvg} href={paths.settings.profile} content="Settings" />
       </div>
       <div>
         <GroupsList />

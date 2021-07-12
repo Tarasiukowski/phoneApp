@@ -42,7 +42,7 @@ const OnboardingNumberContent = () => {
 
     try {
       await fetcher('PUT', '/user/update', {
-        redirectTo: paths.OnBoarding.Account,
+        redirectTo: paths.onBoarding.account,
       });
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
@@ -67,7 +67,7 @@ const OnboardingNumberContent = () => {
   );
 
   return (
-    <RedirectTemplate redirectTo="/onboarding/account" isRedirect={redirect}>
+    <RedirectTemplate redirectTo={paths.onBoarding.account} isRedirect={redirect}>
       <div className={styles.wrapper}>
         <h4>Your phone number</h4>
         <h6>You can add more phone numbers later.</h6>

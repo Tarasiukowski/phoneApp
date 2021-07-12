@@ -1,11 +1,5 @@
 import { Document } from 'mongoose';
 
-export type Message = { from: string; content: string; id: number };
-
-export type Conversation = {
-  users: string[];
-  messages: Message[];
-  id: string
-};
+import { Conversation } from '../../interfaces';
 
 export type ConversationDocument = Conversation & Document;

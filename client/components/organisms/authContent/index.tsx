@@ -24,7 +24,7 @@ const AuthContent = () => {
 
   const activePath = asPath.slice(1) as AuthType;
   const isRegister = activePath === AuthType.Singup;
-  const redirectTo = isRegister ? paths.OnBoarding.Number : paths.Contacts;
+  const redirectTo = isRegister ? paths.onBoarding.number : paths.contacts;
 
   const title = isRegister ? 'Sign up on OpenPhone' : 'Log into OpenPhone';
 

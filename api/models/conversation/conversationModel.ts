@@ -3,7 +3,8 @@ import { model } from 'mongoose';
 import { formatModel } from '../../utils';
 import { ERROR } from '../../data/error';
 import { conversationSchema } from './conversationSchema';
-import { Conversation, ConversationDocument, Message } from './types';
+import { Conversation, Message } from '../../interfaces';
+import { ConversationDocument } from './types';
 
 export const conversationModel = model<ConversationDocument>('conversation', conversationSchema);
 
