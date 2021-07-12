@@ -38,14 +38,13 @@ const OnboardingAccountContent = () => {
     setDisabledByRequest(true);
 
     try {
-      await fetcher('PUT', '/user/update', {
-        fullname: formValues,
+      await fetcher('PUT', '/user/update/fullname', {
+        value: formValues,
       });
 
       try {
-        await fetcher('PUT', '/user/update', {
-          redirectTo: '/contacts',
-          onBoarding: true,
+        await fetcher('PUT', '/user/update/redirectTo', {
+          value: '/contacts',
         });
       } catch (err) {
         handleRequestError(err, (errorMsg) => {
@@ -58,12 +57,16 @@ const OnboardingAccountContent = () => {
         setError({ msg: errorMsg, id: Math.random() });
       });
       return;
+    } finally {
+      await fetcher('PUT', '/user/update/onBoarding', {
+        value: true,
+      });
     }
 
     setRedirect(true);
 
     setDisabledByRequest(false);
-  }, []);
+  }, [formValues]);
 
   return (
     <RedirectTemplate isRedirect={redirect} redirectTo={paths.contacts}>

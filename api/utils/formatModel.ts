@@ -1,19 +1,20 @@
 import { Document } from 'mongoose';
 
-interface ObjectOfDocument {
-  [key: string]: any;
-}
+import { Conversation, User, UpdateOption } from '../interfaces';
 
-export const formatModel = <T extends object>(document: Document<T>) => {
-  const formatedDocument: ObjectOfDocument = {};
-  const objectOfDocument: ObjectOfDocument = document.toObject();
+export const formatModel = <U extends UpdateOption>(
+  document: Document & (U extends UpdateOption.conversation ? Conversation : User),
+) => {
+  const objectOfDocument = document.toObject() as U extends UpdateOption.conversation
+    ? Conversation
+    : User;
 
   for (const key in objectOfDocument) {
-    const formatedKey = key.replace(/[^a-zA-Z0-9]/g, '');
+    const formatedKey = key.replace(/[^a-zA-Z0-9]/g, '') as keyof typeof objectOfDocument;
     const value = objectOfDocument[key];
 
-    formatedDocument[formatedKey] = value;
+    objectOfDocument[formatedKey] = value;
   }
 
-  return formatedDocument;
+  return objectOfDocument;
 };

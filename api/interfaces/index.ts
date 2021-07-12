@@ -39,3 +39,8 @@ export interface User {
   groups: Group[];
   blocklist: string[];
 }
+
+export enum UpdateOption {
+  conversation = 'conversation',
+  user = 'user'
+}

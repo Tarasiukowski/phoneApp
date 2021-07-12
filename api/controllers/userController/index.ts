@@ -3,9 +3,7 @@ import { Response, Request } from 'express';
 import { updateType } from '../../interfaces';
 import UserService from '../../services/userService';
 import { getUpdateType } from '../../utils/getUpdateOption';
-import { BlockControllerMixin } from './mixins/blockController';
-import { FriendsControllerMixin } from './mixins/friendsController';
-import { InviteControllerMixin } from './mixins/inviteController';
+import { BlockControllerMixin, FriendsControllerMixin, InviteControllerMixin } from './mixins';
 
 class UserController extends FriendsControllerMixin(
   InviteControllerMixin(BlockControllerMixin(class {})),

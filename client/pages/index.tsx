@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { Loader } from 'components/molecules';
 
+import { paths } from '../constants';
 import { useUser } from 'setup/reducers/userReducer';
 
 const IndexPage = () => {
@@ -12,7 +13,7 @@ const IndexPage = () => {
   const isLogged = user ? true : false;
 
   useEffect(() => {
-    router.push(isLogged ? '/contacts' : '/singup');
+    router.push(isLogged ? paths.contacts : paths.singUp);
   }, []);
 
   return <Loader />;

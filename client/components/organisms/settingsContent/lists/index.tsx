@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from 'components/atoms';
@@ -5,14 +6,12 @@ import { ElementFinder } from 'components/molecules';
 import { SettingsTemplate } from 'templates';
 import ElementList from './elementList';
 
-import { GroupData } from 'components/molecules/multitask/types';
 import { ERROR } from 'common/errors';
 import { fetcher, getObjectsKeysFromArray, handleRequestError } from 'utils';
 import { updateGroup, useUser } from 'setup/reducers/userReducer';
 import { useError, useMultiTask } from 'contexts';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { Group } from 'interfaces';
-import { useCallback, useMemo } from 'react';
 
 const SettingsListsContent = () => {
   const dispatch = useDispatch();
@@ -63,11 +62,11 @@ const SettingsListsContent = () => {
         onClose: () => {
           multiTask.toggleOpen(false);
         },
-        onEnd: async (groupData: GroupData) => {
+        onEnd: async (groupData: Group) => {
           try {
             await fetcher('POST', '/group/create', { ...groupData });
 
-            const data = groupData as Group;
+            const data = groupData;
 
             dispatch(updateGroup({ key: 'groups', data, option: { type: 'push' } }));
 
@@ -80,7 +79,7 @@ const SettingsListsContent = () => {
           }
         },
       } as const),
-    [],
+    [multiTask.open],
   );
 
   return (

@@ -30,10 +30,11 @@ const userSlice = createSlice({
         } = payload;
 
         const dataOfKey: User[typeof key] = state['groups'];
+        let updatedState;
 
         if (Array.isArray(dataOfKey)) {
           if (type === 'push') {
-            state = { ...state, [key]: [...dataOfKey, data] };
+            updatedState = { ...state, [key]: [...dataOfKey, data] };
           } else if (type === 'pull') {
             const filterDataOfKey = dataOfKey.filter((elem) => {
               if (value && by && value !== elem[by]) {
@@ -41,9 +42,11 @@ const userSlice = createSlice({
               }
             });
 
-            return { ...state, ['groups']: filterDataOfKey };
+            updatedState = { ...state, ['groups']: filterDataOfKey };
           }
         }
+
+        return updatedState;
       }
 
       return null;

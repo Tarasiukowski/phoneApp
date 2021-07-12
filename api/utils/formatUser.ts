@@ -1,10 +1,10 @@
 import { UserDocument } from '../models/user/types';
-import { User } from 'interfaces';
+import { UpdateOption, User } from 'interfaces';
 import { formatModel } from '../utils';
 
 export const formatUser = <K extends keyof User>(user: UserDocument, extraKeys: K[]) => {
   const allowKeys = ['image', 'email', 'number', 'fullname', 'colorImage', ...extraKeys];
-  const userData = formatModel(user) as Partial<User>;
+  const userData = formatModel<UpdateOption.user>(user);
   let key: keyof User;
 
   for (key in userData) {

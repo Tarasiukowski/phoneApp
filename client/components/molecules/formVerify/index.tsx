@@ -28,40 +28,43 @@ const FormVerify = ({ type, onSuccess }: props) => {
     setValueInput(e.target.value);
   };
 
-  const handleSubmit = useCallback(async (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
 
-    try {
-      const { valid } = await fetcher(
-        'post',
-        `/user/verify/${isVerifyAccount ? 'account' : 'login'}`,
-        {
-          code: valueInput,
-        },
-      );
+      try {
+        const { valid } = await fetcher(
+          'post',
+          `/user/verify/${isVerifyAccount ? 'account' : 'login'}`,
+          {
+            code: valueInput,
+          },
+        );
 
-      if (valid && isVerifyAccount) {
-        try {
-          fetcher('PUT', '/user/update', {
-            redirectTo: paths.onBoarding.number,
-          });
-        } catch (err) {
-          handleRequestError(err, (errorMsg) => {
-            setError({ msg: errorMsg, id: Math.random() });
-          });
+        if (valid && isVerifyAccount) {
+          try {
+            fetcher('PUT', '/user/update/redirectTo', {
+              value: paths.onBoarding.number,
+            });
+          } catch (err) {
+            handleRequestError(err, (errorMsg) => {
+              setError({ msg: errorMsg, id: Math.random() });
+            });
 
-          return;
+            return;
+          }
         }
+      } catch (err) {
+        handleRequestError(err, (errorMsg) => {
+          setError({ msg: errorMsg, id: Math.random() });
+        });
+        return;
       }
-    } catch (err) {
-      handleRequestError(err, (errorMsg) => {
-        setError({ msg: errorMsg, id: Math.random() });
-      });
-      return;
-    }
 
-    onSuccess();
-  }, []);
+      onSuccess();
+    },
+    [valueInput],
+  );
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>

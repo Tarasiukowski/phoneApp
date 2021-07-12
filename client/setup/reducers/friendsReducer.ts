@@ -22,7 +22,7 @@ const friendsSlice = createSlice({
     ) {
       const { email, key, value } = payload;
 
-      state = state.map((user) => {
+      const updatedState = state.map((user) => {
         if (user.email === email) {
           let updatedUser;
           const prevDataOfKey: Member[Key] = user[key];
@@ -38,6 +38,8 @@ const friendsSlice = createSlice({
 
         return user;
       });
+
+      return updatedState;
     },
     update(_, { payload }: PayloadAction<Member[]>) {
       return payload;
@@ -71,4 +73,4 @@ export const useFriends = () => {
   const friends = useSelector(selectFriends);
 
   return friends;
-}
+};

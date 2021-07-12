@@ -27,7 +27,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
   const { setError } = useError();
 
   const activePath = router.asPath;
-  const fetchFullUser = mainPaths.some((path) => path.startsWith(activePath))
+  const fetchFullUser = mainPaths.some((path) => activePath.startsWith(path));
 
   const fetchFriends = () => fetcher('POST', '/user/friends');
 

@@ -12,32 +12,21 @@ class GroupService {
   async remove() {
     const { author, name } = this;
 
-    // // const data = await UserModel.update('groups', { email: author, value: { name } }, 'pull');
-    // const data = await UserModel.update(
-    //   { by: 'email', valueFilter: author },
-    //   { key: 'groups', value: [] },
-    //   'pull',
-    // );
+    const data = await UserModel.update('groups', { email: author, value: { name } }, 'pull');
 
-    return { status: 200, data: {} };
+    return data;
   }
 
   async create(users: string[]) {
     const { author, name } = this;
 
-    // const data = await UserModel.update(
-    //   'groups',
-    //   { email: author, value: { name, members: users } },
-    //   'push',
-    // );
+    const data = await UserModel.update(
+      'groups',
+      { email: author, value: { name, members: users } },
+      'push',
+    );
 
-    // const data = await UserModel.update(
-    //   { by: 'email', valueFilter: author },
-    //   { key: 'groups', value: [] },
-    //   'push',
-    // );
-
-    return { status: 200, data: {} };
+    return data;
   }
 }
 

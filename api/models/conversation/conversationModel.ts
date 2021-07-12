@@ -3,7 +3,7 @@ import { model } from 'mongoose';
 import { formatModel } from '../../utils';
 import { ERROR } from '../../data/error';
 import { conversationSchema } from './conversationSchema';
-import { Conversation, Message } from '../../interfaces';
+import { Conversation, Message, UpdateOption } from '../../interfaces';
 import { ConversationDocument } from './types';
 
 export const conversationModel = model<ConversationDocument>('conversation', conversationSchema);
@@ -36,7 +36,7 @@ class ConversationModel {
 
       return { succes: true, status: 200 };
     } catch (err) {
-      return { succes: false, status: 409 };
+      return { succes: false, status: 400 };
     }
   }
 
@@ -46,7 +46,7 @@ class ConversationModel {
 
       return { succes: true, status: 200 };
     } catch (err) {
-      return { succes: false, status: 409 };
+      return { succes: false, status: 400 };
     }
   }
 
@@ -69,7 +69,7 @@ class ConversationModel {
       let formatedConversation: Conversation | undefined;
 
       if (conversation) {
-        formatedConversation = formatModel(conversation) as Conversation;
+        formatedConversation = formatModel<UpdateOption.conversation>(conversation);
       }
 
       return { succes: true, status: 200, conversation: formatedConversation };
@@ -88,11 +88,11 @@ class ConversationModel {
 
     try {
       conversation.save();
-      const formatedConversation = formatModel(conversation) as Conversation;
+      const formatedConversation = formatModel<UpdateOption.conversation>(conversation);
 
       return { succes: true, status: 200, conversation: formatedConversation };
     } catch (err) {
-      return { succes: false, status: 409, conversation: null };
+      return { succes: false, status: 400, conversation: null };
     }
   }
 }

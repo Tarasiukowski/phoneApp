@@ -98,7 +98,7 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
 
   const disabledButton = {
     recommended: !isActiveAllNumbers,
-    all: !isActiveAllNumbers,
+    all: isActiveAllNumbers,
   };
 
   const setOverlap = (e: MouseEvent) => {

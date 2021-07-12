@@ -1,4 +1,7 @@
+import { ListType } from "../usersList/types";
+
 export type props = {
   email?: string;
-  loading: boolean
+  loading: boolean;
+  name?: ListType
 };

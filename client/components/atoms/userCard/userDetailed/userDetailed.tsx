@@ -44,7 +44,7 @@ const UserDetailed = ({ userDetailedRef }: props) => {
           }
         },
       } as const),
-    [],
+    [multiTask.open],
   );
 
   const resetData = () => {

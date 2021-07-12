@@ -92,13 +92,13 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
       }
 
       allowNextStage && setInputValue('');
-    }, []);
+    }, [inputValue]);
 
     const end = useCallback(() => {
       onEnd(groupData);
       onClose();
       setGroupData({ name: null, members: [] });
-    }, []);
+    }, [inputValue]);
 
     if (open) {
       return (

@@ -4,7 +4,7 @@ import { IsLoggedTemplate, OnboardingTemplate } from 'templates';
 import { Allow } from 'interfaces';
 
 const OnboardingAccountPage = () => (
-  <IsLoggedTemplate allow={Allow.notLogged}>
+  <IsLoggedTemplate allow={Allow.logged}>
     <OnboardingTemplate>
       <OnboardingAccountContent />
     </OnboardingTemplate>

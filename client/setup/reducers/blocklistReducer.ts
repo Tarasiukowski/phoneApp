@@ -16,7 +16,7 @@ const blocklistSlice = createSlice({
     remove(state, { payload }: PayloadAction<{ by: Key; value: Member[Key] }>) {
       const { by, value } = payload;
 
-      state = state.filter((user) => {
+      return state.filter((user) => {
         if (user[by] !== value) {
           return user;
         }

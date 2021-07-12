@@ -39,8 +39,8 @@ const SettingsProfileContent = () => {
 
   const save = useCallback(async () => {
     try {
-      await fetcher('PUT', '/user/update', {
-        fullname: { firstname: firstnameValue, lastname: lastnameValue },
+      await fetcher('PUT', '/user/update/fullname', {
+        value: { firstname: firstnameValue, lastname: lastnameValue },
       });
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
@@ -50,7 +50,7 @@ const SettingsProfileContent = () => {
     }
 
     window.location.reload();
-  }, []);
+  }, [inputsValues]);
 
   const resetData = async () => {
     try {
@@ -113,7 +113,7 @@ const SettingsProfileContent = () => {
           }
         },
       } as const),
-    [],
+    [multiTask.open],
   );
 
   return (

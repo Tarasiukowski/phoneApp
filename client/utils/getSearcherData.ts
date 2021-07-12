@@ -31,6 +31,7 @@ export const getSearcherData = (conversations: (DetailedConversation | undefined
       conversation ? out.concat({ type: SearchType.conversation, ...conversation }) : out,
     [],
   );
+
   return {
     routes: {
       data: routes,

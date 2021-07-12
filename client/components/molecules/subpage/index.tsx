@@ -15,7 +15,8 @@ const Subpage = ({ routes, slugNumber }: props) => {
         <Loader />
       ) : (
         routes.map(
-          ({ slug, component: Component }) => slug === activeSlug[slugNumber] && <Component />,
+          ({ slug, component: Component }) =>
+            slug === activeSlug[slugNumber] && <Component key={slug} />,
         )
       )}
     </>

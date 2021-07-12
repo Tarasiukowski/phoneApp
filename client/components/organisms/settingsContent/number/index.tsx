@@ -39,14 +39,14 @@ const SettingsNumberContent = () => {
     setDisabledByRequest(true);
 
     try {
-      await fetcher('PUT', '/user/update', { number });
+      await fetcher('PUT', '/user/update/number', { value: number });
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
       });
       return;
     }
-  }, []);
+  }, [number]);
 
   const handleSelectNumberList = useMemo(
     () => ({

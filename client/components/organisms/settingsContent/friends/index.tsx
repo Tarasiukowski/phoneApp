@@ -57,7 +57,7 @@ const SettingsFriendsContent = () => {
           }
         },
       } as const),
-    [],
+    [multiTask.open],
   );
 
   return (

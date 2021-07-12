@@ -1,7 +1,16 @@
 import { handleNotAllowedError } from './hanldeNotAllowedError';
 
-export const handleRequestError = (err: any, cb: (msg: string) => void) => {
-  const { data, status } = err.response;
+type Error = {
+  response: {
+    data: {
+      errorMsg: string;
+    };
+    status: number;
+  };
+};
+
+export const handleRequestError = (error: Error, cb: (msg: string) => void) => {
+  const { data, status } = error.response;
   const { errorMsg } = data;
 
   cb(errorMsg);

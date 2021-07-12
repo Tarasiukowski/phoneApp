@@ -41,7 +41,7 @@ const FriendsList = () => {
           }
         },
       } as const),
-    [],
+    [multiTask.open],
   );
 
   const hanldeAddButton = useCallback(() => {

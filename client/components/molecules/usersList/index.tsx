@@ -23,24 +23,14 @@ const UsersList = ({ name, data }: props) => {
   const { setError } = useError();
 
   useEffect(() => {
-    if (data) {
-      setDetailedUser(data[0]);
-    }
-  }, []);
-
-  useEffect(() => {
     setListData(data);
   }, [data]);
 
   useEffect(() => {
-    const userExist = data.find(({ email }) => email === detailedUser?.email);
+    const firstMemberOfData = data[0];
 
-    if (!userExist && data.length) {
-      setDetailedUser(data[0]);
-    } else {
-      setDetailedUser(null);
-    }
-  }, [data.length]);
+    setDetailedUser(firstMemberOfData ? firstMemberOfData : null);
+  }, []);
 
   useEffect(() => {
     if (inputValue.length) {
@@ -109,7 +99,7 @@ const UsersList = ({ name, data }: props) => {
           <div>
             {listData.map((user) => (
               <ElementList
-                onClick={updateUserDetailed}
+                onClick={() => updateUserDetailed(user)}
                 onAcceptInvite={acceptInvite}
                 user={user}
                 name={name}
@@ -119,7 +109,7 @@ const UsersList = ({ name, data }: props) => {
           </div>
         </div>
       </div>
-      <UserDetailed loading={detailedUser ? false : true} email={detailedUser?.email} />
+      <UserDetailed name={name} loading={detailedUser ? false : true} email={detailedUser?.email} />
     </>
   );
 };

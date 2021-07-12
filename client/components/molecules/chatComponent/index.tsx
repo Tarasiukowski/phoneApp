@@ -1,6 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useScroll } from 'react-use';
-import { useRouter } from 'next/router';
 
 import { Spinner } from 'components/atoms';
 import Header from './header';
@@ -14,7 +13,6 @@ import { Member } from 'interfaces';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { useUser } from 'setup/reducers/userReducer';
 import styles from './chat.module.scss';
-import { paths } from '../../../constants';
 
 const Chat = ({ id, getScopedUser, width }: props) => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -23,8 +21,6 @@ const Chat = ({ id, getScopedUser, width }: props) => {
   const [loading, setLoading] = useState(true);
 
   const refMessagesTemplate = useRef<HTMLDivElement>(null);
-
-  const router = useRouter();
 
   const activeUser = useUser();
   const friends = useFriends();
@@ -60,9 +56,6 @@ const Chat = ({ id, getScopedUser, width }: props) => {
       .then(() => {
         setLoading(false);
       })
-      .catch(() => {
-        router.push(paths.contacts);
-      });
 
     if (activeUser) {
       const scopedConversations = activeUser.conversations.find(
