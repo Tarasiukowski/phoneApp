@@ -1,7 +1,7 @@
 import { ERROR } from '../../../data';
 import Conversation from '../../../models/conversation/conversationModel';
 import UserModel from '../../../models/user/userModel';
-import { Class, User } from '../../../interfaces';
+import { Class } from '../../../interfaces';
 import { getStagesOfAcceptInvite, getStagesOfCreateConversation } from '../../../data';
 import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
 
@@ -14,7 +14,7 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
         }
 
         const { user: invitedUser } = await UserModel.findOne('email', to);
-        const { user: invitingUser } = (await UserModel.findOne('email', from)) as { user: User };
+        const { user: invitingUser } = await UserModel.findOne('email', from);
 
         if (!invitedUser) {
           return { status: 404, errorMsg: ERROR.USER_NOT_EXIST };
@@ -27,17 +27,17 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
         }
 
         const invites = invitedUser.invites;
-        const friends = invitingUser.friends;
+        const { friends = [] } = invitingUser || {};
 
         const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
 
         if (invites.includes(from)) {
-          return { status: 409, errorMsg: ERROR.DUPLICATE_INVITATION };
+          return { status: 400, errorMsg: ERROR.DUPLICATE_INVITATION };
         } else if (emailsOfFriends.includes(to)) {
-          return { status: 409, errorMsg: ERROR.IS_YOUR_FRIEND };
+          return { status: 400, errorMsg: ERROR.IS_YOUR_FRIEND };
         }
 
-        UserModel.update('invites', { email: to, value: from }, 'push');
+        UserModel.update({ by: 'email', valueFilter: to }, { key: 'invites', value: from }, 'push');
 
         return { status: 200, errorMsg: null };
       },
@@ -57,8 +57,8 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
       async accept(email: string, from: string) {
         const stagesOfAcceptInvite = getStagesOfAcceptInvite(email, from);
 
-        stagesOfAcceptInvite.map(({ key, data, type }) => {
-          UserModel.update(key, data, type);
+        stagesOfAcceptInvite.map(({ filter, data, type }) => {
+          UserModel.update(filter, data, type);
         });
 
         const { conversation } = await new Conversation([email, from]).save();
@@ -70,15 +70,19 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
             conversation.id,
           );
 
-          stagesOfCreateConversation.map(({ key, data, type }) => {
-            UserModel.update(key, data, type);
+          stagesOfCreateConversation.map(({ filter, data, type }) => {
+            UserModel.update(filter, data, type);
           });
         }
 
         return { status: 200, errorMsg: null };
       },
       async reject(email: string, from: string) {
-        const data = await UserModel.update('invites', { email, value: from }, 'pull');
+        const data = await UserModel.update(
+          { by: 'email', valueFilter: email },
+          { key: 'invites', value: from },
+          'pull',
+        );
 
         return data;
       },

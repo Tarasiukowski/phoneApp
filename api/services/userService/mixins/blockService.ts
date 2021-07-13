@@ -1,25 +1,27 @@
 import UserService from '..';
-import { Class, User } from '../../../interfaces';
+import { Class } from '../../../interfaces';
 import UserModel from '../../../models/user/userModel';
 
 export function BlockServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
     static block = {
       async index(loggedEmail: string, memberEmail: string) {
-        const { user: loggedUser } = await UserModel.findOne('email', loggedEmail);
-        const adtiveUser = loggedUser as User;
+        const { user } = await UserModel.findOne('email', loggedEmail);
 
-        const isFriend = adtiveUser.friends.find((friend) => friend.email === memberEmail);
+        const isFriend = user?.friends.find((friend) => friend.email === memberEmail);
 
         if (isFriend) {
           UserService.friend.remove(loggedEmail, memberEmail);
         } else {
-          UserModel.update('invites', { email: loggedEmail, value: memberEmail }, 'pull');
+          UserModel.update(
+            { by: 'email', valueFilter: loggedEmail },
+            { key: 'invites', value: memberEmail },
+            'pull',
+          );
         }
-
         const data = await UserModel.update(
-          'blocklist',
-          { email: loggedEmail, value: memberEmail },
+          { by: 'email', valueFilter: loggedEmail },
+          { key: 'blocklist', value: memberEmail },
           'push',
         );
 
@@ -27,11 +29,11 @@ export function BlockServiceMixin<Base extends Class>(base: Base) {
       },
       async get(email: string) {
         const { user } = await UserModel.findOne('email', email);
-        const findedUser = user as User;
+        const findedUser = user;
 
-        const emailsOfBlocklist = findedUser.blocklist;
+        const { blocklist = [] } = findedUser || {};
 
-        const formatedUsersOfBlocklist = await UserModel.find(emailsOfBlocklist, 'email');
+        const formatedUsersOfBlocklist = await UserModel.find(blocklist, 'email');
 
         return formatedUsersOfBlocklist;
       },
@@ -40,9 +42,9 @@ export function BlockServiceMixin<Base extends Class>(base: Base) {
     static unblock = {
       async index(loggedEmail: string, memberEmail: string) {
         const data = await UserModel.update(
-          'blocklist',
-          { email: loggedEmail, value: memberEmail },
-          'pull',
+          { by: 'email', valueFilter: loggedEmail },
+          { key: 'blocklist', value: memberEmail },
+          'push',
         );
 
         return data;

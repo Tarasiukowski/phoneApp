@@ -3,20 +3,20 @@ import { updateType, User } from '../../interfaces';
 export const getStagesOfAcceptInvite = (
   email: string,
   from: string,
-): { key: keyof User, data: object; type: updateType }[] => [
+): { filter: { by: keyof User; valueFilter: User[keyof User] }; data: any; type: updateType }[] => [
   {
-    key: 'invites',
-    data: { email, value: from },
+    filter: { by: 'email', valueFilter: email },
+    data: { key: 'invites', value: from },
     type: 'pull',
   },
   {
-    key: 'friends',
-    data: { email, value: { email: from, notes: [] } },
+    filter: { by: 'email', valueFilter: email },
+    data: { key: 'friends', value: { email: from, notes: [] } },
     type: 'push',
   },
   {
-    key: 'friends',
-    data: { email: from, value: { email, notes: [] } },
+    filter: { by: 'email', valueFilter: from },
+    data: { key: 'friends', value: { email, notes: [] } },
     type: 'push',
   },
 ];

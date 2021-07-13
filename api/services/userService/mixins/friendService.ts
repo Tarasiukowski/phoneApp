@@ -22,7 +22,7 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
             ...extraData,
           );
 
-          const formatedFriends = findedUsers.map((findedUser) => {
+          const formatedFriends: Partial<User>[] = findedUsers.filter((findedUser) => {
             if (findedUser) {
               const dataFriend = friends.find((friend) => friend.email === findedUser.email);
 
@@ -32,7 +32,7 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
                 return { ...findedUser, notes };
               }
             }
-          }) as User[];
+          });
 
           return { status: 200, data: formatedFriends };
         }
@@ -45,8 +45,8 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
         if (friend) {
           const stagesOfRemoveFriend = getStagesOfRemoveFriend(email, friendEmail);
 
-          stagesOfRemoveFriend.map(({ key, data, type }) => {
-            UserModel.update(key, data, type);
+          stagesOfRemoveFriend.map(({ filter, data, type }) => {
+            UserModel.update(filter, data, type);
           });
 
           ConversationModel.remove('users', [email, friendEmail]);
@@ -54,7 +54,7 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
           return { status: 200, errorMsg: null };
         }
 
-        return { status: 404, errorMsg: ERROR.USER_NOT_EXIST };
+        return { status: 400, errorMsg: ERROR.USER_NOT_EXIST };
       },
     };
   };

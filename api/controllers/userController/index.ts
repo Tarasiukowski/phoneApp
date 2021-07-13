@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 
-import { updateType } from '../../interfaces';
+import { User, VerifyOption } from '../../interfaces';
 import UserService from '../../services/userService';
 import { getUpdateType } from '../../utils/getUpdateOption';
 import { BlockControllerMixin, FriendsControllerMixin, InviteControllerMixin } from './mixins';
@@ -10,14 +10,12 @@ class UserController extends FriendsControllerMixin(
 ) {
   async update(req: Request, res: Response) {
     const method = req.method as 'PUT' | 'DELETE';
-    const { name } = req.params as { name: updateType };
-    const body = name ? { ...req.body, field: name } : req.body;
-
-    const { field, type } = body;
+    const { name } = req.params as { name: keyof User };
+    const { type, email, value } = req.body;
 
     const { status, ...restData } = await UserService.update(
-      field,
-      body,
+      { by: 'email', valueFilter: email },
+      { key: name, value },
       type ? type : getUpdateType(method),
     );
 
@@ -25,7 +23,7 @@ class UserController extends FriendsControllerMixin(
   }
 
   async verify(req: Request, res: Response) {
-    const { name } = req.params as { name: 'account' | 'email' | 'login' };
+    const { name } = req.params as { name: VerifyOption };
     const body = req.body;
 
     const { status, ...restData } = await UserService.verify(body, name);

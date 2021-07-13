@@ -80,8 +80,8 @@ const SettingsProfileContent = () => {
           }
 
           try {
-            await fetcher('PUT', '/user/update/newEmail', {
-              newEmail,
+            await fetcher('PUT', '/user/update', {
+              value: newEmail,
               type: 'newEmail',
             });
 

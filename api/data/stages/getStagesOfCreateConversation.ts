@@ -4,19 +4,23 @@ export const getStagesOfCreateConversation = (
   email: string,
   from: string,
   id: string,
-): { key: keyof User; data: object; type: updateType }[] => [
+): {
+  filter: { by: keyof User; valueFilter: User[keyof User] };
+  data: any;
+  type: updateType;
+}[] => [
   {
-    key: 'conversations',
+    filter: { by: 'email', valueFilter: email },
     data: {
-      email,
+      key: 'conversations',
       value: { with: from, id },
     },
     type: 'push',
   },
   {
-    key: 'conversations',
+    filter: { by: 'email', valueFilter: from },
     data: {
-      email: from,
+      key: 'conversations',
       value: { with: email, id },
     },
     type: 'push',

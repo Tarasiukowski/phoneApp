@@ -12,7 +12,11 @@ class GroupService {
   async remove() {
     const { author, name } = this;
 
-    const data = await UserModel.update('groups', { email: author, value: { name } }, 'pull');
+    const data = await UserModel.update(
+      { by: 'email', valueFilter: author },
+      { key: 'groups', value: { name } },
+      'pull',
+    );
 
     return data;
   }
@@ -21,8 +25,8 @@ class GroupService {
     const { author, name } = this;
 
     const data = await UserModel.update(
-      'groups',
-      { email: author, value: { name, members: users } },
+      { by: 'email', valueFilter: author },
+      { key: 'groups', value: { name, members: users } },
       'push',
     );
 

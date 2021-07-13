@@ -23,7 +23,7 @@ class AuthService {
       const { user, status } = await UserModel.findOne('_id', id);
 
       if (user) {
-        let formatedUser;
+        let formatedUser: Partial<User>;
 
         if (fullUser) {
           formatedUser = UserModel.format(user, 'conversations', 'groups');
@@ -67,7 +67,11 @@ class AuthService {
           const code = generateCode();
           sendMail(email, code);
 
-          UserModel.update('code', { email, value: code });
+          UserModel.update(
+            { by: 'email', valueFilter: email },
+            { key: 'code', value: code },
+            'set',
+          );
 
           formatedUser = UserModel.format(user);
         }

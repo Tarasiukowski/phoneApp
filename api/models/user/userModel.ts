@@ -36,13 +36,19 @@ class UserModel {
     return formatedUser;
   }
 
-  static async update(key: keyof User, data: any, type: updateType = 'set') {
-    const { email, newEmail } = data;
-
-    delete data.email;
+  static async update<K extends keyof User, U extends keyof User, T extends updateType>(
+    filter: { by: K; valueFilter: User[K] },
+    data: {
+      key: U;
+      value: User[U] extends Array<any> ? Partial<User[U][number]> | string : User[U];
+    },
+    type: T,
+  ) {
+    const { by, valueFilter } = filter;
+    const { key, value } = data;
 
     if (type === 'newEmail') {
-      const { user } = await this.findOne('email', newEmail);
+      const { user } = await this.findOne('email', value);
 
       if (user) {
         return { status: 401, errorMsg: ERROR.EMAIL_IN_USE };
@@ -50,11 +56,11 @@ class UserModel {
     }
 
     try {
-      await userModel.updateOne({ email }, getUpdateOption(key, data, type));
+      await userModel.updateOne({ [by]: valueFilter }, getUpdateOption(key, value, type));
 
       return { status: 200, errorMsg: null };
     } catch (err) {
-      return { status: 409, errorMsg: err };
+      return { status: 400, errorMsg: err };
     }
   }
 
@@ -101,7 +107,7 @@ class UserModel {
 
       return { status: 200, user: { value: formatedUser, id: user._id } };
     } catch (err) {
-      return { status: 409, user: null };
+      return { status: 400, user: null };
     }
   }
 }

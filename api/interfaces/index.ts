@@ -42,5 +42,11 @@ export interface User {
 
 export enum UpdateOption {
   conversation = 'conversation',
-  user = 'user'
+  user = 'user',
+}
+
+export enum VerifyOption {
+  account = 'account',
+  email = 'email',
+  login = 'login',
 }
