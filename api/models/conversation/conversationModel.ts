@@ -3,30 +3,38 @@ import { Error, model } from 'mongoose';
 import { formatModel } from '../../utils';
 import { ERROR } from '../../data/error';
 import { conversationSchema } from './conversationSchema';
-import { Conversation, Message, UpdateOption } from '../../interfaces';
+import { Conversation, UpdateOption, UpdateType } from '../../interfaces';
 import { ConversationDocument } from './types';
 
 export const conversationModel = model<ConversationDocument>('conversation', conversationSchema);
 
 class ConversationModel {
-  users: string[];
-  messages: Message[];
+  private constructor(
+    private data: {
+      succes: boolean;
+      status: number;
+      conversation: Conversation | null;
+      errorMsg?: string;
+    },
+  ) {}
 
-  constructor(users: string[]) {
-    this.users = users;
-    this.messages = [];
+  get() {
+    return this.data;
   }
 
-  static async update<K extends keyof Conversation>(
-    id: string,
+  async update<K extends keyof Conversation>(
     key: K,
-    data: Conversation[K][number],
-    type: 'push' | 'pull',
+    value: Conversation[K][number],
+    type: UpdateType,
   ) {
-    try {
-      await conversationModel.updateOne({ _id: id }, { [`$${type}`]: data });
+    const { conversation } = this.data;
+    const id = conversation?.id;
+    const formatedType = `$${type}`;
 
-      if (key === 'users' && type === 'push') {
+    try {
+      await conversationModel.updateOne({ _id: id }, { [formatedType]: value });
+
+      if (key === 'users' && type === UpdateType.push) {
         const conversation = await conversationModel.findOne({ _id: id });
 
         if (conversation) {
@@ -40,9 +48,26 @@ class ConversationModel {
     }
   }
 
-  static async remove<K extends keyof Conversation>(by: K, value: Conversation[K]) {
+  updateMany<K extends keyof Conversation>(
+    data: { key: K; value: Conversation[K][number]; type: UpdateType }[],
+  ) {
     try {
-      await conversationModel.remove({ [by]: value });
+      data.map(({ key, value, type }) => {
+        this.update(key, value, type);
+      });
+
+      return { succes: true, status: 200 };
+    } catch {
+      return { succes: false, status: 400 };
+    }
+  }
+
+  async remove() {
+    const { conversation } = this.data;
+    const id = conversation?.id;
+
+    try {
+      await conversationModel.remove({ _id: id });
 
       return { succes: true, status: 200 };
     } catch (err) {
@@ -50,7 +75,10 @@ class ConversationModel {
     }
   }
 
-  static async send(content: string, email: string, id: string) {
+  async send(content: string, email: string) {
+    const { conversation } = this.data;
+    const id = conversation?.id;
+
     try {
       await conversationModel.updateOne(
         { _id: id },
@@ -63,7 +91,7 @@ class ConversationModel {
     }
   }
 
-  static async get(id: string) {
+  static async find(id: string) {
     try {
       const conversation = await conversationModel.findOne({ _id: id });
       let formatedConversation: Conversation;
@@ -71,22 +99,26 @@ class ConversationModel {
       if (conversation) {
         formatedConversation = formatModel<UpdateOption.conversation>(conversation);
       } else {
-        throw new Error("can not find conversation")
+        throw new Error('can not find that conversation');
       }
 
-      return { succes: true, status: 200, conversation: formatedConversation };
+      return new ConversationModel({
+        succes: true,
+        status: 200,
+        conversation: formatedConversation,
+      });
     } catch (err) {
-      return {
+      return new ConversationModel({
         succes: true,
         status: 404,
         conversation: null,
         errorMsg: ERROR.CONVERSATION_NOT_FOUND,
-      };
+      });
     }
   }
 
-  async save() {
-    const conversation = new conversationModel(this);
+  static async create(users: string[]) {
+    const conversation = new conversationModel({ users, messages: [] });
 
     try {
       conversation.save();

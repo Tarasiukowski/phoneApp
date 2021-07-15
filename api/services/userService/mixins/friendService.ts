@@ -49,7 +49,11 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
             UserModel.update(filter, data, type);
           });
 
-          ConversationModel.remove('users', [email, friendEmail]);
+          const { conversations } = friend;
+
+          const conversation = conversations.find((conversation) => conversation.with === email)!;
+
+          (await ConversationModel.find(conversation.id)).remove();
 
           return { status: 200, errorMsg: null };
         }

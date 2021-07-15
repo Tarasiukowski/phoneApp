@@ -35,7 +35,7 @@ export interface User {
   };
   invites: string[];
   friends: Friend[];
-  conversations: Conversation[];
+  conversations: { with: string; id: string }[];
   groups: Group[];
   blocklist: string[];
 }
@@ -49,4 +49,9 @@ export enum VerifyOption {
   account = 'account',
   email = 'email',
   login = 'login',
+}
+
+export enum UpdateType {
+  pull = 'pull',
+  push = 'push',
 }

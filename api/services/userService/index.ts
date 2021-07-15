@@ -1,5 +1,5 @@
 import { ERROR } from '../../data';
-import { updateType, User, VerifyOption } from '../../interfaces';
+import { updateType, User, VerifyOption, UpdateType } from '../../interfaces';
 import ConversationModel from '../../models/conversation/conversationModel';
 import UserModel from '../../models/user/userModel';
 import { FriendServiceMixin, InviteServiceMixin, BlockServiceMixin } from './mixins';
@@ -60,11 +60,15 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
 
             const { conversations = [] } = friend || {};
 
-            conversations.map((conversation) => {
-              const conversationId = conversation.id;
+            conversations.map(async (conversation) => {
+              const { id } = conversation;
 
-              ConversationModel.update(conversationId, 'users', email, 'pull');
-              ConversationModel.update(conversationId, 'users', newEmail, 'push');
+              await (
+                await ConversationModel.find(id)
+              ).updateMany([
+                { key: 'users', value: email, type: UpdateType.push },
+                { key: 'users', value: newEmail, type: UpdateType.push },
+              ]);
             });
           });
         }

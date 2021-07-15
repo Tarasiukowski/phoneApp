@@ -61,14 +61,12 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
           UserModel.update(filter, data, type);
         });
 
-        const { conversation } = await new Conversation([email, from]).save();
+        const { conversation } = await Conversation.create([email, from]);
 
         if (conversation) {
-          const stagesOfCreateConversation = getStagesOfCreateConversation(
-            email,
-            from,
-            conversation.id,
-          );
+          const id = conversation.id;
+
+          const stagesOfCreateConversation = getStagesOfCreateConversation(email, from, id);
 
           stagesOfCreateConversation.map(({ filter, data, type }) => {
             UserModel.update(filter, data, type);
