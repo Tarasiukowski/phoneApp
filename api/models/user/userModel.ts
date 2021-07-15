@@ -18,7 +18,7 @@ class UserModel {
     this.email = email;
     this.authType = authType;
 
-    if (authType !== 'Google') {
+    if (authType !== AuthType.google) {
       this.code = generateCode();
       this.redirectTo = '/onboarding/code';
       sendMail(this.email, this.code);
@@ -94,7 +94,7 @@ class UserModel {
   }
 
   async save(extraData: Partial<User>) {
-    delete this.authType;
+    // delete this.authType;
 
     const defaultData = await getDefaultDataUser();
 

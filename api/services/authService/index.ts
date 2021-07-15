@@ -3,33 +3,30 @@ import * as jwt from 'jsonwebtoken';
 import UserModel from '../../models/user/userModel';
 import { generateCode, isValidEmail, sendMail } from '../../utils';
 import { ERROR } from '../../data';
-import { By } from '../types';
-import { User } from '../../interfaces';
+import { User, AuthType } from '../../interfaces';
 import { JWT_PRIVATE_KEY } from '../../constants';
 
 class AuthService {
   email: string;
-  by: By;
+  authType: AuthType;
 
-  constructor(email: string, by: By) {
+  constructor(email: string, authType: AuthType) {
     this.email = email;
-    this.by = by;
+    this.authType = authType;
   }
 
-  static async index(token: string, fullUser?: boolean) {
+  static async index(token: string, settings: { fullUser: boolean }) {
+    const { fullUser } = settings;
+
     if (token) {
       const { id }: any = jwt.verify(token, JWT_PRIVATE_KEY);
 
       const { user, status } = await UserModel.findOne('_id', id);
 
       if (user) {
-        let formatedUser: Partial<User>;
-
-        if (fullUser) {
-          formatedUser = UserModel.format(user, 'conversations', 'groups');
-        } else {
-          formatedUser = UserModel.format(user);
-        }
+        const formatedUser: Partial<User> = fullUser
+          ? UserModel.format(user, 'conversations', 'groups')
+          : UserModel.format(user);
 
         return {
           user: {
@@ -47,7 +44,7 @@ class AuthService {
   }
 
   async login() {
-    const { email, by } = this;
+    const { email, authType } = this;
 
     const { valid, errorMsg } = isValidEmail(email);
 
@@ -61,7 +58,7 @@ class AuthService {
 
         let formatedUser;
 
-        if (by === 'Google') {
+        if (authType === AuthType.google) {
           formatedUser = UserModel.format(user, 'conversations', 'groups');
         } else {
           const code = generateCode();
@@ -85,8 +82,8 @@ class AuthService {
     return { user: null, token: null, status: 400, errorMsg };
   }
 
-  async singup(data: Partial<User>) {
-    const { email, by } = this;
+  async singup(extraData: Partial<User>) {
+    const { email, authType } = this;
 
     const { valid, errorMsg } = isValidEmail(email);
 
@@ -97,7 +94,7 @@ class AuthService {
         return { user: null, token: null, status: 403, errorMsg: ERROR.USER_EXIST };
       }
 
-      const { status, user } = await new UserModel(email, by).save(data);
+      const { status, user } = await new UserModel(email, authType).save(extraData);
 
       if (user) {
         const token = jwt.sign({ id: user.id }, JWT_PRIVATE_KEY, {

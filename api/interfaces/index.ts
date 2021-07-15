@@ -1,8 +1,8 @@
+// types
+
 export type updateType = 'remove' | 'set' | 'newEmail' | 'push' | 'pull' | 'setEmail';
 
 export type Class = new (...args: any[]) => any;
-
-export type AuthType = 'Google' | undefined;
 
 export type Message = { from: string; content: string; id: number };
 
@@ -15,6 +15,8 @@ export type Conversation = {
 type Group = { name: string; members: string[] };
 
 export type Friend = { email: string; notes: { content: string }[] };
+
+// interfaces
 
 export interface User {
   email: string;
@@ -40,6 +42,8 @@ export interface User {
   blocklist: string[];
 }
 
+// enums
+
 export enum UpdateOption {
   conversation = 'conversation',
   user = 'user',
@@ -54,4 +58,9 @@ export enum VerifyOption {
 export enum UpdateType {
   pull = 'pull',
   push = 'push',
+}
+
+export enum AuthType {
+  google = 'google',
+  email = 'email',
 }
