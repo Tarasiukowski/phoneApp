@@ -1,4 +1,4 @@
-import { model } from 'mongoose';
+import { Error, model } from 'mongoose';
 
 import { formatModel } from '../../utils';
 import { ERROR } from '../../data/error';
@@ -66,10 +66,12 @@ class ConversationModel {
   static async get(id: string) {
     try {
       const conversation = await conversationModel.findOne({ _id: id });
-      let formatedConversation: Conversation | undefined;
+      let formatedConversation: Conversation;
 
       if (conversation) {
         formatedConversation = formatModel<UpdateOption.conversation>(conversation);
+      } else {
+        throw new Error("can not find conversation")
       }
 
       return { succes: true, status: 200, conversation: formatedConversation };

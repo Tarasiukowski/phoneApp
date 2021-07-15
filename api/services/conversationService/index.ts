@@ -1,26 +1,36 @@
+import { Conversation } from 'interfaces';
 import ConversationModel from '../../models/conversation/conversationModel';
 
 class ConversationService {
-  id: string;
-
-  constructor(id: string) {
-    this.id = id;
-  }
+  private constructor(
+    private data: {
+      succes: boolean;
+      status: number;
+      conversation: Conversation | null;
+      errorMsg?: string;
+    },
+  ) {}
 
   send(email: string, content: string) {
-    const { id } = this;
+    const { conversation } = this.data;
 
-    const data = ConversationModel.send(content, email, id);
+    if (conversation) {
+      const data = ConversationModel.send(content, email, conversation.id);
 
-    return data;
+      data;
+    }
+
+    return this.get();
   }
 
-  async get() {
-    const { id } = this;
+  get() {
+    return this.data;
+  }
 
+  static async find(id: string) {
     const data = await ConversationModel.get(id);
 
-    return data;
+    return new ConversationService(data);
   }
 }
 
