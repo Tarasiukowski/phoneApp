@@ -11,6 +11,10 @@ class ConversationService {
     },
   ) {}
 
+  get() {
+    return this.data;
+  }
+
   async send(email: string, content: string) {
     const { conversation } = this.data;
 
@@ -23,10 +27,6 @@ class ConversationService {
     }
 
     return this.get();
-  }
-
-  get() {
-    return this.data;
   }
 
   static async find(id: string) {

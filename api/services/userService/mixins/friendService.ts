@@ -9,7 +9,7 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
     static friend = {
       async get(email: string, ...extraData: any[]) {
-        const { user } = await UserModel.findOne('email', email);
+        const { user } = await (await UserModel.findOne('email', email)).get();
 
         if (user) {
           const { friends } = user;
@@ -40,13 +40,15 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
         return { status: 404, data: [] };
       },
       async remove(email: string, friendEmail: string) {
-        const { user: friend } = await UserModel.findOne('email', friendEmail);
+        const { user: friend } = await (await UserModel.findOne('email', friendEmail)).get();
 
         if (friend) {
           const stagesOfRemoveFriend = getStagesOfRemoveFriend(email, friendEmail);
 
-          stagesOfRemoveFriend.map(({ filter, data, type }) => {
-            UserModel.update(filter, data, type);
+          stagesOfRemoveFriend.map(async ({ filter, data, type }) => {
+            const { by, valueFilter } = filter;
+
+            await (await UserModel.findOne(by, valueFilter)).update(data, type);
           });
 
           const { conversations } = friend;

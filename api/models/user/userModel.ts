@@ -9,46 +9,32 @@ import { updateType, AuthType, User } from '../../interfaces';
 export const userModel = model<UserDocument>('user', userSchema);
 
 class UserModel {
-  email: string;
-  code?: string;
-  redirectTo: string;
-  authType: AuthType;
+  private constructor(private data: { status: number; user: UserDocument | User | null }) {}
 
-  constructor(email: string, authType: AuthType) {
-    this.email = email;
-    this.authType = authType;
-
-    if (authType !== AuthType.google) {
-      this.code = generateCode();
-      this.redirectTo = '/onboarding/code';
-      sendMail(this.email, this.code);
-    } else {
-      this.redirectTo = '/onboarding/number';
-    }
+  get() {
+    return this.data;
   }
 
-  static format<U extends UserDocument, K extends keyof User>(
-    user: U,
-    ...extraData: K[]
-  ): Partial<User> {
-    const formatedUser = formatUser(user, extraData);
+  format(...extraData: (keyof User)[]) {
+    const { user, status } = this.data;
 
-    return formatedUser;
+    const formatedUser = user ? formatUser(user, extraData) : user;
+
+    return new UserModel({ user: formatedUser, status });
   }
 
-  static async update<K extends keyof User, U extends keyof User, T extends updateType>(
-    filter: { by: K; valueFilter: User[K] },
+  async update<K extends keyof User, T extends updateType>(
     data: {
-      key: U;
-      value: User[U] extends Array<any> ? Partial<User[U][number]> | string : User[U];
+      key: K;
+      value: User[K] extends Array<any> ? Partial<User[K][number]> | string : User[K];
     },
     type: T,
   ) {
-    const { by, valueFilter } = filter;
+    const { user } = this.data;
     const { key, value } = data;
 
     if (type === 'newEmail') {
-      const { user } = await this.findOne('email', value);
+      const { user } = await (await UserModel.findOne('email', value)).get();
 
       if (user) {
         return { status: 401, errorMsg: ERROR.EMAIL_IN_USE };
@@ -56,7 +42,7 @@ class UserModel {
     }
 
     try {
-      await userModel.updateOne({ [by]: valueFilter }, getUpdateOption(key, value, type));
+      await userModel.updateOne({ email: user?.email }, getUpdateOption(key, value, type));
 
       return { status: 200, errorMsg: null };
     } catch (err) {
@@ -66,10 +52,10 @@ class UserModel {
 
   static async find<K extends keyof User, V extends User[K]>(data: V[], key: K, ...extraData: K[]) {
     const formatedData = (await data.map(async (elem) => {
-      const { user } = await UserModel.findOne(key, elem);
+      const { user } = await (await UserModel.findOne(key, elem)).get();
 
       if (user) {
-        const formatedUser = UserModel.format(user, ...extraData);
+        const formatedUser = formatUser(user, extraData);
 
         return formatedUser;
       }
@@ -87,23 +73,39 @@ class UserModel {
     try {
       const user = await userModel.findOne({ [key]: value });
 
-      return { status: 200, user };
+      return new UserModel({ status: 200, user });
     } catch (err) {
-      return { status: 404, user: null };
+      return new UserModel({ status: 404, user: null });
     }
   }
 
-  async save(extraData: Partial<User>) {
-    // delete this.authType;
+  static async create(extraData: Partial<User>, settings: { authType: AuthType }) {
+    const { email } = extraData;
+    const { authType } = settings;
+
+    let authOptions;
+
+    if (authType === AuthType.email) {
+      const code = await generateCode();
+      const redirectTo = '/onboarding/code';
+
+      email && sendMail(email, code);
+
+      authOptions = { code, redirectTo };
+    } else {
+      const redirectTo = '/onboarding/code';
+
+      authOptions = { redirectTo };
+    }
 
     const defaultData = await getDefaultDataUser();
 
-    const user = new userModel({ ...this, ...extraData, ...defaultData });
+    const user = new userModel({ ...extraData, ...defaultData, ...authOptions });
 
     try {
       user.save();
 
-      const formatedUser = UserModel.format(user);
+      const formatedUser = formatUser(user);
 
       return { status: 200, user: { value: formatedUser, id: user._id } };
     } catch (err) {

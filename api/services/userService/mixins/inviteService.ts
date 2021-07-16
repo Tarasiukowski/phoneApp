@@ -13,8 +13,8 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
           return { status: 401, errorMsg: ERROR.INVITE_TO_YOURSELF };
         }
 
-        const { user: invitedUser } = await UserModel.findOne('email', to);
-        const { user: invitingUser } = await UserModel.findOne('email', from);
+        const { user: invitedUser } = await (await UserModel.findOne('email', to)).get();
+        const { user: invitingUser } = await (await UserModel.findOne('email', from)).get();
 
         if (!invitedUser) {
           return { status: 404, errorMsg: ERROR.USER_NOT_EXIST };
@@ -37,12 +37,14 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
           return { status: 400, errorMsg: ERROR.IS_YOUR_FRIEND };
         }
 
-        UserModel.update({ by: 'email', valueFilter: to }, { key: 'invites', value: from }, 'push');
+        await (
+          await UserModel.findOne('email', to)
+        ).update({ key: 'invites', value: from }, 'push');
 
         return { status: 200, errorMsg: null };
       },
       async get(email: string) {
-        const { status, user } = await UserModel.findOne('email', email);
+        const { status, user } = await (await UserModel.findOne('email', email)).get();
 
         if (user) {
           const invites = user.invites;
@@ -57,8 +59,10 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
       async accept(email: string, from: string) {
         const stagesOfAcceptInvite = getStagesOfAcceptInvite(email, from);
 
-        stagesOfAcceptInvite.map(({ filter, data, type }) => {
-          UserModel.update(filter, data, type);
+        stagesOfAcceptInvite.map(async ({ filter, data, type }) => {
+          const { by, valueFilter } = filter;
+
+          await (await UserModel.findOne(by, valueFilter)).update(data, type);
         });
 
         const { conversation } = await Conversation.create([email, from]);
@@ -68,19 +72,19 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
 
           const stagesOfCreateConversation = getStagesOfCreateConversation(email, from, id);
 
-          stagesOfCreateConversation.map(({ filter, data, type }) => {
-            UserModel.update(filter, data, type);
+          stagesOfCreateConversation.map(async ({ filter, data, type }) => {
+            const { by, valueFilter } = filter;
+
+            await (await UserModel.findOne(by, valueFilter)).update(data, type);
           });
         }
 
         return { status: 200, errorMsg: null };
       },
       async reject(email: string, from: string) {
-        const data = await UserModel.update(
-          { by: 'email', valueFilter: email },
-          { key: 'invites', value: from },
-          'pull',
-        );
+        const data = await (
+          await UserModel.findOne('email', email)
+        ).update({ key: 'invites', value: from }, 'pull');
 
         return data;
       },

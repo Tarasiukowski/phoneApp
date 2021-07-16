@@ -15,23 +15,25 @@ class AuthService {
     this.authType = authType;
   }
 
-  static async index(token: string, settings: { fullUser: boolean }) {
+  static async index(token: string, settings: { fullUser: boolean } = { fullUser: true }) {
     const { fullUser } = settings;
 
     if (token) {
       const { id }: any = jwt.verify(token, JWT_PRIVATE_KEY);
 
-      const { user, status } = await UserModel.findOne('_id', id);
+      const userInstance = await UserModel.findOne('_id', id);
+      const { user } = userInstance.get();
 
       if (user) {
-        const formatedUser: Partial<User> = fullUser
-          ? UserModel.format(user, 'conversations', 'groups')
-          : UserModel.format(user);
+        const { onBoarding, redirectTo } = user;
+        const { user: formatedUser, status } = (
+          fullUser ? userInstance.format('conversations', 'groups') : userInstance.format()
+        ).get();
 
         return {
           user: {
             value: formatedUser,
-            status: { onBoarding: user.onBoarding, redirectTo: user.redirectTo },
+            status: { onBoarding, redirectTo },
           },
           status,
         };
@@ -49,28 +51,25 @@ class AuthService {
     const { valid, errorMsg } = isValidEmail(email);
 
     if (valid) {
-      const { status, user } = await UserModel.findOne('email', email);
+      const userInstance = await UserModel.findOne('email', email);
+      const { user }: any = userInstance.get();
 
       if (user) {
         const token = jwt.sign({ id: user._id }, JWT_PRIVATE_KEY, {
           expiresIn: 9999999,
         });
 
-        let formatedUser;
+        const { user: formatedUser, status } = (
+          authType === AuthType.google
+            ? userInstance.format('conversations', 'groups')
+            : userInstance.format()
+        ).get();
 
-        if (authType === AuthType.google) {
-          formatedUser = UserModel.format(user, 'conversations', 'groups');
-        } else {
+        if (authType === AuthType.email) {
           const code = generateCode();
           sendMail(email, code);
 
-          UserModel.update(
-            { by: 'email', valueFilter: email },
-            { key: 'code', value: code },
-            'set',
-          );
-
-          formatedUser = UserModel.format(user);
+          (await UserModel.findOne('email', email)).update({ key: 'code', value: code }, 'set');
         }
 
         return { user: formatedUser, token, status, errorMsg: null };
@@ -88,13 +87,13 @@ class AuthService {
     const { valid, errorMsg } = isValidEmail(email);
 
     if (valid) {
-      const { user: duplicatedUser } = await UserModel.findOne('email', email);
+      const { user: duplicatedUser } = await (await UserModel.findOne('email', email)).get();
 
       if (duplicatedUser) {
         return { user: null, token: null, status: 403, errorMsg: ERROR.USER_EXIST };
       }
 
-      const { status, user } = await new UserModel(email, authType).save(extraData);
+      const { status, user } = await UserModel.create({ email, ...extraData }, { authType });
 
       if (user) {
         const token = jwt.sign({ id: user.id }, JWT_PRIVATE_KEY, {

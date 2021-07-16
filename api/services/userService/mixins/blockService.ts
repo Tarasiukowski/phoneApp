@@ -6,29 +6,27 @@ export function BlockServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
     static block = {
       async index(loggedEmail: string, memberEmail: string) {
-        const { user } = await UserModel.findOne('email', loggedEmail);
+        const { user } = await (await UserModel.findOne('email', loggedEmail)).get();
+        const { friends = [] } = user || {};
 
-        const isFriend = user?.friends.find((friend) => friend.email === memberEmail);
+        const isFriend = friends.find((friend) => friend.email === memberEmail);
 
         if (isFriend) {
           UserService.friend.remove(loggedEmail, memberEmail);
         } else {
-          UserModel.update(
-            { by: 'email', valueFilter: loggedEmail },
+          (await UserModel.findOne('email', loggedEmail)).update(
             { key: 'invites', value: memberEmail },
             'pull',
           );
         }
-        const data = await UserModel.update(
-          { by: 'email', valueFilter: loggedEmail },
-          { key: 'blocklist', value: memberEmail },
-          'push',
-        );
+        const data = await (
+          await UserModel.findOne('email', loggedEmail)
+        ).update({ key: 'blocklist', value: memberEmail }, 'push');
 
         return data;
       },
       async get(email: string) {
-        const { user } = await UserModel.findOne('email', email);
+        const { user } = await (await UserModel.findOne('email', email)).get();
         const findedUser = user;
 
         const { blocklist = [] } = findedUser || {};
@@ -41,11 +39,9 @@ export function BlockServiceMixin<Base extends Class>(base: Base) {
 
     static unblock = {
       async index(loggedEmail: string, memberEmail: string) {
-        const data = await UserModel.update(
-          { by: 'email', valueFilter: loggedEmail },
-          { key: 'blocklist', value: memberEmail },
-          'push',
-        );
+        const data = await (
+          await UserModel.findOne('email', loggedEmail)
+        ).update({ key: 'blocklist', value: memberEmail }, 'push');
 
         return data;
       },

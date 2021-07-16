@@ -4,7 +4,7 @@ import AuthService from '../services/authService';
 
 class AuthController {
   async index(req: Request, res: Response) {
-    const { fullUser } = req.body
+    const { fullUser } = req.body;
     const token = req.cookies['SESSID'];
 
     const { status, ...restData } = await AuthService.index(token, fullUser);
@@ -13,18 +13,20 @@ class AuthController {
   }
 
   async login(req: Request, res: Response) {
-    const { email, by } = req.body;
+    const { email, authType } = req.body;
 
-    const { status, user, token, errorMsg } = await new AuthService(email, by).login();
+    const { status, user, token, errorMsg } = await new AuthService(email, authType).login();
 
     errorMsg || res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
     res.status(status).send({ user, errorMsg });
   }
 
   async singUp(req: Request, res: Response) {
-    const { email, by, ...restBody } = req.body;
+    const { email, authType, ...restBody } = req.body;
 
-    const { status, user, token, errorMsg } = await new AuthService(email, by).singup(restBody);
+    const { status, user, token, errorMsg } = await new AuthService(email, authType).singup(
+      restBody,
+    );
 
     errorMsg || res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
     res.status(status).send({ user, errorMsg });

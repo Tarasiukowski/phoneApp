@@ -2,7 +2,7 @@ import { UserDocument } from '../models/user/types';
 import { UpdateOption, User } from 'interfaces';
 import { formatModel } from '../utils';
 
-export const formatUser = <K extends keyof User>(user: UserDocument, extraKeys: K[]) => {
+export const formatUser = <K extends keyof User>(user: UserDocument | User | any, extraKeys: K[] = []) => {
   const allowKeys = ['image', 'email', 'number', 'fullname', 'colorImage', ...extraKeys];
   const userData = formatModel<UpdateOption.user>(user);
   let key: keyof User;

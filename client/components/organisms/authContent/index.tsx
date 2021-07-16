@@ -37,7 +37,7 @@ const AuthContent = () => {
       const { user } = await fetcher('post', `/auth/${isRegister ? 'singup' : 'login'}`, {
         email,
         image: imageUrl,
-        authType: 'Google',
+        authType: 'google',
       });
 
       setError(null);

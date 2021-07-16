@@ -41,6 +41,7 @@ const AuthForm = ({ auth }: props) => {
         `/auth${isRegister ? paths.singUp : paths.login.index}`,
         {
           email,
+          authType: 'email',
         },
       );
 
