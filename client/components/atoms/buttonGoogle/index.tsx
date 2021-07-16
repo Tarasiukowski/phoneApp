@@ -3,12 +3,12 @@ import { props } from './types';
 import { AuthType } from 'interfaces';
 import styles from './buttonGoogle.module.scss';
 
-const ButtonGoogle = ({ auth, onClick }: props) => {
+const ButtonGoogle = ({ auth, ...restProps }: props) => {
   const isRegister = auth === AuthType.Singup;
   const content = isRegister ? 'Sing up' : 'Log in';
 
   return (
-    <button onClick={onClick} className={styles.button}>
+    <button className={styles.button} {...restProps} >
       <LogoGoole />
       {content} with <span>Google</span>
     </button>

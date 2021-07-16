@@ -6,7 +6,7 @@ class ConversationController {
   async index({ body }: Request, res: Response) {
     const { id } = body;
 
-    const { status, ...restData } = await (await ConversationService.find(id)).get();
+    const { status, ...restData } = await new ConversationService(id).get();
 
     res.status(status).send(restData);
   }
@@ -14,7 +14,7 @@ class ConversationController {
   async send({ body }: Request, res: Response) {
     const { id, email, content } = body;
 
-    const { status, ...restData } = await (await ConversationService.find(id)).send(email, content);
+    const { status, ...restData } = await new ConversationService(id).send(email, content);
 
     res.status(status).send(restData);
   }
