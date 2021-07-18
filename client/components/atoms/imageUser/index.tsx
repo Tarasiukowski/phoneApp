@@ -7,45 +7,49 @@ import { useUser } from 'setup/reducers/userReducer';
 import { getInitials } from 'utils';
 
 const ImageUser = ({ member, ...restProps }: props) => {
+  const [defaultMember, setDefaultMember] = useState<DefaultMember>({
+    colorImage: undefined,
+    image: undefined,
+    initials: undefined,
+  });
+
   const user = useUser();
 
-  if (user) {
-    const {
-      fullname: { firstname, lastname },
-      colorImage: colorProfile,
-      image: imageProfile,
-    } = user;
+  useEffect(() => {
+    if (member) {
+      const {
+        fullname: { firstname, lastname },
+        colorImage: colorProfile,
+        image: imageProfile,
+      } = member;
 
-    const [defaultMember, setDefaultMember] = useState<DefaultMember>({
-      colorImage: colorProfile,
-      image: imageProfile,
-      initials: getInitials(firstname, lastname),
-    });
+      setDefaultMember({
+        image: imageProfile,
+        initials: getInitials(firstname, lastname),
+        colorImage: colorProfile,
+      });
+    } else if (user) {
+      const {
+        fullname: { firstname, lastname },
+        colorImage: colorProfile,
+        image: imageProfile,
+      } = user;
 
-    useEffect(() => {
-      if (member) {
-        const { fullname, image: imageProfile, colorImage: colorProfile } = member;
+      setDefaultMember({
+        image: imageProfile,
+        initials: getInitials(firstname, lastname),
+        colorImage: colorProfile,
+      });
+    }
+  }, [member, user]);
 
-        const { firstname, lastname } = fullname;
+  const { colorImage, initials, image } = defaultMember;
 
-        setDefaultMember({
-          image: imageProfile,
-          initials: getInitials(firstname, lastname),
-          colorImage: colorProfile,
-        });
-      }
-    }, [member]);
-
-    const { colorImage, initials, image } = defaultMember;
-
-    return (
-      <Image image={image} colorImage={colorImage} {...restProps}>
-        {!image && <p>{initials}</p>}
-      </Image>
-    );
-  }
-
-  return null;
+  return (
+    <Image image={image} colorImage={colorImage} {...restProps}>
+      {!image && <p>{initials}</p>}
+    </Image>
+  );
 };
 
 export { ImageUser };

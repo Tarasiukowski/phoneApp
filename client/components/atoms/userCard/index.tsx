@@ -41,7 +41,7 @@ const UserCard = forwardRef<HTMLDivElement, props>(
 
         setFullname(formatedFullname);
       }
-    }, [member]);
+    }, []);
 
     return (
       <Template

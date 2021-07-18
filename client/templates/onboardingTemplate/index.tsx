@@ -9,10 +9,14 @@ import { update as updateInvites } from 'setup/reducers/invitesReducer';
 import Logo from '../../public/svgs/logo.svg';
 import { logout } from 'utils';
 import styles from './onboardingTemplate.module.scss';
+import { useLoading } from 'contexts/loadingContext';
+import { paths } from '../../constants';
 
 const OnboardingTemplate: React.FC = ({ children }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const { toggleLoading } = useLoading();
 
   const resetData = () => {
     dispatch(updateInvites([]));
@@ -20,8 +24,13 @@ const OnboardingTemplate: React.FC = ({ children }) => {
     dispatch(updateFriends([]));
   };
 
-  const logoutCb = () => {
-    router.push('/singup').then(() => {
+  const handleOnRequestLogout = () => {
+    toggleLoading(true);
+  };
+
+  const handleOnResponseLogout = () => {
+    router.push(paths.singUp).then(() => {
+      toggleLoading(false);
       resetData();
     });
   };
@@ -30,7 +39,7 @@ const OnboardingTemplate: React.FC = ({ children }) => {
     <div className={styles.wrapper}>
       <Logo className={styles.logo} />
       <Button
-        onClick={() => logout(logoutCb)}
+        onClick={() => logout(handleOnRequestLogout, handleOnResponseLogout)}
         style={{ position: 'absolute', right: '25px', top: '25px' }}
         width="auto"
         transparent

@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
-
-import { Loader } from 'components/molecules';
 
 import { login } from 'setup/reducers/userReducer';
 import { update } from 'setup/reducers/friendsReducer';
@@ -12,6 +10,7 @@ import { useError } from 'contexts';
 import { ERROR } from 'common';
 import { mainPaths } from 'data';
 import { paths } from '../../constants';
+import { useLoading } from 'contexts/loadingContext';
 
 const settings = {
   logged: true,
@@ -19,12 +18,11 @@ const settings = {
 };
 
 const IsLoggedTemplate = ({ children, allow }: props) => {
-  const [loading, setLoading] = useState(true);
-
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { setError } = useError();
+  const { toggleLoading, loading } = useLoading();
 
   const activePath = router.asPath;
   const fetchFullUser = mainPaths.some((path) => activePath.startsWith(path));
@@ -48,13 +46,13 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
           if (status.onBoarding) {
             fetchFriends().then((data) => {
               dispatch(update(data));
-              loading ? router.push(redirectTo) : setLoading(false);
+              loading ? router.push(redirectTo) : toggleLoading(false);
             });
           } else {
-            loading ? router.push(redirectTo) : setLoading(false);
+            loading ? router.push(redirectTo) : toggleLoading(false);
           }
         } else {
-          setLoading(false);
+          toggleLoading(false);
         }
       } else {
         setError({ msg: ERROR.NOT_ALLOWED, id: Math.random() });
@@ -63,7 +61,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
           const status = data.user.status;
           const { loading, redirectTo } = getOnboardingStage(status, activePath);
 
-          loading ? router.push(redirectTo) : setLoading(false);
+          loading ? router.push(redirectTo) : toggleLoading(false);
         } else {
           router.push(paths.singUp);
         }
@@ -71,7 +69,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
     });
   }, [activePath]);
 
-  return <>{loading ? <Loader /> : children}</>;
+  return <>{loading || children}</>;
 };
 
 export { IsLoggedTemplate };

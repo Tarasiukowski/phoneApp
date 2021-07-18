@@ -6,22 +6,28 @@ import { ErrorProvider, MultiTaskProvider, SearcherProvider } from 'contexts';
 
 import store from 'setup/store';
 import 'style/globalStyle.scss';
+import { LoadingProvider } from 'contexts/loadingContext';
+import { LoadingTemplate } from 'templates/loadingTemplate';
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
   <Provider store={store}>
-    <SearcherProvider>
-      <SearcherTemplate>
-        <MultiTaskProvider>
-          <MultiTaskTemplate>
-            <ErrorProvider>
-              <ErrorTemplate>
-                <Component {...pageProps} />
-              </ErrorTemplate>
-            </ErrorProvider>
-          </MultiTaskTemplate>
-        </MultiTaskProvider>
-      </SearcherTemplate>
-    </SearcherProvider>
+    <LoadingProvider>
+      <LoadingTemplate>
+        <SearcherProvider>
+          <SearcherTemplate>
+            <MultiTaskProvider>
+              <MultiTaskTemplate>
+                <ErrorProvider>
+                  <ErrorTemplate>
+                    <Component {...pageProps} />
+                  </ErrorTemplate>
+                </ErrorProvider>
+              </MultiTaskTemplate>
+            </MultiTaskProvider>
+          </SearcherTemplate>
+        </SearcherProvider>
+      </LoadingTemplate>
+    </LoadingProvider>
   </Provider>
 );
 

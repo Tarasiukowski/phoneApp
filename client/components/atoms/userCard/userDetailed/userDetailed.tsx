@@ -13,6 +13,7 @@ import { update as updateBlocklist } from 'setup/reducers/blocklistReducer';
 import { update as updateFriends } from 'setup/reducers/friendsReducer';
 import { update as updateInvites } from 'setup/reducers/invitesReducer';
 import { paths } from '../../../../constants';
+import { useLoading } from 'contexts/loadingContext';
 
 const UserDetailed = ({ userDetailedRef }: props) => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const UserDetailed = ({ userDetailedRef }: props) => {
 
   const multiTask = useMultiTask();
   const { setError } = useError();
+  const { toggleLoading } = useLoading()
 
   const multitaskHandle = useMemo(
     () =>
@@ -53,8 +55,13 @@ const UserDetailed = ({ userDetailedRef }: props) => {
     dispatch(updateFriends([]));
   };
 
-  const logoutCb = () => {
+  const handleOnRequestLogout = () => {
+    toggleLoading(true)
+  }
+
+  const handleOnResponseLogout = () => {
     router.push(paths.singUp).then(() => {
+      toggleLoading(false)
       resetData();
     });
   };
@@ -68,7 +75,7 @@ const UserDetailed = ({ userDetailedRef }: props) => {
         {buttonsData.map((data) => {
           const handleClick = useCallback(() => {
             data.handleInvite && multiTask.toggleOpen(true, multitaskHandle);
-            data.logout && logout(logoutCb);
+            data.logout && logout(handleOnRequestLogout, handleOnResponseLogout);
           }, []);
 
           return (

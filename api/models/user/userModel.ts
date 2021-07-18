@@ -93,7 +93,7 @@ class UserModel {
 
       authOptions = { code, redirectTo };
     } else {
-      const redirectTo = '/onboarding/code';
+      const redirectTo = '/onboarding/number';
 
       authOptions = { redirectTo };
     }
