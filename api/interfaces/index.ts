@@ -22,13 +22,14 @@ export interface User {
   email: string;
   number: string;
   code: string;
-  onboarding: boolean;
   fullname: {
     firstname: string;
     lastname: string;
   };
-  onBoarding: boolean;
-  redirectTo: string;
+  onBoarding: {
+    value: boolean;
+    stage: string;
+  };
   colorImage: string;
   image: string;
   newEmail: {

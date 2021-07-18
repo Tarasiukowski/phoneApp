@@ -25,7 +25,7 @@ class AuthService {
       const { user } = userInstance.get();
 
       if (user) {
-        const { onBoarding, redirectTo } = user;
+        const { onBoarding } = user;
         const { user: formatedUser, status } = (
           fullUser ? userInstance.format('conversations', 'groups') : userInstance.format()
         ).get();
@@ -33,7 +33,7 @@ class AuthService {
         return {
           user: {
             value: formatedUser,
-            status: { onBoarding, redirectTo },
+            status: { onBoarding },
           },
           status,
         };

@@ -11,7 +11,7 @@ import { update as updateFriends, useFriends } from 'setup/reducers/friendsReduc
 import { update as updateBlocklist, useBlocklist } from 'setup/reducers/blocklistReducer';
 import { login, useUser } from 'setup/reducers/userReducer';
 import { Template } from './styles';
-import { mainPaths } from 'data';
+import { loggedPaths } from 'data';
 
 const swrSettings = {
   refreshInterval: 1,
@@ -27,7 +27,7 @@ const MainTemplate: React.FC = ({ children }) => {
   const user = useUser();
 
   const activePath = router.asPath;
-  const fetchFullUser = mainPaths.some((path) => path.startsWith(activePath));
+  const fetchFullUser = loggedPaths.some((path) => path.startsWith(activePath));
 
   const { data: fetchedFriends, error: errorFriends } = useSwr(
     ['/user/friends', 'POST'],

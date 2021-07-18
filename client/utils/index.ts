@@ -1,6 +1,6 @@
 export { fetcher } from './fetcher';
 export { logout } from './logout';
-export { getOnboardingStage } from './getOnboardingStage';
+export { getUserStage } from './getUserStage';
 export { isCorrectValue } from './isCorrectValue';
 export { swrFetcher } from './swrFetcher';
 export { getInitials } from './getInitials';
@@ -9,4 +9,4 @@ export { getObjectsKeysFromArray } from './getObjectsKeysFromArray';
 export { filterByKey } from './filterByKey';
 export { handleNotAllowedError } from './hanldeNotAllowedError';
 export { handleRequestError } from './handleRequestError';
-export { formatValuesObject } from './formatValuesObject'
+export { formatValuesObject } from './formatValuesObject';

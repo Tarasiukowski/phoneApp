@@ -83,19 +83,16 @@ class UserModel {
     const { email } = extraData;
     const { authType } = settings;
 
-    let authOptions;
+    let authOptions: Partial<User>;
 
     if (authType === AuthType.email) {
       const code = await generateCode();
-      const redirectTo = '/onboarding/code';
 
       email && sendMail(email, code);
 
-      authOptions = { code, redirectTo };
+      authOptions = { code, onBoarding: { value: false, stage: '/onboarding/code' } };
     } else {
-      const redirectTo = '/onboarding/number';
-
-      authOptions = { redirectTo };
+      authOptions = { onBoarding: { value: false, stage: '/onboarding/number' } };
     }
 
     const defaultData = await getDefaultDataUser();

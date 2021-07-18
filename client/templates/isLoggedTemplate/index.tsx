@@ -4,11 +4,11 @@ import { useDispatch } from 'react-redux';
 
 import { login } from 'setup/reducers/userReducer';
 import { update } from 'setup/reducers/friendsReducer';
-import { getOnboardingStage, fetcher } from 'utils';
+import { getUserStage, fetcher } from 'utils';
 import { props } from './types';
 import { useError } from 'contexts';
 import { ERROR } from 'common';
-import { mainPaths } from 'data';
+import { loggedPaths } from 'data';
 import { paths } from '../../constants';
 import { useLoading } from 'contexts/loadingContext';
 
@@ -25,7 +25,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
   const { toggleLoading, loading } = useLoading();
 
   const activePath = router.asPath;
-  const fetchFullUser = mainPaths.some((path) => activePath.startsWith(path));
+  const fetchFullUser = loggedPaths.some((path) => activePath.startsWith(path));
 
   const fetchFriends = () => fetcher('POST', '/user/friends');
 
@@ -41,15 +41,15 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
         if (isLogged) {
           const status = data.user.status;
 
-          const { loading, redirectTo } = getOnboardingStage(status, activePath);
+          const { notAllowed, redirectTo } = getUserStage(status, activePath);
 
           if (status.onBoarding) {
             fetchFriends().then((data) => {
               dispatch(update(data));
-              loading ? router.push(redirectTo) : toggleLoading(false);
+              notAllowed ? router.push(redirectTo) : toggleLoading(false);
             });
           } else {
-            loading ? router.push(redirectTo) : toggleLoading(false);
+            notAllowed ? router.push(redirectTo) : toggleLoading(false);
           }
         } else {
           toggleLoading(false);
@@ -59,9 +59,9 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
 
         if (isLogged) {
           const status = data.user.status;
-          const { loading, redirectTo } = getOnboardingStage(status, activePath);
+          const { notAllowed, redirectTo } = getUserStage(status, activePath);
 
-          loading ? router.push(redirectTo) : toggleLoading(false);
+          notAllowed ? router.push(redirectTo) : toggleLoading(false);
         } else {
           router.push(paths.singUp);
         }

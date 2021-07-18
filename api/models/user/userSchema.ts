@@ -9,8 +9,10 @@ export const userSchema: Schema = new Schema({
     firstname: String,
     lastname: String,
   },
-  onBoarding: Boolean,
-  redirectTo: String,
+  onBoarding: {
+    value: Boolean,
+    stage: String,
+  },
   colorImage: String,
   newEmail: {
     value: String,

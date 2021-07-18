@@ -11,6 +11,5 @@ export const getDefaultDataUser = async () => {
     blocklist: [],
     colorImage: randomColor(),
     number,
-    onBoarding: false,
   };
 };

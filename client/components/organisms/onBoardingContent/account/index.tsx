@@ -32,41 +32,42 @@ const OnboardingAccountContent = () => {
     });
   };
 
-  const next = useCallback(async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const next = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-    setDisabledByRequest(true);
-
-    try {
-      await fetcher('PUT', '/user/update/fullname', {
-        value: formValues,
-      });
+      setDisabledByRequest(true);
 
       try {
-        await fetcher('PUT', '/user/update/redirectTo', {
-          value: '/contacts',
+        await fetcher('PUT', '/user/update/fullname', {
+          value: formValues,
         });
       } catch (err) {
         handleRequestError(err, (errorMsg) => {
           setError({ msg: errorMsg, id: Math.random() });
         });
         return;
+      } finally {
+        try {
+          await fetcher('PUT', '/user/update/onBoarding', {
+            value: {
+              value: true,
+              stage: null,
+            },
+          });
+        } catch (err) {
+          handleRequestError(err, (errorMsg) => {
+            setError({ msg: errorMsg, id: Math.random() });
+          });
+        }
       }
-    } catch (err) {
-      handleRequestError(err, (errorMsg) => {
-        setError({ msg: errorMsg, id: Math.random() });
-      });
-      return;
-    } finally {
-      await fetcher('PUT', '/user/update/onBoarding', {
-        value: true,
-      });
-    }
 
-    setRedirect(true);
+      setRedirect(true);
 
-    setDisabledByRequest(false);
-  }, [formValues]);
+      setDisabledByRequest(false);
+    },
+    [formValues],
+  );
 
   return (
     <RedirectTemplate isRedirect={redirect} redirectTo={paths.contacts}>

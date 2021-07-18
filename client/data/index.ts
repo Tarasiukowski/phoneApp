@@ -1,1 +1,1 @@
-export const mainPaths = ['/settings', '/inbox', '/contacts', '/invites', '/group'];
+export const loggedPaths = ['/settings', '/inbox', '/contacts', '/invites', '/group'];

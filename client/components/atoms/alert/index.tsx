@@ -23,6 +23,7 @@ const Alert = ({ error }: props) => {
         setMsg(msg);
       }
     }
+    
     setIsOpen(true);
   }, [error]);
 

@@ -41,8 +41,11 @@ const OnboardingNumberContent = () => {
     }
 
     try {
-      await fetcher('PUT', '/user/update/redirectTo', {
-        value: paths.onBoarding.account,
+      await fetcher('PUT', '/user/update/onBoarding', {
+        value: {
+          value: false,
+          stage: paths.onBoarding.account,
+        },
       });
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
