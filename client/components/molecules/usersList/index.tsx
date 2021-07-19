@@ -12,6 +12,7 @@ import { add } from 'setup/reducers/friendsReducer';
 import { remove } from 'setup/reducers/invitesReducer';
 import { useError } from 'contexts';
 import styles from './usersList.module.scss';
+import { useDidMount } from 'hooks';
 
 const UsersList = ({ name, data }: props) => {
   const [detailedUser, setDetailedUser] = useState<Member | null>(null);
@@ -22,15 +23,15 @@ const UsersList = ({ name, data }: props) => {
 
   const { setError } = useError();
 
-  useEffect(() => {
-    setListData(data);
-  }, [data]);
-
-  useEffect(() => {
+  useDidMount(() => {
     const firstMemberOfData = data[0];
 
     setDetailedUser(firstMemberOfData ? firstMemberOfData : null);
-  }, []);
+  });
+
+  useEffect(() => {
+    setListData(data);
+  }, [data]);
 
   useEffect(() => {
     if (inputValue.length) {

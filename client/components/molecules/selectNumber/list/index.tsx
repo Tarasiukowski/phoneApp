@@ -18,6 +18,7 @@ import { props, Numbers } from '../types';
 import { useError } from 'contexts';
 import styles from './list.module.scss';
 import { ActiveList } from './types';
+import { useDidMount } from 'hooks';
 
 const MAX_LENGTH_NUMBER = 8;
 
@@ -45,6 +46,18 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
 
   const isActiveAllNumbers = activeList === ActiveList.All;
 
+  useDidMount(() => {
+    fetcher('get', '/generate/randomNumbers')
+      .then(({ numbers }) => {
+        setNumbers({ recommended: numbers });
+      })
+      .catch((err) => {
+        handleRequestError(err, (errorMsg) => {
+          setError({ msg: errorMsg, id: Math.random() });
+        });
+      });
+  });
+
   useEffect(() => {
     if (isActiveAllNumbers) {
       const { scrollHeight, clientHeight } = refListItems.current as HTMLDivElement;
@@ -65,18 +78,6 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
       }
     }
   }, [y]);
-
-  useEffect(() => {
-    fetcher('get', '/generate/randomNumbers')
-      .then(({ numbers }) => {
-        setNumbers({ recommended: numbers });
-      })
-      .catch((err) => {
-        handleRequestError(err, (errorMsg) => {
-          setError({ msg: errorMsg, id: Math.random() });
-        });
-      });
-  }, []);
 
   useEffect(() => {
     fetcher('post', '/generate/allNumbers', { filter: valueDigits })

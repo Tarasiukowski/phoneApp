@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { Button } from 'components/atoms';
 import { SelectNumberButton, SelectNumberList } from 'components/molecules';
@@ -9,6 +9,7 @@ import { useError } from 'contexts';
 import { useUser } from 'setup/reducers/userReducer';
 import styles from './number.module.scss';
 import { paths } from '../../../../constants';
+import { useDidMount } from 'hooks';
 
 const OnboardingNumberContent = () => {
   const [openList, setOpenList] = useState(false);
@@ -19,9 +20,9 @@ const OnboardingNumberContent = () => {
 
   const { setError } = useError();
 
-  useEffect(() => {
+  useDidMount(() => {
     setNumber(user ? user.number : null);
-  }, []);
+  });
 
   const toggleOpenList = useCallback(() => {
     setOpenList(!openList);

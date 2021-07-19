@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState, forwardRef, useCallback } from 'react';
+import { useRef, useState, forwardRef, useCallback } from 'react';
 
 import { ImageUser } from '../index';
 import { Template } from './styles';
 import UserDetailed from './userDetailed/userDetailed';
 
 import { props } from './types';
-import { useOutsideClick } from 'hooks';
+import { useDidMount, useOutsideClick } from 'hooks';
 import { useUser } from 'setup/reducers/userReducer';
 import { formatValuesObject } from 'utils';
 
@@ -33,7 +33,7 @@ const UserCard = forwardRef<HTMLDivElement, props>(
       { isListeningForEvent: openDetailed && withDetailed },
     );
 
-    useEffect(() => {
+    useDidMount(() => {
       if (user) {
         const { fullname } = member ? member : user;
 
@@ -41,7 +41,7 @@ const UserCard = forwardRef<HTMLDivElement, props>(
 
         setFullname(formatedFullname);
       }
-    }, []);
+    });
 
     return (
       <Template

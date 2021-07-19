@@ -6,13 +6,14 @@ import { IsLoggedTemplate, OnboardingTemplate as VerifyTemplate } from 'template
 
 import { Allow } from 'interfaces';
 import { paths } from '../../constants';
+import { useCallback } from 'react';
 
 const LoginVerifyPage = () => {
   const router = useRouter();
 
-  const handleOnSuccess = () => {
+  const handleOnSuccess = useCallback(() => {
     router.push(paths.contacts);
-  };
+  }, []);
 
   return (
     <IsLoggedTemplate allow={Allow.logged}>

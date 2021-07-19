@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import gsap from 'gsap';
 
 import { Button, ImageUser } from 'components/atoms';
@@ -9,6 +9,7 @@ import { props } from './types';
 import { useUser } from 'setup/reducers/userReducer';
 import styles from './header.module.scss';
 import { formatValuesObject } from 'utils';
+import { useDidMount } from 'hooks';
 
 const Header = (props: props) => {
   const [openListOptions, setOpenListOptions] = useState(false);
@@ -26,6 +27,14 @@ const Header = (props: props) => {
   const { fullname, email } = defaultData;
 
   const formatedFullname = formatValuesObject(fullname ? fullname : {});
+
+  useDidMount(() => {
+    window.addEventListener('resize', handleOnResize);
+
+    window.addEventListener('click', handleOnClick);
+
+    setListOptions();
+  });
 
   const setListOptions = () => {
     if (listOptionsRef.current) {
@@ -58,16 +67,6 @@ const Header = (props: props) => {
       setOpenListOptions(false);
     }
   };
-
-  useEffect(() => {
-    window.addEventListener('resize', handleOnResize);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('click', handleOnClick);
-
-    setListOptions();
-  }, []);
 
   return (
     <div className={styles.header}>

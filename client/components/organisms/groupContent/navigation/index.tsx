@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -8,6 +7,7 @@ import { Button } from './button';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { useUser } from 'setup/reducers/userReducer';
 import styles from './navigation.module.scss';
+import { useDidMount } from 'hooks';
 
 const Navigation = () => {
   const user = useUser();
@@ -26,13 +26,13 @@ const Navigation = () => {
   const getConversationId = (email: string) =>
     conversations.find((conversation) => conversation.with === email)?.id;
 
-  useEffect(() => {
+  useDidMount(() => {
     if (findedGroup) {
       const firstMemberOfGroup = findedGroup.members[0];
 
       router.push(`/group/${slugId}/${getConversationId(firstMemberOfGroup)}`);
     }
-  }, []);
+  });
 
   return (
     <div className={styles.template}>

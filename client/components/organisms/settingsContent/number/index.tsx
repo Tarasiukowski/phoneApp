@@ -7,6 +7,7 @@ import { SettingsTemplate } from 'templates';
 import { useUser } from 'setup/reducers/userReducer';
 import { fetcher, handleRequestError } from 'utils';
 import { useError } from 'contexts';
+import { useDidMount } from 'hooks';
 
 const SettingsNumberContent = () => {
   const [openList, setOpenList] = useState(false);
@@ -19,9 +20,9 @@ const SettingsNumberContent = () => {
 
   const implementedChange = number ? user?.number === number : true;
 
-  useEffect(() => {
+  useDidMount(() => {
     setNumber(user ? user.number : null);
-  }, []);
+  });
 
   useEffect(() => {
     if (disabledByRequest) {

@@ -1,1 +1,1 @@
-export { WithLoading } from './withLoading'
+export { withLoading } from './withLoading'

@@ -7,7 +7,7 @@ import { filterByKey, formatValuesObject, getSearcherData } from 'utils';
 import { props, SearchData } from './types';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { useUser } from 'setup/reducers/userReducer';
-import { useOutsideClick } from 'hooks';
+import { useDidMount, useOutsideClick } from 'hooks';
 import styles from './searcher.module.scss';
 
 const Searcher = ({ open, onClose }: props) => {
@@ -42,11 +42,11 @@ const Searcher = ({ open, onClose }: props) => {
     { isListeningForEvent: open },
   );
 
-  useEffect(() => {
+  useDidMount(() => {
     const fetchedSearchData = getSearcherData(formatedConversations);
 
     setSearcherData(fetchedSearchData);
-  }, []);
+  });
 
   useEffect(() => {
     if (inputValue.length) {
