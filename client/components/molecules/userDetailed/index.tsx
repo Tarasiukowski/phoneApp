@@ -2,18 +2,21 @@ import List from './list/list';
 import Header from './header/header';
 import Notes from './notes';
 
+import { WithLoading } from 'hoc';
 import { props } from './types';
 import { ListType } from '../usersList/types';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { useInvites } from 'setup/reducers/invitesReducer';
 import styles from './userDetailed.module.scss';
 
-const UserDetailed = ({ name = ListType.contacts, email, loading = false }: props) => {
+const DefaultUserDetailed = () => <div className={styles.box} />;
+
+const UserDetailed = WithLoading(({ name = ListType.contacts, email }: props) => {
   const members = name === ListType.contacts ? useFriends() : useInvites();
 
   const member = members.find((member) => member.email === email);
 
-  if (member && !loading) {
+  if (member) {
     const { notes, email, number } = member;
 
     return (
@@ -25,7 +28,7 @@ const UserDetailed = ({ name = ListType.contacts, email, loading = false }: prop
     );
   }
 
-  return <div className={styles.box}></div>;
-};
+  return <DefaultUserDetailed />;
+}, DefaultUserDetailed);
 
 export { UserDetailed };
