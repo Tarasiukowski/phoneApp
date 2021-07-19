@@ -29,7 +29,7 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
     if (user) {
       const verify = {
         newEmail: user.newEmail.code === code,
-        account: user.code === code,
+        account: user.verify.code === code,
       };
 
       const validCode = emailVerification ? verify.newEmail : verify.account;
@@ -71,6 +71,10 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
               ]);
             });
           });
+        } else {
+          await (
+            await UserModel.findOne('email', email)
+          ).update({ key: 'verify', value: { ...user.verify } }, 'remove');
         }
 
         return { valid: true, status, errorMsg: null };

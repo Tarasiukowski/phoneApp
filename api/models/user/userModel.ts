@@ -90,7 +90,10 @@ class UserModel {
 
       email && sendMail(email, code);
 
-      authOptions = { code, onBoarding: { value: false, stage: '/onboarding/code' } };
+      authOptions = {
+        verify: { code, stage: '/onboarding/code' },
+        onBoarding: { value: false, stage: '/onboarding/code' },
+      };
     } else {
       authOptions = { onBoarding: { value: false, stage: '/onboarding/number' } };
     }

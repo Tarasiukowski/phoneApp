@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useState } from 'react';
 
-import { multiTaskContext, Handle, ToggleOpen } from './types';
+import { multiTaskContext, Handle, ToggleOpen, props } from './types';
 
 const MultiTaskContext = createContext<multiTaskContext>({
   open: false,
@@ -8,7 +8,7 @@ const MultiTaskContext = createContext<multiTaskContext>({
   toggleOpen() {},
 });
 
-const MultiTaskProvider: React.FC = ({ children }) => {
+const MultiTaskProvider = ({ children }: props) => {
   const [open, setOpen] = useState(false);
   const [handle, setHanlde] = useState<Handle | undefined>(undefined);
 

@@ -25,15 +25,20 @@ class AuthService {
       const { user } = userInstance.get();
 
       if (user) {
-        const { onBoarding } = user;
+        const { onBoarding, verify } = user;
+        const { stage } = verify;
+
         const { user: formatedUser, status } = (
           fullUser ? userInstance.format('conversations', 'groups') : userInstance.format()
         ).get();
 
+
+        console.log(verify)
+
         return {
           user: {
             value: formatedUser,
-            status: { onBoarding },
+            status: { onBoarding, verify: stage ? { stage } : null },
           },
           status,
         };
@@ -69,7 +74,10 @@ class AuthService {
           const code = generateCode();
           sendMail(email, code);
 
-          (await UserModel.findOne('email', email)).update({ key: 'code', value: code }, 'set');
+          (await UserModel.findOne('email', email)).update(
+            { key: 'verify', value: { code, stage: '/login/verify' } },
+            'set',
+          );
         }
 
         return { user: formatedUser, token, status, errorMsg: null };

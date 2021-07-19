@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent, useCallback } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import Image from 'next/image';
 
 import { Button, Input } from 'components/atoms';
@@ -9,6 +9,7 @@ import { useUser } from 'setup/reducers/userReducer';
 import { props, TypeVerify } from './types';
 import styles from './formVerify.module.scss';
 import { paths } from '../../../constants';
+import { useLoading } from 'contexts';
 
 const imageStyle = {
   width: '200px',
@@ -20,6 +21,7 @@ const FormVerify = ({ type, onSuccess }: props) => {
 
   const user = useUser();
   const { setError } = useError();
+  const { toggleLoading } = useLoading();
 
   const isVerifyAccount = type === TypeVerify.account;
   const buttonDisabled = valueInput.length < 1;
@@ -28,46 +30,43 @@ const FormVerify = ({ type, onSuccess }: props) => {
     setValueInput(e.target.value);
   };
 
-  const handleSubmit = useCallback(
-    async (e: FormEvent) => {
-      e.preventDefault();
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
 
-      try {
-        const { valid } = await fetcher(
-          'post',
-          `/user/verify/${isVerifyAccount ? 'account' : 'login'}`,
-          {
-            code: valueInput,
-          },
-        );
+    try {
+      const { valid } = await fetcher(
+        'post',
+        `/user/verify/${isVerifyAccount ? 'account' : 'login'}`,
+        {
+          code: valueInput,
+        },
+      );
 
-        if (valid && isVerifyAccount) {
-          try {
-            fetcher('PUT', '/user/update/onBoarding', {
-              value: {
-                value: false,
-                stage: paths.onBoarding.number
-              },
-            });
-          } catch (err) {
-            handleRequestError(err, (errorMsg) => {
-              setError({ msg: errorMsg, id: Math.random() });
-            });
-
-            return;
-          }
+      if (valid && isVerifyAccount) {
+        try {
+          await fetcher('PUT', '/user/update/onBoarding', {
+            value: {
+              value: false,
+              stage: paths.onBoarding.number,
+            },
+          });
+        } catch (err) {
+          handleRequestError(err, (errorMsg) => {
+            setError({ msg: errorMsg, id: Math.random() });
+          });
+          return;
         }
-      } catch (err) {
-        handleRequestError(err, (errorMsg) => {
-          setError({ msg: errorMsg, id: Math.random() });
-        });
-        return;
       }
+    } catch (err) {
+      handleRequestError(err, (errorMsg) => {
+        setError({ msg: errorMsg, id: Math.random() });
+      });
+      return;
+    }
 
-      onSuccess();
-    },
-    [valueInput],
-  );
+    toggleLoading(true);
+    onSuccess();
+  };
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>

@@ -21,7 +21,10 @@ export type Friend = { email: string; notes: { content: string }[] };
 export interface User {
   email: string;
   number: string;
-  code: string;
+  verify: {
+    code: String;
+    stage: String;
+  };
   fullname: {
     firstname: string;
     lastname: string;

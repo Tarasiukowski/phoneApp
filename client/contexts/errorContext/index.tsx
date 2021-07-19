@@ -1,10 +1,10 @@
 import { createContext, useState, useContext, useMemo } from 'react';
 
-import { errorContext } from './types';
+import { errorContext, props } from './types';
 
 const ErrorContext = createContext<errorContext>({ error: null, setError: () => {} });
 
-const ErrorProvider: React.FC = ({ children }) => {
+const ErrorProvider = ({ children }: props) => {
   const [error, setError] = useState<errorContext['error']>(null);
 
   const passValue = useMemo(

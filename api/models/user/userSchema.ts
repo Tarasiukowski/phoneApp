@@ -3,7 +3,10 @@ import { Schema } from 'mongoose';
 export const userSchema: Schema = new Schema({
   email: String,
   number: String,
-  code: String,
+  verify: {
+    code: String,
+    stage: String,
+  },
   onboarding: Boolean,
   fullname: {
     firstname: String,

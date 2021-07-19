@@ -1,13 +1,13 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
-import { loadingContext } from './types';
+import { loadingContext, props } from './types';
 
 const LoadingContext = createContext<loadingContext>({
   loading: false,
   toggleLoading: () => {},
 });
 
-const LoadingProvider: React.FC = ({ children }) => {
+const LoadingProvider = ({ children }: props) => {
   const [loading, setLoading] = useState(true);
 
   const toggleLoading = useCallback((value: boolean) => {

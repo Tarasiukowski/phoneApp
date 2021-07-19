@@ -1,10 +1,10 @@
 import { createContext, useState, useContext, useCallback, useMemo } from 'react';
 
-import { searcherContext } from './types';
+import { searcherContext, props } from './types';
 
 const SearcherContext = createContext<searcherContext>({ open: false, handleVisible: () => {} });
 
-const SearcherProvider: React.FC = ({ children }) => {
+const SearcherProvider = ({ children }: props) => {
   const [open, setOpen] = useState(false);
 
   const handleVisible = useCallback((visible: boolean) => {

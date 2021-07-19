@@ -54,6 +54,10 @@ export type Member = {
   notes: Note[];
 };
 
+export type RequireChildren = {
+  children: React.ReactNode;
+};
+
 export enum AuthType {
   Login = 'login',
   Singup = 'singup',

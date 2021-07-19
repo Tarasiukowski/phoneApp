@@ -2,7 +2,7 @@ import { loggedPaths } from 'data';
 import { paths } from '../constants';
 
 export const getUserStage = (
-  status: { onBoarding: { value: boolean; stage: string } },
+  status: { onBoarding: { value: boolean; stage: string }; verify: { stage: string } | null },
   activePath: string,
 ) => {
   const defaultStage = {
@@ -11,10 +11,18 @@ export const getUserStage = (
   };
 
   if (status) {
-    const { onBoarding } = status;
-    const isOnBoarding = onBoarding.value;
+    const { onBoarding, verify } = status;
+    const endOnBoarding = onBoarding.value;
 
-    if (isOnBoarding) {
+    if (verify) {
+      const { stage } = verify;
+
+      if (activePath === stage) {
+        defaultStage.notAllowed = false;
+      } else {
+        defaultStage.redirectTo = stage;
+      }
+    } else if (endOnBoarding) {
       const loggedPath = loggedPaths.find((path) => activePath.startsWith(path));
 
       if (loggedPath) {
