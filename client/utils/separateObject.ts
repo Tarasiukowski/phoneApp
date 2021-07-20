@@ -1,4 +1,4 @@
-export const separateObject = <T extends Object>(obj: T) => {
+export const separateObject = <T extends object>(obj: T) => {
   const arr: any[] = [];
 
   for (const key in obj) {

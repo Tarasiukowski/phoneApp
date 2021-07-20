@@ -9,7 +9,7 @@ import { buttonsData, buttonNavigationSettings } from './data';
 import { props } from './types';
 import styles from './UserDetailed.module.scss';
 import { fetcher, handleRequestError, logout } from 'utils';
-import { update as updateBlocklist } from 'setup/reducers/blocklistReducer';
+import { update as updateBlocklist } from 'setup/reducers/blockListReducer';
 import { update as updateFriends } from 'setup/reducers/friendsReducer';
 import { update as updateInvites } from 'setup/reducers/invitesReducer';
 import { paths } from '../../../../constants';

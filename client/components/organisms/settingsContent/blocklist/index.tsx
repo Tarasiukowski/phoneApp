@@ -6,9 +6,9 @@ import { SettingsTemplate } from 'templates';
 import ElementList from './elementList';
 
 import { useError } from 'contexts';
-import { remove as removeFromBlcokList } from 'setup/reducers/blocklistReducer';
+import { remove as removeFromBlcokList } from 'setup/reducers/blockListReducer';
 import { fetcher, handleRequestError } from 'utils';
-import { useBlocklist } from 'setup/reducers/blocklistReducer';
+import { useBlocklist } from 'setup/reducers/blockListReducer';
 
 const SettingsBlocklistContent = () => {
   const disptach = useDispatch();

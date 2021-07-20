@@ -8,7 +8,7 @@ import { useListUpdate, useUpdateUser } from 'hooks';
 import { swrFetcher } from 'utils';
 import { update as updateInvites, useInvites } from 'setup/reducers/invitesReducer';
 import { update as updateFriends, useFriends } from 'setup/reducers/friendsReducer';
-import { update as updateBlocklist, useBlocklist } from 'setup/reducers/blocklistReducer';
+import { update as updateBlocklist, useBlocklist } from 'setup/reducers/blockListReducer';
 import { login, useUser } from 'setup/reducers/userReducer';
 import { Template } from './styles';
 import { loggedPaths } from 'data';

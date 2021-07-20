@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { Button } from 'components/atoms';
 
-import { update as updateBlocklist } from 'setup/reducers/blocklistReducer';
+import { update as updateBlocklist } from 'setup/reducers/blockListReducer';
 import { update as updateFriends } from 'setup/reducers/friendsReducer';
 import { update as updateInvites } from 'setup/reducers/invitesReducer';
 import Logo from '../../public/svgs/logo.svg';

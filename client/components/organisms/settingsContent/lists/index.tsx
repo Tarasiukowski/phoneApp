@@ -8,7 +8,7 @@ import ElementList from './elementList';
 
 import { ERROR } from 'common/errors';
 import { fetcher, getObjectsKeysFromArray, handleRequestError } from 'utils';
-import { updateGroup, useUser } from 'setup/reducers/userReducer';
+import { update as updateUser, useUser } from 'setup/reducers/userReducer';
 import { useError, useMultiTask } from 'contexts';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { Group } from 'interfaces';
@@ -24,14 +24,15 @@ const SettingsListsContent = () => {
 
   const { setError } = useError();
 
-  const removeGroup = useCallback(async (name: string) => {
+  const removeGroup = useCallback(async (group: Group) => {
     try {
       await fetcher('DELETE', '/group/remove', { name });
 
       dispatch(
-        updateGroup({
+        updateUser({
           key: 'groups',
-          option: { type: 'pull', by: 'name', value: name },
+          value: group,
+          option: { type: 'pull' },
         }),
       );
     } catch (err) {
@@ -62,13 +63,11 @@ const SettingsListsContent = () => {
         onClose: () => {
           multiTask.toggleOpen(false);
         },
-        onEnd: async (groupData: Group) => {
+        onEnd: async (group: Group) => {
           try {
-            await fetcher('POST', '/group/create', { ...groupData });
+            await fetcher('POST', '/group/create', { ...group });
 
-            const data = groupData;
-
-            dispatch(updateGroup({ key: 'groups', data, option: { type: 'push' } }));
+            dispatch(updateUser({ key: 'groups', value: group, option: { type: 'pull' } }));
 
             return true;
           } catch (err) {
@@ -102,15 +101,19 @@ const SettingsListsContent = () => {
         filterKey="name"
         placeholder="Search for a group name"
         notFound="No groups to show"
-        renderItem={({ name }) => (
-          <ElementList
-            name={name}
-            key={name}
-            onClick={() => {
-              removeGroup(name);
-            }}
-          />
-        )}
+        renderItem={(group) => {
+          const { name } = group;
+
+          return (
+            <ElementList
+              name={name}
+              key={name}
+              onClick={() => {
+                removeGroup(group);
+              }}
+            />
+          );
+        }}
       />
     </SettingsTemplate>
   );

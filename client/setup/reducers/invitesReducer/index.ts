@@ -1,19 +1,18 @@
 import { useSelector } from 'react-redux';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 import { Member } from 'interfaces';
 import { RootState } from 'setup/store';
+import { Reducers } from './types';
 
-type Key = keyof Member;
-
-const invitesSlice = createSlice({
+const invitesSlice = createSlice<Member[], Reducers, 'invites'>({
   name: 'invites',
   initialState: [] as Member[],
   reducers: {
-    update(_, { payload }: PayloadAction<Member[]>) {
+    update(_, { payload }) {
       return payload;
     },
-    remove(state, { payload }: PayloadAction<{ by: Key; value: Member[Key] }>) {
+    remove(state, { payload }) {
       const { by, value } = payload;
 
       const updatedState = state.filter((user) => {

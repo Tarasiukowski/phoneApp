@@ -1,25 +1,15 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 
 import { Member } from 'interfaces';
-import { useSelector } from 'react-redux';
 import { RootState } from 'setup/store';
+import { Reducers, Key } from './types';
 
-type Key = keyof Member;
-
-const friendsSlice = createSlice({
+const friendsSlice = createSlice<Member[], Reducers, 'friends'>({
   name: 'friends',
   initialState: [] as Member[],
   reducers: {
-    updateOne(
-      state,
-      {
-        payload,
-      }: PayloadAction<{
-        email: string;
-        key: Key;
-        value: Member['notes'][number];
-      }>,
-    ) {
+    updateOne(state, { payload }) {
       const { email, key, value } = payload;
 
       const updatedState = state.map((user) => {
@@ -41,10 +31,10 @@ const friendsSlice = createSlice({
 
       return updatedState;
     },
-    update(_, { payload }: PayloadAction<Member[]>) {
+    update(_, { payload }) {
       return payload;
     },
-    remove(state, { payload }: PayloadAction<{ by: Key; value: Member[Key] }>) {
+    remove(state, { payload }) {
       const { by, value } = payload;
 
       const updatedState = state.filter((user) => {
@@ -55,7 +45,7 @@ const friendsSlice = createSlice({
 
       return [...updatedState];
     },
-    add(state, { payload }: PayloadAction<{ user: Member }>) {
+    add(state, { payload }) {
       const { user } = payload;
 
       return [...state, user];

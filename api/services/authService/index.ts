@@ -32,9 +32,6 @@ class AuthService {
           fullUser ? userInstance.format('conversations', 'groups') : userInstance.format()
         ).get();
 
-
-        console.log(verify)
-
         return {
           user: {
             value: formatedUser,

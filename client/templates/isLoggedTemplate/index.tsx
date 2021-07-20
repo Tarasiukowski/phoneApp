@@ -33,6 +33,8 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
     fetcher('post', '/auth', { fullUser: fetchFullUser }).then((data) => {
       const user = data.user ? data.user.value : null;
 
+      console.log(user)
+
       dispatch(login(user));
 
       const isLogged = user ? true : false;
