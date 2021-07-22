@@ -1,11 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import GoogleLogin from 'react-google-login';
 
 import { ButtonGoogle, ToggleAuth } from 'components/atoms';
 import { AuthForm } from 'components/molecules';
-import { RedirectTemplate } from 'templates';
 
 import { AuthType } from 'interfaces';
 import { login as loginAuth } from 'setup/reducers/userReducer';
@@ -15,14 +14,12 @@ import { paths } from '../../../constants';
 import styles from './authContent.module.scss';
 
 const AuthContent = () => {
-  const [redirect, setRedirect] = useState(false);
-
   const dispatch = useDispatch();
-  const { asPath } = useRouter();
+  const router = useRouter();
 
   const { setError } = useError();
 
-  const activePath = asPath.slice(1) as AuthType;
+  const activePath = router.asPath.slice(1) as AuthType;
   const isRegister = activePath === AuthType.Singup;
   const redirectTo = isRegister ? paths.onBoarding.number : paths.contacts;
 
@@ -42,7 +39,7 @@ const AuthContent = () => {
 
       setError(null);
 
-      setRedirect(true);
+      router.push(redirectTo);
 
       dispatch(loginAuth(user));
     } catch (err) {
@@ -53,20 +50,18 @@ const AuthContent = () => {
   }, []);
 
   return (
-    <RedirectTemplate isRedirect={redirect} redirectTo={redirectTo}>
-      <div className={styles.card}>
-        <h4>{title}</h4>
-        <h6>Use one of the methods below to continue</h6>
-        <GoogleLogin
-          clientId={`${process.env.NEXT_PUBLIC_CLIENT_ID}`}
-          onSuccess={hanldeGoogleLogin}
-          render={({ onClick }) => <ButtonGoogle onClick={onClick} auth={activePath} />}
-        />
-        <p>Or continue with email</p>
-        <AuthForm auth={activePath} />
-        <ToggleAuth auth={activePath} />
-      </div>
-    </RedirectTemplate>
+    <div className={styles.card}>
+      <h4>{title}</h4>
+      <h6>Use one of the methods below to continue</h6>
+      <GoogleLogin
+        clientId={`${process.env.NEXT_PUBLIC_CLIENT_ID}`}
+        onSuccess={hanldeGoogleLogin}
+        render={({ onClick }) => <ButtonGoogle onClick={onClick} auth={activePath} />}
+      />
+      <p>Or continue with email</p>
+      <AuthForm auth={activePath} />
+      <ToggleAuth auth={activePath} />
+    </div>
   );
 };
 

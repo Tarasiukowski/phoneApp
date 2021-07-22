@@ -1,13 +1,13 @@
 import { ChangeEvent, FormEvent, useState, useReducer, useCallback } from 'react';
+import { useRouter } from 'next/router';
 
 import { Button, Input } from 'components/atoms';
-import { RedirectTemplate } from 'templates';
 
 import { fetcher, handleRequestError } from 'utils';
 import { FormValues } from './types';
 import { useError } from 'contexts';
-import styles from './account.module.scss';
 import { paths } from '../../../../constants';
+import styles from './account.module.scss';
 
 const OnboardingAccountContent = () => {
   const [formValues, setFormValues] = useReducer(
@@ -15,7 +15,8 @@ const OnboardingAccountContent = () => {
     { firstname: '', lastname: '' },
   );
   const [disabledByRequest, setDisabledByRequest] = useState(false);
-  const [redirect, setRedirect] = useState(false);
+
+  const router = useRouter();
 
   const { setError } = useError();
 
@@ -62,7 +63,7 @@ const OnboardingAccountContent = () => {
         }
       }
 
-      setRedirect(true);
+      router.push(paths.contacts);
 
       setDisabledByRequest(false);
     },
@@ -70,31 +71,29 @@ const OnboardingAccountContent = () => {
   );
 
   return (
-    <RedirectTemplate isRedirect={redirect} redirectTo={paths.contacts}>
-      <form onSubmit={next} className={styles.template}>
-        <h2>A little about you</h2>
-        <p>This is your OpenPhone profile</p>
-        <div className={styles.templateInputs}>
-          <Input
-            name="firstname"
-            value={firstname}
-            onChange={onChange}
-            placeholder="First name"
-            autoComplete="off"
-          />
-          <Input
-            name="lastname"
-            value={lastname}
-            onChange={onChange}
-            placeholder="Last name"
-            autoComplete="off"
-          />
-        </div>
-        <Button type="submit" disabled={disabledByRequest ? disabledByRequest : disabledByValue}>
-          Continue
-        </Button>
-      </form>
-    </RedirectTemplate>
+    <form onSubmit={next} className={styles.template}>
+      <h2>A little about you</h2>
+      <p>This is your OpenPhone profile</p>
+      <div className={styles.templateInputs}>
+        <Input
+          name="firstname"
+          value={firstname}
+          onChange={onChange}
+          placeholder="First name"
+          autoComplete="off"
+        />
+        <Input
+          name="lastname"
+          value={lastname}
+          onChange={onChange}
+          placeholder="Last name"
+          autoComplete="off"
+        />
+      </div>
+      <Button type="submit" disabled={disabledByRequest ? disabledByRequest : disabledByValue}>
+        Continue
+      </Button>
+    </form>
   );
 };
 

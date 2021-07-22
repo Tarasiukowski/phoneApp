@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 
 import UserModel from '../../models/user/userModel';
 import { generateCode, isValidEmail, sendMail } from '../../utils';
-import { ERROR } from '../../data';
+import { ERROR, paths } from '../../data';
 import { User, AuthType } from '../../interfaces';
 import { JWT_PRIVATE_KEY } from '../../constants';
 
@@ -68,11 +68,21 @@ class AuthService {
         ).get();
 
         if (authType === AuthType.email) {
+          const onBoarding = user.onBoarding;
+          const stage =
+            onBoarding.stage === paths.onBoarding.code ? paths.onBoarding.code : paths.login.verify;
           const code = generateCode();
+
           sendMail(email, code);
 
-          (await UserModel.findOne('email', email)).update(
-            { key: 'verify', value: { code, stage: '/login/verify' } },
+          userInstance.update(
+            {
+              key: 'verify',
+              value: {
+                code,
+                stage,
+              },
+            },
             'set',
           );
         }

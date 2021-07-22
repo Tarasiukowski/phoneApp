@@ -3,7 +3,7 @@ import { model } from 'mongoose';
 import { generateCode, sendMail, formatUser, getUpdateOption } from '../../utils';
 import { userSchema } from './userSchema';
 import { UserDocument } from './types';
-import { ERROR, getDefaultDataUser } from '../../data';
+import { ERROR, getDefaultDataUser, paths } from '../../data';
 import { updateType, AuthType, User } from '../../interfaces';
 
 export const userModel = model<UserDocument>('user', userSchema);
@@ -91,11 +91,11 @@ class UserModel {
       email && sendMail(email, code);
 
       authOptions = {
-        verify: { code, stage: '/onboarding/code' },
-        onBoarding: { value: false, stage: '/onboarding/code' },
+        verify: { code, stage: paths.onBoarding.code },
+        onBoarding: { value: false, stage: paths.onBoarding.code },
       };
     } else {
-      authOptions = { onBoarding: { value: false, stage: '/onboarding/number' } };
+      authOptions = { onBoarding: { value: false, stage: paths.onBoarding.number } };
     }
 
     const defaultData = await getDefaultDataUser();

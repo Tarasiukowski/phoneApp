@@ -1,8 +1,8 @@
 import { useCallback, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { Button } from 'components/atoms';
 import { SelectNumberButton, SelectNumberList } from 'components/molecules';
-import { RedirectTemplate } from 'templates';
 
 import { fetcher, handleNotAllowedError, handleRequestError } from 'utils';
 import { useError } from 'contexts';
@@ -13,11 +13,11 @@ import { useDidMount } from 'hooks';
 
 const OnboardingNumberContent = () => {
   const [openList, setOpenList] = useState(false);
-  const [redirect, setRedirect] = useState(false);
   const [number, setNumber] = useState<string | null>(null);
 
-  const user = useUser();
+  const router = useRouter();
 
+  const user = useUser();
   const { setError } = useError();
 
   useDidMount(() => {
@@ -55,7 +55,7 @@ const OnboardingNumberContent = () => {
       return;
     }
 
-    setRedirect(true);
+    router.push(paths.onBoarding.account);
   }, []);
 
   const handleSelectNumberList = useMemo(
@@ -71,17 +71,15 @@ const OnboardingNumberContent = () => {
   );
 
   return (
-    <RedirectTemplate redirectTo={paths.onBoarding.account} isRedirect={redirect}>
-      <div className={styles.wrapper}>
-        <h4>Your phone number</h4>
-        <h6>You can add more phone numbers later.</h6>
-        <SelectNumberButton onClick={toggleOpenList} number={number} />
-        <Button onClick={next} disabled={!number} style={{ margin: '32px 0 0 0' }} width="100%">
-          Continue
-        </Button>
-        {openList && <SelectNumberList {...handleSelectNumberList} />}
-      </div>
-    </RedirectTemplate>
+    <div className={styles.wrapper}>
+      <h4>Your phone number</h4>
+      <h6>You can add more phone numbers later.</h6>
+      <SelectNumberButton onClick={toggleOpenList} number={number} />
+      <Button onClick={next} disabled={!number} style={{ margin: '32px 0 0 0' }} width="100%">
+        Continue
+      </Button>
+      {openList && <SelectNumberList {...handleSelectNumberList} />}
+    </div>
   );
 };
 

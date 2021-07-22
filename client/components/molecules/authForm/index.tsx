@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
 import { Input, Button } from 'components/atoms';
-import { RedirectTemplate } from 'templates';
 
 import { fetcher, handleRequestError } from 'utils';
 import { login as authLogin } from 'setup/reducers/userReducer';
@@ -15,10 +15,10 @@ import { paths } from '../../../constants';
 
 const AuthForm = ({ auth }: props) => {
   const [disabled, setDisabled] = useState(true);
-  const [redirect, setRedirect] = useState(false);
 
   const { register, handleSubmit, watch } = useForm();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const { setError } = useError();
 
@@ -46,7 +46,7 @@ const AuthForm = ({ auth }: props) => {
       );
 
       setError(null);
-      setRedirect(true);
+      router.push(redirectTo);
       dispatch(authLogin(user));
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
@@ -58,14 +58,12 @@ const AuthForm = ({ auth }: props) => {
   }, []);
 
   return (
-    <RedirectTemplate isRedirect={redirect} redirectTo={redirectTo}>
-      <form onSubmit={handleSubmit(submit)} className={styles.form}>
-        <Input name="email" placeholder="Enter your email" autoComplete="off" ref={register()} />
-        <Button type="submit" disabled={disabled}>
-          Continue
-        </Button>
-      </form>
-    </RedirectTemplate>
+    <form onSubmit={handleSubmit(submit)} className={styles.form}>
+      <Input name="email" placeholder="Enter your email" autoComplete="off" ref={register()} />
+      <Button type="submit" disabled={disabled}>
+        Continue
+      </Button>
+    </form>
   );
 };
 

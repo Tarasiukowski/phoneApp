@@ -1,6 +1,5 @@
-import { useCallback, useState } from 'react';
-
-import { RedirectTemplate } from 'templates';
+import { useCallback } from 'react';
+import { useRouter } from 'next/router';
 
 import { useError } from 'contexts';
 import { FormVerify } from 'components/molecules';
@@ -8,20 +7,16 @@ import { paths } from '../../../../constants';
 import { TypeVerify } from 'components/molecules/formVerify/types';
 
 const OnboardingCodeContent = () => {
-  const [redirect, setRedirect] = useState(false);
+  const router = useRouter();
 
   const { setError } = useError();
 
   const handleOnSuccess = useCallback(() => {
-    setRedirect(true);
+    router.push(paths.onBoarding.number);
     setError(null);
   }, []);
 
-  return (
-    <RedirectTemplate isRedirect={redirect} redirectTo={paths.onBoarding.number}>
-      <FormVerify type={TypeVerify.account} onSuccess={handleOnSuccess} />
-    </RedirectTemplate>
-  );
+  return <FormVerify type={TypeVerify.account} onSuccess={handleOnSuccess} />;
 };
 
 export { OnboardingCodeContent };
