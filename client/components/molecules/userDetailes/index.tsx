@@ -7,11 +7,11 @@ import { props } from './types';
 import { ListType } from '../usersList/types';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { useInvites } from 'setup/reducers/invitesReducer';
-import styles from './userDetailed.module.scss';
+import styles from './userDetailes.module.scss';
 
-const DefaultUserDetailed = () => <div className={styles.box} />;
+const DefaultUserDetailes = () => <div className={styles.box} />;
 
-const UserDetailed = withLoading(({ name = ListType.contacts, email }: props) => {
+const UserDetailes = withLoading(({ name = ListType.contacts, email }: props) => {
   const members = name === ListType.contacts ? useFriends() : useInvites();
 
   const member = members.find((member) => member.email === email);
@@ -28,7 +28,7 @@ const UserDetailed = withLoading(({ name = ListType.contacts, email }: props) =>
     );
   }
 
-  return <DefaultUserDetailed />;
-}, DefaultUserDetailed);
+  return <DefaultUserDetailes />;
+}, DefaultUserDetailes);
 
-export { UserDetailed };
+export { UserDetailes };

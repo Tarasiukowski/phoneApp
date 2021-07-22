@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import ElementList from './elementList';
-import { UserDetailed } from '../index';
+import { UserDetailes } from '../index';
 
 import { SearchSvg } from '../../../public/svgs';
 import { Member } from 'interfaces';
@@ -110,7 +110,7 @@ const UsersList = ({ name, data }: props) => {
           </div>
         </div>
       </div>
-      <UserDetailed name={name} loading={detailedUser ? false : true} email={detailedUser?.email} />
+      <UserDetailes name={name} loading={detailedUser ? false : true} email={detailedUser?.email} />
     </>
   );
 };

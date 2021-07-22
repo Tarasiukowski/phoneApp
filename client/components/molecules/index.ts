@@ -1,5 +1,5 @@
 export { UsersList } from './usersList';
-export { UserDetailed } from './userDetailed';
+export { UserDetailes } from './userDetailes';
 export { Subpage } from './subpage';
 export { SettingsNavigation } from './settingsNavigation';
 export { Searcher } from './searcher';

@@ -2,7 +2,7 @@ import { useRef, useState, forwardRef, useCallback } from 'react';
 
 import { ImageUser } from '../index';
 import { Template } from './styles';
-import UserDetailed from './userDetailed/userDetailed';
+import DetailedView from './detailedView/detailedView';
 
 import { props } from './types';
 import { useDidMount, useOutsideClick } from 'hooks';
@@ -57,7 +57,7 @@ const UserCard = forwardRef<HTMLDivElement, props>(
           big={big}
         />
         <p className="name">{fullname}</p>
-        {withDetailed && openDetailed && <UserDetailed userDetailedRef={userDetailedRef} />}
+        {withDetailed && openDetailed && <DetailedView userDetailedRef={userDetailedRef} />}
       </Template>
     );
   },

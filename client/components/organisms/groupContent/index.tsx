@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { Chat, UserDetailed } from 'components/molecules';
+import { Chat, UserDetailes } from 'components/molecules';
 import Navigation from './navigation';
 
 import { Member } from 'interfaces';
@@ -27,7 +27,7 @@ const GroupContent = () => {
           setUser(user);
         }}
       />
-      <UserDetailed loading={!user} email={user?.email} />
+      <UserDetailes loading={!user} email={user?.email} />
     </>
   );
 };
