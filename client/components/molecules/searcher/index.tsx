@@ -3,7 +3,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import List from './list';
 
 import { SearchSvg } from '../../../public/svgs/index';
-import { filterByKey, formatValuesObject, getSearcherData } from 'utils';
+import { filterByKey, formatValuesObject } from 'utils';
+import { getSearcherData } from './utils';
 import { props, SearchData } from './types';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { useUser } from 'setup/reducers/userReducer';
