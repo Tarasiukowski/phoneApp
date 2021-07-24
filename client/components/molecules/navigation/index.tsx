@@ -5,9 +5,6 @@ import { GroupsList, FriendsList } from '../index';
 
 import { SearchSvg, ContactsSvg, SettingsSvg, MembersSvg } from '../../../public/svgs';
 import { paths } from '../../../constants';
-// import ContactsSvg from "../../../public/svgs/contacts.svg"
-// import SearchSvg from "../../../public/svgs/search.svg"
-// import Settings from "../../../public/svgs/settings.svg"
 import { useSearcher } from 'contexts';
 import styles from './navigation.module.scss';
 
