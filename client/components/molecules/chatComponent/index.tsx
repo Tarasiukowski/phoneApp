@@ -14,6 +14,10 @@ import { useFriends } from 'setup/reducers/friendsReducer';
 import { useUser } from 'setup/reducers/userReducer';
 import styles from './chat.module.scss';
 
+const defaultWidth = '64.5vw';
+const maxMessagesOnFetch = 20;
+const maxScrollUp = 0;
+
 const Chat = ({ id, getScopedUser, width }: props) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [scopedUser, setScopedUser] = useState<Member | null>(null);
@@ -44,7 +48,8 @@ const Chat = ({ id, getScopedUser, width }: props) => {
   };
 
   useEffect(() => {
-    if (y === 0 && messages.length >= 20) {
+    if (y === maxScrollUp && messages.length >= maxMessagesOnFetch) {
+      // TO DO => fetch more messages
     }
   }, [y]);
 
@@ -52,10 +57,9 @@ const Chat = ({ id, getScopedUser, width }: props) => {
     setLoading(true);
     setMessages([]);
 
-    fetchDataChat()
-      .then(() => {
-        setLoading(false);
-      })
+    fetchDataChat().then(() => {
+      setLoading(false);
+    });
 
     if (activeUser) {
       const scopedConversations = activeUser.conversations.find(
@@ -104,7 +108,7 @@ const Chat = ({ id, getScopedUser, width }: props) => {
   };
 
   return (
-    <div className={styles.template} style={{ width: width ? width : '64.5vw' }}>
+    <div className={styles.template} style={{ width: width ? width : defaultWidth }}>
       <Header user={scopedUser} />
       <div className={styles.messagesTemplate} ref={refMessagesTemplate}>
         <div className={styles.messagesList}>
