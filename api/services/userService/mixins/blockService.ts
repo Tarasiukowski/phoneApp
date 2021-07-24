@@ -9,7 +9,7 @@ export function BlockServiceMixin<Base extends Class>(base: Base) {
         const { user } = await (await UserModel.findOne('email', loggedEmail)).get();
         const { friends = [] } = user || {};
 
-        const isFriend = friends.find((friend) => friend.email === memberEmail);
+        const isFriend = friends.some((friend) => friend.email === memberEmail);
 
         if (isFriend) {
           UserService.friend.remove(loggedEmail, memberEmail);

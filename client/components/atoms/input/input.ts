@@ -14,7 +14,7 @@ export const Input = styled.input`
   transition: 240ms ease 0ms;
 
   :focus {
-    border-color: rgb(112,70,227);
+    border-color: rgb(112, 70, 227);
     box-shadow: rgb(155 112 255 / 18%) 0px 0px 0px 3px;
   }
 `;

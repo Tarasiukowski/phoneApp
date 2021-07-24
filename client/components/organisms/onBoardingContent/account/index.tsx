@@ -5,7 +5,7 @@ import { Button, Input } from 'components/atoms';
 
 import { fetcher, handleRequestError } from 'utils';
 import { FormValues } from './types';
-import { useError } from 'contexts';
+import { useError, useLoading } from 'contexts';
 import { paths } from '../../../../constants';
 import styles from './account.module.scss';
 
@@ -19,6 +19,7 @@ const OnboardingAccountContent = () => {
   const router = useRouter();
 
   const { setError } = useError();
+  const { toggleLoading } = useLoading();
 
   const { firstname, lastname } = formValues;
 
@@ -63,9 +64,10 @@ const OnboardingAccountContent = () => {
         }
       }
 
-      router.push(paths.contacts);
-
       setDisabledByRequest(false);
+      toggleLoading(true);
+
+      router.push(paths.contacts);
     },
     [formValues],
   );

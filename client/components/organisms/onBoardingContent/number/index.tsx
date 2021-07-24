@@ -5,7 +5,7 @@ import { Button } from 'components/atoms';
 import { SelectNumberButton, SelectNumberList } from 'components/molecules';
 
 import { fetcher, handleNotAllowedError, handleRequestError } from 'utils';
-import { useError } from 'contexts';
+import { useError, useLoading } from 'contexts';
 import { useUser } from 'setup/reducers/userReducer';
 import styles from './number.module.scss';
 import { paths } from '../../../../constants';
@@ -19,6 +19,7 @@ const OnboardingNumberContent = () => {
 
   const user = useUser();
   const { setError } = useError();
+  const { toggleLoading } = useLoading();
 
   useDidMount(() => {
     setNumber(user ? user.number : null);
@@ -55,6 +56,7 @@ const OnboardingNumberContent = () => {
       return;
     }
 
+    toggleLoading(true);
     router.push(paths.onBoarding.account);
   }, []);
 

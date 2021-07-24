@@ -16,24 +16,12 @@ const ImageUser = ({ member, ...restProps }: props) => {
   const user = useUser();
 
   useEffect(() => {
-    if (member) {
+    if (user) {
       const {
         fullname: { firstname, lastname },
         colorImage: colorProfile,
         image: imageProfile,
-      } = member;
-
-      setDefaultMember({
-        image: imageProfile,
-        initials: getInitials(firstname, lastname),
-        colorImage: colorProfile,
-      });
-    } else if (user) {
-      const {
-        fullname: { firstname, lastname },
-        colorImage: colorProfile,
-        image: imageProfile,
-      } = user;
+      } = member ? member : user;
 
       setDefaultMember({
         image: imageProfile,

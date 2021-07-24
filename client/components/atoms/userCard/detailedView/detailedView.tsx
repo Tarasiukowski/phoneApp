@@ -15,7 +15,7 @@ import { update as updateInvites } from 'setup/reducers/invitesReducer';
 import { paths } from '../../../../constants';
 import { useLoading } from 'contexts/loadingContext';
 
-const UserDetailed = ({ userDetailedRef }: props) => {
+const DetailedView = ({ userDetailedRef }: props) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -92,4 +92,4 @@ const UserDetailed = ({ userDetailedRef }: props) => {
   );
 };
 
-export default UserDetailed;
+export default DetailedView;

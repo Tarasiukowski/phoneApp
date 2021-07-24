@@ -1,12 +1,12 @@
 import { updateType, User } from '../../interfaces';
 
-export const getStagesOfCreateConversation = (
+export const getStagesOfCreateConversation = <K extends keyof User>(
   email: string,
   from: string,
   id: string,
 ): {
   filter: { by: keyof User; valueFilter: User[keyof User] };
-  data: any;
+  data: { key: any, value: any };
   type: updateType;
 }[] => [
   {

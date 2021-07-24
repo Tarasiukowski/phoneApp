@@ -1,5 +1,5 @@
 import { Spinner } from 'components/atoms';
-import Item from '../item';
+import Item from './item';
 
 import { props } from './/types';
 

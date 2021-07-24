@@ -1,6 +1,6 @@
 import { Content } from './styles';
 
-import { props } from './types'
+import { props } from './types';
 import SpinnerSvg from '../../../public/svgs/spinner.svg';
 
 const Spinner = ({ mini, extraStyle }: props) => (

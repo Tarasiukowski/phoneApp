@@ -8,7 +8,7 @@ const ButtonGoogle = ({ auth, ...restProps }: props) => {
   const content = isRegister ? 'Sing up' : 'Log in';
 
   return (
-    <button className={styles.button} {...restProps} >
+    <button className={styles.button} {...restProps}>
       <LogoGoole />
       {content} with <span>Google</span>
     </button>
