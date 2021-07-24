@@ -1,5 +1,6 @@
 import { DetailedConversation } from 'interfaces';
 import { SearchType } from 'components/molecules/searcher/types';
+import { paths } from '../../../constants';
 
 type Route = {
   type: SearchType.route;
@@ -10,18 +11,18 @@ type Route = {
 
 export const getSearcherData = (conversations: (DetailedConversation | undefined)[]) => {
   const routes: Route[] = [
-    { type: SearchType.route, filterValue: 'contacts', href: '/contacts' },
-    { type: SearchType.route, filterValue: 'invites', href: '/invites' },
+    { type: SearchType.route, filterValue: 'contacts', href: paths.contacts },
+    { type: SearchType.route, filterValue: 'invites', href: paths.invites },
     {
       type: SearchType.route,
       filterValue: 'settings',
       hrefs: [
-        '/settings/profile',
-        '/settings/members',
-        '/settings/manageLists',
-        '/settings/blocklist',
-        '/settings/general',
-        '/settings/number',
+        paths.settings.profile,
+        paths.settings.members,
+        paths.settings.manageLists,
+        paths.settings.blocklist,
+        paths.settings.general,
+        paths.settings.nummber,
       ],
     },
   ];

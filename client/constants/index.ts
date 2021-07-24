@@ -13,5 +13,10 @@ export const paths = {
   },
   settings: {
     profile: '/settings/profile',
+    members: '/settings/members',
+    manageLists: '/settings/manageLists',
+    blocklist: '/settings/blocklist',
+    general: '/settings/general',
+    nummber: '/settings/number',
   },
 };
