@@ -21,7 +21,7 @@ const DetailedView = ({ userDetailedRef }: props) => {
 
   const multiTask = useMultiTask();
   const { setError } = useError();
-  const { toggleLoading } = useLoading()
+  const { toggleLoading } = useLoading();
 
   const multitaskHandle = useMemo(
     () =>
@@ -56,15 +56,20 @@ const DetailedView = ({ userDetailedRef }: props) => {
   };
 
   const handleOnRequestLogout = () => {
-    toggleLoading(true)
-  }
+    toggleLoading(true);
+  };
 
   const handleOnResponseLogout = () => {
     router.push(paths.singUp).then(() => {
-      toggleLoading(false)
+      toggleLoading(false);
       resetData();
     });
   };
+
+  const handleButtonNavigation = useCallback((data: typeof buttonsData[number]) => {
+    data.handleInvite && multiTask.toggleOpen(true, multitaskHandle);
+    data.logout && logout(handleOnRequestLogout, handleOnResponseLogout);
+  }, []);
 
   return (
     <div className={styles.box} ref={userDetailedRef}>
@@ -72,21 +77,14 @@ const DetailedView = ({ userDetailedRef }: props) => {
         <UserCard big />
       </div>
       <div className={styles.template}>
-        {buttonsData.map((data) => {
-          const handleClick = useCallback(() => {
-            data.handleInvite && multiTask.toggleOpen(true, multitaskHandle);
-            data.logout && logout(handleOnRequestLogout, handleOnResponseLogout);
-          }, []);
-
-          return (
-            <ButtonNavigation
-              onClick={handleClick}
-              key={data.content}
-              {...data}
-              {...buttonNavigationSettings}
-            />
-          );
-        })}
+        {buttonsData.map((data) => (
+          <ButtonNavigation
+            onClick={() => handleButtonNavigation(data)}
+            key={data.content}
+            {...data}
+            {...buttonNavigationSettings}
+          />
+        ))}
       </div>
     </div>
   );

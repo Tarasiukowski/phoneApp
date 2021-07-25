@@ -15,7 +15,7 @@ export type Reducers = {
       value: Member[K] extends Array<any> ? Member[K][number] : Member[K];
     }>,
   ): Member[];
-  update(_: Member[], { payload }: PayloadAction<Member[]>): Member[];
+  update(_: Member[], { payload }: PayloadAction<Member[]>): void;
   remove<K extends Key>(
     state: Member[],
     {
