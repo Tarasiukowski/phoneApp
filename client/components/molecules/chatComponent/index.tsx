@@ -49,7 +49,7 @@ const Chat = ({ id, getScopedUser, width }: props) => {
 
   useEffect(() => {
     if (y === maxScrollUp && messages.length >= maxMessagesOnFetch) {
-      // TO DO => fetch more messages
+      // TODO => fetch more messages
     }
   }, [y]);
 
