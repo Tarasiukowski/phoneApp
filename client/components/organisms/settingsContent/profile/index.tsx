@@ -7,7 +7,7 @@ import styles from './profile.module.scss';
 import { InputsValues } from './types';
 import { useUser } from 'setup/reducers/userReducer';
 import { fetcher, handleRequestError } from 'utils';
-import { ERROR } from 'common';
+import { ERROR_MESSAGES } from 'common';
 import { useError, useMultiTask } from 'contexts';
 
 const SettingsProfileContent = () => {
@@ -75,7 +75,10 @@ const SettingsProfileContent = () => {
         name: 'ChangeEmail',
         onNext: async (newEmail: string) => {
           if (newEmail === loggedUser?.email) {
-            setError({ msg: ERROR.WITHOUT_CHANGE('email', 'singular'), id: Math.random() });
+            setError({
+              msg: ERROR_MESSAGES.WITHOUT_CHANGE('email', 'singular'),
+              id: Math.random(),
+            });
             return false;
           }
 

@@ -1,4 +1,4 @@
-export const ERROR = {
+export const ERROR_MESSAGES = {
   NOT_ALLOWED: 'error - functionality not allowed',
   EMAIL_NOT_VALID: (email: string) => `error in email - email format validation failed: ${email}`,
   WITHOUT_CHANGE: (param: string, type: 'singular' | 'plural') => {

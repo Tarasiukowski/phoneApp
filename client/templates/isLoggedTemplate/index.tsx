@@ -7,7 +7,7 @@ import { update } from 'setup/reducers/friendsReducer';
 import { getUserStage, fetcher } from 'utils';
 import { props } from './types';
 import { useError } from 'contexts';
-import { ERROR } from 'common';
+import { ERROR_MESSAGES } from 'common';
 import { loggedPaths } from 'data';
 import { paths } from '../../constants';
 import { useLoading } from 'contexts/loadingContext';
@@ -57,7 +57,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
           toggleLoading(false);
         }
       } else {
-        setError({ msg: ERROR.NOT_ALLOWED, id: Math.random() });
+        setError({ msg: ERROR_MESSAGES.NOT_ALLOWED, id: Math.random() });
 
         if (isLogged) {
           const status = data.user.status;

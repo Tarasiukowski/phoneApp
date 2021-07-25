@@ -6,7 +6,7 @@ import { ElementFinder } from 'components/molecules';
 import { SettingsTemplate } from 'templates';
 import ElementList from './elementList';
 
-import { ERROR } from 'common/errors';
+import { ERROR_MESSAGES } from 'common/errorsMessages';
 import { fetcher, getObjectsKeysFromArray, handleRequestError } from 'utils';
 import { update as updateUser, useUser } from 'setup/reducers/userReducer';
 import { useError, useMultiTask } from 'contexts';
@@ -54,7 +54,7 @@ const SettingsListsContent = () => {
               return true;
             }
 
-            setError({ msg: ERROR.IS_NOT_FRIEND(email), id: Math.random() });
+            setError({ msg: ERROR_MESSAGES.IS_NOT_FRIEND(email), id: Math.random() });
             return false;
           }
 

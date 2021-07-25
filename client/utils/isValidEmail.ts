@@ -1,4 +1,4 @@
-import { EMAIL_REGEX, ERROR } from 'common';
+import { EMAIL_REGEX, ERROR_MESSAGES } from 'common';
 
 type returnValueValidEmail = {
   valid: boolean;
@@ -10,6 +10,6 @@ export const isValidEmail = (email: string): returnValueValidEmail => {
 
   return {
     valid,
-    errorMsg: valid ? null : ERROR.EMAIL_NOT_VALID(email),
+    errorMsg: valid ? null : ERROR_MESSAGES.EMAIL_NOT_VALID(email),
   };
 };
