@@ -8,7 +8,6 @@ import { useError } from 'contexts';
 import { useUser } from 'setup/reducers/userReducer';
 import { props, TypeVerify } from './types';
 import styles from './formVerify.module.scss';
-import { paths } from '../../../constants';
 import { useLoading } from 'contexts';
 
 const imageStyle = {
@@ -34,29 +33,9 @@ const FormVerify = ({ type, onSuccess }: props) => {
     e.preventDefault();
 
     try {
-      const { valid } = await fetcher(
-        'post',
-        `/user/verify/${isVerifyAccount ? 'account' : 'login'}`,
-        {
-          code: valueInput,
-        },
-      );
-
-      if (valid && isVerifyAccount) {
-        try {
-          await fetcher('PUT', '/user/update/onBoarding', {
-            value: {
-              value: false,
-              stage: paths.onBoarding.number,
-            },
-          });
-        } catch (err) {
-          handleRequestError(err, (errorMsg) => {
-            setError({ msg: errorMsg, id: Math.random() });
-          });
-          return;
-        }
-      }
+      await fetcher('post', `/user/verify/${isVerifyAccount ? 'account' : 'login'}`, {
+        code: valueInput,
+      });
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
