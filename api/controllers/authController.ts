@@ -9,7 +9,7 @@ class AuthController {
 
     const { status, ...restData } = await AuthService.index(token, { fullUser });
 
-    res.status(status).send(restData);
+    res.status(status).json(restData);
   }
 
   async login(req: Request, res: Response) {
@@ -18,7 +18,7 @@ class AuthController {
     const { status, user, token, errorMsg } = await new AuthService(email, authType).login();
 
     errorMsg || res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
-    res.status(status).send({ user, errorMsg });
+    res.status(status).json({ user, errorMsg });
   }
 
   async singUp(req: Request, res: Response) {
@@ -29,11 +29,11 @@ class AuthController {
     );
 
     errorMsg || res.cookie('SESSID', token, { maxAge: 900000, httpOnly: true });
-    res.status(status).send({ user, errorMsg });
+    res.status(status).json({ user, errorMsg });
   }
 
   logout(_: Request, res: Response) {
-    res.clearCookie('SESSID').send({ success: true });
+    res.clearCookie('SESSID').json({ success: true });
   }
 }
 

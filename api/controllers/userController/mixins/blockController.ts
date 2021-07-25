@@ -18,7 +18,7 @@ export function BlockControllerMixin<Base extends Class>(base: Base) {
 
         const { data } = await UserService.block.get(email);
 
-        res.send(data);
+        res.json(data);
       },
     };
 
@@ -28,7 +28,7 @@ export function BlockControllerMixin<Base extends Class>(base: Base) {
 
         const { status, ...restData } = await UserService.unblock.index(email, userEmail);
 
-        res.status(status).send(restData);
+        res.status(status).json(restData);
       },
     };
   };

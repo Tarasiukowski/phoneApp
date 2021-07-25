@@ -6,7 +6,7 @@ class GenerateController {
   async randomNumbers(_: Request, res: Response) {
     const numbers = await getRandomNumbers();
 
-    res.send({ numbers });
+    res.json({ numbers });
   }
 
   async allNumbers(req: Request, res: Response) {
@@ -14,7 +14,7 @@ class GenerateController {
 
     const numbers = await getAllNumbers(filter, lastNumber);
 
-    res.send({ numbers });
+    res.json({ numbers });
   }
 }
 
