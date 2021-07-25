@@ -8,9 +8,9 @@ export const useOutsideClick = (
   ref: RefObject<HTMLElement>,
   cb: CallbackType,
   getExtraOption: GetExtraOption,
-  settings?: Settings,
+  settings: Settings = { isListeningForEvent: false },
 ) => {
-  const { isListeningForEvent } = settings ? settings : ({ isListeningForEvent: false } as const);
+  const { isListeningForEvent } = settings;
 
   const handleClickEvent = (e: Event) => {
     const target = e.target as HTMLElement;
