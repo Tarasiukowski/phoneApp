@@ -1,11 +1,11 @@
 import { Document } from 'mongoose';
 
-import { Conversation, User, UpdateOption } from '../interfaces';
+import { Conversation, User, TypeModel } from '../interfaces';
 
-export const formatModel = <U extends UpdateOption>(
-  document: Document & (U extends UpdateOption.conversation ? Conversation : User),
+export const formatModel = <U extends TypeModel>(
+  document: Document & (U extends TypeModel.conversation ? Conversation : User),
 ) => {
-  const objectOfDocument = document.toObject() as U extends UpdateOption.conversation
+  const objectOfDocument = document.toObject() as U extends TypeModel.conversation
     ? Conversation
     : User;
 

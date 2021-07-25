@@ -1,6 +1,6 @@
 import { updateType, User } from '../../interfaces';
 
-export const getStagesOfAcceptInvite = (
+export const getStepsOfAcceptInvite = (
   email: string,
   from: string,
 ): { filter: { by: keyof User; valueFilter: User[keyof User] }; data: any; type: updateType }[] => [

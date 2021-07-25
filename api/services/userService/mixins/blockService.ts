@@ -5,31 +5,35 @@ import UserModel from '../../../models/user/userModel';
 export function BlockServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
     static block = {
-      async index(loggedEmail: string, memberEmail: string) {
-        const { user } = await (await UserModel.findOne('email', loggedEmail)).get();
-        const { friends = [] } = user || {};
+      async index(blockingUserEmail: string, blockedUserEmail: string) {
+        const { user: blockingUser } = await (
+          await UserModel.findOne('email', blockingUserEmail)
+        ).get();
+        const { friends = [] } = blockingUser || {};
 
-        const isFriend = friends.some((friend) => friend.email === memberEmail);
+        const isFriend = friends.some((friend) => friend.email === blockedUserEmail);
 
         if (isFriend) {
-          UserService.friend.remove(loggedEmail, memberEmail);
+          UserService.friend.remove(blockingUserEmail, blockedUserEmail);
         } else {
-          (await UserModel.findOne('email', loggedEmail)).update(
-            { key: 'invites', value: memberEmail },
+          (await UserModel.findOne('email', blockingUserEmail)).update(
+            { key: 'invites', value: blockedUserEmail },
             'pull',
           );
         }
+
         const data = await (
-          await UserModel.findOne('email', loggedEmail)
-        ).update({ key: 'blocklist', value: memberEmail }, 'push');
+          await UserModel.findOne('email', blockingUserEmail)
+        ).update({ key: 'blocklist', value: blockedUserEmail }, 'push');
 
         return data;
       },
-      async get(email: string) {
-        const { user } = await (await UserModel.findOne('email', email)).get();
-        const findedUser = user;
+      async get(loggedUserEmail: string) {
+        const { user: loggedUser } = await (
+          await UserModel.findOne('email', loggedUserEmail)
+        ).get();
 
-        const { blocklist = [] } = findedUser || {};
+        const { blocklist = [] } = loggedUser || {};
 
         const formatedUsersOfBlocklist = await UserModel.find(blocklist, 'email');
 
@@ -38,10 +42,10 @@ export function BlockServiceMixin<Base extends Class>(base: Base) {
     };
 
     static unblock = {
-      async index(loggedEmail: string, memberEmail: string) {
+      async index(unblockingUserEmail: string, unblockedUserEmail: string) {
         const data = await (
-          await UserModel.findOne('email', loggedEmail)
-        ).update({ key: 'blocklist', value: memberEmail }, 'push');
+          await UserModel.findOne('email', unblockingUserEmail)
+        ).update({ key: 'blocklist', value: unblockedUserEmail }, 'push');
 
         return data;
       },

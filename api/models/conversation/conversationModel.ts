@@ -3,7 +3,7 @@ import { Error, model } from 'mongoose';
 import { formatModel } from '../../utils';
 import { ERROR } from '../../data/error';
 import { conversationSchema } from './conversationSchema';
-import { Conversation, UpdateOption, UpdateType } from '../../interfaces';
+import { Conversation, TypeModel, UpdateType } from '../../interfaces';
 import { ConversationDocument } from './types';
 
 export const conversationModel = model<ConversationDocument>('conversation', conversationSchema);
@@ -75,14 +75,14 @@ class ConversationModel {
     }
   }
 
-  async send(content: string, email: string) {
+  async send(content: string, author: string) {
     const { conversation } = this.data;
     const id = conversation?.id;
 
     try {
       await conversationModel.updateOne(
         { _id: id },
-        { $push: { messages: { from: email, content, id: Math.random() } } },
+        { $push: { messages: { from: author, content, id: Math.random() } } },
       );
 
       return { succes: true, status: 200 };
@@ -91,13 +91,13 @@ class ConversationModel {
     }
   }
 
-  static async find(id: string) {
+  static async findById(id: string) {
     try {
       const conversation = await conversationModel.findOne({ _id: id });
       let formatedConversation: Conversation;
 
       if (conversation) {
-        formatedConversation = formatModel<UpdateOption.conversation>(conversation);
+        formatedConversation = formatModel<TypeModel.conversation>(conversation);
       } else {
         throw new Error('can not find that conversation');
       }
@@ -122,7 +122,7 @@ class ConversationModel {
 
     try {
       conversation.save();
-      const formatedConversation = formatModel<UpdateOption.conversation>(conversation);
+      const formatedConversation = formatModel<TypeModel.conversation>(conversation);
 
       return { succes: true, status: 200, conversation: formatedConversation };
     } catch (err) {

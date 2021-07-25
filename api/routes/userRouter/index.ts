@@ -8,7 +8,7 @@ import { blockRouter } from './blockRouter';
 export const userRouter = Router();
 
 userRouter
-  .post('/verify/:name', userController.verify)
+  .post('/verify/:option', userController.verify)
   .put('/update', userController.update)
   .put('/update/:name', userController.update)
   .delete('/update/:name', userController.update)

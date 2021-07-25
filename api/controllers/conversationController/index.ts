@@ -4,17 +4,20 @@ import ConversationService from '../../services/conversationService';
 
 class ConversationController {
   async index({ body }: Request, res: Response) {
-    const { id } = body;
+    const { id: conversationId } = body;
 
-    const { status, ...restData } = await new ConversationService(id).get();
+    const { status, ...restData } = await new ConversationService(conversationId).get();
 
     res.status(status).json(restData);
   }
 
   async send({ body }: Request, res: Response) {
-    const { id, email, content } = body;
+    const { id: conversationId, email: author, content } = body;
 
-    const { status, ...restData } = await new ConversationService(id).send(email, content);
+    const { status, ...restData } = await new ConversationService(conversationId).send(
+      author,
+      content,
+    );
 
     res.status(status).json(restData);
   }

@@ -14,14 +14,16 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
     type: T,
   ) {
     const { by, valueFilter } = filter;
+    const { key, value } = data;
 
-    const returnedData = await (await UserModel.findOne(by, valueFilter)).update(data, type);
+    const returnedData = await (
+      await UserModel.findOne(by, valueFilter)
+    ).update({ key, value }, type);
 
     return returnedData;
   }
 
-  static async verify(data: { code: string; email: string }, type: VerifyOption) {
-    const { code, email } = data;
+  static async verify(email: string, code: string, type: VerifyOption) {
     const emailVerification = type === VerifyOption.email;
 
     const { status, user } = await (await UserModel.findOne('email', email)).get();
@@ -43,9 +45,9 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
             'setEmail',
           );
 
-          const friends = await this.friend.get(email, 'conversations');
+          const { data: friends } = await this.friend.get(email, 'conversations');
 
-          friends.data.map(async (friend) => {
+          friends.map(async (friend) => {
             if (friend.email) {
               (await UserModel.findOne('email', friend.email)).update(
                 { key: 'friends', value: email },
@@ -64,7 +66,7 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
               const { id } = conversation;
 
               await (
-                await ConversationModel.find(id)
+                await ConversationModel.findById(id)
               ).updateMany([
                 { key: 'users', value: email, type: UpdateType.push },
                 { key: 'users', value: newEmail, type: UpdateType.push },

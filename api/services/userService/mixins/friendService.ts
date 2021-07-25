@@ -2,24 +2,26 @@ import UserModel from '../../../models/user/userModel';
 import { ERROR } from '../../../data';
 import { Class, User } from '../../../interfaces';
 import ConversationModel from '../../../models/conversation/conversationModel';
-import { getStagesOfRemoveFriend } from '../../../data';
+import { getStepsOfRemoveFriend } from '../../../data';
 import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
 
 export function FriendServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
     static friend = {
-      async get(email: string, ...extraData: any[]) {
-        const { user } = await (await UserModel.findOne('email', email)).get();
+      async get(loggedUserEmail: string, ...extraKeys: (keyof User)[]) {
+        const { user: loggedUser } = await (
+          await UserModel.findOne('email', loggedUserEmail)
+        ).get();
 
-        if (user) {
-          const { friends } = user;
+        if (loggedUser) {
+          const { friends } = loggedUser;
 
-          const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
+          const emailsOfFriends = getObjectsKeysFromArray(friends, 'email') as string[];
 
           const { data: findedUsers } = await UserModel.find(
             emailsOfFriends,
             'email',
-            ...extraData,
+            ...extraKeys,
           );
 
           const formatedFriends: Partial<User>[] = findedUsers.filter((findedUser) => {
@@ -39,13 +41,13 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
 
         return { status: 404, data: [] };
       },
-      async remove(email: string, friendEmail: string) {
+      async remove(loggedUserEmail: string, friendEmail: string) {
         const { user: friend } = await (await UserModel.findOne('email', friendEmail)).get();
 
         if (friend) {
-          const stagesOfRemoveFriend = getStagesOfRemoveFriend(email, friendEmail);
+          const stepsOfRemoveFriend = getStepsOfRemoveFriend(loggedUserEmail, friendEmail);
 
-          stagesOfRemoveFriend.map(async ({ filter, data, type }) => {
+          stepsOfRemoveFriend.map(async ({ filter, data, type }) => {
             const { by, valueFilter } = filter;
 
             await (await UserModel.findOne(by, valueFilter)).update(data, type);
@@ -53,9 +55,11 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
 
           const { conversations } = friend;
 
-          const conversation = conversations.find((conversation) => conversation.with === email)!;
+          const conversation = conversations.find(
+            (conversation) => conversation.with === loggedUserEmail,
+          )!;
 
-          (await ConversationModel.find(conversation.id)).remove();
+          (await ConversationModel.findById(conversation.id)).remove();
 
           return { status: 200, errorMsg: null };
         }

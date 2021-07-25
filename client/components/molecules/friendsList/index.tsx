@@ -28,7 +28,7 @@ const FriendsList = () => {
         onEnd: async (to: string) => {
           try {
             await fetcher('POST', '/user/invite', {
-              to,
+              invitedUser: to,
             });
 
             return true;

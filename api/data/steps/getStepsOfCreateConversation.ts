@@ -1,6 +1,6 @@
 import { updateType, User } from '../../interfaces';
 
-export const getStagesOfCreateConversation = <K extends keyof User>(
+export const getStepsOfCreateConversation = <K extends keyof User>(
   email: string,
   from: string,
   id: string,

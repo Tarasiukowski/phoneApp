@@ -50,7 +50,7 @@ const UsersList = ({ name, data }: props) => {
   const acceptInvite = useCallback(async (user: Member) => {
     try {
       await fetcher('POST', '/user/invite/accept', {
-        from: user.email,
+        invitingUser: user.email,
       });
 
       const filteredData = listData.filter((user) => {

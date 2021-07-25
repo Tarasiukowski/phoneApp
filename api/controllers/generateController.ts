@@ -10,9 +10,9 @@ class GenerateController {
   }
 
   async allNumbers(req: Request, res: Response) {
-    const { filter, lastNumber } = req.body;
+    const { include, startWith } = req.body;
 
-    const numbers = await getAllNumbers(filter, lastNumber);
+    const numbers = await getAllNumbers(startWith, include);
 
     res.json({ numbers });
   }

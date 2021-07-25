@@ -8,7 +8,7 @@ import { getUserStage, fetcher } from 'utils';
 import { props } from './types';
 import { useError } from 'contexts';
 import { ERROR_MESSAGES } from 'common';
-import { loggedPaths } from 'data';
+import { loggedPaths } from '../../constants';
 import { paths } from '../../constants';
 import { useLoading } from 'contexts/loadingContext';
 
@@ -33,7 +33,7 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
     fetcher('post', '/auth', { fullUser: fetchFullUser }).then((data) => {
       const user = data.user ? data.user.value : null;
 
-      console.log(user)
+      console.log(user);
 
       dispatch(login(user));
 

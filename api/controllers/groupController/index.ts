@@ -4,19 +4,19 @@ import GroupService from '../../services/groupService';
 
 class GroupController {
   async create({ body }: Request, res: Response) {
-    const { email, name, members } = body;
+    const { email: author, name, members } = body;
 
-    const { status, ...restData } = await new GroupService(email, name).create(members);
+    const { status, ...restData } = await new GroupService(author, name).create(members);
 
-    res.status(status).send(restData);
+    res.status(status).json(restData);
   }
 
   async remove({ body }: Request, res: Response) {
-    const { email, name } = body
+    const { email: author, name } = body;
 
-    const { status, ...restData } = await new GroupService(email, name).remove();
+    const { status, ...restData } = await new GroupService(author, name).remove();
 
-    res.status(status).send(restData);
+    res.status(status).json(restData);
   }
 }
 

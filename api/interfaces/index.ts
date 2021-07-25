@@ -48,7 +48,7 @@ export interface User {
 
 // enums
 
-export enum UpdateOption {
+export enum TypeModel {
   conversation = 'conversation',
   user = 'user',
 }

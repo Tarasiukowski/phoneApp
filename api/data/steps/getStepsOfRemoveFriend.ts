@@ -1,6 +1,6 @@
 import { updateType, User } from '../../interfaces';
 
-export const getStagesOfRemoveFriend = (
+export const getStepsOfRemoveFriend = (
   email: string,
   friendEmail: string,
 ): {

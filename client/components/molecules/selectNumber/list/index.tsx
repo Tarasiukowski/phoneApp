@@ -64,8 +64,8 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
 
       if (scrollHeight - clientHeight === y && y !== 0) {
         fetcher('post', '/generate/allNumbers', {
-          filter: valueDigits,
-          lastNumber: allNumbers[allNumbers.length - 1],
+          include: valueDigits,
+          startWith: allNumbers[allNumbers.length - 1],
         })
           .then(({ numbers }) => {
             setNumbers({ all: [...allNumbers, ...numbers] });

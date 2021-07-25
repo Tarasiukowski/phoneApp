@@ -11,7 +11,7 @@ import { update as updateFriends, useFriends } from 'setup/reducers/friendsReduc
 import { update as updateBlocklist, useBlocklist } from 'setup/reducers/blockListReducer';
 import { login, useUser } from 'setup/reducers/userReducer';
 import { Template } from './styles';
-import { loggedPaths } from 'data';
+import { loggedPaths } from '../../constants';
 
 const swrSettings = {
   refreshInterval: 1,

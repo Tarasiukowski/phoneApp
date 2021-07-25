@@ -56,7 +56,7 @@ class UserModel<F extends boolean> {
     }
   }
 
-  static async find<K extends keyof User, V extends User[K]>(data: V[], key: K, ...extraData: K[]) {
+  static async find<K extends keyof User, V extends User[K]>(data: V[], key: K, ...extraData: (keyof User)[]) {
     const formatedData = (await data.map(async (elem) => {
       const { user } = await (await UserModel.findOne(key, elem)).get();
 

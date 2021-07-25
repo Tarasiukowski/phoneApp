@@ -23,7 +23,7 @@ const SettingsFriendsContent = () => {
 
     try {
       await fetcher('POST', '/user/friends/remove', {
-        friendEmail: email,
+        friend: email,
       });
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
@@ -45,7 +45,7 @@ const SettingsFriendsContent = () => {
         onEnd: async (to: string) => {
           try {
             await fetcher('POST', '/user/invite', {
-              to,
+              invitedUser: to,
             });
 
             return true;

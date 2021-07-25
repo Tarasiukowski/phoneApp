@@ -20,3 +20,5 @@ export const paths = {
     nummber: '/settings/number',
   },
 };
+
+export const loggedPaths = ['/settings', '/inbox', '/contacts', '/invites', '/group'];

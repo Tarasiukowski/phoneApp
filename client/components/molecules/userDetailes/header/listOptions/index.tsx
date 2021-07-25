@@ -25,7 +25,7 @@ const ListOptions = ({ open, email, listOptionsRef }: props) => {
         : dispatch(removeInvite({ by: 'email', value: userEmail }));
 
       await fetcher('POST', '/user/block', {
-        userEmail,
+        blockedUser: userEmail,
       });
     } catch (err) {
       handleRequestError(err, (errorMsg) => {

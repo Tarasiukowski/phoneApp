@@ -2,26 +2,26 @@ import { formatNumber } from './formatNumber';
 import { unformat } from './unformat';
 import { availabilityNumber } from './availabilityNumber';
 
-export const getAllNumbers = async (filter?: string, lastNumber?: string): Promise<string[]> => {
+export const getAllNumbers = async (startWith?: string, include?: string): Promise<string[]> => {
   const numbers: string[] = [];
-  let number = lastNumber ? unformat(lastNumber) : '0000000';
+  let number = startWith ? unformat(startWith) : '0000000';
   let parseNumber = parseInt(number);
   let counter = 20;
 
-  if (filter) {
-    number = number.slice(0, number.length - filter.length) + filter;
+  if (include) {
+    number = number.slice(0, number.length - include.length) + include;
     parseNumber = parseInt(number);
 
     for (let i = 0; i <= counter; i++) {
       let lengthParseNumber = parseNumber.toString().length;
-      let increaseNumber = parseInt(`1${'0'.repeat(filter.length)}`);
+      let increaseNumber = parseInt(`1${'0'.repeat(include.length)}`);
 
       if (i == 0) {
         const formatedNumber = formatNumber(number);
 
         const availability = await availabilityNumber(formatedNumber);
 
-        if (!lastNumber) {
+        if (!startWith) {
           if (availability) {
             numbers.push(formatedNumber);
           } else {
@@ -63,7 +63,7 @@ export const getAllNumbers = async (filter?: string, lastNumber?: string): Promi
 
     const availability = await availabilityNumber(formatedNumber);
 
-    if (!(i === 0 && lastNumber) && availability) {
+    if (!(i === 0 && startWith) && availability) {
       numbers.push(formatedNumber);
     } else {
       counter++;
