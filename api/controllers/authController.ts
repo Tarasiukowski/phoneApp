@@ -7,7 +7,7 @@ class AuthController {
     const { fullUser } = req.body;
     const token = req.cookies['SESSID'];
 
-    const { status, ...restData } = await AuthService.index(token, fullUser);
+    const { status, ...restData } = await AuthService.index(token, { fullUser });
 
     res.status(status).send(restData);
   }

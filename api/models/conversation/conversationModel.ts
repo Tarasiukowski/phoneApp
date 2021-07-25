@@ -38,7 +38,7 @@ class ConversationModel {
         const conversation = await conversationModel.findOne({ _id: id });
 
         if (conversation) {
-          // FIX ME
+          // TODO
         }
       }
 

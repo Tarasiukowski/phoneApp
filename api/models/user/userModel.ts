@@ -8,8 +8,14 @@ import { updateType, AuthType, User } from '../../interfaces';
 
 export const userModel = model<UserDocument>('user', userSchema);
 
-class UserModel {
-  private constructor(private data: { status: number; user: UserDocument | User | null }) {}
+class UserModel<F extends boolean> {
+  private constructor(
+    private data: {
+      status: number;
+      user: (F extends true ? User : UserDocument) | null;
+      formated: F;
+    },
+  ) {}
 
   get() {
     return this.data;
@@ -20,7 +26,7 @@ class UserModel {
 
     const formatedUser = user ? formatUser(user, extraData) : user;
 
-    return new UserModel({ user: formatedUser, status });
+    return new UserModel({ user: formatedUser, status, formated: true });
   }
 
   async update<K extends keyof User, T extends updateType>(
@@ -73,9 +79,9 @@ class UserModel {
     try {
       const user = await userModel.findOne({ [key]: value });
 
-      return new UserModel({ status: 200, user });
+      return new UserModel({ status: 200, user, formated: false });
     } catch (err) {
-      return new UserModel({ status: 404, user: null });
+      return new UserModel({ status: 404, user: null, formated: false });
     }
   }
 

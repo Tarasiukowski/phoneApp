@@ -27,5 +27,3 @@ export const getUpdateOption = <K extends keyof User, T extends updateType>(
 
   return availableOptions[type];
 };
-
-// FIX ME

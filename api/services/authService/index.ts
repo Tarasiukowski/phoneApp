@@ -1,4 +1,4 @@
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 import UserModel from '../../models/user/userModel';
 import { generateCode, isValidEmail, sendMail } from '../../utils';
@@ -19,6 +19,7 @@ class AuthService {
     const { fullUser } = settings;
 
     if (token) {
+      // TODO => fix type
       const { id }: any = jwt.verify(token, JWT_PRIVATE_KEY);
 
       const userInstance = await UserModel.findOne('_id', id);
@@ -54,7 +55,7 @@ class AuthService {
 
     if (valid) {
       const userInstance = await UserModel.findOne('email', email);
-      const { user }: any = userInstance.get();
+      const { user } = userInstance.get();
 
       if (user) {
         const token = jwt.sign({ id: user._id }, JWT_PRIVATE_KEY, {
