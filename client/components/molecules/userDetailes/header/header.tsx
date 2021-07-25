@@ -29,11 +29,15 @@ const Header = (props: props) => {
   const formatedFullname = formatValuesObject(fullname ? fullname : {});
 
   useDidMount(() => {
-    window.addEventListener('resize', handleOnResize);
+    setListOptions()
 
+    window.addEventListener('resize', handleOnResize);
     window.addEventListener('click', handleOnClick);
 
-    setListOptions();
+    return () => {
+      window.removeEventListener('resize', handleOnResize);
+      window.removeEventListener('click', handleOnClick);
+    };
   });
 
   const setListOptions = () => {
