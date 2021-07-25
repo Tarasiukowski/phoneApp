@@ -23,13 +23,13 @@ const MultiTaskProvider = ({ children }: props) => {
     setHanlde(undefined);
   }, []);
 
-  const passValue = {
+  const value = {
     open,
     handle,
     toggleOpen,
   };
 
-  return <MultiTaskContext.Provider value={passValue}>{children}</MultiTaskContext.Provider>;
+  return <MultiTaskContext.Provider value={value}>{children}</MultiTaskContext.Provider>;
 };
 
 const useMultiTask = () => {

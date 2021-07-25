@@ -7,7 +7,7 @@ const ErrorContext = createContext<errorContext>({ error: null, setError: () => 
 const ErrorProvider = ({ children }: props) => {
   const [error, setError] = useState<errorContext['error']>(null);
 
-  const passValue = useMemo(
+  const value = useMemo(
     () => ({
       error,
       setError,
@@ -15,7 +15,7 @@ const ErrorProvider = ({ children }: props) => {
     [error],
   );
 
-  return <ErrorContext.Provider value={passValue}>{children}</ErrorContext.Provider>;
+  return <ErrorContext.Provider value={value}>{children}</ErrorContext.Provider>;
 };
 
 const useError = () => {

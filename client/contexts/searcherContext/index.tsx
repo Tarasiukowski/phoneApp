@@ -11,9 +11,9 @@ const SearcherProvider = ({ children }: props) => {
     setOpen(visible);
   }, []);
 
-  const passValue = useMemo(() => ({ open, handleVisible }), [open]);
+  const value = useMemo(() => ({ open, handleVisible }), [open]);
 
-  return <SearcherContext.Provider value={passValue}>{children}</SearcherContext.Provider>;
+  return <SearcherContext.Provider value={value}>{children}</SearcherContext.Provider>;
 };
 
 const useSearcher = () => {

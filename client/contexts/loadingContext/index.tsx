@@ -14,7 +14,7 @@ const LoadingProvider = ({ children }: props) => {
     setLoading(value);
   }, []);
 
-  const passValue = useMemo(
+  const value = useMemo(
     () => ({
       loading,
       toggleLoading,
@@ -22,7 +22,7 @@ const LoadingProvider = ({ children }: props) => {
     [loading],
   );
 
-  return <LoadingContext.Provider value={passValue}>{children}</LoadingContext.Provider>;
+  return <LoadingContext.Provider value={value}>{children}</LoadingContext.Provider>;
 };
 
 const useLoading = () => {
