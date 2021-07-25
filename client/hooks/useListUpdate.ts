@@ -1,14 +1,16 @@
 import { useEffect } from 'react';
 
+import { Member } from 'interfaces';
+
 export const useListUpdate = (
   error: Error,
-  fetchedData: any[],
-  activeData: any[],
+  fetchedData: Member[],
+  activeData: Member[],
   cb: () => void,
 ) => {
   useEffect(() => {
-    if(!error && fetchedData && fetchedData.length !== activeData.length) {
-      cb()
+    if (!error && fetchedData && fetchedData.length !== activeData.length) {
+      cb();
     }
   }, [error, fetchedData]);
 };
