@@ -1,5 +1,4 @@
-import { loggedPaths } from 'data';
-import { paths } from '../constants';
+import { paths, loggedPaths } from '../constants';
 
 export const getUserStage = (
   status: { onBoarding: { value: boolean; stage: string }; verify: { stage: string } | null },
