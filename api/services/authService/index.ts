@@ -7,7 +7,7 @@ import { User, AuthType } from '../../interfaces';
 import { JWT_PRIVATE_KEY } from '../../constants';
 
 const authService = {
-  async index(token: string, settings: { fullUser: boolean } = { fullUser: true }) {
+  async byToken(token: string, settings: { fullUser: boolean } = { fullUser: true }) {
     const { fullUser } = settings;
 
     if (token) {

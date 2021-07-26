@@ -6,7 +6,7 @@ import { ERROR } from '../data';
 const mainMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.SESSID;
 
-  const { user } = await authService.index(token);
+  const { user } = await authService.byToken(token);
 
   if (user) {
     if (user.value) {

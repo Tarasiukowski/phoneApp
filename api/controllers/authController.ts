@@ -3,11 +3,11 @@ import { Request, Response } from 'express';
 import { authService } from '../services';
 
 export const authController = {
-  async index(req: Request, res: Response) {
+  async byToken(req: Request, res: Response) {
     const { fullUser } = req.body;
     const token = req.cookies['SESSID'];
 
-    const { status, ...restData } = await authService.index(token, { fullUser });
+    const { status, ...restData } = await authService.byToken(token, { fullUser });
 
     res.status(status).json(restData);
   },
