@@ -18,7 +18,7 @@ const SettingsBlocklistContent = () => {
 
   const removeFromBlockList = useCallback(async (email: string) => {
     try {
-      fetcher('POST', '/user/unblock', { unblockedUser: email });
+      fetcher('POST', '/user/unblock', { unblockedUserEmail: email });
 
       disptach(removeFromBlcokList({ by: 'email', value: email }));
     } catch (err) {
