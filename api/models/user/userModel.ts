@@ -21,23 +21,20 @@ class UserModel<F extends boolean> {
     return this.data;
   }
 
-  format(...extraData: (keyof User)[]) {
+  format(...extraKeys: (keyof User)[]) {
     const { user, status } = this.data;
 
-    const formatedUser = user ? formatUser(user, extraData) : user;
+    const formatedUser = user ? formatUser(user, extraKeys) : user;
 
     return new UserModel({ user: formatedUser, status, formated: true });
   }
 
   async update<K extends keyof User, T extends updateType>(
-    data: {
-      key: K;
-      value: User[K] extends Array<any> ? Partial<User[K][number]> | string : User[K];
-    },
+    key: K,
+    value: User[K] extends Array<any> ? Partial<User[K][number]> | string : User[K],
     type: T,
   ) {
     const { user } = this.data;
-    const { key, value } = data;
 
     if (type === 'newEmail') {
       const { user } = await (await UserModel.findOne('email', value)).get();
@@ -56,19 +53,23 @@ class UserModel<F extends boolean> {
     }
   }
 
-  static async find<K extends keyof User, V extends User[K]>(data: V[], key: K, ...extraData: (keyof User)[]) {
-    const formatedData = (await data.map(async (elem) => {
+  static async findAllBy<K extends keyof User, V extends User[K]>(
+    key: K,
+    data: V[],
+    ...extraKeys: (keyof User)[]
+  ) {
+    const findedUsers = (await data.map(async (elem) => {
       const { user } = await (await UserModel.findOne(key, elem)).get();
 
       if (user) {
-        const formatedUser = formatUser(user, extraData);
+        const formatedUser = formatUser(user, extraKeys);
 
         return formatedUser;
       }
     })) as Partial<User>[];
 
     return {
-      data: await Promise.all(formatedData),
+      data: await Promise.all(findedUsers),
     };
   }
 
@@ -104,9 +105,9 @@ class UserModel<F extends boolean> {
       authOptions = { onBoarding: { value: false, stage: paths.onBoarding.number } };
     }
 
-    const defaultData = await getDefaultDataUser();
+    const defaultDataUser = await getDefaultDataUser();
 
-    const user = new userModel({ ...extraData, ...defaultData, ...authOptions });
+    const user = new userModel({ ...extraData, ...defaultDataUser, ...authOptions });
 
     try {
       user.save();

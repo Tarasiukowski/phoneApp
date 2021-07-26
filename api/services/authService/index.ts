@@ -76,16 +76,7 @@ class AuthService {
 
           sendMail(email, code);
 
-          userInstance.update(
-            {
-              key: 'verify',
-              value: {
-                code,
-                stage,
-              },
-            },
-            'set',
-          );
+          userInstance.update('verify', { code, stage }, 'set');
         }
 
         return { user: formatedUser, token, status, errorMsg: null };

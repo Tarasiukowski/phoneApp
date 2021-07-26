@@ -5,26 +5,23 @@ import UserModel from '../../models/user/userModel';
 import { FriendServiceMixin, InviteServiceMixin, BlockServiceMixin } from './mixins';
 
 class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixin(class {}))) {
-  static async update<K extends keyof User, U extends keyof User, T extends updateType>(
-    filter: { by: K; valueFilter: User[K] },
+  static async update<U extends keyof User, T extends updateType>(
+    email: string,
     data: {
       key: U;
       value: User[U] extends Array<any> ? Partial<User[U][number]> | string : User[U];
     },
     type: T,
   ) {
-    const { by, valueFilter } = filter;
     const { key, value } = data;
 
-    const returnedData = await (
-      await UserModel.findOne(by, valueFilter)
-    ).update({ key, value }, type);
+    const returnedData = await (await UserModel.findOne('email', email)).update(key, value, type);
 
     return returnedData;
   }
 
   static async verify(email: string, code: string, type: VerifyOption) {
-    const emailVerification = type === VerifyOption.email;
+    const isEmailVerification = type === VerifyOption.email;
 
     const { status, user } = await (await UserModel.findOne('email', email)).get();
 
@@ -34,31 +31,19 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
         account: user.verify.code === code,
       };
 
-      const validCode = emailVerification ? verify.newEmail : verify.account;
+      const validCode = isEmailVerification ? verify.newEmail : verify.account;
 
       if (validCode) {
-        if (emailVerification) {
+        if (isEmailVerification) {
           const newEmail = user.newEmail.value;
 
-          (await UserModel.findOne('email', email)).update(
-            { key: 'email', value: newEmail },
-            'setEmail',
-          );
+          (await UserModel.findOne('email', email)).update('email', newEmail, 'setEmail');
 
           const { data: friends } = await this.friend.get(email, 'conversations');
 
           friends.map(async (friend) => {
-            if (friend.email) {
-              (await UserModel.findOne('email', friend.email)).update(
-                { key: 'friends', value: email },
-                'pull',
-              );
-
-              (await UserModel.findOne('email', friend.email)).update(
-                { key: 'friends', value: newEmail },
-                'push',
-              );
-            }
+            (await UserModel.findOne('email', friend.email)).update('friends', email, 'pull');
+            (await UserModel.findOne('email', friend.email)).update('friends', newEmail, 'push');
 
             const { conversations = [] } = friend || {};
 
@@ -76,7 +61,7 @@ class UserService extends InviteServiceMixin(FriendServiceMixin(BlockServiceMixi
         } else {
           await (
             await UserModel.findOne('email', email)
-          ).update({ key: 'verify', value: { ...user.verify } }, 'remove');
+          ).update('verify', { ...user.verify }, 'remove');
         }
 
         return { valid: true, status, errorMsg: null };

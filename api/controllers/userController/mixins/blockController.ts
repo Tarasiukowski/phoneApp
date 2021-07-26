@@ -7,16 +7,19 @@ export function BlockControllerMixin<Base extends Class>(base: Base) {
   return class extends base {
     block = {
       async index({ body }: Request, res: Response) {
-        const { email: blockingUser, blockedUser } = body;
+        const { email: blockingUserEmail, blockedUserEmail } = body;
 
-        const { status, ...restData } = await UserService.block.index(blockingUser, blockedUser);
+        const { status, ...restData } = await UserService.block.index(
+          blockingUserEmail,
+          blockedUserEmail,
+        );
 
         res.status(status).send(restData);
       },
       async get({ body }: Request, res: Response) {
-        const { email: loggedUser } = body;
+        const { email: loggedUserEmail } = body;
 
-        const { data } = await UserService.block.get(loggedUser);
+        const { data } = await UserService.block.get(loggedUserEmail);
 
         res.json(data);
       },
@@ -24,11 +27,11 @@ export function BlockControllerMixin<Base extends Class>(base: Base) {
 
     unblock = {
       async index({ body }: Request, res: Response) {
-        const { email: unblockingUser, unblockedUser } = body;
+        const { email: unblockingUserEmail, unblockedUserEmail } = body;
 
         const { status, ...restData } = await UserService.unblock.index(
-          unblockingUser,
-          unblockedUser,
+          unblockingUserEmail,
+          unblockedUserEmail,
         );
 
         res.status(status).json(restData);

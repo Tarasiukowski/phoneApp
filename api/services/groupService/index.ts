@@ -14,7 +14,7 @@ class GroupService {
 
     const data = await (
       await UserModel.findOne('email', author)
-    ).update({ key: 'groups', value: { name } }, 'pull');
+    ).update('groups', { name }, 'pull');
 
     return data;
   }
@@ -24,7 +24,7 @@ class GroupService {
 
     const data = await (
       await UserModel.findOne('email', author)
-    ).update({ key: 'groups', value: { name, members: users } }, 'push');
+    ).update('groups', { name, members: users }, 'push');
 
     return data;
   }

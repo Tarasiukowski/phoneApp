@@ -17,14 +17,15 @@ export function BlockServiceMixin<Base extends Class>(base: Base) {
           UserService.friend.remove(blockingUserEmail, blockedUserEmail);
         } else {
           (await UserModel.findOne('email', blockingUserEmail)).update(
-            { key: 'invites', value: blockedUserEmail },
-            'pull',
+            'invites',
+            blockedUserEmail,
+            'push',
           );
         }
 
         const data = await (
           await UserModel.findOne('email', blockingUserEmail)
-        ).update({ key: 'blocklist', value: blockedUserEmail }, 'push');
+        ).update('blocklist', blockedUserEmail, 'push');
 
         return data;
       },
@@ -35,7 +36,7 @@ export function BlockServiceMixin<Base extends Class>(base: Base) {
 
         const { blocklist = [] } = loggedUser || {};
 
-        const formatedUsersOfBlocklist = await UserModel.find(blocklist, 'email');
+        const formatedUsersOfBlocklist = await UserModel.findAllBy('email', blocklist);
 
         return formatedUsersOfBlocklist;
       },
@@ -45,7 +46,7 @@ export function BlockServiceMixin<Base extends Class>(base: Base) {
       async index(unblockingUserEmail: string, unblockedUserEmail: string) {
         const data = await (
           await UserModel.findOne('email', unblockingUserEmail)
-        ).update({ key: 'blocklist', value: unblockedUserEmail }, 'push');
+        ).update('blocklist', unblockedUserEmail, 'push');
 
         return data;
       },

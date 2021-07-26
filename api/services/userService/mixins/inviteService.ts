@@ -3,7 +3,6 @@ import Conversation from '../../../models/conversation/conversationModel';
 import UserModel from '../../../models/user/userModel';
 import { Class } from '../../../interfaces';
 import { getStepsOfAcceptInvite, getStepsOfCreateConversation } from '../../../data';
-import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
 
 export function InviteServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
@@ -33,7 +32,7 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
         const invites = invitedUser.invites;
         const { friends = [] } = invitingUser || {};
 
-        const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
+        const emailsOfFriends = friends.map(({ email }) => email);
 
         if (invites.includes(invitingUserEmail)) {
           return { status: 400, errorMsg: ERROR.DUPLICATE_INVITATION };
@@ -43,7 +42,7 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
 
         await (
           await UserModel.findOne('email', invitedUserEmail)
-        ).update({ key: 'invites', value: invitingUserEmail }, 'push');
+        ).update('invites', invitingUserEmail, 'push');
 
         return { status: 200, errorMsg: null };
       },
@@ -55,7 +54,7 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
         if (loggedUser) {
           const invites = loggedUser.invites;
 
-          const { data: findedUsers } = await UserModel.find(invites, 'email');
+          const { data: findedUsers } = await UserModel.findAllBy('email', invites);
 
           return { status, data: findedUsers };
         }
@@ -65,10 +64,10 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
       async accept(acceptingUserEmail: string, invitingUserEmail: string) {
         const stepsOfAcceptInvite = getStepsOfAcceptInvite(acceptingUserEmail, invitingUserEmail);
 
-        stepsOfAcceptInvite.map(async ({ filter, data, type }) => {
-          const { by, valueFilter } = filter;
+        stepsOfAcceptInvite.map(async ({ email, data, type }) => {
+          const { key, value } = data;
 
-          await (await UserModel.findOne(by, valueFilter)).update(data, type);
+          await (await UserModel.findOne('email', email)).update(key, value, type);
         });
 
         const { conversation } = await Conversation.create([acceptingUserEmail, invitingUserEmail]);
@@ -82,10 +81,10 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
             id,
           );
 
-          stepsOfCreateConversation.map(async ({ filter, data, type }) => {
-            const { by, valueFilter } = filter;
+          stepsOfCreateConversation.map(async ({ email, data, type }) => {
+            const { key, value } = data;
 
-            await (await UserModel.findOne(by, valueFilter)).update(data, type);
+            await (await UserModel.findOne('email', email)).update(key, value, type);
           });
         }
 
@@ -94,7 +93,7 @@ export function InviteServiceMixin<Base extends Class>(base: Base) {
       async reject(rejectingUserEmail: string, invitingUserEmail: string) {
         const data = await (
           await UserModel.findOne('email', rejectingUserEmail)
-        ).update({ key: 'invites', value: invitingUserEmail }, 'pull');
+        ).update('invites', invitingUserEmail, 'pull');
 
         return data;
       },

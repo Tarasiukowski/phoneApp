@@ -10,9 +10,9 @@ class ConversationService {
   async get() {
     const id = this.conversationId;
 
-    const conversation = await (await ConversationModel.findById(id)).get();
+    const conversationData = await (await ConversationModel.findById(id)).get();
 
-    return conversation;
+    return conversationData;
   }
 
   async send(author: string, content: string) {

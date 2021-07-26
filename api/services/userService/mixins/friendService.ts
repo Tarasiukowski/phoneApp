@@ -3,7 +3,6 @@ import { ERROR } from '../../../data';
 import { Class, User } from '../../../interfaces';
 import ConversationModel from '../../../models/conversation/conversationModel';
 import { getStepsOfRemoveFriend } from '../../../data';
-import { getObjectsKeysFromArray } from '../../../utils/getObjectsKeysFromArray';
 
 export function FriendServiceMixin<Base extends Class>(base: Base) {
   return class extends base {
@@ -16,27 +15,15 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
         if (loggedUser) {
           const { friends } = loggedUser;
 
-          const emailsOfFriends = getObjectsKeysFromArray(friends, 'email') as string[];
+          const emailsOfFriends = friends.map(({ email }) => email);
 
-          const { data: findedUsers } = await UserModel.find(
-            emailsOfFriends,
+          const { data: findedUsers } = await UserModel.findAllBy(
             'email',
+            emailsOfFriends,
             ...extraKeys,
           );
 
-          const formatedFriends: Partial<User>[] = findedUsers.filter((findedUser) => {
-            if (findedUser) {
-              const dataFriend = friends.find((friend) => friend.email === findedUser.email);
-
-              if (dataFriend) {
-                const notes = dataFriend.notes;
-
-                return { ...findedUser, notes };
-              }
-            }
-          });
-
-          return { status: 200, data: formatedFriends };
+          return { status: 200, data: findedUsers };
         }
 
         return { status: 404, data: [] };
@@ -47,10 +34,10 @@ export function FriendServiceMixin<Base extends Class>(base: Base) {
         if (friend) {
           const stepsOfRemoveFriend = getStepsOfRemoveFriend(loggedUserEmail, friendEmail);
 
-          stepsOfRemoveFriend.map(async ({ filter, data, type }) => {
-            const { by, valueFilter } = filter;
+          stepsOfRemoveFriend.map(async ({ email, data, type }) => {
+            const { key, value } = data;
 
-            await (await UserModel.findOne(by, valueFilter)).update(data, type);
+            await (await UserModel.findOne('email', email)).update(key, value, type);
           });
 
           const { conversations } = friend;

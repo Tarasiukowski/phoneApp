@@ -14,7 +14,7 @@ class UserController extends FriendsControllerMixin(
     const { type, email, value } = req.body;
 
     const { status, ...restData } = await UserService.update(
-      { by: 'email', valueFilter: email },
+      email,
       { key: name, value },
       type ? type : getUpdateType(method),
     );

@@ -7,35 +7,38 @@ export function InviteControllerMixin<Base extends Class>(base: Base) {
   return class extends base {
     invite = {
       async index(req: Request, res: Response) {
-        const { email: invitingUser, invitedUser } = req.body;
+        const { email: invitingUserEmail, invitedUserEmail } = req.body;
 
-        const { status, ...restData } = await UserService.invite.index(invitingUser, invitedUser);
+        const { status, ...restData } = await UserService.invite.index(
+          invitingUserEmail,
+          invitedUserEmail,
+        );
 
         res.status(status).json(restData);
       },
       async get(req: Request, res: Response) {
-        const { email: loggedUser } = req.body;
+        const { email: loggedUserEmail } = req.body;
 
-        const { status, data } = await UserService.invite.get(loggedUser);
+        const { status, data } = await UserService.invite.get(loggedUserEmail);
 
         res.status(status).json(data);
       },
       async accept(req: Request, res: Response) {
-        const { email: acceptingUser, invitingUser } = req.body;
+        const { email: acceptingUserEmail, invitingUserEmail } = req.body;
 
         const { status, ...restData } = await UserService.invite.accept(
-          acceptingUser,
-          invitingUser,
+          acceptingUserEmail,
+          invitingUserEmail,
         );
 
         res.status(status).json(restData);
       },
       async reject(req: Request, res: Response) {
-        const { email: rejectingUser, invitingUser } = req.body;
+        const { email: rejectingUserEmail, invitingUserEmail } = req.body;
 
         const { status, ...restData } = await UserService.invite.reject(
-          rejectingUser,
-          invitingUser,
+          rejectingUserEmail,
+          invitingUserEmail,
         );
 
         res.status(status).json(restData);

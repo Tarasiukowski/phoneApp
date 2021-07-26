@@ -1,31 +1,31 @@
 import { updateType, User } from '../../interfaces';
 
 export const getStepsOfRemoveFriend = (
-  email: string,
+  loggedUserEmail: string,
   friendEmail: string,
 ): {
-  filter: { by: keyof User; valueFilter: User[keyof User] };
+  email: string;
   data: any;
   type: updateType;
 }[] => [
   {
-    filter: { by: 'email', valueFilter: email },
+    email: loggedUserEmail,
     data: { key: 'friends', value: { email: friendEmail } },
     type: 'pull',
   },
   {
-    filter: { by: 'email', valueFilter: email },
+    email: loggedUserEmail,
     data: { key: 'conversations', value: { with: friendEmail } },
     type: 'pull',
   },
   {
-    filter: { by: 'email', valueFilter: friendEmail },
-    data: { key: 'friends', value: { email } },
+    email: friendEmail,
+    data: { key: 'friends', value: { email: loggedUserEmail } },
     type: 'pull',
   },
   {
-    filter: { by: 'email', valueFilter: friendEmail },
-    data: { key: 'conversations', value: { with: email } },
+    email: friendEmail,
+    data: { key: 'conversations', value: { with: loggedUserEmail } },
     type: 'pull',
   },
 ];
