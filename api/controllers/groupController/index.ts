@@ -1,23 +1,20 @@
 import { Request, Response } from 'express';
 
-import GroupService from '../../services/groupService';
+import { groupService } from '../../services/groupService';
 
-class GroupController {
+export const groupController = {
   async create({ body }: Request, res: Response) {
     const { email: author, name, members } = body;
 
-    const { status, ...restData } = await new GroupService(author, name).create(members);
+    const { status, ...restData } = await groupService(author, name).create(members);
 
     res.status(status).json(restData);
-  }
-
+  },
   async remove({ body }: Request, res: Response) {
     const { email: author, name } = body;
 
-    const { status, ...restData } = await new GroupService(author, name).remove();
+    const { status, ...restData } = await groupService(author, name).remove();
 
     res.status(status).json(restData);
-  }
-}
-
-export const groupController = new GroupController();
+  },
+};

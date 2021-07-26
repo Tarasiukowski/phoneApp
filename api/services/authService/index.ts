@@ -6,16 +6,8 @@ import { ERROR, paths } from '../../data';
 import { User, AuthType } from '../../interfaces';
 import { JWT_PRIVATE_KEY } from '../../constants';
 
-class AuthService {
-  email: string;
-  authType: AuthType;
-
-  constructor(email: string, authType: AuthType) {
-    this.email = email;
-    this.authType = authType;
-  }
-
-  static async index(token: string, settings: { fullUser: boolean } = { fullUser: true }) {
+const authService = {
+  async index(token: string, settings: { fullUser: boolean } = { fullUser: true }) {
     const { fullUser } = settings;
 
     if (token) {
@@ -46,11 +38,8 @@ class AuthService {
     }
 
     return { user: null, status: 200 };
-  }
-
-  async login() {
-    const { email, authType } = this;
-
+  },
+  async login(email: string, authType: AuthType) {
     const { valid, errorMsg } = isValidEmail(email);
 
     if (valid) {
@@ -86,11 +75,8 @@ class AuthService {
     }
 
     return { user: null, token: null, status: 400, errorMsg };
-  }
-
-  async singup(extraData: Partial<User>) {
-    const { email, authType } = this;
-
+  },
+  async singup(email: string, authType: AuthType) {
     const { valid, errorMsg } = isValidEmail(email);
 
     if (valid) {
@@ -100,7 +86,7 @@ class AuthService {
         return { user: null, token: null, status: 403, errorMsg: ERROR.USER_EXIST };
       }
 
-      const { status, user } = await UserModel.create({ email, ...extraData }, { authType });
+      const { status, user } = await UserModel.create({ email }, { authType });
 
       if (user) {
         const token = jwt.sign({ id: user.id }, JWT_PRIVATE_KEY, {
@@ -112,7 +98,7 @@ class AuthService {
     }
 
     return { user: null, token: null, status: 400, errorMsg };
-  }
-}
+  },
+};
 
-export default AuthService;
+export { authService };

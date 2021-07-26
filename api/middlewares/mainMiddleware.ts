@@ -1,17 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
 
-import AuthService from '../services/authService';
+import { authService } from '../services';
 import { ERROR } from '../data';
 
 const mainMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.SESSID;
 
-  const { user } = await AuthService.index(token);
+  const { user } = await authService.index(token);
 
   if (user) {
     if (user.value) {
       const { email } = user.value;
-      
+
       req.body = { ...req.body, email };
     }
   } else {

@@ -1,27 +1,14 @@
 import ConversationModel from '../../models/conversation/conversationModel';
 
-class ConversationService {
-  conversationId: string;
-
-  constructor(conversationId: string) {
-    this.conversationId = conversationId;
-  }
-
+export const conversationService = (id: string) => ({
   async get() {
-    const id = this.conversationId;
-
     const conversationData = await (await ConversationModel.findById(id)).get();
 
     return conversationData;
-  }
-
+  },
   async send(author: string, content: string) {
-    const id = this.conversationId;
-
     const data = await (await ConversationModel.findById(id)).send(content, author);
 
     return data;
-  }
-}
-
-export default ConversationService;
+  },
+});
