@@ -6,7 +6,7 @@ import { getStepsOfRemoveFriend } from '../../../data';
 
 export const friendService = {
   friend: {
-    async get(loggedUserEmail: string, ...extraKeys: (keyof User)[]) {
+    async  get(loggedUserEmail: string, ...extraKeys: (keyof User)[]) {
       const { user: loggedUser } = await (await UserModel.findOne('email', loggedUserEmail)).get();
 
       if (loggedUser) {

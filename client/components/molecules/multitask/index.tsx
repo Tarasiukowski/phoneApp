@@ -70,7 +70,6 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
 
       if (allowResetData) {
         onClose(allowResetData);
-        setInputValue('');
         setCounterStage(0);
       }
 
@@ -109,6 +108,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
           </div>
           <div className={styles.inputTemplate}>
             <input
+              key={counterStage}
               value={inputValue}
               placeholder={inputPlaceholder}
               name={inputName}

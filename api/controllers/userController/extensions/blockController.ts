@@ -12,7 +12,7 @@ export const blockController = {
         blockedUserEmail,
       );
 
-      res.status(status).send(restData);
+      res.status(status).json(restData);
     },
     async get({ body }: Request, res: Response) {
       const { email: loggedUserEmail } = body;
