@@ -7,11 +7,11 @@ import { Textarea } from './textarea';
 import Msg from './message';
 
 import { useError } from 'contexts';
-import { Message, props } from './types';
-import { fetcher, handleRequestError } from 'utils';
-import { Member } from 'interfaces';
+import { useChatConnection } from 'hooks';
 import { useFriends } from 'setup/reducers/friendsReducer';
-import { useUser } from 'setup/reducers/userReducer';
+import { props } from './types';
+import { handleRequestError } from 'utils';
+import { Member, Message } from 'interfaces';
 import styles from './chat.module.scss';
 
 const defaultWidth = '64.5vw';
@@ -22,60 +22,35 @@ const Chat = ({ id, getScopedUser, width }: props) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [scopedUser, setScopedUser] = useState<Member | null>(null);
   const [valueTextarea, setValueTextarea] = useState('');
-  const [loading, setLoading] = useState(true);
 
   const refMessagesTemplate = useRef<HTMLDivElement>(null);
 
-  const activeUser = useUser();
-  const friends = useFriends();
+  const { loading, sendMessage, onJoin, onMessage } = useChatConnection(id);
   const { setError } = useError();
+  const friends = useFriends();
 
   const { y } = useScroll(refMessagesTemplate);
 
-  const fetchDataChat = async () => {
-    try {
-      const { conversation } = await fetcher('POST', '/conversation', {
-        id,
-      });
-      const { messages: fetchedMessages } = conversation;
+  onJoin((messages, scopedUserEmail) => {
+    const friend = friends.find((friend) => friend.email === scopedUserEmail);
 
-      setMessages(fetchedMessages);
-    } catch (err) {
-      handleRequestError(err, (errorMsg) => {
-        setError({ msg: errorMsg, id: Math.random() });
-      });
+    if (friend) {
+      setScopedUser(friend);
+      getScopedUser(friend);
     }
-  };
+
+    setMessages(messages);
+  });
+
+  onMessage((message) => {
+    setMessages([...messages, message]);
+  });
 
   useEffect(() => {
     if (y === maxScrollUp && messages.length >= maxMessagesOnFetch) {
       // TODO => fetch more messages
     }
   }, [y]);
-
-  useEffect(() => {
-    setLoading(true);
-    setMessages([]);
-
-    fetchDataChat().then(() => {
-      setLoading(false);
-    });
-
-    if (activeUser) {
-      const scopedConversations = activeUser.conversations.find(
-        (conversations) => conversations.id === id,
-      );
-
-      if (scopedConversations) {
-        const scopedFriend = friends.find((friend) => friend.email === scopedConversations?.with);
-
-        if (scopedFriend) {
-          setScopedUser(scopedFriend);
-          getScopedUser(scopedFriend);
-        }
-      }
-    }
-  }, [id]);
 
   useEffect(() => {
     const messagesTemplate = refMessagesTemplate.current as HTMLDivElement;
@@ -92,10 +67,7 @@ const Chat = ({ id, getScopedUser, width }: props) => {
     onKeyUp: (e: KeyboardEvent) => {
       if (e.key === 'Enter' && valueTextarea.length) {
         try {
-          fetcher('PUT', '/conversation/send', {
-            content: valueTextarea,
-            id,
-          });
+          sendMessage(valueTextarea);
 
           setValueTextarea('');
         } catch (err) {

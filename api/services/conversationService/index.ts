@@ -1,8 +1,8 @@
 import ConversationModel from '../../models/conversation/conversationModel';
 
 export const conversationService = (id: string) => ({
-  async get() {
-    const conversationData = await (await ConversationModel.findById(id)).get();
+  async get(loggedUserEmail: string) {
+    const conversationData = await (await ConversationModel.findById(id)).get(loggedUserEmail);
 
     return conversationData;
   },

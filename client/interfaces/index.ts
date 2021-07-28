@@ -6,6 +6,12 @@ export type propsOnboardingNumberPage = {
 
 // Others
 
+export type Message = {
+  content: string;
+  from: string;
+  id: string;
+};
+
 export type Conversation = {
   with: string;
   id: string;

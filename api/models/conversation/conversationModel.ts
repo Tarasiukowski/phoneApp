@@ -11,14 +11,11 @@ export const conversationModel = model<ConversationDocument>('conversation', con
 class ConversationModel {
   private constructor(
     private data: {
-      succes: boolean;
-      status: number;
       conversation: Conversation | null;
-      errorMsg?: string;
     },
   ) {}
 
-  get() {
+  get(loggedUserEmail: string) {
     return this.data;
   }
 
@@ -42,9 +39,9 @@ class ConversationModel {
         }
       }
 
-      return { succes: true, status: 200 };
+      return { succes: true };
     } catch (err) {
-      return { succes: false, status: 400 };
+      return { succes: false };
     }
   }
 
@@ -56,9 +53,9 @@ class ConversationModel {
         this.update(key, value, type);
       });
 
-      return { succes: true, status: 200 };
+      return { succes: true };
     } catch {
-      return { succes: false, status: 400 };
+      return { succes: false };
     }
   }
 
@@ -69,9 +66,9 @@ class ConversationModel {
     try {
       await conversationModel.remove({ _id: id });
 
-      return { succes: true, status: 200 };
+      return { succes: true };
     } catch (err) {
-      return { succes: false, status: 400 };
+      return { succes: false };
     }
   }
 
@@ -79,15 +76,14 @@ class ConversationModel {
     const { conversation } = this.data;
     const id = conversation?.id;
 
-    try {
-      await conversationModel.updateOne(
-        { _id: id },
-        { $push: { messages: { from: author, content, id: Math.random() } } },
-      );
+    const message = { from: author, content, id: Math.random() };
 
-      return { succes: true, status: 200 };
+    try {
+      await conversationModel.updateOne({ _id: id }, { $push: { messages: message } });
+
+      return { succes: true, message };
     } catch (e) {
-      return { succes: false, status: 400, errorMsg: ERROR.CONVERSATION_CAN_NOT_SEND_MESSAGE };
+      return { succes: false, message: null };
     }
   }
 
@@ -99,20 +95,15 @@ class ConversationModel {
       if (conversation) {
         formatedConversation = formatModel<TypeModel.conversation>(conversation);
       } else {
-        throw new Error('can not find that conversation');
+        throw new Error(ERROR.CONVERSATION_NOT_FOUND);
       }
 
       return new ConversationModel({
-        succes: true,
-        status: 200,
         conversation: formatedConversation,
       });
     } catch (err) {
       return new ConversationModel({
-        succes: true,
-        status: 404,
         conversation: null,
-        errorMsg: ERROR.CONVERSATION_NOT_FOUND,
       });
     }
   }
@@ -124,9 +115,9 @@ class ConversationModel {
       conversation.save();
       const formatedConversation = formatModel<TypeModel.conversation>(conversation);
 
-      return { succes: true, status: 200, conversation: formatedConversation };
+      return { conversation: formatedConversation };
     } catch (err) {
-      return { succes: false, status: 400, conversation: null };
+      return { conversation: null };
     }
   }
 }

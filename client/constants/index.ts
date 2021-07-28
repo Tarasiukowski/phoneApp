@@ -22,3 +22,5 @@ export const paths = {
 };
 
 export const loggedPaths = ['/settings', '/inbox', '/contacts', '/invites', '/group'];
+
+export const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
