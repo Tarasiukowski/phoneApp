@@ -49,6 +49,7 @@ export const useChatConnection = (id: string) => {
           ({ conversation, error }: { conversation: Conversation; error: Error | null }) => {
             if (error) {
               setError({ msg: error.msg, id: Math.random() });
+              router.push(paths.contacts);
               return;
             }
 
