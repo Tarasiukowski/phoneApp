@@ -16,9 +16,9 @@ export const useSocketio = (server: http.Server) => {
       const { conversation } = await conversationService(id).get(email);
 
       if (conversation) {
-        callback({ conversation, error: null });
-
         socket.join(id);
+
+        callback({ conversation, error: null });
       } else {
         callback({ conversation, error: { value: true, msg: ERROR.CONVERSATION_NOT_FOUND } });
       }
@@ -28,7 +28,7 @@ export const useSocketio = (server: http.Server) => {
       const { message } = await conversationService(id).send(email, content);
 
       socket.emit('message', { message });
-      socket.broadcast.to(id).emit('message', { message });
+      socket.to(id).emit('message', { message });
     });
   });
 };

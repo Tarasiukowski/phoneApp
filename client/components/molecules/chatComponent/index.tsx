@@ -6,11 +6,9 @@ import Header from './header';
 import { Textarea } from './textarea';
 import Msg from './message';
 
-import { useError } from 'contexts';
 import { useChatConnection } from 'hooks';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { props } from './types';
-import { handleRequestError } from 'utils';
 import { Member, Message } from 'interfaces';
 import styles from './chat.module.scss';
 
@@ -26,7 +24,6 @@ const Chat = ({ id, getScopedUser, width }: props) => {
   const refMessagesTemplate = useRef<HTMLDivElement>(null);
 
   const { loading, sendMessage, onJoin, onMessage } = useChatConnection(id);
-  const { setError } = useError();
   const friends = useFriends();
 
   const { y } = useScroll(refMessagesTemplate);
@@ -43,7 +40,7 @@ const Chat = ({ id, getScopedUser, width }: props) => {
   });
 
   onMessage((message) => {
-    setMessages([...messages, message]);
+    setMessages((messages) => [...messages, message]);
   });
 
   useEffect(() => {
@@ -66,15 +63,8 @@ const Chat = ({ id, getScopedUser, width }: props) => {
     },
     onKeyUp: (e: KeyboardEvent) => {
       if (e.key === 'Enter' && valueTextarea.length) {
-        try {
-          sendMessage(valueTextarea);
-
-          setValueTextarea('');
-        } catch (err) {
-          handleRequestError(err, (errorMsg) => {
-            setError({ msg: errorMsg, id: Math.random() });
-          });
-        }
+        sendMessage(valueTextarea);
+        setValueTextarea('');
       }
     },
   };

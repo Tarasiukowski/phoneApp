@@ -5,7 +5,6 @@ import io from 'socket.io-client';
 import { useError } from 'contexts';
 import { API_URL, paths } from '../constants';
 import { useUser } from '../setup/reducers/userReducer/index';
-import { ERROR_MESSAGES } from 'common';
 import { Message } from 'interfaces';
 
 type Error = {
@@ -34,7 +33,6 @@ export const useChatConnection = (id: string) => {
       const { email } = loggedUser;
 
       socket.emit('sendMessage', { content, email, id });
-      return;
     }
   };
 
@@ -54,7 +52,7 @@ export const useChatConnection = (id: string) => {
             }
 
             const { messages, users } = conversation;
-            const friendEmail = users.find((email: string) => email !== loggedUser.email);
+            const friendEmail = users.find((email) => email !== loggedUser.email);
 
             if (friendEmail) {
               callback(messages, friendEmail);
@@ -66,9 +64,6 @@ export const useChatConnection = (id: string) => {
         return () => {
           socket.off();
         };
-      } else {
-        setError({ msg: ERROR_MESSAGES.NOT_ALLOWED, id: Math.random() });
-        router.push(paths.singUp);
       }
     }, [router.asPath]);
 
@@ -79,5 +74,5 @@ export const useChatConnection = (id: string) => {
       });
     }, []);
 
-  return { loading, onJoin, sendMessage, onMessage };
+  return { loading, onJoin, sendMessage, onMessage, socket };
 };
