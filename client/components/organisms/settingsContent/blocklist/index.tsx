@@ -7,7 +7,7 @@ import ElementList from './elementList';
 
 import { useError } from 'contexts';
 import { remove as removeFromBlcokList } from 'setup/reducers/blockListReducer';
-import { fetcher, handleRequestError } from 'utils';
+import { unblockUser, handleRequestError } from 'utils';
 import { useBlocklist } from 'setup/reducers/blockListReducer';
 
 const SettingsBlocklistContent = () => {
@@ -18,7 +18,7 @@ const SettingsBlocklistContent = () => {
 
   const removeFromBlockList = useCallback(async (email: string) => {
     try {
-      fetcher('POST', '/user/unblock', { unblockedUserEmail: email });
+      await unblockUser(email);
 
       disptach(removeFromBlcokList({ by: 'email', value: email }));
     } catch (err) {

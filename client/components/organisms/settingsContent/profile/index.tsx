@@ -1,12 +1,11 @@
-import { ChangeEvent, useReducer, useEffect, useMemo, useCallback } from 'react';
+import { ChangeEvent, useState, useEffect, useMemo, useCallback } from 'react';
 
 import { ImageUser, Input, Button } from 'components/atoms';
 import { SettingsTemplate } from 'templates';
 
 import styles from './profile.module.scss';
-import { InputsValues } from './types';
 import { useUser } from 'setup/reducers/userReducer';
-import { fetcher, handleRequestError } from 'utils';
+import { fetcher, handleRequestError, verifyUser, updateUser } from 'utils';
 import { ERROR_MESSAGES } from 'common';
 import { useError, useMultiTask } from 'contexts';
 
@@ -17,40 +16,44 @@ const SettingsProfileContent = () => {
 
   const fullname = loggedUser?.fullname;
 
-  const [inputsValues, setInputsValues] = useReducer(
-    (prevState: InputsValues, state: InputsValues) => ({ ...prevState, ...state }),
-    { firstname: fullname?.firstname, lastname: fullname?.lastname },
-  );
+  const [fields, setFields] = useState({
+    firstname: fullname?.firstname || '',
+    lastname: fullname?.lastname || '',
+  });
 
-  const { firstname: firstnameValue, lastname: lastnameValue } = inputsValues;
+  const { firstname: firstnameValue, lastname: lastnameValue } = fields;
 
   const implementedChange =
     firstnameValue !== fullname?.firstname || lastnameValue !== fullname?.lastname;
   const validFullname = Boolean(!firstnameValue?.length || !lastnameValue?.length);
   const isDisabled = !implementedChange || validFullname;
 
+  useEffect(() => {
+    if (!multiTask.open) {
+      resetData();
+    }
+  }, [multiTask.open]);
+
   const handleOnChange = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
 
-    setInputsValues({
+    setFields({
+      ...fields,
       [target.name]: target.value,
     });
   };
 
   const save = useCallback(async () => {
     try {
-      await fetcher('PUT', '/user/update/fullname', {
-        value: { firstname: firstnameValue, lastname: lastnameValue },
-      });
+      await updateUser('fullname', { firstname: firstnameValue, lastname: lastnameValue });
+
+      window.location.reload();
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
       });
-      return;
     }
-
-    window.location.reload();
-  }, [inputsValues]);
+  }, [fields]);
 
   const resetData = async () => {
     try {
@@ -59,15 +62,8 @@ const SettingsProfileContent = () => {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
       });
-      return;
     }
   };
-
-  useEffect(() => {
-    if (multiTask.open === false) {
-      resetData();
-    }
-  }, [multiTask.open]);
 
   const multitaskHandle = useMemo(
     () =>
@@ -103,9 +99,7 @@ const SettingsProfileContent = () => {
         },
         onEnd: async (code: string) => {
           try {
-            await fetcher('POST', '/user/verify/email', {
-              code,
-            });
+            await verifyUser('email', code);
 
             return true;
           } catch (err) {

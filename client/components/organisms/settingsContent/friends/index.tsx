@@ -6,7 +6,7 @@ import { ElementFinder } from 'components/molecules';
 import { SettingsTemplate } from 'templates';
 import ElementList from './elementList';
 
-import { fetcher, handleRequestError } from 'utils';
+import { invite, handleRequestError, removeFriend } from 'utils';
 import { Member } from 'interfaces';
 import { remove, useFriends } from 'setup/reducers/friendsReducer';
 import { useError, useMultiTask } from 'contexts';
@@ -18,13 +18,11 @@ const SettingsFriendsContent = () => {
   const { setError } = useError();
   const multiTask = useMultiTask();
 
-  const removeFriend = useCallback(async (user: Member) => {
+  const handleRemoveFriend = useCallback(async (user: Member) => {
     const { email } = user;
 
     try {
-      await fetcher('POST', '/user/friends/remove', {
-        friend: email,
-      });
+      await removeFriend(email);
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
@@ -42,11 +40,9 @@ const SettingsFriendsContent = () => {
         onClose: () => {
           multiTask.toggleOpen(false);
         },
-        onEnd: async (to: string) => {
+        onEnd: async (email: string) => {
           try {
-            await fetcher('POST', '/user/invite', {
-              invitedUserEmail: to,
-            });
+            await invite(email);
 
             return true;
           } catch (err) {
@@ -80,7 +76,7 @@ const SettingsFriendsContent = () => {
         filterKey="fullname"
         placeholder="Search for a number"
         notFound="User not found"
-        renderItem={(data) => <ElementList user={data} onClick={removeFriend} />}
+        renderItem={(data) => <ElementList user={data} onClick={handleRemoveFriend} />}
       />
     </SettingsTemplate>
   );

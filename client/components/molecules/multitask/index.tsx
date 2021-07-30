@@ -24,12 +24,6 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
   const activeStage = stages[counterStage];
   const isEnd = counterStage === stages.length - 1;
 
-  const resetData = () => {
-    setInputValue('');
-    setCounterStage(0);
-    setGroupData({ name: null, members: [] });
-  };
-
   useOutsideClick(
     templateRef,
     () => {
@@ -40,28 +34,10 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
     { isListeningForEvent: open },
   );
 
-  const { title, description, inputPlaceholder, inputName, unlimited, textButton } = activeStage;
-
-  const { members = [] } = groupData;
-
-  const disabeld = {
-    constantButton: !isCorrectValue(inputName, inputValue),
-    optionalButton: members.length ? false : true,
-  };
-
-  const inputHandle = {
-    onChange(e: ChangeEvent<HTMLInputElement>) {
-      const value = e.target.value;
-
-      setInputValue(value);
-    },
-    onKeyUp(e: KeyboardEvent<HTMLInputElement>) {
-      if (e.key === 'Enter') {
-        if (!disabeld.constantButton) {
-          next();
-        }
-      }
-    },
+  const resetData = () => {
+    setInputValue('');
+    setCounterStage(0);
+    setGroupData({ name: null, members: [] });
   };
 
   const next = useCallback(async () => {
@@ -97,6 +73,30 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
     onClose();
     setGroupData({ name: null, members: [] });
   }, [inputValue]);
+
+  const { title, description, inputPlaceholder, inputName, unlimited, textButton } = activeStage;
+
+  const { members = [] } = groupData;
+
+  const disabeld = {
+    constantButton: !isCorrectValue(inputName, inputValue),
+    optionalButton: members.length ? false : true,
+  };
+
+  const inputHandle = {
+    onChange(e: ChangeEvent<HTMLInputElement>) {
+      const value = e.target.value;
+
+      setInputValue(value);
+    },
+    onKeyUp(e: KeyboardEvent<HTMLInputElement>) {
+      if (e.key === 'Enter') {
+        if (!disabeld.constantButton) {
+          next();
+        }
+      }
+    },
+  };
 
   if (open) {
     return (

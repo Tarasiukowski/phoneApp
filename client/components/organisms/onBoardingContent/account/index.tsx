@@ -1,19 +1,15 @@
-import { ChangeEvent, FormEvent, useState, useReducer, useCallback } from 'react';
+import { ChangeEvent, FormEvent, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 
 import { Button, Input } from 'components/atoms';
 
-import { fetcher, handleRequestError } from 'utils';
-import { FormValues } from './types';
+import { handleRequestError, updateUser } from 'utils';
 import { useError, useLoading } from 'contexts';
 import { paths } from '../../../../constants';
 import styles from './account.module.scss';
 
 const OnboardingAccountContent = () => {
-  const [formValues, setFormValues] = useReducer(
-    (prevState: FormValues, state: FormValues) => ({ ...prevState, ...state }),
-    { firstname: '', lastname: '' },
-  );
+  const [fields, setFields] = useState({ firstname: '', lastname: '' });
   const [disabledByRequest, setDisabledByRequest] = useState(false);
 
   const router = useRouter();
@@ -21,7 +17,7 @@ const OnboardingAccountContent = () => {
   const { setError } = useError();
   const { toggleLoading } = useLoading();
 
-  const { firstname, lastname } = formValues;
+  const { firstname, lastname } = fields;
 
   const disabledByValue = firstname && lastname ? !firstname.length || !lastname.length : true;
 
@@ -29,9 +25,7 @@ const OnboardingAccountContent = () => {
     const target = e.target as HTMLInputElement;
     const value = target.value;
 
-    setFormValues({
-      [target.name]: value,
-    });
+    setFields({ ...fields, [target.name]: value });
   };
 
   const next = useCallback(
@@ -41,9 +35,7 @@ const OnboardingAccountContent = () => {
       setDisabledByRequest(true);
 
       try {
-        await fetcher('PUT', '/user/update/fullname', {
-          value: formValues,
-        });
+        await updateUser('fullname', fields);
       } catch (err) {
         handleRequestError(err, (errorMsg) => {
           setError({ msg: errorMsg, id: Math.random() });
@@ -51,11 +43,9 @@ const OnboardingAccountContent = () => {
         return;
       } finally {
         try {
-          await fetcher('PUT', '/user/update/onBoarding', {
-            value: {
-              value: true,
-              stage: null,
-            },
+          await updateUser('onBoarding', {
+            value: true,
+            stage: null,
           });
         } catch (err) {
           handleRequestError(err, (errorMsg) => {
@@ -69,7 +59,7 @@ const OnboardingAccountContent = () => {
 
       router.push(paths.contacts);
     },
-    [formValues],
+    [fields],
   );
 
   return (

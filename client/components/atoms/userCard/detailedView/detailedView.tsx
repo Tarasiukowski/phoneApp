@@ -8,7 +8,7 @@ import { useError, useMultiTask } from 'contexts';
 import { buttonsData, buttonNavigationSettings } from './data';
 import { props } from './types';
 import styles from './detailedView.module.scss';
-import { fetcher, handleRequestError, logout } from 'utils';
+import { handleRequestError, logout, invite } from 'utils';
 import { update as updateBlocklist } from 'setup/reducers/blockListReducer';
 import { update as updateFriends } from 'setup/reducers/friendsReducer';
 import { update as updateInvites } from 'setup/reducers/invitesReducer';
@@ -30,11 +30,9 @@ const DetailedView = ({ userDetailedRef }: props) => {
         onClose: () => {
           multiTask.toggleOpen(false);
         },
-        onEnd: async (to: string) => {
+        onEnd: async (email: string) => {
           try {
-            await fetcher('POST', '/user/invite', {
-              invitedUserEmail: to,
-            });
+            await invite(email);
 
             return true;
           } catch (err) {

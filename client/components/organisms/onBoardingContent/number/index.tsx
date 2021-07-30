@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Button } from 'components/atoms';
 import { SelectNumberButton, SelectNumberList } from 'components/molecules';
 
-import { fetcher, handleNotAllowedError, handleRequestError } from 'utils';
+import { handleRequestError, updateUser } from 'utils';
 import { useError, useLoading } from 'contexts';
 import { useUser } from 'setup/reducers/userReducer';
 import styles from './number.module.scss';
@@ -31,28 +31,17 @@ const OnboardingNumberContent = () => {
 
   const next = useCallback(async () => {
     try {
-      await fetcher('PUT', '/user/update', { number });
-    } catch (err) {
-      const { data, status } = err.response;
-      const { errorMsg } = data;
+      number && (await updateUser('number', number));
 
-      setError({ msg: errorMsg, id: Math.random() });
-
-      handleNotAllowedError(status);
-      return;
-    }
-
-    try {
-      await fetcher('PUT', '/user/update/onBoarding', {
-        value: {
-          value: false,
-          stage: paths.onBoarding.account,
-        },
+      await updateUser('onBoarding', {
+        value: false,
+        stage: paths.onBoarding.account,
       });
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
       });
+
       return;
     }
 

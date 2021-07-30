@@ -19,10 +19,15 @@ const UserCard = forwardRef<HTMLDivElement, props>(
 
     const user = useUser();
 
-    const handleOnClick = useCallback(() => {
-      withDetailed && setOpenDetailed(true);
-      onClick && onClick();
-    }, []);
+    useDidMount(() => {
+      if (user) {
+        const { fullname } = member ? member : user;
+
+        const formatedFullname = formatValuesObject(fullname);
+
+        setFullname(formatedFullname);
+      }
+    });
 
     useOutsideClick(
       templateRef,
@@ -33,15 +38,10 @@ const UserCard = forwardRef<HTMLDivElement, props>(
       { isListeningForEvent: openDetailed && withDetailed },
     );
 
-    useDidMount(() => {
-      if (user) {
-        const { fullname } = member ? member : user;
-
-        const formatedFullname = formatValuesObject(fullname);
-
-        setFullname(formatedFullname);
-      }
-    });
+    const handleOnClick = useCallback(() => {
+      withDetailed && setOpenDetailed(true);
+      onClick && onClick();
+    }, []);
 
     return (
       <Template

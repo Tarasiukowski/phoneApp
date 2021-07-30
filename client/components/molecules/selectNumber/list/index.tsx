@@ -1,20 +1,12 @@
-import {
-  useRef,
-  MouseEvent,
-  useState,
-  useEffect,
-  ChangeEvent,
-  useReducer,
-  useCallback,
-} from 'react';
+import { useRef, MouseEvent, useState, useEffect, ChangeEvent, useCallback } from 'react';
 import gsap from 'gsap';
 import { useScroll } from 'react-use';
 
 import Input from './input';
 import NumbersList from './numbersList';
 
-import { fetcher, handleRequestError } from 'utils';
-import { props, Numbers } from '../types';
+import { handleRequestError, getAllNumbers, getRandomNumbers } from 'utils';
+import { props } from '../types';
 import { useError } from 'contexts';
 import styles from './list.module.scss';
 import { ActiveList } from './types';
@@ -25,10 +17,7 @@ const MAX_LENGTH_NUMBER = 8;
 const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
   const [activeList, setActiveList] = useState<ActiveList>(ActiveList.Recommended);
   const [valueDigits, setValueDigits] = useState('');
-  const [numbers, setNumbers] = useReducer(
-    (prevState: Numbers, state: Numbers) => ({ ...prevState, ...state }),
-    { all: [], recommended: [] },
-  );
+  const [numbers, setNumbers] = useState({ all: [], recommended: [] });
 
   const refIndicator = useRef<HTMLSpanElement>(null);
   const refTab = useRef<HTMLDivElement>(null);
@@ -39,17 +28,10 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
 
   const { y } = useScroll(refListItems);
 
-  const { all = [], recommended = [] } = numbers;
-
-  const allNumbers = all;
-  const recommendedNumbers = recommended;
-
-  const isActiveAllNumbers = activeList === ActiveList.All;
-
   useDidMount(() => {
-    fetcher('get', '/generate/randomNumbers')
+    getRandomNumbers()
       .then(({ numbers }) => {
-        setNumbers({ recommended: numbers });
+        setNumbers({ ...numbers, recommended: numbers });
       })
       .catch((err) => {
         handleRequestError(err, (errorMsg) => {
@@ -63,12 +45,12 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
       const { scrollHeight, clientHeight } = refListItems.current as HTMLDivElement;
 
       if (scrollHeight - clientHeight === y && y !== 0) {
-        fetcher('post', '/generate/allNumbers', {
+        getAllNumbers({
           include: valueDigits,
           startWith: allNumbers[allNumbers.length - 1],
         })
           .then(({ numbers }) => {
-            setNumbers({ all: [...allNumbers, ...numbers] });
+            setNumbers({ ...numbers, all: [...allNumbers, ...numbers] });
           })
           .catch((err) => {
             handleRequestError(err, (errorMsg) => {
@@ -80,9 +62,9 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
   }, [y]);
 
   useEffect(() => {
-    fetcher('post', '/generate/allNumbers', { filter: valueDigits })
+    getAllNumbers({ include: valueDigits })
       .then(({ numbers }) => {
-        setNumbers({ all: numbers });
+        setNumbers({ ...numbers, all: numbers });
       })
       .catch((err) => {
         handleRequestError(err, (errorMsg) => {
@@ -96,6 +78,13 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
 
     listItems.scrollTo(0, 0);
   }, [activeList]);
+
+  const { all = [], recommended = [] } = numbers;
+
+  const allNumbers = all;
+  const recommendedNumbers = recommended;
+
+  const isActiveAllNumbers = activeList === ActiveList.All;
 
   const disabledButton = {
     recommended: !isActiveAllNumbers,

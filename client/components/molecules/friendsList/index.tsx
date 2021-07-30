@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { UserCard } from 'components/atoms';
 import AddButton from './addButton';
 
-import { fetcher, handleRequestError } from 'utils';
+import { handleRequestError, invite } from 'utils';
 import { useError, useMultiTask } from 'contexts';
 import { useFriends } from 'setup/reducers/friendsReducer';
 import { useUser } from 'setup/reducers/userReducer';
@@ -25,11 +25,9 @@ const FriendsList = () => {
         onClose: () => {
           multiTask.toggleOpen(false);
         },
-        onEnd: async (to: string) => {
+        onEnd: async (email: string) => {
           try {
-            await fetcher('POST', '/user/invite', {
-              invitedUserEmail: to,
-            });
+            await invite(email);
 
             return true;
           } catch (err) {

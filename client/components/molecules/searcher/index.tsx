@@ -23,14 +23,10 @@ const Searcher = ({ open, onClose }: props) => {
   const user = useUser();
   const friends = useFriends();
 
-  const { conversations = [] } = user || {};
+  useDidMount(() => {
+    const fetchedSearchData = getSearcherData(formatedConversations);
 
-  const formatedConversations = conversations.map((conversation) => {
-    const friend = friends.find((friend) => friend.email === conversation.with);
-
-    if (friend) {
-      return { user: friend, ...conversation };
-    }
+    setSearcherData(fetchedSearchData);
   });
 
   useOutsideClick(
@@ -42,12 +38,6 @@ const Searcher = ({ open, onClose }: props) => {
     (target, defaultOption) => defaultOption && target.id !== 'searcher',
     { isListeningForEvent: open },
   );
-
-  useDidMount(() => {
-    const fetchedSearchData = getSearcherData(formatedConversations);
-
-    setSearcherData(fetchedSearchData);
-  });
 
   useEffect(() => {
     if (inputValue.length) {
@@ -74,6 +64,16 @@ const Searcher = ({ open, onClose }: props) => {
       setSearcherData(fetchData);
     }
   }, [inputValue]);
+
+  const { conversations = [] } = user || {};
+
+  const formatedConversations = conversations.map((conversation) => {
+    const friend = friends.find((friend) => friend.email === conversation.with);
+
+    if (friend) {
+      return { user: friend, ...conversation };
+    }
+  });
 
   const handleOnSelect = useCallback(() => {
     onClose();

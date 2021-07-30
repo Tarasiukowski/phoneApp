@@ -7,7 +7,7 @@ import { SettingsTemplate } from 'templates';
 import ElementList from './elementList';
 
 import { ERROR_MESSAGES } from 'common/errorsMessages';
-import { fetcher, getObjectsKeysFromArray, handleRequestError } from 'utils';
+import { handleRequestError, removeGroup, createGroup } from 'utils';
 import { update as updateUser, useUser } from 'setup/reducers/userReducer';
 import { useError, useMultiTask } from 'contexts';
 import { useFriends } from 'setup/reducers/friendsReducer';
@@ -24,9 +24,11 @@ const SettingsListsContent = () => {
 
   const { setError } = useError();
 
-  const removeGroup = useCallback(async (group: Group) => {
+  const handleRemoveGroup = useCallback(async (group: Group) => {
+    const { name } = group;
+
     try {
-      await fetcher('DELETE', '/group/remove', { name });
+      await removeGroup(name);
 
       dispatch(
         updateUser({
@@ -48,7 +50,7 @@ const SettingsListsContent = () => {
         name: 'CreateGroup',
         onNext: (email: string, stage: number) => {
           if (stage > 0) {
-            const emailsOfFriends = getObjectsKeysFromArray(friends, 'email');
+            const emailsOfFriends = friends.map(({ email }) => email);
 
             if (emailsOfFriends.includes(email)) {
               return true;
@@ -65,7 +67,7 @@ const SettingsListsContent = () => {
         },
         onEnd: async (group: Group) => {
           try {
-            await fetcher('POST', '/group/create', { ...group });
+            await createGroup(group);
 
             dispatch(updateUser({ key: 'groups', value: group, option: { type: 'pull' } }));
 
@@ -109,7 +111,7 @@ const SettingsListsContent = () => {
               name={name}
               key={name}
               onClick={() => {
-                removeGroup(group);
+                handleRemoveGroup(group);
               }}
             />
           );

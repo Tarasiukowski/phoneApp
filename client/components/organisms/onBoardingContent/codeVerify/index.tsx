@@ -5,7 +5,7 @@ import { FormVerify } from 'components/molecules';
 import { useError } from 'contexts';
 import { TypeVerify } from 'components/molecules/formVerify/types';
 import { paths } from '../../../../constants';
-import { fetcher, handleRequestError } from 'utils';
+import { handleRequestError, updateUser } from 'utils';
 
 const OnboardingCodeContent = () => {
   const router = useRouter();
@@ -14,11 +14,9 @@ const OnboardingCodeContent = () => {
 
   const handleOnSuccess = useCallback(async () => {
     try {
-      await fetcher('PUT', '/user/update/onBoarding', {
-        value: {
-          value: false,
-          stage: paths.onBoarding.number,
-        },
+      await updateUser('onBoarding', {
+        value: false,
+        stage: paths.onBoarding.number,
       });
 
       router.push(paths.onBoarding.number);

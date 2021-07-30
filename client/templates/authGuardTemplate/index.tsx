@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { login } from 'setup/reducers/userReducer';
 import { update } from 'setup/reducers/friendsReducer';
-import { getUserStage, fetcher } from 'utils';
+import { getUserStage, getFriends, fetcher } from 'utils';
 import { props } from './types';
 import { useError } from 'contexts';
 import { ERROR_MESSAGES } from 'common';
@@ -27,8 +27,6 @@ const AuthGuardTemplate = ({ children, allow }: props) => {
   const activePath = router.asPath;
   const fetchFullUser = loggedPaths.some((path) => activePath.startsWith(path));
 
-  const fetchFriends = () => fetcher('POST', '/user/friends');
-
   useEffect(() => {
     fetcher('post', '/auth', { fullUser: fetchFullUser }).then((data) => {
       const user = data.user ? data.user.value : null;
@@ -44,7 +42,7 @@ const AuthGuardTemplate = ({ children, allow }: props) => {
           const { notAllowed, redirectTo } = getUserStage(status, activePath);
 
           if (status.onBoarding) {
-            fetchFriends().then((data) => {
+            getFriends().then((data) => {
               dispatch(update(data));
               notAllowed ? router.push(redirectTo) : toggleLoading(false);
             });

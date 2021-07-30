@@ -5,7 +5,7 @@ import { SelectNumberButton, SelectNumberList } from 'components/molecules';
 import { SettingsTemplate } from 'templates';
 
 import { useUser } from 'setup/reducers/userReducer';
-import { fetcher, handleRequestError } from 'utils';
+import { handleRequestError, updateUser } from 'utils';
 import { useError } from 'contexts';
 import { useDidMount } from 'hooks';
 
@@ -40,12 +40,11 @@ const SettingsNumberContent = () => {
     setDisabledByRequest(true);
 
     try {
-      await fetcher('PUT', '/user/update/number', { value: number });
+      number && (await updateUser('number', number));
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
       });
-      return;
     }
   }, [number]);
 

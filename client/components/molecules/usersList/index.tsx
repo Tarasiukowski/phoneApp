@@ -7,7 +7,7 @@ import { UserDetailes } from '../index';
 import { SearchSvg } from '../../../public/svgs';
 import { Member } from 'interfaces';
 import { props } from './types';
-import { fetcher, filterByKey, handleRequestError } from 'utils';
+import { filterByKey, handleRequestError, acceptInvite } from 'utils';
 import { add } from 'setup/reducers/friendsReducer';
 import { remove } from 'setup/reducers/invitesReducer';
 import { useError } from 'contexts';
@@ -47,11 +47,9 @@ const UsersList = ({ name, data }: props) => {
     setDetailedUser(userData);
   }, []);
 
-  const acceptInvite = useCallback(async (user: Member) => {
+  const handleAcceptInvite = useCallback(async (user: Member) => {
     try {
-      await fetcher('POST', '/user/invite/accept', {
-        invitingUserEmail: user.email,
-      });
+      await acceptInvite(user.email);
 
       const filteredData = listData.filter((user) => {
         const { email } = user;
@@ -101,7 +99,7 @@ const UsersList = ({ name, data }: props) => {
             {listData.map((user) => (
               <ElementList
                 onClick={() => updateUserDetailed(user)}
-                onAcceptInvite={acceptInvite}
+                onAcceptInvite={handleAcceptInvite}
                 user={user}
                 name={name}
                 key={user.email}
