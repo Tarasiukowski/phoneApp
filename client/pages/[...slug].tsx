@@ -6,16 +6,16 @@ import {
   InvitesContent,
   SettingsContent,
 } from 'components/organisms/index';
-import { MainTemplate, IsLoggedTemplate } from 'templates';
+import { MainTemplate, AuthGuardTemplate } from 'templates';
 
 import { Allow } from 'interfaces';
 
 const MainPage = () => (
-  <IsLoggedTemplate allow={Allow.logged}>
+  <AuthGuardTemplate allow={Allow.logged}>
     <MainTemplate>
       <Subpage routes={routes} slugNumber={0} />
     </MainTemplate>
-  </IsLoggedTemplate>
+  </AuthGuardTemplate>
 );
 
 const routes = [

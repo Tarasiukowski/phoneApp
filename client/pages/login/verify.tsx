@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { FormVerify } from 'components/molecules';
 import { TypeVerify } from 'components/molecules/formVerify/types';
-import { IsLoggedTemplate, OnboardingTemplate as VerifyTemplate } from 'templates';
+import { AuthGuardTemplate, OnboardingTemplate as VerifyTemplate } from 'templates';
 
 import { Allow } from 'interfaces';
 import { paths } from '../../constants';
@@ -16,11 +16,11 @@ const LoginVerifyPage = () => {
   }, []);
 
   return (
-    <IsLoggedTemplate allow={Allow.logged}>
+    <AuthGuardTemplate allow={Allow.logged}>
       <VerifyTemplate>
         <FormVerify type={TypeVerify.login} onSuccess={handleOnSuccess} />
       </VerifyTemplate>
-    </IsLoggedTemplate>
+    </AuthGuardTemplate>
   );
 };
 

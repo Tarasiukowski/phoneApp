@@ -1,13 +1,13 @@
 import { AuthContent } from 'components/organisms';
 import { Allow } from 'interfaces';
-import { IsLoggedTemplate, AuthTemplate } from 'templates';
+import { AuthGuardTemplate, AuthTemplate } from 'templates';
 
 const LoginPage = () => (
-  <IsLoggedTemplate allow={Allow.notLogged}>
+  <AuthGuardTemplate allow={Allow.notLogged}>
     <AuthTemplate>
       <AuthContent />
     </AuthTemplate>
-  </IsLoggedTemplate>
+  </AuthGuardTemplate>
 );
 
 export default LoginPage;

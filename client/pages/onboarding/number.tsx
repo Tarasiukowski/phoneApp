@@ -1,14 +1,14 @@
 import { OnboardingNumberContent } from 'components/organisms';
-import { IsLoggedTemplate, OnboardingTemplate } from 'templates';
+import { AuthGuardTemplate, OnboardingTemplate } from 'templates';
 
 import { Allow } from 'interfaces';
 
 const OnboardingNumberPage = () => (
-  <IsLoggedTemplate allow={Allow.logged}>
+  <AuthGuardTemplate allow={Allow.logged}>
     <OnboardingTemplate>
       <OnboardingNumberContent />
     </OnboardingTemplate>
-  </IsLoggedTemplate>
+  </AuthGuardTemplate>
 );
 
 export default OnboardingNumberPage;

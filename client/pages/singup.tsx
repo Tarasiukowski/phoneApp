@@ -1,14 +1,14 @@
 import { AuthContent } from 'components/organisms';
-import { IsLoggedTemplate, AuthTemplate } from 'templates';
+import { AuthGuardTemplate, AuthTemplate } from 'templates';
 
 import { Allow } from 'interfaces';
 
 const SingUpPage = () => (
-  <IsLoggedTemplate allow={Allow.notLogged}>
+  <AuthGuardTemplate allow={Allow.notLogged}>
     <AuthTemplate>
       <AuthContent />
     </AuthTemplate>
-  </IsLoggedTemplate>
+  </AuthGuardTemplate>
 );
 
 export default SingUpPage;

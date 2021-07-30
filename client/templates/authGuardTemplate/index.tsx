@@ -17,7 +17,7 @@ const settings = {
   notLogged: false,
 };
 
-const IsLoggedTemplate = ({ children, allow }: props) => {
+const AuthGuardTemplate = ({ children, allow }: props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -72,4 +72,4 @@ const IsLoggedTemplate = ({ children, allow }: props) => {
   return <>{loading || children}</>;
 };
 
-export { IsLoggedTemplate };
+export { AuthGuardTemplate };
