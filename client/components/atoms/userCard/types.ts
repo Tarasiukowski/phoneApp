@@ -2,7 +2,7 @@ export type props = {
   href?: string,
   elemList?: boolean;
   big?: boolean;
-  withDetailed?: boolean;
+  withDetailedView?: boolean;
   member?: {
     fullname: {
       firstname: string;

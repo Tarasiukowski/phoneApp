@@ -1,4 +1,4 @@
-import { useState, useRef, useReducer, ChangeEvent, KeyboardEvent, useCallback } from 'react';
+import { useState, useRef, ChangeEvent, KeyboardEvent, useCallback } from 'react';
 
 import { Button } from 'components/atoms';
 
@@ -13,10 +13,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
 
   const [inputValue, setInputValue] = useState('');
   const [counterStage, setCounterStage] = useState(0);
-  const [groupData, setGroupData] = useReducer(
-    (prevState: GroupData, state: GroupData) => ({ ...prevState, ...state }),
-    { name: null, members: [] },
-  );
+  const [groupData, setGroupData] = useState<GroupData>({ name: null, members: [] });
 
   const templateRef = useRef<HTMLDivElement>(null);
 
@@ -61,8 +58,8 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
       const { members = [] } = groupData;
 
       name === 'CreateGroup' && counterStage > 0
-        ? setGroupData({ members: [...members, inputValue] })
-        : setGroupData({ name: inputValue });
+        ? setGroupData({ ...groupData, members: [...members, inputValue] })
+        : setGroupData({ ...groupData, name: inputValue });
     }
 
     allowNextStage && setInputValue('');

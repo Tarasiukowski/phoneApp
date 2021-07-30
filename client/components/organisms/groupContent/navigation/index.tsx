@@ -23,9 +23,6 @@ const Navigation = () => {
   const slugId = slug[1];
   const findedGroup = groups.find((group) => group._id === slugId);
 
-  const getConversationId = (email: string) =>
-    conversations.find((conversation) => conversation.with === email)?.id;
-
   useDidMount(() => {
     if (findedGroup) {
       const firstMemberOfGroup = findedGroup.members[0];
@@ -33,6 +30,9 @@ const Navigation = () => {
       router.push(`/group/${slugId}/${getConversationId(firstMemberOfGroup)}`);
     }
   });
+
+  const getConversationId = (email: string) =>
+    conversations.find((conversation) => conversation.with === email)?.id;
 
   return (
     <div className={styles.template}>

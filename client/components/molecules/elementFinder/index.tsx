@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 import { filterByKey } from 'utils';
 
 import { Input } from 'components/atoms';
@@ -24,7 +24,7 @@ const ElementFinder = <T,>({ renderItem, data, filterKey, notFound, placeholder 
     }
   }, [inputValue]);
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
     setInputValue(value);
   };

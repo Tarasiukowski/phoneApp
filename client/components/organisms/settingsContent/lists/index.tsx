@@ -19,10 +19,9 @@ const SettingsListsContent = () => {
   const user = useUser();
   const friends = useFriends();
   const multiTask = useMultiTask();
+  const { setError } = useError();
 
   const { groups = [] } = user || {};
-
-  const { setError } = useError();
 
   const handleRemoveGroup = useCallback(async (group: Group) => {
     const { name } = group;
@@ -76,6 +75,7 @@ const SettingsListsContent = () => {
             handleRequestError(err, (errorMsg) => {
               setError({ msg: errorMsg, id: Math.random() });
             });
+            
             return false;
           }
         },

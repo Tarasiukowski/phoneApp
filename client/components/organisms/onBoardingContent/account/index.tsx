@@ -4,22 +4,22 @@ import { useRouter } from 'next/router';
 import { Button, Input } from 'components/atoms';
 
 import { handleRequestError, updateUser } from 'utils';
+import { useMutation } from 'hooks';
 import { useError, useLoading } from 'contexts';
 import { paths } from '../../../../constants';
 import styles from './account.module.scss';
 
 const OnboardingAccountContent = () => {
   const [fields, setFields] = useState({ firstname: '', lastname: '' });
-  const [disabledByRequest, setDisabledByRequest] = useState(false);
 
   const router = useRouter();
 
   const { setError } = useError();
   const { toggleLoading } = useLoading();
+  const { mutate, status } = useMutation(updateUser);
 
   const { firstname, lastname } = fields;
-
-  const disabledByValue = firstname && lastname ? !firstname.length || !lastname.length : true;
+  const disabled = status === 'loading' || !firstname.length || !lastname.length;
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
@@ -32,10 +32,8 @@ const OnboardingAccountContent = () => {
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      setDisabledByRequest(true);
-
       try {
-        await updateUser('fullname', fields);
+        await mutate('fullname', fields);
       } catch (err) {
         handleRequestError(err, (errorMsg) => {
           setError({ msg: errorMsg, id: Math.random() });
@@ -43,7 +41,7 @@ const OnboardingAccountContent = () => {
         return;
       } finally {
         try {
-          await updateUser('onBoarding', {
+          await mutate('onBoarding', {
             value: true,
             stage: null,
           });
@@ -54,9 +52,7 @@ const OnboardingAccountContent = () => {
         }
       }
 
-      setDisabledByRequest(false);
       toggleLoading(true);
-
       router.push(paths.contacts);
     },
     [fields],
@@ -82,7 +78,7 @@ const OnboardingAccountContent = () => {
           autoComplete="off"
         />
       </div>
-      <Button type="submit" disabled={disabledByRequest ? disabledByRequest : disabledByValue}>
+      <Button type="submit" disabled={disabled}>
         Continue
       </Button>
     </form>

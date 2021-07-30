@@ -1,9 +1,9 @@
 import { AuthType } from "interfaces";
 
 export type props = {
-  auth: AuthType;
+  authType: AuthType;
 };
 
-export type formData = {
-  email: String;
+export type Fields = {
+  email: string;
 };

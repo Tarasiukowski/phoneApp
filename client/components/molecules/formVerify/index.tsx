@@ -1,10 +1,11 @@
-import { useState, FormEvent, ChangeEvent } from 'react';
+import { useState, FormEvent, ChangeEventHandler } from 'react';
 import Image from 'next/image';
 
 import { Button, Input } from 'components/atoms';
 
-import { fetcher, handleRequestError } from 'utils';
+import { verifyUser, handleRequestError } from 'utils';
 import { useError } from 'contexts';
+import { useMutation } from 'hooks';
 import { useUser } from 'setup/reducers/userReducer';
 import { props, TypeVerify } from './types';
 import styles from './formVerify.module.scss';
@@ -21,11 +22,12 @@ const FormVerify = ({ type, onSuccess }: props) => {
   const user = useUser();
   const { setError } = useError();
   const { toggleLoading } = useLoading();
+  const { mutate, status } = useMutation(verifyUser);
 
   const isVerifyAccount = type === TypeVerify.account;
-  const buttonDisabled = valueInput.length < 1;
+  const disabled = !valueInput.length || status === 'loading';
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setValueInput(e.target.value);
   };
 
@@ -33,18 +35,15 @@ const FormVerify = ({ type, onSuccess }: props) => {
     e.preventDefault();
 
     try {
-      await fetcher('post', `/user/verify/${isVerifyAccount ? 'account' : 'login'}`, {
-        code: valueInput,
-      });
+      await mutate(isVerifyAccount ? 'account' : 'login', valueInput);
+
+      toggleLoading(true);
+      onSuccess();
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
       });
-      return;
     }
-
-    toggleLoading(true);
-    onSuccess();
   };
 
   return (
@@ -58,7 +57,7 @@ const FormVerify = ({ type, onSuccess }: props) => {
         placeholder="6-digit code"
         autoComplete="off"
       />
-      <Button disabled={buttonDisabled} type="submit">
+      <Button disabled={disabled} type="submit">
         Continue
       </Button>
     </form>

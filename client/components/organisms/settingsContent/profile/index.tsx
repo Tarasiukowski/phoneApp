@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, ChangeEventHandler } from 'react';
 
 import { ImageUser, Input, Button } from 'components/atoms';
 import { SettingsTemplate } from 'templates';
@@ -34,8 +34,8 @@ const SettingsProfileContent = () => {
     }
   }, [multiTask.open]);
 
-  const handleOnChange = (e: ChangeEvent) => {
-    const target = e.target as HTMLInputElement;
+  const handleOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const target = e.target;
 
     setFields({
       ...fields,

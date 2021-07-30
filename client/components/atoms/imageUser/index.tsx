@@ -7,7 +7,7 @@ import { useUser } from 'setup/reducers/userReducer';
 import { getInitials } from 'utils';
 
 const ImageUser = ({ member, ...restProps }: props) => {
-  const [defaultMember, setDefaultMember] = useState<DefaultMember>({
+  const [imageData, setImageData] = useState<DefaultMember>({
     colorImage: undefined,
     image: undefined,
     initials: undefined,
@@ -23,7 +23,7 @@ const ImageUser = ({ member, ...restProps }: props) => {
         image: imageProfile,
       } = member ? member : user;
 
-      setDefaultMember({
+      setImageData({
         image: imageProfile,
         initials: getInitials(firstname, lastname),
         colorImage: colorProfile,
@@ -31,7 +31,7 @@ const ImageUser = ({ member, ...restProps }: props) => {
     }
   }, [member, user]);
 
-  const { colorImage, initials, image } = defaultMember;
+  const { colorImage, initials, image } = imageData;
 
   return (
     <Image image={image} colorImage={colorImage} {...restProps}>

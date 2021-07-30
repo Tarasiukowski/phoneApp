@@ -15,7 +15,6 @@ const SettingsNumberContent = () => {
   const [number, setNumber] = useState<string | null>(null);
 
   const { setError } = useError();
-
   const user = useUser();
 
   const implementedChange = number ? user?.number === number : true;

@@ -23,14 +23,13 @@ const SettingsFriendsContent = () => {
 
     try {
       await removeFriend(email);
+
+      dispatch(remove({ by: 'email', value: email }));
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
       });
-      return;
     }
-
-    dispatch(remove({ by: 'email', value: email }));
   }, []);
 
   const multitaskHandle = useMemo(

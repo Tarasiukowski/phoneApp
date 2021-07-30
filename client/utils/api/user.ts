@@ -8,32 +8,6 @@ type ExtendedUser = User & {
   };
 };
 
-// email: String,
-// number: String,
-// verify: {
-//   code: String,
-//   stage: String,
-// },
-// fullname: {
-//   firstname: String,
-//   lastname: String,
-// },
-// onBoarding: {
-//   value: Boolean,
-//   stage: String,
-// },
-// colorImage: String,
-// newEmail: {
-//   value: String,
-//   code: String,
-// },
-// invites: [String],
-// friends: [{ email: String, notes: [{ content: String }] }],
-// image: String,
-// conversations: [{ with: String, id: String }],
-// groups: [{ name: String, members: [String] }],
-// blocklist: [String],
-
 export const updateUser = <K extends keyof ExtendedUser>(key: K, value: ExtendedUser[K]) =>
   fetcher('PUT', `/user/update/${key}`, { value });
 
@@ -45,7 +19,7 @@ export const blockUser = (email: string) =>
     blockedUserEmail: email,
   });
 
-export const verifyUser = (type: 'email', code: string) =>
+export const verifyUser = (type: 'email' | 'account' | 'login', code: string) =>
   fetcher('POST', `/user/verify/${type}`, {
     code,
   });

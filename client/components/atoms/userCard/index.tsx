@@ -10,9 +10,9 @@ import { useUser } from 'setup/reducers/userReducer';
 import { formatValuesObject } from 'utils';
 
 const UserCard = forwardRef<HTMLDivElement, props>(
-  ({ elemList, member, big, withDetailed, onClick }, ref) => {
+  ({ elemList, member, big, withDetailedView, onClick }, ref) => {
     const [fullname, setFullname] = useState('');
-    const [openDetailed, setOpenDetailed] = useState(false);
+    const [openDetailedView, setOpenDetailedView] = useState(false);
 
     const templateRef = useRef<HTMLDivElement>(null);
     const userDetailedRef = useRef<HTMLDivElement>(null);
@@ -32,23 +32,23 @@ const UserCard = forwardRef<HTMLDivElement, props>(
     useOutsideClick(
       templateRef,
       () => {
-        setOpenDetailed(false);
+        setOpenDetailedView(false);
       },
       (target, defaultOption) => defaultOption || target.tagName === 'BUTTON',
-      { isListeningForEvent: openDetailed && withDetailed },
+      { isListeningForEvent: openDetailedView && withDetailedView },
     );
 
     const handleOnClick = useCallback(() => {
-      withDetailed && setOpenDetailed(true);
+      withDetailedView && setOpenDetailedView(true);
       onClick && onClick();
     }, []);
 
     return (
       <Template
-        onClick={withDetailed ? handleOnClick : onClick}
+        onClick={withDetailedView ? handleOnClick : onClick}
         elemList={elemList}
         big={big}
-        ref={withDetailed ? templateRef : ref}
+        ref={withDetailedView ? templateRef : ref}
       >
         <ImageUser
           member={member}
@@ -57,7 +57,7 @@ const UserCard = forwardRef<HTMLDivElement, props>(
           big={big}
         />
         <p className="name">{fullname}</p>
-        {withDetailed && openDetailed && <DetailedView userDetailedRef={userDetailedRef} />}
+        {withDetailedView && openDetailedView && <DetailedView userDetailedRef={userDetailedRef} />}
       </Template>
     );
   },

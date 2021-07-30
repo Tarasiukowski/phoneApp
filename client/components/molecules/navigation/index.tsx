@@ -18,7 +18,7 @@ const Navigation = () => {
   return (
     <div className={styles.box}>
       <div className={styles.header}>
-        <UserCard withDetailed />
+        <UserCard withDetailedView />
         <ButtonNavigation
           onClick={handleVisibleSearcher}
           icon={SearchSvg}

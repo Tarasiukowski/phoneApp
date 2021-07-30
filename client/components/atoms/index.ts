@@ -1,5 +1,5 @@
 export { UserCard } from './userCard';
-export { ToggleAuth } from './toggleAauth';
+export { ToggleAuth } from './toggleAuth';
 export { TextArea } from './textArea';
 export { Spinner } from './spinner';
 export { Input } from './input/input';

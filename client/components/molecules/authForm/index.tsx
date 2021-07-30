@@ -1,59 +1,49 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
 import { Input, Button } from 'components/atoms';
 
-import { fetcher, handleRequestError } from 'utils';
+import { handleRequestError, auth } from 'utils';
 import { login as authLogin } from 'setup/reducers/userReducer';
-import { props, formData } from './types';
+import { props, Fields } from './types';
 import { useError } from 'contexts';
+import { useMutation } from 'hooks';
 import { AuthType } from 'interfaces';
 import styles from './authForm.module.scss';
 import { paths } from '../../../constants';
 
-const AuthForm = ({ auth }: props) => {
-  const [disabled, setDisabled] = useState(true);
-
+const AuthForm = ({ authType }: props) => {
   const { register, handleSubmit, watch } = useForm();
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { setError } = useError();
+  const { mutate, status } = useMutation(auth);
 
-  const isRegister = auth === AuthType.Singup;
+  const isRegister = authType === AuthType.Singup;
   const redirectTo = isRegister ? paths.onBoarding.code : paths.login.verify;
-  const valueEmailInput = watch('email');
+  const valueEmailInput: string = watch('email');
+  const disabled = !valueEmailInput?.length || status === 'loading';
 
-  useEffect(() => {
-    setDisabled(valueEmailInput ? false : true);
-  }, [valueEmailInput]);
-
-  const submit = useCallback(async (data: formData) => {
-    const { email } = data;
-
-    setDisabled(true);
+  const submit = useCallback(async (fields: Fields) => {
+    const { email } = fields;
 
     try {
-      const { user } = await fetcher(
-        'post',
-        `/auth${isRegister ? paths.singUp : paths.login.index}`,
-        {
-          email,
-          authType: 'email',
-        },
-      );
+      const { user } = await mutate(authType, {
+        email,
+        by: 'email',
+      });
 
       setError(null);
-      router.push(redirectTo);
       dispatch(authLogin(user));
+
+      router.push(redirectTo);
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
       });
-    } finally {
-      setDisabled(false);
     }
   }, []);
 
