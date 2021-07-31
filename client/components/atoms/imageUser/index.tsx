@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 
 import { Image } from './styles';
 
-import { props, DefaultMember } from './types';
+import { props, ImageUserType } from './types';
 import { useUser } from 'setup/reducers/userReducer';
 import { getInitials } from 'utils';
 
 const ImageUser = ({ member, ...restProps }: props) => {
-  const [imageData, setImageData] = useState<DefaultMember>({
+  const [imageData, setImageData] = useState<ImageUserType>({
     colorImage: undefined,
     image: undefined,
     initials: undefined,

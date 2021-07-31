@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 export type Status = 'idle' | 'loading' | 'error' | 'success';
 
-export const useMutation = <Params extends Array<unknown>>(
+export const useMutation = <Params extends Array<any>>(
   mutation: (...params: Params) => Promise<any>,
 ) => {
   const [status, setStatus] = useState<Status>('idle');

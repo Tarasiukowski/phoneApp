@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useScroll } from 'react-use';
 
 import { Spinner } from 'components/atoms';
@@ -8,7 +8,7 @@ import Msg from './message';
 
 import { useChatConnection } from 'hooks';
 import { useFriends } from 'setup/reducers/friendsReducer';
-import { props } from './types';
+import { props, TextAreaHandle } from './types';
 import { Member, Message } from 'interfaces';
 import styles from './chat.module.scss';
 
@@ -50,18 +50,20 @@ const Chat = ({ id, getScopedUser, width }: props) => {
   }, [y]);
 
   useEffect(() => {
-    const messagesTemplate = refMessagesTemplate.current as HTMLDivElement;
+    const messagesTemplate = refMessagesTemplate.current;
 
-    messagesTemplate.scrollTo(0, messagesTemplate.scrollHeight);
+    if (messagesTemplate) {
+      messagesTemplate.scrollTo(0, messagesTemplate.scrollHeight);
+    }
   }, [messages.length]);
 
-  const textareaHandle = {
-    onChange: (e: ChangeEvent) => {
-      const target = e.target as HTMLTextAreaElement;
+  const textareaHandle: TextAreaHandle = {
+    onChange: (e) => {
+      const target = e.target;
 
       setValueTextarea(target.value);
     },
-    onKeyUp: (e: KeyboardEvent) => {
+    onKeyUp: (e) => {
       if (e.key === 'Enter' && valueTextarea.length) {
         sendMessage(valueTextarea);
         setValueTextarea('');

@@ -23,6 +23,7 @@ const DetailedView = ({ userDetailedRef }: props) => {
   const { setError } = useError();
   const { toggleLoading } = useLoading();
 
+  // FIXME
   const multitaskHandle = useMemo(
     () =>
       ({
@@ -47,26 +48,27 @@ const DetailedView = ({ userDetailedRef }: props) => {
     [multiTask.open],
   );
 
+  const handleLogout = {
+    onRequest() {
+      toggleLoading(true);
+    },
+    onResponse() {
+      router.push(paths.singUp).then(() => {
+        toggleLoading(false);
+        resetData();
+      });
+    },
+  };
+
   const resetData = () => {
     dispatch(updateInvites([]));
     dispatch(updateBlocklist([]));
     dispatch(updateFriends([]));
   };
 
-  const handleOnRequestLogout = () => {
-    toggleLoading(true);
-  };
-
-  const handleOnResponseLogout = () => {
-    router.push(paths.singUp).then(() => {
-      toggleLoading(false);
-      resetData();
-    });
-  };
-
   const handleButtonNavigation = useCallback((data: typeof buttonsData[number]) => {
     data.handleInvite && multiTask.toggleOpen(true, multitaskHandle);
-    data.logout && logout(handleOnRequestLogout, handleOnResponseLogout);
+    data.logout && logout(handleLogout.onResponse, handleLogout.onResponse);
   }, []);
 
   return (

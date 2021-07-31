@@ -32,6 +32,7 @@ const SettingsFriendsContent = () => {
     }
   }, []);
 
+  // FIXME
   const multitaskHandle = useMemo(
     () =>
       ({

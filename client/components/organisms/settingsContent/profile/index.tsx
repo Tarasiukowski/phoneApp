@@ -8,11 +8,13 @@ import { useUser } from 'setup/reducers/userReducer';
 import { fetcher, handleRequestError, verifyUser, updateUser } from 'utils';
 import { ERROR_MESSAGES } from 'common';
 import { useError, useMultiTask } from 'contexts';
+import { useMutation } from 'hooks';
 
 const SettingsProfileContent = () => {
   const { setError } = useError();
   const loggedUser = useUser();
   const multiTask = useMultiTask();
+  const { mutate, status } = useMutation(updateUser);
 
   const fullname = loggedUser?.fullname;
 
@@ -26,7 +28,7 @@ const SettingsProfileContent = () => {
   const implementedChange =
     firstnameValue !== fullname?.firstname || lastnameValue !== fullname?.lastname;
   const validFullname = Boolean(!firstnameValue?.length || !lastnameValue?.length);
-  const isDisabled = !implementedChange || validFullname;
+  const isDisabled = !implementedChange || validFullname || status === 'loading';
 
   useEffect(() => {
     if (!multiTask.open) {
@@ -45,7 +47,7 @@ const SettingsProfileContent = () => {
 
   const save = useCallback(async () => {
     try {
-      await updateUser('fullname', { firstname: firstnameValue, lastname: lastnameValue });
+      await mutate('fullname', { firstname: firstnameValue, lastname: lastnameValue });
 
       window.location.reload();
     } catch (err) {
@@ -65,6 +67,7 @@ const SettingsProfileContent = () => {
     }
   };
 
+  // FIXME
   const multitaskHandle = useMemo(
     () =>
       ({

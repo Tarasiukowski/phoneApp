@@ -11,7 +11,7 @@ const getValueOfKey = <T>(elem: T, key: Key<T>): string | undefined => {
   }
 };
 
-export const filterByKey = <T>(data: T[], value: string, key: Key<T>): T[] =>
+export const filterByKey = <T>(key: Key<T>, data: T[], value: string): T[] =>
   data.filter((elem) => {
     const valueOfKeyToFilter = getValueOfKey(elem, key);
 

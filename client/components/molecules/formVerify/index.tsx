@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEventHandler } from 'react';
+import { useState, ChangeEventHandler, FormEventHandler } from 'react';
 import Image from 'next/image';
 
 import { Button, Input } from 'components/atoms';
@@ -31,7 +31,7 @@ const FormVerify = ({ type, onSuccess }: props) => {
     setValueInput(e.target.value);
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
     try {

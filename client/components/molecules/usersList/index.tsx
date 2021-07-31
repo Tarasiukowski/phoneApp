@@ -35,7 +35,7 @@ const UsersList = ({ name, data }: props) => {
 
   useEffect(() => {
     if (inputValue.length) {
-      const filteredData = filterByKey(listData, inputValue, 'fullname');
+      const filteredData = filterByKey('fullname', listData, inputValue);
 
       setListData(filteredData);
     } else {
@@ -43,8 +43,8 @@ const UsersList = ({ name, data }: props) => {
     }
   }, [inputValue]);
 
-  const updateUserDetailed = useCallback((userData: Member) => {
-    setDetailedUser(userData);
+  const updateUserDetailed = useCallback((member: Member) => {
+    setDetailedUser(member);
   }, []);
 
   const handleAcceptInvite = useCallback(async (user: Member) => {

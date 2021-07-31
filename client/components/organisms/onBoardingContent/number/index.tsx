@@ -22,6 +22,8 @@ const OnboardingNumberContent = () => {
   const { toggleLoading } = useLoading();
   const { mutate, status } = useMutation(updateUser);
 
+  const disabled = !number || status === 'loading';
+
   useDidMount(() => {
     setNumber(user ? user.number : null);
   });
@@ -29,8 +31,6 @@ const OnboardingNumberContent = () => {
   const toggleOpenList = useCallback(() => {
     setOpenList(!openList);
   }, []);
-
-  const disabled = !number || status === 'loading';
 
   const next = useCallback(async () => {
     try {
@@ -40,16 +40,14 @@ const OnboardingNumberContent = () => {
         value: false,
         stage: paths.onBoarding.account,
       });
+
+      toggleLoading(true);
+      router.push(paths.onBoarding.account);
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
       });
-
-      return;
     }
-
-    toggleLoading(true);
-    router.push(paths.onBoarding.account);
   }, []);
 
   const handleSelectNumberList = useMemo(

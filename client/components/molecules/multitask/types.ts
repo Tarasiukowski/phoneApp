@@ -1,3 +1,5 @@
+import { ChangeEventHandler, KeyboardEventHandler } from 'react';
+
 export type props = {
   name: 'ChangeEmail' | 'InviteFriend' | 'CreateGroup';
   open: boolean;
@@ -7,3 +9,8 @@ export type props = {
 };
 
 export type GroupData = { name?: string | null; members?: string[] };
+
+export type InputHandle = {
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  onKeyUp: KeyboardEventHandler<HTMLInputElement>;
+};

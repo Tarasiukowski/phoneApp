@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState, useCallback } from 'react';
+import { FormEvent, useState, useCallback, ChangeEventHandler } from 'react';
 import { useRouter } from 'next/router';
 
 import { Button, Input } from 'components/atoms';
@@ -21,7 +21,7 @@ const OnboardingAccountContent = () => {
   const { firstname, lastname } = fields;
   const disabled = status === 'loading' || !firstname.length || !lastname.length;
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const target = e.target as HTMLInputElement;
     const value = target.value;
 
@@ -45,15 +45,15 @@ const OnboardingAccountContent = () => {
             value: true,
             stage: null,
           });
+
+          toggleLoading(true);
+          router.push(paths.contacts);
         } catch (err) {
           handleRequestError(err, (errorMsg) => {
             setError({ msg: errorMsg, id: Math.random() });
           });
         }
       }
-
-      toggleLoading(true);
-      router.push(paths.contacts);
     },
     [fields],
   );

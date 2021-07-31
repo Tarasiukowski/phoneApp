@@ -18,6 +18,7 @@ const FriendsList = () => {
 
   const { conversations = [] } = user || {};
 
+  // FIXME
   const multitaskHandle = useMemo(
     () =>
       ({

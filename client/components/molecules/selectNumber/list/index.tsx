@@ -1,4 +1,11 @@
-import { useRef, MouseEvent, useState, useEffect, ChangeEvent, useCallback } from 'react';
+import {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  ChangeEventHandler,
+  MouseEventHandler,
+} from 'react';
 import gsap from 'gsap';
 import { useScroll } from 'react-use';
 
@@ -9,15 +16,15 @@ import { handleRequestError, getAllNumbers, getRandomNumbers } from 'utils';
 import { props } from '../types';
 import { useError } from 'contexts';
 import styles from './list.module.scss';
-import { ActiveList } from './types';
+import { ActiveList, Numbers } from './types';
 import { useDidMount } from 'hooks';
 
-const MAX_LENGTH_NUMBER = 8;
+const LENGTH_NUMBER = 8;
 
 const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
   const [activeList, setActiveList] = useState<ActiveList>(ActiveList.Recommended);
   const [valueDigits, setValueDigits] = useState('');
-  const [numbers, setNumbers] = useState({ all: [], recommended: [] });
+  const [numbers, setNumbers] = useState<Numbers>({ all: [], recommended: [] });
 
   const refIndicator = useRef<HTMLSpanElement>(null);
   const refTab = useRef<HTMLDivElement>(null);
@@ -27,11 +34,15 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
   const { setError } = useError();
 
   const { y } = useScroll(refListItems);
+  const { all = [], recommended = [] } = numbers;
+
+  const allNumbers = all;
+  const recommendedNumbers = recommended;
 
   useDidMount(() => {
     getRandomNumbers()
-      .then(({ numbers }) => {
-        setNumbers({ ...numbers, recommended: numbers });
+      .then(({ numbers: fetchedNumbers }) => {
+        setNumbers({ ...numbers, recommended: fetchedNumbers });
       })
       .catch((err) => {
         handleRequestError(err, (errorMsg) => {
@@ -39,6 +50,18 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
         });
       });
   });
+
+  useEffect(() => {
+    getAllNumbers({ include: valueDigits })
+      .then(({ numbers: fetchedNumbers }) => {
+        setNumbers((numbers) => ({ ...numbers, all: fetchedNumbers }));
+      })
+      .catch((err) => {
+        handleRequestError(err, (errorMsg) => {
+          setError({ msg: errorMsg, id: Math.random() });
+        });
+      });
+  }, [valueDigits]);
 
   useEffect(() => {
     if (isActiveAllNumbers) {
@@ -49,8 +72,8 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
           include: valueDigits,
           startWith: allNumbers[allNumbers.length - 1],
         })
-          .then(({ numbers }) => {
-            setNumbers({ ...numbers, all: [...allNumbers, ...numbers] });
+          .then(({ numbers: fetchedNumbers }) => {
+            setNumbers({ ...numbers, all: [...allNumbers, ...fetchedNumbers] });
           })
           .catch((err) => {
             handleRequestError(err, (errorMsg) => {
@@ -62,27 +85,10 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
   }, [y]);
 
   useEffect(() => {
-    getAllNumbers({ include: valueDigits })
-      .then(({ numbers }) => {
-        setNumbers({ ...numbers, all: numbers });
-      })
-      .catch((err) => {
-        handleRequestError(err, (errorMsg) => {
-          setError({ msg: errorMsg, id: Math.random() });
-        });
-      });
-  }, [valueDigits]);
-
-  useEffect(() => {
     const listItems = refListItems.current as HTMLDivElement;
 
     listItems.scrollTo(0, 0);
   }, [activeList]);
-
-  const { all = [], recommended = [] } = numbers;
-
-  const allNumbers = all;
-  const recommendedNumbers = recommended;
 
   const isActiveAllNumbers = activeList === ActiveList.All;
 
@@ -91,7 +97,7 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
     all: isActiveAllNumbers,
   };
 
-  const setOverlap = (e: MouseEvent) => {
+  const setOverlap: MouseEventHandler<HTMLButtonElement> = (e) => {
     const target = e.target as HTMLButtonElement;
     const tab = refTab.current as HTMLDivElement;
     const { left: leftTarget } = target.getBoundingClientRect();
@@ -106,11 +112,11 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
     setActiveList(oppositeValue);
   };
 
-  const handleValueDigits = (e: ChangeEvent<Element>) => {
+  const handleValueDigits: ChangeEventHandler<Element> = (e) => {
     const target = e.target as HTMLInputElement;
     const value = target.value;
 
-    if (value.length === MAX_LENGTH_NUMBER) return;
+    if (value.length === LENGTH_NUMBER) return;
 
     setValueDigits(value);
   };
@@ -120,7 +126,7 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
     onClose();
   }, []);
 
-  const closeList = useCallback((e: MouseEvent<HTMLDivElement>) => {
+  const closeList: MouseEventHandler<HTMLDivElement> = useCallback((e) => {
     if (refWrapper.current === e.target) {
       onClose();
     }

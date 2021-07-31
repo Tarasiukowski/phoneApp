@@ -28,7 +28,7 @@ export type propsImage = {
   mini?: boolean;
 };
 
-export type DefaultMember = {
+export type ImageUserType = {
   colorImage?: string;
   image?: string;
   initials?: string;

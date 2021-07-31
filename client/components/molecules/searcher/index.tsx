@@ -23,6 +23,8 @@ const Searcher = ({ open, onClose }: props) => {
   const user = useUser();
   const friends = useFriends();
 
+  const { conversations = [] } = user || {};
+
   useDidMount(() => {
     const fetchedSearchData = getSearcherData(formatedConversations);
 
@@ -43,7 +45,7 @@ const Searcher = ({ open, onClose }: props) => {
     if (inputValue.length) {
       const { routes, conversations } = getSearcherData(formatedConversations);
 
-      const filteredRoutes = filterByKey(routes.data, inputValue, 'filterValue');
+      const filteredRoutes = filterByKey('filterValue', routes.data, inputValue);
 
       const filteredConversations = conversations.data.filter((conversation) => {
         const { fullname } = conversation.user;
@@ -64,8 +66,6 @@ const Searcher = ({ open, onClose }: props) => {
       setSearcherData(fetchData);
     }
   }, [inputValue]);
-
-  const { conversations = [] } = user || {};
 
   const formatedConversations = conversations.map((conversation) => {
     const friend = friends.find((friend) => friend.email === conversation.with);

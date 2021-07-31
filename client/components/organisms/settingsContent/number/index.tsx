@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 
 import { Button } from 'components/atoms';
 import { SelectNumberButton, SelectNumberList } from 'components/molecules';
@@ -7,39 +7,30 @@ import { SettingsTemplate } from 'templates';
 import { useUser } from 'setup/reducers/userReducer';
 import { handleRequestError, updateUser } from 'utils';
 import { useError } from 'contexts';
-import { useDidMount } from 'hooks';
+import { useDidMount, useMutation } from 'hooks';
 
 const SettingsNumberContent = () => {
   const [openList, setOpenList] = useState(false);
-  const [disabledByRequest, setDisabledByRequest] = useState(false);
   const [number, setNumber] = useState<string | null>(null);
 
   const { setError } = useError();
   const user = useUser();
+  const { mutate, status } = useMutation(updateUser);
 
   const implementedChange = number ? user?.number === number : true;
+  const disabled = implementedChange || status === 'loading';
 
   useDidMount(() => {
     setNumber(user ? user.number : null);
   });
-
-  useEffect(() => {
-    if (disabledByRequest) {
-      if (user?.number === number) {
-        setDisabledByRequest(false);
-      }
-    }
-  }, [user]);
 
   const toggleOpenList = useCallback(() => {
     setOpenList(!openList);
   }, []);
 
   const onSave = useCallback(async () => {
-    setDisabledByRequest(true);
-
     try {
-      number && (await updateUser('number', number));
+      number && (await mutate('number', number));
     } catch (err) {
       handleRequestError(err, (errorMsg) => {
         setError({ msg: errorMsg, id: Math.random() });
@@ -65,12 +56,7 @@ const SettingsNumberContent = () => {
       <p className="description">Manage your phone number</p>
       <SelectNumberButton number={number} onClick={toggleOpenList} mini />
       {openList && <SelectNumberList {...handleSelectNumberList} />}
-      <Button
-        onClick={onSave}
-        disabled={disabledByRequest ? disabledByRequest : implementedChange}
-        style={{ marginTop: '40px' }}
-        width="auto"
-      >
+      <Button onClick={onSave} disabled={disabled} style={{ marginTop: '40px' }} width="auto">
         save
       </Button>
     </SettingsTemplate>

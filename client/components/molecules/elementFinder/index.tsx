@@ -16,7 +16,7 @@ const ElementFinder = <T,>({ renderItem, data, filterKey, notFound, placeholder 
 
   useEffect(() => {
     if (inputValue.length) {
-      const filteredData = filterByKey(data, inputValue, filterKey);
+      const filteredData = filterByKey(filterKey, data, inputValue);
 
       setReceivedDate(filteredData);
     } else {

@@ -1,4 +1,4 @@
-import { useState, useRef, ChangeEvent, KeyboardEvent, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 
 import { Button } from 'components/atoms';
 
@@ -6,7 +6,7 @@ import styles from './multitask.module.scss';
 import { isCorrectValue } from 'utils';
 import { optionsComponent } from './data';
 import { useOutsideClick } from 'hooks';
-import { props, GroupData } from './types';
+import { props, GroupData, InputHandle } from './types';
 
 const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
   const option = optionsComponent.find((option) => option.name === name)!;
@@ -80,13 +80,13 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
     optionalButton: members.length ? false : true,
   };
 
-  const inputHandle = {
-    onChange(e: ChangeEvent<HTMLInputElement>) {
+  const inputHandle: InputHandle = {
+    onChange(e) {
       const value = e.target.value;
 
       setInputValue(value);
     },
-    onKeyUp(e: KeyboardEvent<HTMLInputElement>) {
+    onKeyUp(e) {
       if (e.key === 'Enter') {
         if (!disabeld.constantButton) {
           next();
