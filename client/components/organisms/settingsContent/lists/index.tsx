@@ -69,7 +69,7 @@ const SettingsListsContent = () => {
           try {
             await createGroup(group);
 
-            dispatch(updateUser({ key: 'groups', value: group, option: { type: 'pull' } }));
+            dispatch(updateUser({ key: 'groups', value: group, option: { type: 'push' } }));
 
             return true;
           } catch (err) {

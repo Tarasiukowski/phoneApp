@@ -21,6 +21,7 @@ export const Template = styled.div<props>`
     margin-left: 9px;
     pointer-events: none;
   }
+  
   :hover {
     background-color: #4b4b663b;
   }

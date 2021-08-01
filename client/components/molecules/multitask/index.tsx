@@ -9,17 +9,22 @@ import { useOutsideClick } from 'hooks';
 import { props, GroupData, InputHandle } from './types';
 
 const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
-  const option = optionsComponent.find((option) => option.name === name)!;
+  const { stages } = optionsComponent.find((option) => option.name === name)!;
+  const iterator = stages.entries();
+  iterator.next();
 
   const [inputValue, setInputValue] = useState('');
-  const [counterStage, setCounterStage] = useState(0);
+  const [activeStage, serActiveStage] = useState(stages[0]);
   const [groupData, setGroupData] = useState<GroupData>({ name: null, members: [] });
 
   const templateRef = useRef<HTMLDivElement>(null);
 
-  const stages = option.stages;
-  const activeStage = stages[counterStage];
-  const isEnd = counterStage === stages.length - 1;
+  const stageIndex = stages.findIndex((stage) => stage.title === activeStage.title);
+  const isEnd = stageIndex === stages.length - 1;
+  const returnValueOnEnd = name === 'CreateGroup' ? groupData : inputValue;
+
+  const { title, description, inputPlaceholder, inputName, unlimited, textButton } = activeStage;
+  const { members = [] } = groupData;
 
   useOutsideClick(
     templateRef,
@@ -31,49 +36,57 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
     { isListeningForEvent: open },
   );
 
-  const resetData = () => {
-    setInputValue('');
-    setCounterStage(0);
-    setGroupData({ name: null, members: [] });
-  };
-
   const next = useCallback(async () => {
-    if (isEnd && !unlimited) {
-      const allowResetData = await onEnd(inputValue);
+    if (onNext) {
+      const allowNextStage = onNext(inputValue, stageIndex);
 
-      if (allowResetData) {
-        onClose(allowResetData);
-        setCounterStage(0);
+      if (allowNextStage) {
+        const { unlimited } = activeStage;
+
+        if (unlimited) {
+          if (name === 'CreateGroup') {
+            if (stageIndex) {
+              setGroupData({ ...groupData, members: [...members, inputValue] });
+            } else {
+              setGroupData({ ...groupData, name: inputValue });
+            }
+          }
+
+          setInputValue('');
+          return;
+        }
+
+        const { value, done } = iterator.next();
+        const nextStage = value[1];
+
+        if (done) {
+          const isEnd = await onEnd(returnValueOnEnd);
+
+          isEnd && close();
+          return;
+        }
+
+        serActiveStage(nextStage);
+        setInputValue('');
       }
 
       return;
     }
 
-    const allowNextStage =
-      (onNext ? await onNext(inputValue, counterStage) : false) && Boolean(stages.length);
+    const isEnd = await onEnd(returnValueOnEnd);
 
-    if (allowNextStage) {
-      unlimited || setCounterStage(counterStage + 1);
-
-      const { members = [] } = groupData;
-
-      name === 'CreateGroup' && counterStage > 0
-        ? setGroupData({ ...groupData, members: [...members, inputValue] })
-        : setGroupData({ ...groupData, name: inputValue });
-    }
-
-    allowNextStage && setInputValue('');
+    isEnd && close();
   }, [inputValue]);
 
-  const end = useCallback(() => {
-    onEnd(groupData);
+  const close = useCallback(() => {
     onClose();
-    setGroupData({ name: null, members: [] });
+    resetData();
   }, [inputValue]);
 
-  const { title, description, inputPlaceholder, inputName, unlimited, textButton } = activeStage;
-
-  const { members = [] } = groupData;
+  const resetData = useCallback(() => {
+    setInputValue('');
+    setGroupData({ name: null, members: [] });
+  }, []);
 
   const disabeld = {
     constantButton: !isCorrectValue(inputName, inputValue),
@@ -105,7 +118,6 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
           </div>
           <div className={styles.inputTemplate}>
             <input
-              key={counterStage}
               value={inputValue}
               placeholder={inputPlaceholder}
               name={inputName}
@@ -119,7 +131,10 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
             </Button>
             {unlimited && (
               <Button
-                onClick={end}
+                onClick={() => {
+                  onEnd(returnValueOnEnd);
+                  close();
+                }}
                 disabled={disabeld.optionalButton}
                 width="auto"
                 style={{ marginLeft: '10px' }}

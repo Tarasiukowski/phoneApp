@@ -36,7 +36,7 @@ const OnboardingNumberContent = () => {
     try {
       number && (await mutate('number', number));
 
-      await updateUser('onBoarding', {
+      await mutate('onBoarding', {
         value: false,
         stage: paths.onBoarding.account,
       });

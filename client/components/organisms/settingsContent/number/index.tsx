@@ -9,6 +9,7 @@ import { handleRequestError, updateUser } from 'utils';
 import { useError } from 'contexts';
 import { useDidMount, useMutation } from 'hooks';
 
+// FIXME
 const SettingsNumberContent = () => {
   const [openList, setOpenList] = useState(false);
   const [number, setNumber] = useState<string | null>(null);

@@ -10,6 +10,7 @@ import { ERROR_MESSAGES } from 'common';
 import { useError, useMultiTask } from 'contexts';
 import { useMutation } from 'hooks';
 
+// FIXME
 const SettingsProfileContent = () => {
   const { setError } = useError();
   const loggedUser = useUser();
