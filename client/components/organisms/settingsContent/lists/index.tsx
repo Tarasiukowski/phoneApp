@@ -18,7 +18,7 @@ const SettingsListsContent = () => {
 
   const user = useUser();
   const friends = useFriends();
-  const multiTask = useMultiTask();
+  const createGroupPopUp = useMultiTask();
   const { setError } = useError();
 
   const { groups = [] } = user || {};
@@ -43,8 +43,7 @@ const SettingsListsContent = () => {
     }
   }, []);
 
-  // FIXME
-  const multitaskHandle = useMemo(
+  const createGroupHandle = useMemo(
     () =>
       ({
         name: 'CreateGroup',
@@ -63,7 +62,7 @@ const SettingsListsContent = () => {
           return true;
         },
         onClose: () => {
-          multiTask.toggleOpen(false);
+          createGroupPopUp.toggleOpen(false);
         },
         onEnd: async (group: Group) => {
           try {
@@ -76,12 +75,12 @@ const SettingsListsContent = () => {
             handleRequestError(err, (errorMsg) => {
               setError({ msg: errorMsg, id: Math.random() });
             });
-            
+
             return false;
           }
         },
       } as const),
-    [multiTask.open],
+    [createGroupPopUp.open],
   );
 
   return (
@@ -90,9 +89,9 @@ const SettingsListsContent = () => {
       <p className="description">Manage the settings.</p>
       <Button
         onClick={() => {
-          multiTask.toggleOpen(true, multitaskHandle);
+          createGroupPopUp.toggleOpen(true, createGroupHandle);
         }}
-        disabled={multiTask.open}
+        disabled={createGroupPopUp.open}
         id="CreateGroup"
         style={{ margin: '37px 0 17px 0' }}
         width="auto"

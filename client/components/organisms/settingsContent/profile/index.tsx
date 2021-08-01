@@ -10,11 +10,10 @@ import { ERROR_MESSAGES } from 'common';
 import { useError, useMultiTask } from 'contexts';
 import { useMutation } from 'hooks';
 
-// FIXME
 const SettingsProfileContent = () => {
   const { setError } = useError();
   const loggedUser = useUser();
-  const multiTask = useMultiTask();
+  const changeEmailPopUp = useMultiTask();
   const { mutate, status } = useMutation(updateUser);
 
   const fullname = loggedUser?.fullname;
@@ -32,10 +31,10 @@ const SettingsProfileContent = () => {
   const isDisabled = !implementedChange || validFullname || status === 'loading';
 
   useEffect(() => {
-    if (!multiTask.open) {
+    if (!changeEmailPopUp.open) {
       resetData();
     }
-  }, [multiTask.open]);
+  }, [changeEmailPopUp.open]);
 
   const handleOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const target = e.target;
@@ -68,8 +67,7 @@ const SettingsProfileContent = () => {
     }
   };
 
-  // FIXME
-  const multitaskHandle = useMemo(
+  const changeEmailHandle = useMemo(
     () =>
       ({
         name: 'ChangeEmail',
@@ -98,7 +96,7 @@ const SettingsProfileContent = () => {
           }
         },
         onClose: async (verify?: boolean) => {
-          multiTask.toggleOpen(false);
+          changeEmailPopUp.toggleOpen(false);
           verify && window.location.reload();
         },
         onEnd: async (code: string) => {
@@ -114,7 +112,7 @@ const SettingsProfileContent = () => {
           }
         },
       } as const),
-    [multiTask.open],
+    [changeEmailPopUp.open],
   );
 
   return (
@@ -146,9 +144,9 @@ const SettingsProfileContent = () => {
         <Button
           id="ChangeEmail"
           onClick={() => {
-            multiTask.toggleOpen(true, multitaskHandle);
+            changeEmailPopUp.toggleOpen(true, changeEmailHandle);
           }}
-          disabled={multiTask.open}
+          disabled={changeEmailPopUp.open}
           width="auto"
           transparent
         >
