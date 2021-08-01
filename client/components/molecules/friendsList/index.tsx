@@ -13,7 +13,7 @@ import styles from './friendsList.module.scss';
 const FriendsList = () => {
   const user = useUser();
   const friends = useFriends();
-  const inviteFriendPopUp = useMultiTask();
+  const inviteFriendPopup = useMultiTask();
   const { setError } = useError();
 
   const { conversations = [] } = user || {};
@@ -23,7 +23,7 @@ const FriendsList = () => {
       ({
         name: 'InviteFriend',
         onClose: () => {
-          inviteFriendPopUp.toggleOpen(false);
+          inviteFriendPopup.toggleOpen(false);
         },
         onEnd: async (email: string) => {
           try {
@@ -39,11 +39,11 @@ const FriendsList = () => {
           }
         },
       } as const),
-    [inviteFriendPopUp.open],
+    [inviteFriendPopup.open],
   );
 
   const hanldeAddButton = useCallback(() => {
-    inviteFriendPopUp.toggleOpen(true, inviteFriendHandle);
+    inviteFriendPopup.toggleOpen(true, inviteFriendHandle);
   }, []);
 
   return (

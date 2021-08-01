@@ -16,7 +16,7 @@ const SettingsFriendsContent = () => {
 
   const friends = useFriends();
   const { setError } = useError();
-  const inviteFriendPopUp = useMultiTask();
+  const inviteFriendPopup = useMultiTask();
 
   const handleRemoveFriend = useCallback(async (user: Member) => {
     const { email } = user;
@@ -32,12 +32,12 @@ const SettingsFriendsContent = () => {
     }
   }, []);
 
-  const multitaskHandle = useMemo(
+  const inviteFriendHandle = useMemo(
     () =>
       ({
         name: 'InviteFriend',
         onClose: () => {
-          inviteFriendPopUp.toggleOpen(false);
+          inviteFriendPopup.toggleOpen(false);
         },
         onEnd: async (email: string) => {
           try {
@@ -52,7 +52,7 @@ const SettingsFriendsContent = () => {
           }
         },
       } as const),
-    [inviteFriendPopUp.open],
+    [inviteFriendPopup.open],
   );
 
   return (
@@ -61,9 +61,9 @@ const SettingsFriendsContent = () => {
       <p className="description">Manage all the members in your friend list.</p>
       <Button
         onClick={() => {
-          inviteFriendPopUp.toggleOpen(true, multitaskHandle);
+          inviteFriendPopup.toggleOpen(true, inviteFriendHandle);
         }}
-        disabled={inviteFriendPopUp.open}
+        disabled={inviteFriendPopup.open}
         id="InviteFriend"
         style={{ margin: '37px 0 17px 0' }}
         width="auto"

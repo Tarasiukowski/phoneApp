@@ -18,7 +18,7 @@ const SettingsListsContent = () => {
 
   const user = useUser();
   const friends = useFriends();
-  const createGroupPopUp = useMultiTask();
+  const createGroupPopup = useMultiTask();
   const { setError } = useError();
 
   const { groups = [] } = user || {};
@@ -62,7 +62,7 @@ const SettingsListsContent = () => {
           return true;
         },
         onClose: () => {
-          createGroupPopUp.toggleOpen(false);
+          createGroupPopup.toggleOpen(false);
         },
         onEnd: async (group: Group) => {
           try {
@@ -80,7 +80,7 @@ const SettingsListsContent = () => {
           }
         },
       } as const),
-    [createGroupPopUp.open],
+    [createGroupPopup.open],
   );
 
   return (
@@ -89,9 +89,9 @@ const SettingsListsContent = () => {
       <p className="description">Manage the settings.</p>
       <Button
         onClick={() => {
-          createGroupPopUp.toggleOpen(true, createGroupHandle);
+          createGroupPopup.toggleOpen(true, createGroupHandle);
         }}
-        disabled={createGroupPopUp.open}
+        disabled={createGroupPopup.open}
         id="CreateGroup"
         style={{ margin: '37px 0 17px 0' }}
         width="auto"

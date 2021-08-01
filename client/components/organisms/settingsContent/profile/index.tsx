@@ -13,7 +13,7 @@ import { useMutation } from 'hooks';
 const SettingsProfileContent = () => {
   const { setError } = useError();
   const loggedUser = useUser();
-  const changeEmailPopUp = useMultiTask();
+  const changeEmailPopup = useMultiTask();
   const { mutate, status } = useMutation(updateUser);
 
   const fullname = loggedUser?.fullname;
@@ -31,10 +31,10 @@ const SettingsProfileContent = () => {
   const isDisabled = !implementedChange || validFullname || status === 'loading';
 
   useEffect(() => {
-    if (!changeEmailPopUp.open) {
+    if (!changeEmailPopup.open) {
       resetData();
     }
-  }, [changeEmailPopUp.open]);
+  }, [changeEmailPopup.open]);
 
   const handleOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const target = e.target;
@@ -96,7 +96,7 @@ const SettingsProfileContent = () => {
           }
         },
         onClose: async (verify?: boolean) => {
-          changeEmailPopUp.toggleOpen(false);
+          changeEmailPopup.toggleOpen(false);
           verify && window.location.reload();
         },
         onEnd: async (code: string) => {
@@ -112,7 +112,7 @@ const SettingsProfileContent = () => {
           }
         },
       } as const),
-    [changeEmailPopUp.open],
+    [changeEmailPopup.open],
   );
 
   return (
@@ -144,9 +144,9 @@ const SettingsProfileContent = () => {
         <Button
           id="ChangeEmail"
           onClick={() => {
-            changeEmailPopUp.toggleOpen(true, changeEmailHandle);
+            changeEmailPopup.toggleOpen(true, changeEmailHandle);
           }}
-          disabled={changeEmailPopUp.open}
+          disabled={changeEmailPopup.open}
           width="auto"
           transparent
         >

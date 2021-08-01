@@ -19,7 +19,7 @@ const DetailedView = ({ userDetailedRef }: props) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const inviteFriendPopUp = useMultiTask();
+  const inviteFriendPopup = useMultiTask();
   const { setError } = useError();
   const { toggleLoading } = useLoading();
 
@@ -28,7 +28,7 @@ const DetailedView = ({ userDetailedRef }: props) => {
       ({
         name: 'InviteFriend',
         onClose: () => {
-          inviteFriendPopUp.toggleOpen(false);
+          inviteFriendPopup.toggleOpen(false);
         },
         onEnd: async (email: string) => {
           try {
@@ -44,7 +44,7 @@ const DetailedView = ({ userDetailedRef }: props) => {
           }
         },
       } as const),
-    [inviteFriendPopUp.open],
+    [inviteFriendPopup.open],
   );
 
   const handleLogout = {
@@ -66,7 +66,7 @@ const DetailedView = ({ userDetailedRef }: props) => {
   };
 
   const handleButtonNavigation = useCallback((data: typeof buttonsData[number]) => {
-    data.handleInvite && inviteFriendPopUp.toggleOpen(true, inviteFriendHandle);
+    data.handleInvite && inviteFriendPopup.toggleOpen(true, inviteFriendHandle);
     data.logout && logout(handleLogout.onResponse, handleLogout.onResponse);
   }, []);
 
