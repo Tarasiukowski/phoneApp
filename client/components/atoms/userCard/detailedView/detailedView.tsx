@@ -14,7 +14,7 @@ import { update as updateInvites } from 'setup/reducers/invitesReducer';
 import { paths } from '../../../../constants';
 import { useLoading } from 'contexts/loadingContext';
 
-const DetailedView = forwardRef<HTMLDivElement>(() => {
+const DetailedView = forwardRef<HTMLDivElement, {}>((_, ref) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -70,7 +70,7 @@ const DetailedView = forwardRef<HTMLDivElement>(() => {
   }, []);
 
   return (
-    <div className={styles.box}>
+    <div className={styles.box} ref={ref}>
       <div>
         <UserCard big />
       </div>

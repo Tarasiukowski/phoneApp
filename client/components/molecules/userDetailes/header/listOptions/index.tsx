@@ -10,7 +10,7 @@ import { useFriends } from 'setup/reducers/friendsReducer';
 import { useError } from 'contexts';
 import styles from './listOptions.module.scss';
 
-const ListOptions = forwardRef<HTMLDivElement, props>(({ open, email }) => {
+const ListOptions = forwardRef<HTMLDivElement, props>(({ open, email }, ref) => {
   const dispatch = useDispatch();
   const friends = useFriends();
   const { setError } = useError();
@@ -33,7 +33,7 @@ const ListOptions = forwardRef<HTMLDivElement, props>(({ open, email }) => {
   }, []);
 
   return (
-    <div className={styles.box} style={{ visibility: open ? 'visible' : 'hidden' }}>
+    <div className={styles.box} style={{ visibility: open ? 'visible' : 'hidden' }} ref={ref}>
       <div onClick={handleBlockUser} className={styles.elem}>
         <BlockSvg />
         <p>Block</p>
