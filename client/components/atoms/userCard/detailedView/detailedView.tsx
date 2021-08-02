@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, forwardRef } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
@@ -6,7 +6,6 @@ import { UserCard, ButtonNavigation } from '../../index';
 
 import { useError, useMultiTask } from 'contexts';
 import { buttonsData, buttonNavigationSettings } from './data';
-import { props } from './types';
 import styles from './detailedView.module.scss';
 import { handleRequestError, logout, invite } from 'utils';
 import { update as updateBlocklist } from 'setup/reducers/blockListReducer';
@@ -15,7 +14,7 @@ import { update as updateInvites } from 'setup/reducers/invitesReducer';
 import { paths } from '../../../../constants';
 import { useLoading } from 'contexts/loadingContext';
 
-const DetailedView = ({ userDetailedRef }: props) => {
+const DetailedView = forwardRef<HTMLDivElement>(() => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -71,7 +70,7 @@ const DetailedView = ({ userDetailedRef }: props) => {
   }, []);
 
   return (
-    <div className={styles.box} ref={userDetailedRef}>
+    <div className={styles.box}>
       <div>
         <UserCard big />
       </div>
@@ -87,6 +86,6 @@ const DetailedView = ({ userDetailedRef }: props) => {
       </div>
     </div>
   );
-};
+});
 
 export default DetailedView;

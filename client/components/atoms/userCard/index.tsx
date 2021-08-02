@@ -57,7 +57,7 @@ const UserCard = forwardRef<HTMLDivElement, props>(
           big={big}
         />
         <p className="name">{fullname}</p>
-        {withDetailedView && openDetailedView && <DetailedView userDetailedRef={userDetailedRef} />}
+        {withDetailedView && openDetailedView && <DetailedView ref={userDetailedRef} />}
       </Template>
     );
   },

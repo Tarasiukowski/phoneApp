@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, forwardRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { remove as removeFriend } from 'setup/reducers/friendsReducer';
@@ -10,7 +10,7 @@ import { useFriends } from 'setup/reducers/friendsReducer';
 import { useError } from 'contexts';
 import styles from './listOptions.module.scss';
 
-const ListOptions = ({ open, email, listOptionsRef }: props) => {
+const ListOptions = forwardRef<HTMLDivElement, props>(({ open, email }) => {
   const dispatch = useDispatch();
   const friends = useFriends();
   const { setError } = useError();
@@ -33,17 +33,13 @@ const ListOptions = ({ open, email, listOptionsRef }: props) => {
   }, []);
 
   return (
-    <div
-      className={styles.box}
-      ref={listOptionsRef}
-      style={{ visibility: open ? 'visible' : 'hidden' }}
-    >
+    <div className={styles.box} style={{ visibility: open ? 'visible' : 'hidden' }}>
       <div onClick={handleBlockUser} className={styles.elem}>
         <BlockSvg />
         <p>Block</p>
       </div>
     </div>
   );
-};
+});
 
 export default ListOptions;

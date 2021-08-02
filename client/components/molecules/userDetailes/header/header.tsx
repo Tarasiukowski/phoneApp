@@ -29,7 +29,7 @@ const Header = (props: props) => {
   const formatedFullname = formatValuesObject(fullname ? fullname : {});
 
   useDidMount(() => {
-    setListOptions()
+    setListOptions();
 
     window.addEventListener('resize', handleOnResize);
     window.addEventListener('click', handleOnClick);
@@ -90,7 +90,7 @@ const Header = (props: props) => {
           <MoreSvg />
         </Button>
       </div>
-      <ListOptions open={openListOptions} email={email} listOptionsRef={listOptionsRef} />
+      <ListOptions open={openListOptions} email={email} ref={listOptionsRef} />
     </div>
   );
 };
