@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 
 import { Button } from 'components/atoms';
 
@@ -8,10 +8,9 @@ import { optionsComponent } from './data';
 import { useOutsideClick } from 'hooks';
 import { props, GroupData, InputHandle } from './types';
 
-const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
+const Multitask = ({ name, onEnd, onClose, onNext }: props) => {
   const { stages } = optionsComponent.find((option) => option.name === name)!;
   const iterator = stages.entries();
-  iterator.next();
 
   const [inputValue, setInputValue] = useState('');
   const [activeStage, serActiveStage] = useState(stages[0]);
@@ -26,6 +25,10 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
   const { title, description, inputPlaceholder, inputName, unlimited, textButton } = activeStage;
   const { members = [] } = groupData;
 
+  useEffect(() => {
+    iterator.next();
+  });
+
   useOutsideClick(
     templateRef,
     () => {
@@ -33,7 +36,7 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
       onClose();
     },
     (target, defaultOption) => defaultOption && target.id !== name,
-    { isListeningForEvent: open },
+    { isListeningForEvent: true },
   );
 
   const next = useCallback(async () => {
@@ -88,67 +91,69 @@ const Multitask = ({ name, open, onEnd, onClose, onNext }: props) => {
     setGroupData({ name: null, members: [] });
   }, []);
 
-  const disabeld = {
-    constantButton: !isCorrectValue(inputName, inputValue),
-    optionalButton: members.length ? false : true,
-  };
+  const disabeld = useMemo(
+    () => ({
+      constantButton: !isCorrectValue(inputName, inputValue),
+      optionalButton: members.length ? false : true,
+    }),
+    [inputValue],
+  );
 
-  const inputHandle: InputHandle = {
-    onChange(e) {
-      const value = e.target.value;
+  const inputHandle: InputHandle = useMemo(
+    () => ({
+      onChange(e) {
+        const value = e.target.value;
 
-      setInputValue(value);
-    },
-    onKeyUp(e) {
-      if (e.key === 'Enter') {
-        if (!disabeld.constantButton) {
-          next();
+        setInputValue(value);
+      },
+      onKeyUp(e) {
+        if (e.key === 'Enter') {
+          if (!disabeld.constantButton) {
+            next();
+          }
         }
-      }
-    },
-  };
+      },
+    }),
+    [],
+  );
 
-  if (open) {
-    return (
-      <div className={styles.template} ref={templateRef}>
-        <div className={styles.box}>
-          <div className={styles.header}>
-            <h4>{title}</h4>
-            <p>{description}</p>
-          </div>
-          <div className={styles.inputTemplate}>
-            <input
-              value={inputValue}
-              placeholder={inputPlaceholder}
-              name={inputName}
-              autoComplete="off"
-              {...inputHandle}
-            />
-          </div>
-          <div className={styles.footer}>
-            <Button onClick={next} disabled={disabeld.constantButton} width="auto">
-              {isEnd ? textButton : 'Next'}
+  return (
+    <div className={styles.template} ref={templateRef}>
+      <div className={styles.box}>
+        <div className={styles.header}>
+          <h4>{title}</h4>
+          <p>{description}</p>
+        </div>
+        <div className={styles.inputTemplate}>
+          <input
+            value={inputValue}
+            placeholder={inputPlaceholder}
+            name={inputName}
+            autoComplete="off"
+            {...inputHandle}
+          />
+        </div>
+        <div className={styles.footer}>
+          <Button onClick={next} disabled={disabeld.constantButton} width="auto">
+            {isEnd ? textButton : 'Next'}
+          </Button>
+          {unlimited && (
+            <Button
+              onClick={() => {
+                onEnd(returnValueOnEnd);
+                close();
+              }}
+              disabled={disabeld.optionalButton}
+              width="auto"
+              style={{ marginLeft: '10px' }}
+            >
+              Create
             </Button>
-            {unlimited && (
-              <Button
-                onClick={() => {
-                  onEnd(returnValueOnEnd);
-                  close();
-                }}
-                disabled={disabeld.optionalButton}
-                width="auto"
-                style={{ marginLeft: '10px' }}
-              >
-                Create
-              </Button>
-            )}
-          </div>
+          )}
         </div>
       </div>
-    );
-  }
-
-  return null;
+    </div>
+  );
 };
 
 export { Multitask };

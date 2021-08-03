@@ -7,7 +7,7 @@ const MultiTaskTemplate: React.FC = ({ children }) => {
 
   return (
     <>
-      {handle && <Multitask open={open} {...handle} />}
+      {open && handle && <Multitask {...handle} />}
       {children}
     </>
   );

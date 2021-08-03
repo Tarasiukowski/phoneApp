@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState } from 'react';
 
 import { multiTaskContext, Handle, ToggleOpen, props } from './types';
 
@@ -23,11 +23,14 @@ const MultiTaskProvider = ({ children }: props) => {
     setHanlde(undefined);
   }, []);
 
-  const value = {
-    open,
-    handle,
-    toggleOpen,
-  };
+  const value = useMemo(
+    () => ({
+      open,
+      handle,
+      toggleOpen,
+    }),
+    [open],
+  );
 
   return <MultiTaskContext.Provider value={value}>{children}</MultiTaskContext.Provider>;
 };
