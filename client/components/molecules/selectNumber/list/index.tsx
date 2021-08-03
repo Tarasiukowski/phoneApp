@@ -6,6 +6,7 @@ import {
   ChangeEventHandler,
   MouseEventHandler,
 } from 'react';
+import { useMemo } from 'react';
 import gsap from 'gsap';
 import { useScroll } from 'react-use';
 
@@ -92,34 +93,40 @@ const SelectNumberList = ({ onSelectNumber, onClose }: props) => {
 
   const isActiveAllNumbers = activeList === ActiveList.All;
 
-  const disabledButton = {
-    recommended: !isActiveAllNumbers,
-    all: isActiveAllNumbers,
-  };
+  const disabledButton = useMemo(
+    () => ({
+      recommended: !isActiveAllNumbers,
+      all: isActiveAllNumbers,
+    }),
+    [isActiveAllNumbers],
+  );
 
-  const setOverlap: MouseEventHandler<HTMLButtonElement> = (e) => {
-    const target = e.target as HTMLButtonElement;
-    const tab = refTab.current as HTMLDivElement;
-    const { left: leftTarget } = target.getBoundingClientRect();
-    const { left: leftTab } = tab?.getBoundingClientRect();
+  const setOverlap: MouseEventHandler<HTMLButtonElement> = useCallback(
+    (e) => {
+      const target = e.target as HTMLButtonElement;
+      const tab = refTab.current as HTMLDivElement;
+      const { left: leftTarget } = target.getBoundingClientRect();
+      const { left: leftTab } = tab?.getBoundingClientRect();
 
-    gsap.set(refIndicator.current, {
-      left: `${leftTarget - leftTab}px`,
-    });
+      gsap.set(refIndicator.current, {
+        left: `${leftTarget - leftTab}px`,
+      });
 
-    const oppositeValue = isActiveAllNumbers ? ActiveList.Recommended : ActiveList.All;
+      const oppositeValue = isActiveAllNumbers ? ActiveList.Recommended : ActiveList.All;
 
-    setActiveList(oppositeValue);
-  };
+      setActiveList(oppositeValue);
+    },
+    [isActiveAllNumbers],
+  );
 
-  const handleValueDigits: ChangeEventHandler<Element> = (e) => {
+  const handleValueDigits: ChangeEventHandler<Element> = useCallback((e) => {
     const target = e.target as HTMLInputElement;
     const value = target.value;
 
     if (value.length === LENGTH_NUMBER) return;
 
     setValueDigits(value);
-  };
+  }, []);
 
   const hanldeOnSelectNumber = useCallback((number: string) => {
     onSelectNumber(number);

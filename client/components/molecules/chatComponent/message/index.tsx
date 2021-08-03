@@ -20,16 +20,16 @@ const MessageComponent = ({ content, id, data }: props) => {
     [data],
   );
 
+  const { currentMsg, previousMsg, nextMsg } = msgs;
+
   const isFromLoggedUser = useMemo(
     () => ({
       currentMsg: currentMsg ? currentMsg.from === user?.email : false,
       previousMsg: previousMsg ? previousMsg.from === currentMsg.from : false,
       nextMsg: nextMsg ? nextMsg.from === currentMsg.from : false,
     }),
-    [msgs],
+    [currentMsg, previousMsg, nextMsg],
   );
-
-  const { currentMsg, previousMsg, nextMsg } = msgs;
 
   const marginTop = messageIndex !== 0 && !isFromLoggedUser.previousMsg ? '10px' : undefined;
 

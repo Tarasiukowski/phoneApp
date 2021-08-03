@@ -61,11 +61,11 @@ const DetailedView = forwardRef<HTMLDivElement, {}>((_, ref) => {
     [],
   );
 
-  const resetData = () => {
+  const resetData = useCallback(() => {
     dispatch(updateInvites([]));
     dispatch(updateBlocklist([]));
     dispatch(updateFriends([]));
-  };
+  }, []);
 
   const handleButtonNavigation = useCallback((data: typeof buttonsData[number]) => {
     data.handleInvite && inviteFriendPopup.toggleOpen(true, inviteFriendHandle);
