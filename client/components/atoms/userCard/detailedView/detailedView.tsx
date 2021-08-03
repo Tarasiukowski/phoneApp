@@ -46,17 +46,20 @@ const DetailedView = forwardRef<HTMLDivElement, {}>((_, ref) => {
     [inviteFriendPopup.open],
   );
 
-  const handleLogout = {
-    onRequest() {
-      toggleLoading(true);
-    },
-    onResponse() {
-      router.push(paths.singUp).then(() => {
-        toggleLoading(false);
-        resetData();
-      });
-    },
-  };
+  const handleLogout = useMemo(
+    () => ({
+      onRequest() {
+        toggleLoading(true);
+      },
+      onResponse() {
+        router.push(paths.singUp).then(() => {
+          toggleLoading(false);
+          resetData();
+        });
+      },
+    }),
+    [],
+  );
 
   const resetData = () => {
     dispatch(updateInvites([]));
