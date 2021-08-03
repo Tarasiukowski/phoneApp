@@ -36,14 +36,14 @@ const SettingsProfileContent = () => {
     }
   }, [changeEmailPopup.open]);
 
-  const handleOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleOnChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     const target = e.target;
 
     setFields({
       ...fields,
       [target.name]: target.value,
     });
-  };
+  }, [fields])
 
   const save = useCallback(async () => {
     try {
@@ -57,7 +57,7 @@ const SettingsProfileContent = () => {
     }
   }, [fields]);
 
-  const resetData = async () => {
+  const resetData = useCallback(async () => {
     try {
       await fetcher('DELETE', '/user/update/newEmail');
     } catch (err) {
@@ -65,7 +65,7 @@ const SettingsProfileContent = () => {
         setError({ msg: errorMsg, id: Math.random() });
       });
     }
-  };
+  }, []);
 
   const changeEmailHandle = useMemo(
     () =>
