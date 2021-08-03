@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { useScroll } from 'react-use';
 
 import { Spinner } from 'components/atoms';
@@ -57,19 +57,22 @@ const Chat = ({ id, getScopedUser, width }: props) => {
     }
   }, [messages.length]);
 
-  const textareaHandle: TextAreaHandle = {
-    onChange: (e) => {
-      const target = e.target;
+  const textareaHandle: TextAreaHandle = useMemo(
+    () => ({
+      onChange: (e) => {
+        const target = e.target;
 
-      setValueTextarea(target.value);
-    },
-    onKeyUp: (e) => {
-      if (e.key === 'Enter' && valueTextarea.length) {
-        sendMessage(valueTextarea);
-        setValueTextarea('');
-      }
-    },
-  };
+        setValueTextarea(target.value);
+      },
+      onKeyUp: (e) => {
+        if (e.key === 'Enter' && valueTextarea.length) {
+          sendMessage(valueTextarea);
+          setValueTextarea('');
+        }
+      },
+    }),
+    [valueTextarea],
+  );
 
   return (
     <div className={styles.template} style={{ width: width ? width : defaultWidth }}>
