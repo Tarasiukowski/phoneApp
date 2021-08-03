@@ -21,12 +21,12 @@ const OnboardingAccountContent = () => {
   const { firstname, lastname } = fields;
   const disabled = status === 'loading' || !firstname.length || !lastname.length;
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const onChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     const target = e.target as HTMLInputElement;
     const value = target.value;
 
     setFields({ ...fields, [target.name]: value });
-  };
+  }, [fields]);
 
   const next = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {

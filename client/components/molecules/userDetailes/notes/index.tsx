@@ -1,4 +1,4 @@
-import { ChangeEvent, useState, KeyboardEvent } from 'react';
+import { ChangeEvent, useState, KeyboardEvent, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { TextArea } from 'components/atoms';
@@ -13,19 +13,22 @@ const Notes = ({ data, email }: props) => {
 
   const dispatch = useDispatch();
 
-  const textAreaHandle = {
-    onChange: (e: ChangeEvent<HTMLTextAreaElement>) => {
-      const target = e.target;
+  const textAreaHandle = useMemo(
+    () => ({
+      onChange: (e: ChangeEvent<HTMLTextAreaElement>) => {
+        const target = e.target;
 
-      setValueTextArea(target.value);
-    },
-    onKeyDown: (e: KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === 'Enter' && valueTextArea.trim().length > 0) {
-        dispatch(updateOne({ email, key: 'notes', value: { content: valueTextArea } }));
-        setValueTextArea('');
-      }
-    },
-  };
+        setValueTextArea(target.value);
+      },
+      onKeyDown: (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter' && valueTextArea.trim().length > 0) {
+          dispatch(updateOne({ email, key: 'notes', value: { content: valueTextArea } }));
+          setValueTextArea('');
+        }
+      },
+    }),
+    [valueTextArea],
+  );
 
   return (
     <div className={styles.template}>
