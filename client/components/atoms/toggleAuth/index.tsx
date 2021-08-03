@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import Link from 'next/link';
 
 import { props } from './types';
@@ -8,10 +9,13 @@ import { paths } from '../../../constants';
 const ToggleAuth = ({ authType }: props) => {
   const isRegister = authType === AuthType.Singup;
   const content = isRegister ? 'Already have an account?' : 'Need an account?';
-  const handleLink = {
-    content: isRegister ? 'Login.' : 'Sing up.',
-    href: isRegister ? paths.login.index : paths.singUp,
-  };
+  const handleLink = useMemo(
+    () => ({
+      content: isRegister ? 'Login.' : 'Sing up.',
+      href: isRegister ? paths.login.index : paths.singUp,
+    }),
+    [],
+  );
 
   return (
     <div className={styles.wrapper}>
