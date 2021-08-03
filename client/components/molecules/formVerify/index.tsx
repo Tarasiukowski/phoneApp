@@ -1,4 +1,4 @@
-import { useState, ChangeEventHandler, FormEventHandler } from 'react';
+import { useState, ChangeEventHandler, FormEventHandler, useCallback } from 'react';
 import Image from 'next/image';
 
 import { Button, Input } from 'components/atoms';
@@ -27,24 +27,27 @@ const FormVerify = ({ type, onSuccess }: props) => {
   const isVerifyAccount = type === TypeVerify.account;
   const disabled = !valueInput.length || status === 'loading';
 
-  const handleOnChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleOnChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     setValueInput(e.target.value);
-  };
+  }, []);
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
+  const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(
+    async (e) => {
+      e.preventDefault();
 
-    try {
-      await mutate(isVerifyAccount ? 'account' : 'login', valueInput);
+      try {
+        await mutate(isVerifyAccount ? 'account' : 'login', valueInput);
 
-      toggleLoading(true);
-      onSuccess();
-    } catch (err) {
-      handleRequestError(err, (errorMsg) => {
-        setError({ msg: errorMsg, id: Math.random() });
-      });
-    }
-  };
+        toggleLoading(true);
+        onSuccess();
+      } catch (err) {
+        handleRequestError(err, (errorMsg) => {
+          setError({ msg: errorMsg, id: Math.random() });
+        });
+      }
+    },
+    [valueInput],
+  );
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
