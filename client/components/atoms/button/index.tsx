@@ -55,8 +55,8 @@ export const Button = styled.button<props>`
     ${({ disabled }) =>
     disabled &&
     css`
-      color: rgba(255, 255, 255, 0.3) !important;
-      background: rgb(36, 36, 51) !important;
+      color: rgba(255, 255, 255, 0.3);
+      background: rgb(36, 36, 51);
       cursor: default;
     `}
 `;
