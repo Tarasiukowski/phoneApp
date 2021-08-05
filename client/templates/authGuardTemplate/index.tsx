@@ -28,7 +28,7 @@ const AuthGuardTemplate = ({ children, allow }: props) => {
   const fetchFullUser = loggedPaths.some((path) => activePath.startsWith(path));
 
   useEffect(() => {
-    fetcher('post', '/auth', { fullUser: fetchFullUser }).then((data) => {
+    fetcher('post', '/auth/me', { fullUser: fetchFullUser }).then((data) => {
       const user = data.user ? data.user.value : null;
 
       dispatch(login(user));

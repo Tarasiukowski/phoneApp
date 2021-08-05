@@ -5,7 +5,7 @@ import { authController } from '../controllers/authController';
 export const authRouter = Router();
 
 authRouter
-  .post('/', authController.byToken)
+  .post('/me', authController.getMe)
   .post('/login', authController.login)
   .post('/singup', authController.singUp)
   .get('/logout', authController.logout);
